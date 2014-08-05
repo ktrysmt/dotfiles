@@ -6,21 +6,19 @@ cd dotfiles
 ./setup.sh
 ```
 
-# あとで整理してsh化する
+# .vimrc
+あとで整理してsh化する
 
 ## NeoBundleインストール
 
 ```
-
 mkdir -p ~/.vim/bundle
 git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-
 ```
 
 ## Ctags インストール
 
 ```
-
 # 5.8がいいなら。。。
 
 wget http://prdownloads.sourceforge.net/ctags/ctags-5.8.tar.gz
@@ -31,7 +29,6 @@ cd ctags-5.8
 # 5.6でいいなら。
 
 yum -y install ctags
-
 ```
 
 
@@ -39,7 +36,6 @@ yum -y install ctags
 ## 基本のvimrc
 
 ```
-
 syntax on
 
 set ambiwidth=double
@@ -83,19 +79,12 @@ NeoBundle 'mattn/emmet-vim'
 NeoBundle 'thinca/vim-quickrun' 
 NeoBundle 'scrooloose/syntastic' 
 NeoBundle 'Shougo/unite.vim' 
-
 NeoBundle 'Shougo/vimproc'
-
 NeoBundle 'LeafCage/yankround.vim'
-
 NeoBundle 'kchmck/vim-coffee-script'
-
 NeoBundle 'Shougo/neocomplcache'
-
 NeoBundle 'itchyny/lightline.vim'
-
 NeoBundle 'soramugi/auto-ctags.vim'
-
 NeoBundle 'Shougo/vimshell.vim'
 
 
@@ -187,9 +176,6 @@ nmap <ESC><ESC> :nohlsearch<CR><ESC>
 autocmd BufWritePre * :%s/\s\+$//ge 
 " 保存時にtabをスペースに変換する 
 autocmd BufWritePre * :%s/\t/ /ge
-
-
-
 ```
 
 
@@ -197,9 +183,7 @@ autocmd BufWritePre * :%s/\t/ /ge
 ## プラグインインストール
 
 ```
-
 vim
-
 ```
 
  
@@ -209,11 +193,9 @@ vim
 CentOSの場合はmakeたたけばOK
 
 ```
-
 cd ~/.vim/bundle/vimproc
 
 make
-
 ```
 
 
@@ -221,11 +203,83 @@ make
 ## php入力補完
 
 ```
-
 wget http://coderepos.org/share/export/39278/lang/php/misc/dict.php
 
 mkdir -p ~/.vim/dictionaries/
 
 php dict.php | sort > ~/.vim/dictionaries/php.dict
+```
 
+# .bashrc
+これもあとで整理
+
+## 以下をインストールすること
++ git-prompt,git-completion
++ go
++ peco
++ autojump
++ node
+
+```
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias l='ls -lha' 
+
+
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+. /etc/bashrc
+fi
+
+
+
+source /usr/share/doc/git-1.8.2.1/contrib/completion/git-prompt.sh
+source /usr/share/doc/git-1.8.2.1/contrib/completion/git-completion.bash
+GIT_PS1_SHOWDIRTYSTATE=true
+export PS1='\[\033[1;32m\]\u@\h\[\033[00m\]:\[\033[1;34m\]\w\[\033[1;31m\]$(__git_ps1)\[\033[00m\][\t]\$ '
+
+ 
+
+# for go lang
+if [ -x "`which go`" ]; then
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+fi
+ 
+
+#if [ -x "`which peco`" ]; then
+# alias ll='ls -la | peco'
+# alias tp='top | peco'
+# alias pp='ps aux | peco'
+#fi
+ 
+
+_replace_by_history() {
+declare l=$(HISTTIMEFORMAT= history | sort -k1,1nr | perl -ne 'BEGIN { my @lines = (); } s/^\s*\d+\s*//; $in=$_; if (!(grep {$in eq $_} @lines)) { push(@lines, $in); print $in; }' | peco --query "$READLINE_LINE")
+READLINE_LINE="$l"
+READLINE_POINT=${#l}
+}
+bind -x '"\C-r": _replace_by_history'
+bind '"\C-xr": reverse-search-history'
+ 
+
+# autojump
+[[ -s /root/.autojump/etc/profile.d/autojump.sh ]] && source /root/.autojump/etc/profile.d/autojump.sh
+ 
+
+# node
+source /root/.nvm/nvm.sh
+```
+
+## おまけ：cygwinの場合
+### フォルダ色分けされないのでされるように
+```
+c:\mingw64\msys\home\user-name\.bashrcを編集
+
+ 	
+export TERM=msys
+export LS_COLORS="no=00:fi=00:di=01;36:ln=01;34"
+alias ls='ls -F --color=auto'
 ```
