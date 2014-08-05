@@ -1,5 +1,4 @@
-how to
-========
+setup bashrc and vimrc, etc
 
 ```
 git clone https://github.com/KotaroYoshimatsu/dotfiles
