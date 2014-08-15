@@ -154,19 +154,19 @@ let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
 
 
 
+"-------------------------                                                                        
+" カーソル行をハイライト                                                                                               
 "-------------------------
-
-" カーソル行をハイライト 
-"------------------------- 
-set cursorline 
-augroup cch 
-autocmd! cch 
-autocmd WinLeave * set nocursorline 
-autocmd WinEnter,BufRead * set cursorline 
-augroup END 
-hi clear CursorLine 
-hi CursorLine gui=underline 
-highlight CursorLine ctermbg=black guibg=black 
+set cursorline
+augroup cch
+  autocmd! cch
+  autocmd WinLeave * set nocursorline
+  autocmd WinEnter,BufRead * set cursorline
+augroup END
+hi clear CursorLine
+hi CursorLine gui=underline
+"highlight CursorLine cterm=underline ctermbg=black guibg=black
+highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE
 
 "Escの2回押しでハイライト消去 
 nmap <ESC><ESC> :nohlsearch<CR><ESC> 
