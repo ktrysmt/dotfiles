@@ -86,7 +86,13 @@ NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'Shougo/vimshell.vim'
-
+" for js
+NeoBundle 'jelera/vim-javascript-syntax'
+NeoBundle 'vim-scripts/jQuery'
+NeoBundle 'jiangmiao/simple-javascript-indenter'
+NeoBundle 'mattn/jscomplete-vim'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'nono/vim-handlebars'
 
 call neobundle#end() 
 
