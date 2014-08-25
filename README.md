@@ -93,6 +93,7 @@ NeoBundle 'jiangmiao/simple-javascript-indenter'
 NeoBundle 'mattn/jscomplete-vim'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'nono/vim-handlebars'
+NeoBundle 'haya14busa/vim-easymotion'
 
 call neobundle#end() 
 
