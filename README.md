@@ -232,11 +232,11 @@ wget https://storage.googleapis.com/golang/go1.3.1.linux-amd64.tar.gz
 tar -C /usr/local -xzf go1.3.1.linux-amd64.tar.gz 
 vim ~/.bashrc 
 
-export PATH=$PATH:/usr/local/go/bin
-export GOPATH=/usr/local/go/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 source ~/.bashrc
-go get github.com/peco/peco/cmd/peco
+go get github.com/peco/peco/cmd/peco/
 ```
 
 ```
