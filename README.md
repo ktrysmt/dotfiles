@@ -79,7 +79,14 @@ NeoBundle 'mattn/emmet-vim'
 "NeoBundle 'thinca/vim-quickrun' 
 NeoBundle 'scrooloose/syntastic' 
 NeoBundle 'Shougo/unite.vim' 
-NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimproc', {
+  \ 'build' : {
+    \ 'windows' : 'make -f make_mingw32.mak',
+    \ 'cygwin' : 'make -f make_cygwin.mak',
+    \ 'mac' : 'make -f make_mac.mak',
+    \ 'unix' : 'make -f make_unix.mak',
+  \ },
+\ }
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'Shougo/neocomplcache'
