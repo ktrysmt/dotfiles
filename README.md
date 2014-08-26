@@ -220,12 +220,24 @@ php dict.php | sort > ~/.vim/dictionaries/php.dict
 # .bashrc
 これもあとで整理
 
-## 以下をインストールすること
+## 以下をインストールする
 + git-prompt,git-completion
 + go
 + peco
 + autojump
 + node
+
+```
+wget https://storage.googleapis.com/golang/go1.3.1.linux-amd64.tar.gz
+tar -C /usr/local -xzf go1.3.1.linux-amd64.tar.gz 
+vim ~/.bashrc 
+
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=/usr/local/go/bin
+
+source ~/.bashrc
+go get github.com/peco/peco/cmd/peco
+```
 
 ```
 alias rm='rm -i'
