@@ -1,10 +1,24 @@
-setup bashrc and vimrc, etc
+# introduce
+for CentOS6(64bit)
 
+# how to setup
 ```
 git clone https://github.com/KotaroYoshimatsu/dotfiles
 cd dotfiles
 ./setup.sh
 ```
+
+# include that
++ git
++ curl
++ php
++ ctags
++ go
++ peco
++ neobundle
++ vim-plugins
+
+# 以下残骸...
 
 # .vimrc
 あとで整理してsh化する
