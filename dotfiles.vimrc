@@ -133,7 +133,7 @@ let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
 
 
 "-------------------------                                                                        
-" カーソル行をハイライト                                                                                               
+" カーソル行をハイライト
 "-------------------------
 set cursorline
 augroup cch
@@ -154,3 +154,11 @@ nmap <ESC><ESC> :nohlsearch<CR><ESC>
 autocmd BufWritePre * :%s/\s\+$//ge 
 " 保存時にtabをスペースに変換する 
 autocmd BufWritePre * :%s/\t/ /ge
+
+"-------------------------
+" taglist
+"-------------------------
+let Tlist_Ctags_Cmd = "/usr/local/bin/ctags" " 実装場所は確認
+let Tlist_Show_One_File = 1
+let Tlist_Use_Right_Window = 1
+let Tlist_Exit_OnlyWindow = 1
