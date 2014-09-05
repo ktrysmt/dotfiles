@@ -63,6 +63,8 @@ NeoBundle 'mattn/jscomplete-vim'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'nono/vim-handlebars'
 NeoBundle 'haya14busa/vim-easymotion'
+NeoBundle 'vim-scripts/taglist.vim'
+NeoBundle 'szw/vim-tags'
 
 call neobundle#end() 
 
