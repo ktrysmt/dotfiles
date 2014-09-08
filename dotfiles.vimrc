@@ -62,7 +62,7 @@ NeoBundle 'jiangmiao/simple-javascript-indenter'
 NeoBundle 'mattn/jscomplete-vim'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'nono/vim-handlebars'
-NeoBundle 'haya14busa/vim-easymotion'
+"NeoBundle 'haya14busa/vim-easymotion'
 NeoBundle 'vim-scripts/taglist.vim'
 NeoBundle 'szw/vim-tags'
 
@@ -158,7 +158,7 @@ autocmd BufWritePre * :%s/\t/ /ge
 "-------------------------
 " taglist
 "-------------------------
-let Tlist_Ctags_Cmd = "/usr/local/bin/ctags" " 実装場所は確認
+"let Tlist_Ctags_Cmd = "/usr/local/bin/ctags" " 実装場所は確認
 let Tlist_Show_One_File = 1
 let Tlist_Use_Right_Window = 1
 let Tlist_Exit_OnlyWindow = 1
