@@ -66,6 +66,7 @@ NeoBundle 'nono/vim-handlebars'
 NeoBundle 'vim-scripts/taglist.vim'
 NeoBundle 'szw/vim-tags'
 "NeoBundle 'Shougo/vimfiler'
+"NeoBundle 'Yggdroot/indentLine'
 
 call neobundle#end() 
 
@@ -163,3 +164,9 @@ autocmd BufWritePre * :%s/\t/ /ge
 let Tlist_Show_One_File = 1
 let Tlist_Use_Right_Window = 1
 let Tlist_Exit_OnlyWindow = 1
+
+"-------------------------
+" indentLine faster
+"-------------------------
+"let g:indentLine_faster = 1
+"nmap <silent><Leader>i :<C-u>IndentLinesToggle<CR>
