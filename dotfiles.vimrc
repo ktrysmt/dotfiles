@@ -20,27 +20,27 @@ set vb t_vb=
 set whichwrap=b,s,[,],<,>,~
 set number
 
-set cindent 
+set cindent
 
-"--------------------------- 
-"" Neobundle Settings. 
-"--------------------------- 
-" bundleで管理するディレクトリを指定 
-set runtimepath+=~/.vim/bundle/neobundle.vim/ 
+"---------------------------
+"" Neobundle Settings.
+"---------------------------
+" bundleで管理するディレクトリを指定
+set runtimepath+=~/.vim/bundle/neobundle.vim/
 
-" Required: 
-call neobundle#begin(expand('~/.vim/bundle/')) 
+" Required:
+call neobundle#begin(expand('~/.vim/bundle/'))
 
-" neobundle自体をneobundleで管理 
-NeoBundleFetch 'Shougo/neobundle.vim' 
+" neobundle自体をneobundleで管理
+NeoBundleFetch 'Shougo/neobundle.vim'
 
-" プラグイン 
-NeoBundle 'scrooloose/nerdtree' 
-NeoBundle 'Townk/vim-autoclose' 
-NeoBundle 'mattn/emmet-vim' 
-"NeoBundle 'thinca/vim-quickrun' 
-NeoBundle 'scrooloose/syntastic' 
-NeoBundle 'Shougo/unite.vim' 
+" プラグイン
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'Townk/vim-autoclose'
+NeoBundle 'mattn/emmet-vim'
+"NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc', {
   \ 'build' : {
     \ 'windows' : 'make -f make_mingw32.mak',
@@ -68,73 +68,73 @@ NeoBundle 'szw/vim-tags'
 "NeoBundle 'Shougo/vimfiler'
 "NeoBundle 'Yggdroot/indentLine'
 
-call neobundle#end() 
+call neobundle#end()
 
-" Required: 
-filetype plugin indent on 
+" Required:
+filetype plugin indent on
 
-" 未インストールのプラグインがある場合、インストールするかどうかを尋ねてくれるようにする設定 
-" 毎回聞かれると邪魔な場合もあるので、この設定は任意です。 
-NeoBundleCheck 
+" 未インストールのプラグインがある場合、インストールするかどうかを尋ねてくれるようにする設定
+" 毎回聞かれると邪魔な場合もあるので、この設定は任意です。
+NeoBundleCheck
 
-"------------------------- 
-" Unite Settings. 
-"------------------------- 
+"-------------------------
+" Unite Settings.
+"-------------------------
 
-" Vertical 
-let g:unite_enable_split_vertically = 1 
-" YankRound 
+" Vertical
+let g:unite_enable_split_vertically = 1
+" YankRound
 :map <C-p> :Unite yankround<Return>
 
 
 
-"------------------------- 
-" 入力補完 
-"------------------------- 
-autocmd BufRead *.php\|*.ctp\|*.tpl :set dictionary=~/.vim/dictionaries/php.dict filetype=php 
-let g:neocomplcache_enable_at_startup = 1 
-let g:neocomplcache_enable_camel_case_completion = 1 
-let g:neocomplcache_enable_underbar_completion = 1 
-let g:neocomplcache_smart_case = 1 
-let g:neocomplcache_min_syntax_length = 3 
-let g:neocomplcache_manual_completion_start_length = 0 
-let g:neocomplcache_caching_percent_in_statusline = 1 
-let g:neocomplcache_enable_skip_completion = 1 
-let g:neocomplcache_skip_input_time = '0.5' 
+"-------------------------
+" 入力補完
+"-------------------------
+autocmd BufRead *.php\|*.ctp\|*.tpl :set dictionary=~/.vim/dictionaries/php.dict filetype=php
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplcache_enable_underbar_completion = 1
+let g:neocomplcache_smart_case = 1
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_manual_completion_start_length = 0
+let g:neocomplcache_caching_percent_in_statusline = 1
+let g:neocomplcache_enable_skip_completion = 1
+let g:neocomplcache_skip_input_time = '0.5'
 
-"------------------------- 
-" syntax 
-"------------------------- 
-let g:syntastic_check_on_open = 1 
-let g:syntastic_enable_signs = 1 
-let g:syntastic_echo_current_error = 1 
-let g:syntastic_auto_loc_list = 2 
-let g:syntastic_enable_highlighting = 1 
-let g:syntastic_php_php_args = '-l' 
-set statusline+=%#warningmsg# 
-set statusline+=%{SyntasticStatuslineFlag()} 
+"-------------------------
+" syntax
+"-------------------------
+let g:syntastic_check_on_open = 1
+let g:syntastic_enable_signs = 1
+let g:syntastic_echo_current_error = 1
+let g:syntastic_auto_loc_list = 2
+let g:syntastic_enable_highlighting = 1
+let g:syntastic_php_php_args = '-l'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-"------------------------- 
-" lightline settiong 
-"------------------------- 
-let g:lightline = {'colorscheme': 'landscape'} 
-set laststatus=2 
-if !has('gui_running') 
-set t_Co=256 
+"-------------------------
+" lightline settiong
+"-------------------------
+let g:lightline = {'colorscheme': 'landscape'}
+set laststatus=2
+if !has('gui_running')
+set t_Co=256
 endif
 
-"------------------------- 
-" ctags 
-"------------------------- 
-let g:auto_ctags = 1 
-set tags+=$HOME/tags 
-let g:auto_ctags_directory_list = [$HOME] 
+"-------------------------
+" ctags
+"-------------------------
+let g:auto_ctags = 1
+set tags+=$HOME/tags
+let g:auto_ctags_directory_list = [$HOME]
 let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
 
 
 
-"-------------------------                                                                        
+"-------------------------
 " カーソル行をハイライト
 "-------------------------
 set cursorline
@@ -148,13 +148,13 @@ hi CursorLine gui=underline
 "highlight CursorLine cterm=underline ctermbg=black guibg=black
 highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE
 
-"Escの2回押しでハイライト消去 
-nmap <ESC><ESC> :nohlsearch<CR><ESC> 
+"Escの2回押しでハイライト消去
+nmap <ESC><ESC> :nohlsearch<CR><ESC>
 
 " 保存時に行末の空白を除去する
 
-autocmd BufWritePre * :%s/\s\+$//ge 
-" 保存時にtabをスペースに変換する 
+autocmd BufWritePre * :%s/\s\+$//ge
+" 保存時にtabをスペースに変換する
 autocmd BufWritePre * :%s/\t/ /ge
 
 "-------------------------
@@ -170,3 +170,23 @@ let Tlist_Exit_OnlyWindow = 1
 "-------------------------
 "let g:indentLine_faster = 1
 "nmap <silent><Leader>i :<C-u>IndentLinesToggle<CR>
+
+"-------------------------
+" auto save
+"-------------------------
+let g:auto_save = 1
+
+
+"-------------------------
+" NERDTree
+"-------------------------
+nmap <silent> <C-e>      :NERDTreeToggle<CR>
+vmap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
+omap <silent> <C-e>      :NERDTreeToggle<CR>
+imap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
+cmap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
+autocmd vimenter * NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+let g:NERDTreeShowHidden=1
+
+
