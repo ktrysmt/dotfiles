@@ -164,6 +164,11 @@ autocmd BufWritePre * :%s/\t/ /ge
 let Tlist_Show_One_File = 1
 let Tlist_Use_Right_Window = 1
 let Tlist_Exit_OnlyWindow = 1
+nmap <silent> <C-a>      :TlistToggle<CR>                                                                                                                                                                                                                                                                       
+vmap <silent> <C-a> <Esc>:TlistToggle<CR>                                                                                                                                                                                                                                                                       
+omap <silent> <C-a>      :TlistToggle<CR>                                                                                                                                                                                                                                                                       
+imap <silent> <C-a> <Esc>:TlistToggle<CR>                                                                                                                                                                                                                                                                       
+cmap <silent> <C-a> <C-u>:TlistToggle<CR>
 
 "-------------------------
 " indentLine faster
