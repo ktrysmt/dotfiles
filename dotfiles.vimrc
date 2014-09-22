@@ -65,7 +65,7 @@ NeoBundle 'nono/vim-handlebars'
 "NeoBundle 'haya14busa/vim-easymotion'
 NeoBundle 'vim-scripts/taglist.vim'
 NeoBundle 'szw/vim-tags'
-NeoBundle 'Shougo/vimfiler'
+"NeoBundle 'Shougo/vimfiler'
 "NeoBundle 'Yggdroot/indentLine'
 
 call neobundle#end()
@@ -185,7 +185,7 @@ vmap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
 omap <silent> <C-e>      :NERDTreeToggle<CR>
 imap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
 cmap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
-autocmd vimenter * NERDTree
+"autocmd vimenter * NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let g:NERDTreeShowHidden=1
 
