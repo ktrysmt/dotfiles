@@ -65,7 +65,7 @@ NeoBundle 'nono/vim-handlebars'
 "NeoBundle 'haya14busa/vim-easymotion'
 NeoBundle 'vim-scripts/taglist.vim'
 NeoBundle 'szw/vim-tags'
-"NeoBundle 'Shougo/vimfiler'
+NeoBundle 'Shougo/vimfiler'
 "NeoBundle 'Yggdroot/indentLine'
 
 call neobundle#end()
