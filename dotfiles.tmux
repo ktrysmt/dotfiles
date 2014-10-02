@@ -37,3 +37,9 @@ setw -g window-status-current-bg white
 # pane-active-border
 set -g pane-active-border-fg white
 set -g pane-active-border-bg black
+
+# scroll
+set-window-option -g mode-mouse on
+set -g terminal-overrides 'xterm*:smcup@:rmcup@'
+set-option -g history-limit 100000
+
