@@ -11,11 +11,9 @@ set -g prefix C-a
 
 # 256色ターミナル
 #set -g default-terminal screen
-#set -g default-terminal xterm
-#set-option -g default-terminal "xterm"
 
 # UTF8 Support
-setw -g utf8 on
+#setw -g utf8 on
 # コピーモードのキーバインドをviライクにする
 setw -g mode-keys vi
 # ウィンドウ名が実行中のコマンド名になるのを止める
@@ -48,4 +46,6 @@ set-option -g history-limit 100000
 
 # home key and end key
 #set-option -g xterm-keys on
-
+set -g default-terminal xterm
+#set-option -g default-terminal "xterm"
+set-option -g terminal-overrides "xterm-color:khome=\033[1~"
