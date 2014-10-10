@@ -53,3 +53,11 @@ set-option -g history-limit 100000
 set -g default-terminal xterm
 #set-option -g default-terminal "xterm"
 set-option -g terminal-overrides "xterm-color:khome=\033[1~"
+
+# mode-mouse
+bind m \
+  set -g mode-mouse on \; \
+  display "Mouse: ON"
+bind M \
+  set -g mode-mouse off \; \
+  display "Mouse: OFF"
