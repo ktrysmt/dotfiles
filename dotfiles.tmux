@@ -1,3 +1,7 @@
+###############################
+# for poderosa, cygwin @Win7
+###############################
+
 # reloading command
 unbind r
 bind C-r source-file ~/.tmux.conf \; display-message "reloaded"
@@ -40,8 +44,8 @@ set -g pane-active-border-fg white
 set -g pane-active-border-bg black
 
 # scroll
-#set-window-option -g mode-mouse on
-#set -g terminal-overrides 'xterm*:smcup@:rmcup@'
+set-window-option -g mode-mouse on
+set -g terminal-overrides 'xterm*:smcup@:rmcup@'
 set-option -g history-limit 100000
 
 # home key and end key
