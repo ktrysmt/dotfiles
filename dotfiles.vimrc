@@ -19,6 +19,7 @@ set tabstop=8
 set vb t_vb=
 set whichwrap=b,s,[,],<,>,~
 set number
+set noswapfile
 
 set cindent
 
@@ -193,5 +194,10 @@ cmap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
 "autocmd vimenter * NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let g:NERDTreeShowHidden=1
-
-
+" 隠しファイルを表示する
+let NERDTreeShowHidden = 1
+" 引数なしで実行したとき、NERDTreeを実行する
+let file_name = expand("%:p")
+if has('vim_starting') &&  file_name == ""
+    autocmd VimEnter * execute 'NERDTree ./'
+endif
