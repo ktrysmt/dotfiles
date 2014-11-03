@@ -20,7 +20,7 @@ set vb t_vb=
 set whichwrap=b,s,[,],<,>,~
 set number
 set noswapfile
-
+set nrformats=
 set cindent
 
 "---------------------------
