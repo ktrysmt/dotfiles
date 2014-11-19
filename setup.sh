@@ -16,10 +16,10 @@ cd ~/
 git clone git://github.com/creationix/nvm.git ~/.nvm
 source ~/.nvm/nvm.sh
 nvm install v0.11
-wget https://storage.googleapis.com/golang/go1.3.1.linux-amd64.tar.gz
-tar xzf go1.3.1.linux-amd64.tar.gz
+wget https://github.com/peco/peco/releases/download/v0.2.10/peco_linux_amd64.tar.gz
+tar xzf peco_linux_amd64.tar.gz
+\cp -f peco_linux_amd64/peco /usr/local/bin/
 cat dotfiles.bashrc >> ~/.bashrc
 source ~/.bashrc
-go get github.com/peco/peco/cmd/peco/
 
 
