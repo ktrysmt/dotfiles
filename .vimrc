@@ -65,6 +65,7 @@ NeoBundle '907th/vim-auto-save'
 NeoBundle 'violetyk/neocomplete-php.vim'
 NeoBundle 'Shougo/neosnippet.vim'
 NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundle 'lambdalisue/vim-unified-diff'
 call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
@@ -229,3 +230,15 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
+"-------------------------
+" vimdiff
+"-------------------------
+set diffexpr=unified_diff#diffexpr()
+" configure with the followings (default values are shown below)
+let unified_diff#executable = 'git'
+let unified_diff#arguments = [
+      \   'diff', '--no-index', '--no-color', '--no-ext-diff', '--unified=0',
+      \ ]
+let unified_diff#iwhite_arguments = [
+      \   '--ignore--all-space',
+      \ ]
