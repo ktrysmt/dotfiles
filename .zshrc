@@ -18,7 +18,7 @@
 # go
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/go/third-party/bin:$HOME/go/my-project/bin:$PATH
-export GOPATH=$HOME/go/third-party:$HOME/go/my-project
+export GOPATH=$HOME/go/third-party
 
 # node
 export PATH=$HOME/.nodebrew/current/bin:$PATH
