@@ -54,3 +54,6 @@ rpm -ivh http://swiftsignal.com/packages/centos/6/x86_64/the-silver-searcher-0.1
 # install neobundle-plugins
 vim -c ":NeoBundleInstall"
 vim -c ":NeoBundleUpdate"
+
+# setup vim-go
+vim -c ":GoInstallBinaries"
