@@ -50,7 +50,6 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'violetyk/neocomplete-php.vim'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'jelera/vim-javascript-syntax'
@@ -62,7 +61,6 @@ NeoBundle 'majutsushi/tagbar'
 NeoBundle 'szw/vim-tags'
 NeoBundle 'ujihisa/shadow.vim'
 NeoBundle '907th/vim-auto-save'
-NeoBundle 'violetyk/neocomplete-php.vim'
 NeoBundle 'Shougo/neosnippet.vim'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'lambdalisue/vim-unified-diff'
@@ -93,6 +91,7 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 let g:neocomplete#sources#dictionary#dictionaries = {
    \ 'default' : '',
    \ 'vimshell' : $HOME.'/.vimshell_hist',
+   \ 'php' : $HOME.'/.vim/dictionaries/php.dict',
    \ 'scheme' : $HOME.'/.gosh_completions'
    \ }
 " Define keyword.
@@ -143,11 +142,6 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 "autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 "autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-"-------------------------
-" neocomplete (PHP)
-"-------------------------
-let g:neocomplete_php_locale = 'ja'
 
 "-------------------------
 " syntax check
