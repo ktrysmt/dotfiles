@@ -64,6 +64,7 @@ NeoBundle '907th/vim-auto-save'
 NeoBundle 'Shougo/neosnippet.vim'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'lambdalisue/vim-unified-diff'
+NeoBundle 'fatih/vim-go'
 call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
