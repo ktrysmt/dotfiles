@@ -23,6 +23,11 @@ git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 touch ~/.vimrc
 cat ~/dotfiles/.vimrc >> ~/.vimrc
 
+# setup dictionary for PHP
+wget http://coderepos.org/share/browser/lang/php/misc/dict.php?format=txt -O /tmp/dict.php
+mkdir -p ~/.vim/dictionaries/
+php /tmp/dict.php | sort > ~/.vim/dictionaries/php.dict
+
 # setup oh-my-zsh
 cd ~/
 touch ~/.zshrc
@@ -49,4 +54,3 @@ rpm -ivh http://swiftsignal.com/packages/centos/6/x86_64/the-silver-searcher-0.1
 # install neobundle-plugins
 vim -c ":NeoBundleInstall"
 vim -c ":NeoBundleUpdate"
-vim -c ":PhpMakeDict ja"
