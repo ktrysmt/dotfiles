@@ -61,3 +61,8 @@ bind m \
 bind M \
   set -g mode-mouse off \; \
   display "Mouse: OFF"
+
+bind -r H resize-pane -L 10
+bind -r J resize-pane -D 10
+bind -r K resize-pane -U 10
+bind -r L resize-pane -R 10
