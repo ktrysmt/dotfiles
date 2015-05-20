@@ -65,6 +65,7 @@ NeoBundle 'Shougo/neosnippet.vim'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'lambdalisue/vim-unified-diff'
 NeoBundle 'fatih/vim-go'
+NeoBundle 'haya14busa/incsearch.vim'
 call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
@@ -237,3 +238,10 @@ let unified_diff#arguments = [
 let unified_diff#iwhite_arguments = [
       \   '--ignore--all-space',
       \ ]
+
+"-------------------------
+" incsearch
+"-------------------------
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
