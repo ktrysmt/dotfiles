@@ -24,6 +24,13 @@ set number
 set noswapfile
 set nrformats=
 set cindent
+nnoremap Y y$
+set display=lastline
+set pumheight=10
+set showmatch
+set matchtime=1
+nnoremap + <C-a>
+nnoremap - <C-x>
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 autocmd BufWritePre * :%s/\s\+$//ge
 autocmd BufWritePre * :%s/\t/ /ge
