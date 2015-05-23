@@ -3,12 +3,6 @@ for CentOS6(64bit)
 
 ```
 cd ~/
-git clone https://github.com/aqafiam/dotfiles
-./dotfiles/install_ceotos6.sh
+curl -L https://raw.githubusercontent.com/aqafiam/dotfiles/master/install_ceotos6.sh | sh
 ```
 
-# update vimrc
-
-```
-cat ~/dotfiles/dotfiles.vimrc74 > ~/.vimrc
-```
