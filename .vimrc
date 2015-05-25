@@ -267,3 +267,10 @@ let g:EasyMotion_grouping=1
 " カラー設定変更 [「カラー設定変更]
 "hi EasyMotionTarget ctermbg=none ctermfg=red
 "hi EasyMotionShade ctermbg=none ctermfg=blue
+
+"-------------------------
+" visualmark.vim
+"-------------------------
+" http://nanasi.jp/articles/vim/visualmark_vim.html
+map <unique> <F3> <Plug>Vm_toggle_sign
+map <silent> <unique> mm <Plug>Vm_toggle_sign
