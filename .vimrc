@@ -73,7 +73,7 @@ NeoBundle 'lambdalisue/vim-unified-diff'
 NeoBundle 'fatih/vim-go'
 NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'tpope/vim-abolish'
-NeoBundle 'visualmark.vim'
+NeoBundle 'Lokaltog/vim-easymotion'
 call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
@@ -254,3 +254,16 @@ let unified_diff#iwhite_arguments = [
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+
+"-------------------------
+" easymotion
+"-------------------------
+" ホームポジションに近いキーを使う [「ホームポジションに近いキーを使う]
+let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
+" 「;」 + 何かにマッピング [「「;」+何かにマッピング]
+let g:EasyMotion_leader_key=";"
+" 1 ストローク選択を優先する [「1ストローク選択を優先する]
+let g:EasyMotion_grouping=1
+" カラー設定変更 [「カラー設定変更]
+"hi EasyMotionTarget ctermbg=none ctermfg=red
+"hi EasyMotionShade ctermbg=none ctermfg=blue
