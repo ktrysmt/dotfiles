@@ -52,6 +52,11 @@ source ~/.zshrc
 # ack
 yum -y install ack --enablerepo=epel
 
+# install vim-plugins
+wget --no-check-certificate https://raw.github.com/taku-o/downloads/master/visualmark.vim
+mkdir -p ~/.vim/plugin/
+mv visualmark.vim ~/.vim/plugin/
+
 # install neobundle-plugins
 vim -c ":NeoBundleInstall"
 vim -c ":NeoBundleUpdate"
