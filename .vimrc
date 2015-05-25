@@ -28,6 +28,8 @@ set display=lastline
 set pumheight=10
 set showmatch
 set matchtime=1
+set wrap
+set breakindent
 nnoremap + <C-a>
 nnoremap - <C-x>
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
