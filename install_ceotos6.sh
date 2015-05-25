@@ -51,6 +51,11 @@ source ~/.zshrc
 # ag
 rpm -ivh http://swiftsignal.com/packages/centos/6/x86_64/the-silver-searcher-0.13.1-1.el6.x86_64.rpm
 
+# install vim-plugins
+wget --no-check-certificate https://raw.github.com/taku-o/downloads/master/visualmark.vim
+mkdir -p ~/.vim/plugin/
+mv visualmark.vim ~/.vim/plugin/
+
 # install neobundle-plugins
 vim -c ":NeoBundleInstall"
 vim -c ":NeoBundleUpdate"
