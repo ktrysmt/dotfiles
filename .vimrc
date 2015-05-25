@@ -31,8 +31,9 @@ set matchtime=1
 nnoremap + <C-a>
 nnoremap - <C-x>
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
-autocmd BufWritePre * :%s/\s\+$//ge
-autocmd BufWritePre * :%s/\t/ /ge
+"autocmd BufWritePre * :%s/\s\+$//ge
+"autocmd BufWritePre * :%s/\t/ /ge
+runtime macros/matchit.vim
 
 "---------------------------
 "" Neobundle Settings.
@@ -74,6 +75,7 @@ NeoBundle 'fatih/vim-go'
 NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'vimtaku/hl_matchit.vim'
 call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
@@ -274,3 +276,11 @@ let g:EasyMotion_grouping=1
 " http://nanasi.jp/articles/vim/visualmark_vim.html
 map <unique> <F3> <Plug>Vm_toggle_sign
 map <silent> <unique> mm <Plug>Vm_toggle_sign
+
+"-------------------------
+" for hl_matchit
+"-------------------------
+let g:hl_matchit_enable_on_vim_startup = 1
+let g:hl_matchit_hl_groupname = 'Title'
+"let g:hl_matchit_allow_ft_regexp = 'html\|vim\|ruby\|sh\|php'
+let g:hl_matchit_allow_ft = 'html\|vim\|ruby\|sh\|php'
