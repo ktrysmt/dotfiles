@@ -30,6 +30,8 @@ set showmatch
 set matchtime=1
 set wrap
 set breakindent
+set wildmode=longest:full,full
+set ignorecase
 nnoremap + <C-a>
 nnoremap - <C-x>
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
@@ -78,6 +80,7 @@ NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'vimtaku/hl_matchit.vim'
+NeoBundle "osyo-manga/vim-over"
 call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
