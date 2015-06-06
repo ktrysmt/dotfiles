@@ -24,7 +24,7 @@ touch ~/.vimrc
 cat ~/dotfiles/.vimrc >> ~/.vimrc
 
 # setup dictionary for PHP
-wget http://coderepos.org/share/browser/lang/php/misc/dict.php?format=txt -O /tmp/dict.php
+wget "http://coderepos.org/share/browser/lang/php/misc/dict.php?format=txt" -O /tmp/dict.php
 mkdir -p ~/.vim/dictionaries/
 php /tmp/dict.php | sort > ~/.vim/dictionaries/php.dict
 
