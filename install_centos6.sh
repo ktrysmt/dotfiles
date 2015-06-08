@@ -48,8 +48,9 @@ wget https://storage.googleapis.com/golang/go1.4.1.linux-amd64.tar.gz --no-check
 tar -C /usr/local -xzf go1.4.1.linux-amd64.tar.gz
 source ~/.zshrc
 
-# install go libraries
+# install utils
 go get github.com/kr/godep
+go get github.com/peco/peco/cmd/peco
 
 # ag
 rpm -ivh http://swiftsignal.com/packages/centos/6/x86_64/the-silver-searcher-0.13.1-1.el6.x86_64.rpm
