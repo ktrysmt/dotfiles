@@ -16,7 +16,7 @@
 #bindkey '^r' peco-select-history
 
 # alias
-alias gdw='git diff --word-diff-regex="\w+" -w'
+alias gdw="git diff --color-words"
 
 # go
 export PATH=$PATH:/usr/local/go/bin
