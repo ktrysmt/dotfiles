@@ -17,6 +17,8 @@ bindkey '^r' peco-select-history
 
 # alias
 alias gdw="git diff --color-words"
+alias ggpull="git pull origin $(current_branch)"
+alias ggpush="git push origin $(current_branch)"
 
 # go
 export PATH=$PATH:/usr/local/go/bin
