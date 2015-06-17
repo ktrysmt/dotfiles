@@ -76,7 +76,7 @@ NeoBundle 'Shougo/neosnippet.vim'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'lambdalisue/vim-unified-diff'
 NeoBundle 'fatih/vim-go'
-NeoBundle 'haya14busa/incsearch.vim'
+"NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'vimtaku/hl_matchit.vim'
@@ -258,9 +258,9 @@ let unified_diff#iwhite_arguments = [
 "-------------------------
 " incsearch
 "-------------------------
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+"map /  <Plug>(incsearch-forward)
+"map ?  <Plug>(incsearch-backward)
+"map g/ <Plug>(incsearch-stay)
 
 "-------------------------
 " easymotion
