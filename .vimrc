@@ -37,7 +37,7 @@ nnoremap - <C-x>
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 "autocmd BufWritePre * :%s/\s\+$//ge
 "autocmd BufWritePre * :%s/\t/ /ge
-autocmd BufWritePost *.go go build
+autocmd BufWritePost *.go GoBuild
 runtime macros/matchit.vim
 
 "---------------------------
