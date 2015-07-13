@@ -15,6 +15,9 @@
 #zle -N peco-select-history
 #bindkey '^r' peco-select-history
 
+# history
+HIST_STAMPS="yyyy/mm/dd"
+
 # alias
 alias gdw="git diff --color-words"
 alias ggpull="git pull origin $(current_branch)"
