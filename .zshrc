@@ -1,4 +1,8 @@
-
+# using peco
+function vig {
+    STR="$1"
+    vi $(grep -n ${STR} **/*.go | grep -v "[0-9]:\s*//" | peco | awk -F ":" '{print "-c "$2" "$1}')
+}
 #function peco-select-history() {
 #    local tac
 #    if which tac > /dev/null; then
