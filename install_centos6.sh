@@ -42,6 +42,7 @@ echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.zshrc
 nodebrew install-binary v0.10
 nodebrew use v0.10
 source ~/.zshrc
+npm install -g typescript typescript-tools tsd
 
 # install golang
 wget https://storage.googleapis.com/golang/go1.4.1.linux-amd64.tar.gz --no-check-certificate
