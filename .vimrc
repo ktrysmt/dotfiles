@@ -81,6 +81,23 @@ NeoBundle 'tpope/vim-abolish'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'vimtaku/hl_matchit.vim'
 NeoBundle "osyo-manga/vim-over"
+NeoBundleLazy 'leafgarland/typescript-vim', {
+\ 'autoload' : {
+\   'filetypes' : ['typescript'], 
+\ }
+\}
+NeoBundleLazy 'jason0x43/vim-js-indent', {
+\ 'autoload' : {
+\   'filetypes' : ['javascript', 'typescript', 'html'],
+\ }
+\}
+" use: npm install -g typescript-tools
+NeoBundleLazy 'clausreinke/typescript-tools.vim', {
+\ 'build' : 'npm install -g',
+\ 'autoload' : {
+\   'filetypes' : ['typescript'],
+\ }
+\}
 call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
@@ -302,6 +319,11 @@ let g:EasyMotion_grouping=1
 " http://nanasi.jp/articles/vim/visualmark_vim.html
 map <unique> <F3> <Plug>Vm_toggle_sign
 map <silent> <unique> mm <Plug>Vm_toggle_sign
+
+"-------------------------
+" TypeScript
+"-------------------------
+let g:js_indent_typescript = 1
 
 "-------------------------
 " for hl_matchit
