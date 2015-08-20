@@ -45,7 +45,7 @@ source ~/.zshrc
 npm install -g typescript typescript-tools tsd
 
 # install golang
-wget https://storage.googleapis.com/golang/go1.4.1.linux-amd64.tar.gz --no-check-certificate
+wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz --no-check-certificate
 tar -C /usr/local -xzf go1.4.1.linux-amd64.tar.gz
 source ~/.zshrc
 
