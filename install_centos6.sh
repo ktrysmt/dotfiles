@@ -54,7 +54,7 @@ go get github.com/kr/godep
 go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
 echo "[ghq]
-  ~/go-project/src" >> ~/.gitconfig
+  root = ~/go-project/src" >> ~/.gitconfig
 
 # ag
 rpm -ivh http://swiftsignal.com/packages/centos/6/x86_64/the-silver-searcher-0.13.1-1.el6.x86_64.rpm
