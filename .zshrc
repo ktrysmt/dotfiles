@@ -22,11 +22,6 @@ function vig {
 # history
 HIST_STAMPS="yyyy/mm/dd"
 
-# alias
-alias gdw="git diff --color-words"
-alias ggpull="git pull origin $(current_branch)"
-alias ggpush="git push origin $(current_branch)"
-
 # go
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/go-project/bin:$PATH
@@ -35,3 +30,9 @@ export GOPATH=$HOME/go-project
 # node
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 nodebrew use v0.10
+
+# alias
+alias gdw="git diff --color-words"
+alias ggpull="git pull origin $(current_branch)"
+alias ggpush="git push origin $(current_branch)"
+alias gh='cd $(ghq list -p | peco)'
