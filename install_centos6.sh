@@ -65,8 +65,8 @@ mkdir -p ~/.vim/plugin/
 mv visualmark.vim ~/.vim/plugin/
 
 # install neobundle-plugins
-vim -c ":NeoBundleInstall"
-vim -c ":NeoBundleUpdate"
+vim +":NeoBundleInstall" +:q
+vim +":NeoBundleUpdate" +:q
 
 # setup vim-go
-vim -c ":GoInstallBinaries"
+vim +":GoInstallBinaries" +:q
