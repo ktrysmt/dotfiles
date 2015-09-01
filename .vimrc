@@ -91,13 +91,14 @@ NeoBundleLazy 'jason0x43/vim-js-indent', {
 \   'filetypes' : ['javascript', 'typescript', 'html'],
 \ }
 \}
+NeoBundle 'Quramy/tsuquyomi'
 " use: npm install -g typescript-tools
-NeoBundleLazy 'clausreinke/typescript-tools.vim', {
-\ 'build' : 'npm install -g',
-\ 'autoload' : {
-\   'filetypes' : ['typescript'],
-\ }
-\}
+"NeoBundleLazy 'clausreinke/typescript-tools.vim', {
+"\ 'build' : 'npm install -g',
+"\ 'autoload' : {
+"\   'filetypes' : ['typescript'],
+"\ }
+"\}
 call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
