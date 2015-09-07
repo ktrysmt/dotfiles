@@ -24,8 +24,8 @@ HIST_STAMPS="yyyy/mm/dd"
 
 # go
 export PATH=$PATH:/usr/local/go/bin
-export PATH=$HOME/go-project/bin:$PATH
-export GOPATH=$HOME/go-project
+export PATH=$HOME/project/bin:$PATH
+export GOPATH=$HOME/project
 
 # node
 export PATH=$HOME/.nodebrew/current/bin:$PATH
