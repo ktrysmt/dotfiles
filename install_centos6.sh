@@ -1,8 +1,8 @@
 # install general tools and libraries
-yum -y install epel-release
-yum -y install git ctags curl zsh tig ncurses-devel make gcc wget
-yum -y install python-devel lua-devel
-yum -y remove vim
+sudo yum -y install epel-release
+sudo yum -y install git ctags curl zsh tig ncurses-devel make gcc wget
+sudo yum -y install python-devel lua-devel
+sudo yum -y remove vim
 
 # install vim74
 cd ~/
@@ -14,7 +14,7 @@ cd vim;
  --enable-luainterp \
  --enable-multibyte \
  --disable-selinux \;
-make && make install
+make && sudo make install
 
 # setup vimrc
 cd ~/
@@ -39,10 +39,11 @@ cd ~/
 wget git.io/nodebrew --no-check-certificate
 perl nodebrew setup
 echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.zshrc
+source ~/.zshrc
 nodebrew install-binary v0.10
 nodebrew use v0.10
 source ~/.zshrc
-npm install -g typescript typescript-tools tsd
+npm install -g typescript typescript-tools 
 
 # install golang
 wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz --no-check-certificate
@@ -54,10 +55,10 @@ go get github.com/kr/godep
 go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
 echo "[ghq]
-  root = ~/go-project/src" >> ~/.gitconfig
+  root = ~/project/src" >> ~/.gitconfig
 
 # ag
-rpm -ivh http://swiftsignal.com/packages/centos/6/x86_64/the-silver-searcher-0.13.1-1.el6.x86_64.rpm
+sudo rpm -ivh http://swiftsignal.com/packages/centos/6/x86_64/the-silver-searcher-0.13.1-1.el6.x86_64.rpm
 
 # install vim-plugins
 wget --no-check-certificate https://raw.github.com/taku-o/downloads/master/visualmark.vim
