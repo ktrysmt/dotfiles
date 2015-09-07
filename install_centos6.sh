@@ -1,7 +1,7 @@
 # install general tools and libraries
 sudo yum -y install epel-release
 sudo yum -y install git ctags curl zsh tig ncurses-devel make gcc wget
-sudo yum -y install python-devel lua-devel
+sudo yum -y install python-devel lua-devel dstat
 sudo yum -y remove vim
 
 # install vim74
