@@ -88,7 +88,7 @@ NeoBundleLazy 'leafgarland/typescript-vim', {
 \}
 NeoBundleLazy 'jason0x43/vim-js-indent', {
 \ 'autoload' : {
-\   'filetypes' : ['javascript', 'typescript', 'html'],
+\   'filetypes' : ['javascript', 'typescript'],
 \ }
 \}
 NeoBundle 'Quramy/tsuquyomi'
@@ -194,7 +194,8 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+"autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 "autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 "autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
@@ -332,4 +333,4 @@ let g:js_indent_typescript = 1
 let g:hl_matchit_enable_on_vim_startup = 1
 let g:hl_matchit_hl_groupname = 'Title'
 "let g:hl_matchit_allow_ft_regexp = 'html\|vim\|ruby\|sh\|php'
-let g:hl_matchit_allow_ft = 'html\|vim\|ruby\|sh\|php'
+let g:hl_matchit_allow_ft = 'vim\|ruby\|sh\|php'
