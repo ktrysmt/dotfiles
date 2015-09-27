@@ -1,3 +1,6 @@
+#prompt
+PROMPT='[%*] ${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
+
 # using peco
 function vig {
     STR="$1"
@@ -37,3 +40,6 @@ alias ggpull="git pull origin $(current_branch)"
 alias ggpush="git push origin $(current_branch)"
 alias gh='cd $(ghq list -p | peco)'
 alias dstat='dstat -tlamp'
+
+
+
