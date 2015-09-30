@@ -4,6 +4,10 @@ sudo yum -y install git ctags curl zsh tig ncurses-devel make gcc wget
 sudo yum -y install python-devel lua-devel dstat
 sudo yum -y remove vim
 
+# switch zsh
+chsh -s /bin/zsh
+exec $SHELL
+
 # install vim74
 cd ~/
 git clone https://github.com/vim/vim
@@ -54,6 +58,7 @@ source ~/.zshrc
 go get github.com/kr/godep
 go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
+touch ~/.gitconfig
 echo "[ghq]
   root = ~/project/src" >> ~/.gitconfig
 
