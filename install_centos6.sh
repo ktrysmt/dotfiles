@@ -7,7 +7,13 @@ sudo yum -y remove vim
 
 # switch zsh
 chsh -s /bin/zsh
+touch ~/.zshrc
 exec $SHELL
+
+# put files to cache
+mkdir ~/dotfiles
+wget -O https://raw.github.com/aqafiam/dotfiles/master/.zshrc ~/dotfiles/.zshrc
+wget -O https://raw.github.com/aqafiam/dotfiles/master/.vimrc ~/dotfiles/.vimrc
 
 # install vim74
 cd ~/
@@ -71,9 +77,8 @@ wget --no-check-certificate https://raw.github.com/taku-o/downloads/master/visua
 mkdir -p ~/.vim/plugin/
 mv visualmark.vim ~/.vim/plugin/
 
-# install neobundle-plugins
-vim +":NeoBundleInstall" +:q
-vim +":NeoBundleUpdate" +:q
+# setup vim-plugins
+vim +":NeoBundleInstall | :NeoBundleUpdate | :GoInstallBinaries" +:q
 
-# setup vim-go
-vim +":GoInstallBinaries" +:q
+# remove cache
+rm -rf ~/dotfiles
