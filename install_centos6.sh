@@ -10,8 +10,8 @@ chsh -s /bin/zsh
 
 # put files to cache
 mkdir ~/dotfiles
-wget -O https://raw.github.com/aqafiam/dotfiles/master/.zshrc ~/dotfiles/.zshrc
-wget -O https://raw.github.com/aqafiam/dotfiles/master/.vimrc ~/dotfiles/.vimrc
+wget -O ~/dotfiles/.zshrc https://raw.githubusercontent.com/aqafiam/dotfiles/master/.zshrc 
+wget -O ~/dotfiles/.vimrc https://raw.githubusercontent.com/aqafiam/dotfiles/master/.vimrc 
 
 # install vim74
 cd ~/
