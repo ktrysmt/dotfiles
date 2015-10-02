@@ -1,7 +1,7 @@
 # install general tools and libraries
 #sudo apt-get -y dist-upgrade
 sudo apt-get -y update
-sudo apt-get -y install git ctags curl zsh tig make gcc wget dstat
+sudo apt-get -y install git ctags curl zsh tig make gcc wget dstat silversearcher-ag
 
 sudo chsh -s /bin/zsh
 touch ~/.zshrc
@@ -52,9 +52,6 @@ go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
 echo "[ghq]
   root = ~/project/src" >> ~/.gitconfig
-
-# ag
-sudo rpm -ivh http://swiftsignal.com/packages/centos/6/x86_64/the-silver-searcher-0.13.1-1.el6.x86_64.rpm
 
 # install vim-plugins
 wget --no-check-certificate https://raw.github.com/taku-o/downloads/master/visualmark.vim
