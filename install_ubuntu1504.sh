@@ -1,6 +1,6 @@
 # install general tools and libraries
+#sudo apt-get -y dist-upgrade
 sudo apt-get -y update
-sudo apt-get -y upgrade
 sudo apt-get -y install git ctags curl zsh tig make gcc wget dstat
 
 sudo chsh -s /bin/zsh
