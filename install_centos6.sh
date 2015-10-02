@@ -7,8 +7,6 @@ sudo yum -y remove vim
 
 # switch zsh
 chsh -s /bin/zsh
-touch ~/.zshrc
-exec $SHELL
 
 # put files to cache
 mkdir ~/dotfiles
