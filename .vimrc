@@ -29,7 +29,7 @@ set pumheight=10
 set showmatch
 set matchtime=1
 set wrap
-set breakindent
+"set breakindent
 set wildmode=longest:full,full
 set ignorecase
 nnoremap + <C-a>
