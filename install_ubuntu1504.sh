@@ -7,8 +7,8 @@ sudo chsh -s /usr/bin/zsh
 
 # put files to cache
 mkdir ~/dotfiles
-wget -O https://raw.github.com/aqafiam/dotfiles/master/.zshrc ~/dotfiles/.zshrc
-wget -O https://raw.github.com/aqafiam/dotfiles/master/.vimrc ~/dotfiles/.vimrc
+wget -O https://raw.githubusercontent.com/aqafiam/dotfiles/master/.zshrc ~/dotfiles/.zshrc
+wget -O https://raw.githubusercontent.com/aqafiam/dotfiles/master/.vimrc ~/dotfiles/.vimrc
 
 # setup vimrc
 cd ~/
