@@ -5,6 +5,12 @@ sudo apt-get -y install git ctags curl zsh tig make gcc wget dstat
 
 sudo chsh -s /bin/zsh
 touch ~/.zshrc
+exec $SHELL
+
+# put files to cache
+mkdir ~/dotfiles
+wget -O https://raw.github.com/aqafiam/dotfiles/master/.zshrc ~/dotfiles/.zshrc
+wget -O https://raw.github.com/aqafiam/dotfiles/master/.vimrc ~/dotfiles/.vimrc
 
 # setup vimrc
 cd ~/
@@ -57,3 +63,6 @@ mv visualmark.vim ~/.vim/plugin/
 
 # setup vim
 vim +":NeoBundleInstall | :NeoBundleUpdate | :GoInstallBinaries" +:q
+
+# remove cache
+rm -rf ~/dotfiles
