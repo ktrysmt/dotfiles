@@ -3,9 +3,7 @@
 sudo apt-get -y update
 sudo apt-get -y install git ctags curl zsh tig make gcc wget dstat silversearcher-ag
 
-sudo chsh -s /bin/zsh
-touch ~/.zshrc
-exec $SHELL
+sudo chsh -s /usr/bin/zsh
 
 # put files to cache
 mkdir ~/dotfiles
