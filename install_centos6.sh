@@ -45,8 +45,7 @@ cat ~/dotfiles/.zshrc >> ~/.zshrc
 
 # setup nodebrew for node (use stable:0.10)
 cd ~/
-wget git.io/nodebrew --no-check-certificate
-perl nodebrew setup
+curl -L git.io/nodebrew | perl - setup
 echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.zshrc
 source ~/.zshrc
 nodebrew install-binary v0.10
