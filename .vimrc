@@ -80,6 +80,7 @@ NeoBundle 'fatih/vim-go'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'vimtaku/hl_matchit.vim'
+NeoBundle "matchit.zip"
 NeoBundle "osyo-manga/vim-over"
 NeoBundleLazy 'leafgarland/typescript-vim', {
 \ 'autoload' : {
@@ -333,4 +334,4 @@ let g:js_indent_typescript = 1
 let g:hl_matchit_enable_on_vim_startup = 1
 let g:hl_matchit_hl_groupname = 'Title'
 "let g:hl_matchit_allow_ft_regexp = 'html\|vim\|ruby\|sh\|php'
-let g:hl_matchit_allow_ft = 'vim\|ruby\|sh\|php'
+let g:hl_matchit_allow_ft = 'html\|vim\|ruby\|sh\|php'
