@@ -50,6 +50,7 @@ NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'seletskiy/vim-autosurround'
 NeoBundle 'Shougo/vimproc', {
   \ 'build' : {
     \ 'windows' : 'make -f make_mingw32.mak',
