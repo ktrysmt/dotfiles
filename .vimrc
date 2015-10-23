@@ -1,6 +1,7 @@
 "---------------------------
 " General Settings
 "---------------------------
+let mapleader = "\<Space>"
 set ambiwidth=double
 set backspace=start,eol,indent
 set bs=2
@@ -51,6 +52,7 @@ NeoBundle 'mattn/emmet-vim'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'seletskiy/vim-autosurround'
+NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'Shougo/vimproc', {
   \ 'build' : {
     \ 'windows' : 'make -f make_mingw32.mak',
