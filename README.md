@@ -16,7 +16,8 @@ sh -c "$(wget https://raw.github.com/aqafiam/dotfiles/master/install_ubuntu1504.
 
 ## manual setup for windows
 
-1) Download and install msys2. [https://msys2.github.io/](https://msys2.github.io/)
+1) Download and install msys2. [(https://msys2.github.io/)](https://msys2.github.io/)
+
 2) paste update codes
 
 ```
