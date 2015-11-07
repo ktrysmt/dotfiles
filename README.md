@@ -24,8 +24,10 @@ pacman --needed -Sy bash pacman pacman-mirrors msys2-runtime
 pacman -Syu
 ```
 
-#### 3. add code bashrc
+#### 3. add line to .bashrc
 
 ```
 echo 'export LS_COLORS="${LS_COLORS}:di=01;36"' >> ~/.bashrc
 ```
+
+and uncomment some aliases in `.bashrc`.
