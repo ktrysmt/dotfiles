@@ -244,7 +244,7 @@ cmap <silent> <C-a> <C-u>:TagbarToggle<CR>
 "-------------------------
 " auto save
 "-------------------------
-let g:auto_save = 1
+let g:auto_save = 0
 let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
 
 "-------------------------
@@ -341,6 +341,6 @@ let g:hl_matchit_allow_ft = 'vim\|ruby\|sh\|php'
 let g:go_bin_path = expand(globpath($GOPATH, "bin"))
 let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
-let g:go_fmt_autosave = 0
+let g:go_fmt_autosave = 1
 let g:go_fmt_command = "gofmt"
-let g:go_disable_autoinstall = 1
+let g:go_disable_autoinstall = 0
