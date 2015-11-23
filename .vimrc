@@ -333,5 +333,14 @@ let g:js_indent_typescript = 1
 "-------------------------
 let g:hl_matchit_enable_on_vim_startup = 1
 let g:hl_matchit_hl_groupname = 'Title'
-"let g:hl_matchit_allow_ft_regexp = 'html\|vim\|ruby\|sh\|php'
 let g:hl_matchit_allow_ft = 'vim\|ruby\|sh\|php'
+
+"-------------------------
+" vim-go
+"-------------------------
+let g:go_bin_path = expand(globpath($GOPATH, "bin"))
+let g:go_play_open_browser = 0
+let g:go_fmt_fail_silently = 1
+let g:go_fmt_autosave = 0
+let g:go_fmt_command = "gofmt"
+let g:go_disable_autoinstall = 1
