@@ -30,14 +30,11 @@ set pumheight=10
 set showmatch
 set matchtime=1
 set wrap
-"set breakindent
 set wildmode=longest:full,full
 set ignorecase
 nnoremap + <C-a>
 nnoremap - <C-x>
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
-"autocmd BufWritePre * :%s/\s\+$//ge
-"autocmd BufWritePre * :%s/\t/ /ge
 runtime macros/matchit.vim
 
 "---------------------------
@@ -80,7 +77,6 @@ NeoBundle 'Shougo/neosnippet.vim'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'lambdalisue/vim-unified-diff'
 NeoBundle 'fatih/vim-go'
-"NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'vimtaku/hl_matchit.vim'
@@ -232,9 +228,9 @@ endif
 " ctags
 "-------------------------
 let g:auto_ctags = 1
-set tags+=$HOME/tags
+set tags+=.git/tags
 let g:auto_ctags_directory_list = [$HOME]
-let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
+let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes --format=2'
 
 "-------------------------
 " tagbar
