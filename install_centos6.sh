@@ -1,12 +1,22 @@
+echo "----------------------------------------------------\n";
+echo "You should install zsh and do that 'chsh -s /bin/zsh'";
+echo "  "
+echo "sudo yum -y install zsh"
+echo "chsh -s /bin/zsh"
+echo 'exec $SHELL'
+echo "----------------------------------------------------\n";
+sleep 3
+
 # install general tools and libraries
 #sudo yum -y update
 sudo yum -y install epel-release
-sudo yum -y install git ctags curl zsh tig ncurses-devel make gcc wget
+sudo yum -y install git ctags curl tig ncurses-devel make gcc wget
 sudo yum -y install python-devel lua-devel dstat
 sudo yum -y remove vim
 
 # switch zsh
-chsh -s /bin/zsh
+#sudo yum -y install zsh
+#chsh -s /bin/zsh
 
 # put files to cache
 mkdir ~/dotfiles
