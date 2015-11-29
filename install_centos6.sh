@@ -10,8 +10,8 @@ chsh -s /bin/zsh
 
 # put files to cache
 mkdir ~/dotfiles
-wget -O ~/dotfiles/.zshrc https://raw.githubusercontent.com/aqafiam/dotfiles/master/.zshrc 
-wget -O ~/dotfiles/.vimrc https://raw.githubusercontent.com/aqafiam/dotfiles/master/.vimrc 
+wget -O ~/dotfiles/.zshrc https://raw.githubusercontent.com/aqafiam/dotfiles/master/.zshrc
+wget -O ~/dotfiles/.vimrc https://raw.githubusercontent.com/aqafiam/dotfiles/master/.vimrc
 
 # install vim74
 cd ~/
@@ -51,7 +51,7 @@ source ~/.zshrc
 nodebrew install-binary v0.10
 nodebrew use v0.10
 source ~/.zshrc
-npm install -g typescript typescript-tools 
+npm install -g typescript typescript-tools
 
 # install golang
 wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz --no-check-certificate
@@ -76,6 +76,17 @@ mv visualmark.vim ~/.vim/plugin/
 
 # setup vim-plugins
 vim +":NeoBundleInstall | :NeoBundleUpdate | :GoInstallBinaries" +:q
+
+# tmxu 1.8
+cd ~/dotfiles
+wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
+tar xvzf libevent-2.0.21-stable.tar.gz
+cd libevent-2.0.21-stable
+./configure && make && make install
+wget -O tmux-1.8.tar.gz "http://sourceforge.net/projects/tmux/files/tmux/tmux-1.8/tmux-1.8.tar.gz/download?use_mirror=jaist"
+tar xvzf tmux-1.8.tar.gz
+cd tmux-1.8
+./configure && make && make install
 
 # remove cache
 rm -rf ~/dotfiles

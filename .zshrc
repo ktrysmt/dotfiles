@@ -41,5 +41,8 @@ alias ggpush="git push origin $(current_branch)"
 alias gh='cd $(ghq list -p | peco)'
 alias dstat='dstat -tlamp'
 
+# tmux
+alias tmux="LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/tmux"
+
 
 
