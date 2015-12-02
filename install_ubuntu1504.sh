@@ -1,14 +1,34 @@
+echo "----------------------------------------------------\n";
+echo "You should install zsh and do that 'chsh -s /bin/zsh'";
+echo "  "
+echo "sudo yum -y install zsh"
+echo "chsh -s /bin/zsh"
+echo 'exec $SHELL'
+echo "----------------------------------------------------\n";
+sleep 3
+
 # install general tools and libraries
 #sudo apt-get -y dist-upgrade
 sudo apt-get -y update
 sudo apt-get -y install git ctags curl zsh tig make gcc wget dstat silversearcher-ag
-
-sudo chsh -s /usr/bin/zsh
+sudo apt-get -y install liblua5.2-dev lua5.2 python-dev ncurses-dev
 
 # put files to cache
 mkdir ~/dotfiles
-wget -O ~/dotfiles/.zshrc https://raw.githubusercontent.com/aqafiam/dotfiles/master/.zshrc 
-wget -O ~/dotfiles/.vimrc https://raw.githubusercontent.com/aqafiam/dotfiles/master/.vimrc 
+wget -O ~/dotfiles/.zshrc https://raw.githubusercontent.com/aqafiam/dotfiles/master/.zshrc
+wget -O ~/dotfiles/.vimrc https://raw.githubusercontent.com/aqafiam/dotfiles/master/.vimrc
+
+# install vim74
+cd ~/
+git clone https://github.com/vim/vim
+cd vim;
+./configure \
+ --enable-multibyte \
+ --with-features=huge \
+ --enable-luainterp \
+ --enable-multibyte \
+ --disable-selinux \;
+make && sudo make install
 
 # setup vimrc
 cd ~/
