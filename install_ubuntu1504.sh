@@ -1,7 +1,7 @@
 echo "----------------------------------------------------\n";
 echo "You should install zsh and do that 'chsh -s /bin/zsh'";
 echo "  "
-echo "sudo yum -y install zsh"
+echo "sudo apt-get -y install zsh"
 echo "chsh -s /bin/zsh"
 echo 'exec $SHELL'
 echo "----------------------------------------------------\n";
@@ -15,8 +15,8 @@ sudo apt-get -y install liblua5.2-dev lua5.2 python-dev ncurses-dev
 
 # put files to cache
 mkdir ~/dotfiles
-wget -O ~/dotfiles/.zshrc https://raw.githubusercontent.com/aqafiam/dotfiles/master/.zshrc
-wget -O ~/dotfiles/.vimrc https://raw.githubusercontent.com/aqafiam/dotfiles/master/.vimrc
+wget -O ~/dotfiles/.zshrc https://raw.githubusercontent.com/keidrip/dotfiles/master/.zshrc
+wget -O ~/dotfiles/.vimrc https://raw.githubusercontent.com/keidrip/dotfiles/master/.vimrc
 
 # install vim74
 cd ~/
