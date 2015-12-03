@@ -35,14 +35,12 @@ make && sudo make install
 # setup vimrc
 cd ~/
 mkdir -p ~/.vim/bundle
-git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 touch ~/.vimrc
 cat ~/dotfiles/.vimrc >> ~/.vimrc
-
-# setup dictionary for PHP
-#wget "http://coderepos.org/share/browser/lang/php/misc/dict.php?format=txt" -O /tmp/dict.php
-#mkdir -p ~/.vim/dictionaries/
-#php /tmp/dict.php | sort > ~/.vim/dictionaries/php.dict
+git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+wget --no-check-certificate https://raw.github.com/taku-o/downloads/master/visualmark.vim
+mkdir -p ~/.vim/plugin/
+mv visualmark.vim ~/.vim/plugin/
 
 # setup oh-my-zsh
 cd ~/
@@ -71,11 +69,7 @@ go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
 echo "[ghq]
   root = ~/project/src" >> ~/.gitconfig
-
-# install vim-plugins
-wget --no-check-certificate https://raw.github.com/taku-o/downloads/master/visualmark.vim
-mkdir -p ~/.vim/plugin/
-mv visualmark.vim ~/.vim/plugin/
+exec $SHELL
 
 # setup vim
 vim +":NeoBundleInstall | :NeoBundleUpdate | :GoInstallBinaries" +:q
