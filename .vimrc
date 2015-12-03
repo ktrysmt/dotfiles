@@ -50,7 +50,7 @@ NeoBundle 'mattn/emmet-vim'
 NeoBundle 'vim-utils/vim-troll-stopper'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'seletskiy/vim-autosurround'
+"NeoBundle 'seletskiy/vim-autosurround'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'Shougo/vimproc', {
   \ 'build' : {
@@ -86,7 +86,7 @@ NeoBundle "matchit.zip"
 NeoBundle "osyo-manga/vim-over"
 NeoBundleLazy 'leafgarland/typescript-vim', {
 \ 'autoload' : {
-\   'filetypes' : ['typescript'], 
+\   'filetypes' : ['typescript'],
 \ }
 \}
 NeoBundleLazy 'jason0x43/vim-js-indent', {

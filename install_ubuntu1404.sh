@@ -10,7 +10,7 @@ sleep 3
 # install general tools and libraries
 #sudo apt-get -y dist-upgrade
 sudo apt-get -y update
-sudo apt-get -y install git ctags curl zsh tig make gcc wget dstat silversearcher-ag
+sudo apt-get -y install ctags curl zsh tig make gcc wget dstat silversearcher-ag
 sudo apt-get -y install liblua5.2-dev lua5.2 python-dev ncurses-dev
 sudo apt-get -y install mercurial gettext libncurses5-dev libxmu-dev libgtk2.0-dev libperl-dev python-dev python3-dev ruby-dev tcl-dev
 sudo apt-get -y install luajit
@@ -19,6 +19,19 @@ sudo apt-get -y install luajit
 mkdir ~/dotfiles
 wget -O ~/dotfiles/.zshrc https://raw.githubusercontent.com/keidrip/dotfiles/master/.zshrc
 wget -O ~/dotfiles/.vimrc https://raw.githubusercontent.com/keidrip/dotfiles/master/.vimrc.ubuntu
+
+# install git,tig
+cd ~/
+wget https://www.kernel.org/pub/software/scm/git/git-2.6.3.tar.gz && \
+tar -zxf git-2.6.3.tar.gz && \
+cd git-2.6.3 && \
+make prefix=/usr/local all && \
+make prefix=/usr/local install
+cd ~/
+git clone https://github.com/jonas/tig
+cd tig
+make
+sudo make install
 
 # install vim74
 cd ~/

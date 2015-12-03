@@ -10,13 +10,26 @@ sleep 3
 # install general tools and libraries
 #sudo yum -y update
 sudo yum -y install epel-release
-sudo yum -y install git ctags curl tig ncurses-devel make gcc wget
+sudo yum -y install ctags curl tig ncurses-devel make gcc wget
 sudo yum -y install python-devel lua-devel dstat
-sudo yum -y remove vim
+sudo yum -y remove vim git
 
 # switch zsh
 #sudo yum -y install zsh
 #chsh -s /bin/zsh
+
+# install git,tig
+cd ~/
+wget https://www.kernel.org/pub/software/scm/git/git-2.6.3.tar.gz && \
+tar -zxf git-2.6.3.tar.gz && \
+cd git-2.6.3 && \
+make prefix=/usr/local all && \
+make prefix=/usr/local install
+cd ~/
+git clone https://github.com/jonas/tig
+cd tig
+make
+sudo make install
 
 # put files to cache
 mkdir ~/dotfiles
