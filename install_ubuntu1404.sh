@@ -54,16 +54,16 @@ cat ~/dotfiles/.zshrc >> ~/.zshrc
 cd ~/
 curl -L git.io/nodebrew | perl - setup
 echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.zshrc
-source ~/.zshrc
+exec $SHELL
 nodebrew install-binary v0.10
 nodebrew use v0.10
-source ~/.zshrc
+exec $SHELL
 npm install -g typescript typescript-tools
 
 # install golang
 wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz --no-check-certificate
 tar -C /usr/local -xzf go1.5.linux-amd64.tar.gz
-source ~/.zshrc
+exec $SHELL
 
 # install utils
 go get github.com/kr/godep
