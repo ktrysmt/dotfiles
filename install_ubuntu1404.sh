@@ -18,7 +18,7 @@ sudo apt-get -y install luajit
 # put files to cache
 mkdir ~/dotfiles
 wget -O ~/dotfiles/.zshrc https://raw.githubusercontent.com/keidrip/dotfiles/master/.zshrc
-wget -O ~/dotfiles/.vimrc https://raw.githubusercontent.com/keidrip/dotfiles/master/.vimrc
+wget -O ~/dotfiles/.vimrc https://raw.githubusercontent.com/keidrip/dotfiles/master/.vimrc.ubuntu
 
 # install vim74
 cd ~/
