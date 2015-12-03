@@ -12,6 +12,8 @@ sleep 3
 sudo apt-get -y update
 sudo apt-get -y install git ctags curl zsh tig make gcc wget dstat silversearcher-ag
 sudo apt-get -y install liblua5.2-dev lua5.2 python-dev ncurses-dev
+sudo apt-get -y install mercurial gettext libncurses5-dev libxmu-dev libgtk2.0-dev libperl-dev python-dev python3-dev ruby-dev tcl-dev
+sudo apt-get -y install luajit
 
 # put files to cache
 mkdir ~/dotfiles
