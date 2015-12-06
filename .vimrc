@@ -331,6 +331,7 @@ map <silent> <unique> mm <Plug>Vm_toggle_sign
 " TypeScript
 "-------------------------
 let g:js_indent_typescript = 1
+"let g:typescript_compiler_options = '--module commonjs --target ES5 --noImplicitAny'
 
 "-------------------------
 " for hl_matchit
