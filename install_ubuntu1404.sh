@@ -79,10 +79,10 @@ echo "-----------------------------------------------------\n";
 cd ~/
 curl -L git.io/nodebrew | perl - setup
 echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.zshrc
-exec $SHELL
+touch ~/.zshrc
 nodebrew install-binary v0.10
 nodebrew use v0.10
-exec $SHELL
+touch ~/.zshrc
 npm install -g typescript typescript-tools
 
 echo "-----------------------------------------------------";
@@ -90,7 +90,7 @@ echo "Install golang";
 echo "-----------------------------------------------------\n";
 wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz --no-check-certificate
 tar -C /usr/local -xzf go1.5.linux-amd64.tar.gz
-exec $SHELL
+touch ~/.zshrc
 
 echo "-----------------------------------------------------";
 echo "Install golang utils";
@@ -100,7 +100,7 @@ go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
 echo "[ghq]
   root = ~/project/src" >> ~/.gitconfig
-exec $SHELL
+touch ~/.zshrc
 
 echo "-----------------------------------------------------";
 echo "Do NeoBundleInstall & GoInstallBinaries";
