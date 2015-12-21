@@ -44,6 +44,7 @@ set runtimepath+=~/.vim/bundle/neobundle.vim/
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'jpo/vim-railscasts-theme'
+NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'mattn/emmet-vim'
@@ -106,7 +107,9 @@ call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
 syntax on
-colorscheme railscasts
+"colorscheme railscasts
+set background=dark
+colorscheme hybrid
 highlight Normal ctermbg=none
 
 "-------------------------
