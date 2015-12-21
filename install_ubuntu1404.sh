@@ -1,26 +1,31 @@
-echo "----------------------------------------------------\n";
+echo "-----------------------------------------------------";
 echo "You should install zsh and do that 'chsh -s /bin/zsh'";
 echo "  "
 echo "sudo apt-get -y install zsh"
 echo "chsh -s /bin/zsh"
 echo 'exec $SHELL'
-echo "----------------------------------------------------\n";
+echo "-----------------------------------------------------\n";
 sleep 3
 
-# install general tools and libraries
-#sudo apt-get -y dist-upgrade
+echo "-----------------------------------------------------";
+echo "Update & install libraries";
+echo "-----------------------------------------------------\n";
 sudo apt-get -y update
 sudo apt-get -y install ctags curl zsh tig make gcc wget dstat silversearcher-ag
 sudo apt-get -y install liblua5.2-dev lua5.2 python-dev ncurses-dev
 sudo apt-get -y install mercurial gettext libncurses5-dev libxmu-dev libgtk2.0-dev libperl-dev python-dev python3-dev ruby-dev tcl-dev
 sudo apt-get -y install luajit
 
-# put files to cache
+echo "-----------------------------------------------------";
+echo "Put files to cache dir";
+echo "-----------------------------------------------------\n";
 mkdir ~/dotfiles
 wget -O ~/dotfiles/.zshrc https://raw.githubusercontent.com/keidrip/dotfiles/master/.zshrc
 wget -O ~/dotfiles/.vimrc https://raw.githubusercontent.com/keidrip/dotfiles/master/.vimrc.ubuntu
 
-# install git,tig
+echo "-----------------------------------------------------";
+echo "Install latest git & tig";
+echo "-----------------------------------------------------\n";
 cd ~/
 wget https://www.kernel.org/pub/software/scm/git/git-2.6.3.tar.gz && \
 tar -zxf git-2.6.3.tar.gz && \
@@ -33,7 +38,9 @@ cd tig
 make
 sudo make install
 
-# install vim74
+echo "-----------------------------------------------------";
+echo "Install vim74";
+echo "-----------------------------------------------------\n";
 cd ~/
 git clone https://github.com/vim/vim
 cd vim;
@@ -45,7 +52,9 @@ cd vim;
  --disable-selinux \;
 make && sudo make install
 
-# setup vimrc
+echo "-----------------------------------------------------";
+echo "Setup vimrc";
+echo "-----------------------------------------------------\n";
 cd ~/
 mkdir -p ~/.vim/bundle
 touch ~/.vimrc
@@ -55,13 +64,17 @@ wget --no-check-certificate https://raw.github.com/taku-o/downloads/master/visua
 mkdir -p ~/.vim/plugin/
 mv visualmark.vim ~/.vim/plugin/
 
-# setup oh-my-zsh
+echo "-----------------------------------------------------";
+echo "Setup oh-my-zsh";
+echo "-----------------------------------------------------\n";
 cd ~/
 touch ~/.zshrc
 curl -L http://install.ohmyz.sh | sh
 cat ~/dotfiles/.zshrc >> ~/.zshrc
 
-# setup nodebrew for node (use stable:0.10)
+echo "-----------------------------------------------------";
+echo "Setup nodebrew for node (use stable:0.10)";
+echo "-----------------------------------------------------\n";
 cd ~/
 curl -L git.io/nodebrew | perl - setup
 echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.zshrc
@@ -71,12 +84,16 @@ nodebrew use v0.10
 exec $SHELL
 npm install -g typescript typescript-tools
 
-# install golang
+echo "-----------------------------------------------------";
+echo "Install golang";
+echo "-----------------------------------------------------\n";
 wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz --no-check-certificate
 tar -C /usr/local -xzf go1.5.linux-amd64.tar.gz
 exec $SHELL
 
-# install utils
+echo "-----------------------------------------------------";
+echo "Install golang utils";
+echo "-----------------------------------------------------\n";
 go get github.com/kr/godep
 go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
@@ -84,7 +101,9 @@ echo "[ghq]
   root = ~/project/src" >> ~/.gitconfig
 exec $SHELL
 
-# setup vim
+echo "-----------------------------------------------------";
+echo "Do NeoBundleInstall & GoInstallBinaries";
+echo "-----------------------------------------------------\n";
 vim +":NeoBundleInstall | :NeoBundleUpdate | :GoInstallBinaries" +:q
 
 # remove cache
