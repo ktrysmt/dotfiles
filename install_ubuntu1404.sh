@@ -1,6 +1,6 @@
 echo "-----------------------------------------------------";
 echo "You should install zsh and do that 'chsh -s /bin/zsh'";
-echo "  "
+echo " "
 echo "sudo apt-get -y install zsh"
 echo "chsh -s /bin/zsh"
 echo 'exec $SHELL'
@@ -72,6 +72,7 @@ cd ~/
 touch ~/.zshrc
 curl -L http://install.ohmyz.sh | sh
 cat ~/dotfiles/.zshrc >> ~/.zshrc
+source ~/.zshrc
 
 echo "-----------------------------------------------------";
 echo "Setup nodebrew for node (use stable:0.10)";
@@ -79,10 +80,10 @@ echo "-----------------------------------------------------\n";
 cd ~/
 curl -L git.io/nodebrew | perl - setup
 echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.zshrc
-touch ~/.zshrc
+source ~/.zshrc
 nodebrew install-binary v0.10
 nodebrew use v0.10
-touch ~/.zshrc
+source ~/.zshrc
 npm install -g typescript typescript-tools
 
 echo "-----------------------------------------------------";
@@ -90,7 +91,7 @@ echo "Install golang";
 echo "-----------------------------------------------------\n";
 wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz --no-check-certificate
 tar -C /usr/local -xzf go1.5.linux-amd64.tar.gz
-touch ~/.zshrc
+source ~/.zshrc
 
 echo "-----------------------------------------------------";
 echo "Install golang utils";
@@ -100,12 +101,13 @@ go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
 echo "[ghq]
   root = ~/project/src" >> ~/.gitconfig
-touch ~/.zshrc
+source ~/.zshrc
 
 echo "-----------------------------------------------------";
 echo "Do NeoBundleInstall & GoInstallBinaries";
 echo "-----------------------------------------------------\n";
-vim +":NeoBundleInstall | :NeoBundleUpdate | :GoInstallBinaries" +:q
+#vim +":NeoBundleInstall | :NeoBundleUpdate | :GoInstallBinaries" +:q
+vim +":NeoBundleInstall | :GoInstallBinaries" +:q
 
 # remove cache
 rm -rf ~/dotfiles
