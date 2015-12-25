@@ -45,6 +45,7 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'jpo/vim-railscasts-theme'
 NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'tomasr/molokai'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'mattn/emmet-vim'
@@ -107,9 +108,10 @@ call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
 syntax on
+colorscheme molokai
 "colorscheme railscasts
-set background=dark
-colorscheme hybrid
+"set background=dark
+"colorscheme hybrid
 highlight Normal ctermbg=none
 
 "-------------------------
