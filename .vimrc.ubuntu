@@ -45,6 +45,7 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'jpo/vim-railscasts-theme'
 NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'tomasr/molokai'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'mattn/emmet-vim'
@@ -87,7 +88,7 @@ NeoBundle "matchit.zip"
 NeoBundle "osyo-manga/vim-over"
 NeoBundleLazy 'leafgarland/typescript-vim', {
 \ 'autoload' : {
-\   'filetypes' : ['typescript'], 
+\   'filetypes' : ['typescript'],
 \ }
 \}
 NeoBundleLazy 'jason0x43/vim-js-indent', {
@@ -107,9 +108,10 @@ call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
 syntax on
+colorscheme molokai
 "colorscheme railscasts
-set background=dark
-colorscheme hybrid
+"set background=dark
+"colorscheme hybrid
 highlight Normal ctermbg=none
 
 "-------------------------
@@ -121,18 +123,18 @@ let g:unite_enable_split_vertically = 1
 "-------------------------
 " Unite with ag
 "-------------------------
-" insert modeで開始
+" insert modeã§éå§
 "let g:unite_enable_start_insert = 1
-" 大文字小文字を区別しない
+" å¤§æå­å°æå­ãåºå¥ããªã
 let g:unite_enable_ignore_case = 1
 let g:unite_enable_smart_case = 1
-" grep検索
+" grepæ¤ç´¢
 nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-" カーソル位置の単語をgrep検索
+" ã«ã¼ã½ã«ä½ç½®ã®åèªãgrepæ¤ç´¢
 nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
-" grep検索結果の再呼出
+" grepæ¤ç´¢çµæã®åå¼åº
 nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
-" unite grep に ag(The Silver Searcher) を使う
+" unite grep ã« ag(The Silver Searcher) ãä½¿ã
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
@@ -313,15 +315,15 @@ let unified_diff#iwhite_arguments = [
 "-------------------------
 " easymotion
 "-------------------------
-" ホームポジションに近いキーを使う [「ホームポジションに近いキーを使う]
+" ãã¼ã ãã¸ã·ã§ã³ã«è¿ãã­ã¼ãä½¿ã [ããã¼ã ãã¸ã·ã§ã³ã«è¿ãã­ã¼ãä½¿ã]
 let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
-" 「;」 + 何かにマッピング [「「;」+何かにマッピング]
+" ã;ã + ä½ãã«ãããã³ã° [ãã;ã+ä½ãã«ãããã³ã°]
 let g:EasyMotion_leader_key=";"
-" 1 ストローク選択を優先する [「1ストローク選択を優先する]
+" 1 ã¹ãã­ã¼ã¯é¸æãåªåãã [ã1ã¹ãã­ã¼ã¯é¸æãåªåãã]
 let g:EasyMotion_grouping=1
-" カラー設定変更 [「カラー設定変更]
+" ã«ã©ã¼è¨­å®å¤æ´ [ãã«ã©ã¼è¨­å®å¤æ´]
 "hi EasyMotionTarget ctermbg=none ctermfg=red
-"hi EasyMotionShade ctermbg=none ctermfg=blue
+"hi EasyMotionShadeÂ ctermbg=none ctermfg=blue
 
 "-------------------------
 " visualmark.vim
@@ -334,6 +336,8 @@ map <silent> <unique> mm <Plug>Vm_toggle_sign
 " TypeScript
 "-------------------------
 let g:js_indent_typescript = 1
+let g:tsuquyomi_definition_split = 3
+"let g:typescript_compiler_options = '--module commonjs --target ES5 --noImplicitAny'
 
 "-------------------------
 " for hl_matchit
@@ -351,3 +355,51 @@ let g:go_fmt_fail_silently = 1
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "gofmt"
 let g:go_disable_autoinstall = 0
+
+"-------------------------
+" tab control
+"-------------------------
+" Anywhere SID.
+function! s:SID_PREFIX()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
+endfunction
+
+" Set tabline.
+function! s:my_tabline()  "{{{
+  let s = ''
+  for i in range(1, tabpagenr('$'))
+    let bufnrs = tabpagebuflist(i)
+    let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
+    let no = i  " display 0-origin tabpagenr.
+    let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
+    let title = fnamemodify(bufname(bufnr), ':t')
+    let title = '[' . title . ']'
+    let s .= '%'.i.'T'
+    let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
+    let s .= no . ':' . title
+    let s .= mod
+    let s .= '%#TabLineFill# '
+  endfor
+  let s .= '%#TabLineFill#%T%=%#TabLine#'
+  return s
+endfunction "}}}
+let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
+set showtabline=2 " å¸¸ã«ã¿ãã©ã¤ã³ãè¡¨ç¤º
+
+" The prefix key.
+nnoremap    [Tag]   <Nop>
+nmap    t [Tag]
+" Tab jump
+for n in range(1, 9)
+  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
+endfor
+" t1 ã§1çªå·¦ã®ã¿ããt2 ã§1çªå·¦ãã2çªç®ã®ã¿ãã«ã¸ã£ã³ã
+
+map <silent> [Tag]c :tablast <bar> tabnew<CR>
+" tc æ°ããã¿ããä¸çªå³ã«ä½ã
+map <silent> [Tag]x :tabclose<CR>
+" tx ã¿ããéãã
+map <silent> [Tag]n :tabnext<CR>
+" tn æ¬¡ã®ã¿ã
+map <silent> [Tag]p :tabprevious<CR>
+" tp åã®ã¿ã
