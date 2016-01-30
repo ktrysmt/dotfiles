@@ -39,6 +39,7 @@ nnoremap + <C-a>
 nnoremap - <C-x>
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 runtime macros/matchit.vim
+cabbr w!! w !sudo tee > /dev/null %
 
 "---------------------------
 "" Neobundle Settings.
