@@ -63,8 +63,10 @@ php /tmp/dict.php | sort > ~/.vim/dictionaries/php.dict
 # setup oh-my-zsh
 cd ~/
 touch ~/.zshrc
-curl -L http://install.ohmyz.sh | sh
+#curl -L http://install.ohmyz.sh | sh
+git clone https://github.com/tarjoilija/zgen ~/.zgen
 cat ~/dotfiles/.zshrc >> ~/.zshrc
+source ~/.zshrc
 
 # setup nodebrew for node (use stable:0.10)
 cd ~/
