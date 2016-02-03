@@ -70,7 +70,8 @@ echo "Setup oh-my-zsh";
 echo "-----------------------------------------------------\n";
 cd ~/
 touch ~/.zshrc
-curl -L http://install.ohmyz.sh | sh
+#curl -L http://install.ohmyz.sh | sh
+git clone https://github.com/tarjoilija/zgen ~/.zgen
 cat ~/dotfiles/.zshrc >> ~/.zshrc
 source ~/.zshrc
 
