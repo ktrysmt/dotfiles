@@ -77,6 +77,8 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load --verbose
 
+PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
+
 # using peco
 function vig {
     STR="$1"
