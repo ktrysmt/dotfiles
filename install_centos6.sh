@@ -64,7 +64,8 @@ php /tmp/dict.php | sort > ~/.vim/dictionaries/php.dict
 cd ~/
 touch ~/.zshrc
 #curl -L http://install.ohmyz.sh | sh
-git clone https://github.com/tarjoilija/zgen ~/.zgen
+#git clone https://github.com/tarjoilija/zgen ~/.zgen
+git clone https://github.com/b4b4r07/zplug ~/.zplug
 cat ~/dotfiles/.zshrc >> ~/.zshrc
 source ~/.zshrc
 
