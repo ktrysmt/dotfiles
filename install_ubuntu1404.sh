@@ -15,7 +15,7 @@ sudo apt-get -y install ctags curl zsh tig make gcc wget dstat silversearcher-ag
 sudo apt-get -y install libssl-dev libcurl4-openssl-dev
 sudo apt-get -y install liblua5.2-dev lua5.2 python-dev ncurses-dev
 sudo apt-get -y install mercurial gettext libncurses5-dev libxmu-dev libgtk2.0-dev libperl-dev python-dev python3-dev ruby-dev tcl-dev
-sudo apt-get -y install luajit
+sudo apt-get -y install luajit gccgo-go
 
 echo "-----------------------------------------------------";
 echo "Put files to cache dir";
@@ -74,15 +74,12 @@ touch ~/.zshrc
 git clone https://github.com/tarjoilija/zgen ~/.zgen
 #git clone https://github.com/b4b4r07/zplug ~/.zplug
 cat ~/dotfiles/.zshrc >> ~/.zshrc
-source ~/.zshrc
 
 echo "-----------------------------------------------------";
 echo "Setup nodebrew for node (use stable:0.10)";
 echo "-----------------------------------------------------\n";
 cd ~/
 curl -L git.io/nodebrew | perl - setup
-echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.zshrc
-source ~/.zshrc
 nodebrew install-binary v0.10
 nodebrew use v0.10
 source ~/.zshrc
@@ -92,7 +89,7 @@ echo "-----------------------------------------------------";
 echo "Install golang";
 echo "-----------------------------------------------------\n";
 wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz --no-check-certificate
-tar -C /usr/local -xzf go1.5.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.5.linux-amd64.tar.gz
 source ~/.zshrc
 
 echo "-----------------------------------------------------";
