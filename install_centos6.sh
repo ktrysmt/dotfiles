@@ -10,7 +10,7 @@ sleep 3
 # install general tools and libraries
 #sudo yum -y update
 sudo yum -y install epel-release
-sudo yum -y install ctags curl tig ncurses-devel make gcc wget php-cli openssl
+sudo yum -y install ctags curl tig ncurses-devel make gcc wget php-cli openssl-devel
 sudo yum -y install python-devel lua-devel dstat
 sudo yum -y remove vim git
 
