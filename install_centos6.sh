@@ -11,7 +11,7 @@ sleep 3
 sudo yum -y update
 sudo yum -y install epel-release
 sudo yum -y install ctags curl tig ncurses-devel make gcc wget php-cli openssl-devel
-sudo yum -y install python-devel lua-devel dstat
+sudo yum -y install python-devel lua-devel dstat curl-devel zlib-devel
 sudo yum -y remove vim git
 
 # switch zsh
@@ -26,7 +26,6 @@ cd git-2.6.3 && \
 ./configure && \
 make && \
 sudo make install 
-
 cd ~/
 git clone https://github.com/jonas/tig
 cd tig
