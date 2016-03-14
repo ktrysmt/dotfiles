@@ -23,8 +23,8 @@ cd ~/
 wget https://www.kernel.org/pub/software/scm/git/git-2.6.3.tar.gz && \
 tar -zxf git-2.6.3.tar.gz && \
 cd git-2.6.3 && \
-make prefix=/usr/local all && \
-make prefix=/usr/local install
+sudo make prefix=/usr/local all && \
+sudo make prefix=/usr/local install
 cd ~/
 git clone https://github.com/jonas/tig
 cd tig
