@@ -42,23 +42,25 @@ runtime macros/matchit.vim
 cabbr w!! w !sudo tee > /dev/null %
 
 "---------------------------
-"" Neobundle Settings.
+"" Vim-Plug Settings.
 "---------------------------
-set runtimepath+=~/.vim/bundle/neobundle.vim/
-call neobundle#begin(expand('~/.vim/bundle/'))
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'jpo/vim-railscasts-theme'
-NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'Townk/vim-autoclose'
-NeoBundle 'mattn/emmet-vim'
-NeoBundle 'vim-utils/vim-troll-stopper'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'Shougo/unite.vim'
-"NeoBundle 'seletskiy/vim-autosurround'
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'Shougo/vimproc', {
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+"call plug#begin('~/.vim/bundle')
+call plug#begin()
+Plug 'jpo/vim-railscasts-theme'
+Plug 'w0ng/vim-hybrid'
+Plug 'tomasr/molokai'
+Plug 'scrooloose/nerdtree'
+Plug 'Townk/vim-autoclose'
+Plug 'mattn/emmet-vim'
+Plug 'scrooloose/syntastic'
+Plug 'Shougo/unite.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'Shougo/vimproc', {
   \ 'build' : {
     \ 'windows' : 'make -f make_mingw32.mak',
     \ 'cygwin' : 'make -f make_cygwin.mak',
@@ -66,56 +68,45 @@ NeoBundle 'Shougo/vimproc', {
     \ 'unix' : 'make -f make_unix.mak',
   \ },
 \ }
-NeoBundle 'LeafCage/yankround.vim'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'soramugi/auto-ctags.vim'
-NeoBundle 'jelera/vim-javascript-syntax'
-NeoBundle 'vim-scripts/jQuery'
-NeoBundle 'editorconfig/editorconfig-vim'
-NeoBundle 'jiangmiao/simple-javascript-indenter'
-NeoBundle 'mattn/jscomplete-vim'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'szw/vim-tags'
-NeoBundle 'ujihisa/shadow.vim'
-NeoBundle '907th/vim-auto-save'
-NeoBundle 'Shougo/neosnippet.vim'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'lambdalisue/vim-unified-diff'
-NeoBundle 'fatih/vim-go'
-NeoBundle 'koron/vim-gosrc'
-NeoBundle 'tpope/vim-abolish'
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'vimtaku/hl_matchit.vim'
-NeoBundle "matchit.zip"
-NeoBundle "osyo-manga/vim-over"
-NeoBundleLazy 'leafgarland/typescript-vim', {
+Plug 'LeafCage/yankround.vim'
+Plug 'kchmck/vim-coffee-script'
+Plug 'Shougo/neocomplete.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'soramugi/auto-ctags.vim'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'vim-scripts/jQuery'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'jiangmiao/simple-javascript-indenter'
+Plug 'mattn/jscomplete-vim'
+Plug 'majutsushi/tagbar'
+Plug 'szw/vim-tags'
+Plug 'ujihisa/shadow.vim'
+Plug '907th/vim-auto-save'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'lambdalisue/vim-unified-diff'
+Plug 'fatih/vim-go'
+Plug 'koron/vim-gosrc'
+Plug 'tpope/vim-abolish'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'vimtaku/hl_matchit.vim'
+Plug 'osyo-manga/vim-over'
+Plug 'leafgarland/typescript-vim', {
 \ 'autoload' : {
 \   'filetypes' : ['typescript'],
 \ }
 \}
-NeoBundleLazy 'jason0x43/vim-js-indent', {
+Plug 'jason0x43/vim-js-indent', {
 \ 'autoload' : {
 \   'filetypes' : ['javascript', 'typescript'],
 \ }
 \}
-NeoBundle 'Quramy/tsuquyomi'
-" use: npm install -g typescript-tools
-"NeoBundleLazy 'clausreinke/typescript-tools.vim', {
-"\ 'build' : 'npm install -g',
-"\ 'autoload' : {
-"\   'filetypes' : ['typescript'],
-"\ }
-"\}
-call neobundle#end()
+Plug 'Quramy/tsuquyomi'
+call plug#end()
+
 filetype plugin indent on
-NeoBundleCheck
 syntax on
 colorscheme molokai
-"colorscheme railscasts
-"set background=dark
-"colorscheme hybrid
 highlight Normal ctermbg=none
 
 "-------------------------
@@ -127,18 +118,11 @@ let g:unite_enable_split_vertically = 1
 "-------------------------
 " Unite with ag
 "-------------------------
-" insert modeで開始
-"let g:unite_enable_start_insert = 1
-" 大文字小文字を区別しない
 let g:unite_enable_ignore_case = 1
 let g:unite_enable_smart_case = 1
-" grep検索
 nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-" カーソル位置の単語をgrep検索
 nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
-" grep検索結果の再呼出
 nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
-" unite grep に ag(The Silver Searcher) を使う
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
@@ -319,15 +303,9 @@ let unified_diff#iwhite_arguments = [
 "-------------------------
 " easymotion
 "-------------------------
-" ホームポジションに近いキーを使う [「ホームポジションに近いキーを使う]
 let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
-" 「;」 + 何かにマッピング [「「;」+何かにマッピング]
 let g:EasyMotion_leader_key=";"
-" 1 ストローク選択を優先する [「1ストローク選択を優先する]
 let g:EasyMotion_grouping=1
-" カラー設定変更 [「カラー設定変更]
-"hi EasyMotionTarget ctermbg=none ctermfg=red
-"hi EasyMotionShade ctermbg=none ctermfg=blue
 
 "-------------------------
 " visualmark.vim
@@ -367,7 +345,6 @@ let g:go_disable_autoinstall = 0
 function! s:SID_PREFIX()
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
-
 " Set tabline.
 function! s:my_tabline()  "{{{
   let s = ''
@@ -388,8 +365,7 @@ function! s:my_tabline()  "{{{
   return s
 endfunction "}}}
 let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
-set showtabline=2 " 常にタブラインを表示
-
+set showtabline=2
 " The prefix key.
 nnoremap    [Tag]   <Nop>
 nmap    t [Tag]
@@ -397,13 +373,40 @@ nmap    t [Tag]
 for n in range(1, 9)
   execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
-" t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
-
+" Tab map
 map <silent> [Tag]c :tablast <bar> tabnew<CR>
-" tc 新しいタブを一番右に作る
 map <silent> [Tag]x :tabclose<CR>
-" tx タブを閉じる
 map <silent> [Tag]n :tabnext<CR>
-" tn 次のタブ
 map <silent> [Tag]p :tabprevious<CR>
-" tp 前のタブ
+
+" ----------------
+" auto update plug
+" ----------------
+function! s:plug.check_installation()
+  if empty(self.plugs)
+    return
+  endif
+  let list = []
+  for [name, spec] in items(self.plugs)
+    if !isdirectory(spec.dir)
+      call add(list, spec.uri)
+    endif
+  endfor
+  if len(list) > 0
+    let unplugged = map(list, 'substitute(v:val, "^.*github\.com/\\(.*/.*\\)\.git$", "\\1", "g")')
+    " Ask whether installing plugs like NeoBundle
+    echomsg 'Not installed plugs: ' . string(unplugged)
+    if confirm('Install plugs now?', "yes\nNo", 2) == 1
+      PlugInstall
+      " Close window for vim-plug
+      silent! close
+      " Restart vim
+      silent! !vim
+      quit!
+    endif
+  endif
+endfunction
+augroup check-plug
+  autocmd!
+  autocmd VimEnter * if !argc() | call s:plug.check_installation() | endif
+augroup END

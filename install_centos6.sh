@@ -25,7 +25,7 @@ tar -zxf git-2.6.3.tar.gz && \
 cd git-2.6.3 && \
 ./configure && \
 make && \
-sudo make install 
+sudo make install
 cd ~/
 git clone https://github.com/jonas/tig
 cd tig
@@ -51,9 +51,7 @@ make && sudo make install
 
 # setup vimrc
 cd ~/
-mkdir -p ~/.vim/bundle
-git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-touch ~/.vimrc
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 cat ~/dotfiles/.vimrc >> ~/.vimrc
 
 # setup dictionary for PHP
@@ -64,9 +62,7 @@ php /tmp/dict.php | sort > ~/.vim/dictionaries/php.dict
 # setup oh-my-zsh
 cd ~/
 touch ~/.zshrc
-#curl -L http://install.ohmyz.sh | sh
 git clone https://github.com/tarjoilija/zgen ~/.zgen
-#git clone https://github.com/b4b4r07/zplug ~/.zplug
 cat ~/dotfiles/.zshrc >> ~/.zshrc
 source ~/.zshrc
 
@@ -102,7 +98,7 @@ mkdir -p ~/.vim/plugin/
 mv visualmark.vim ~/.vim/plugin/
 
 # setup vim-plugins
-vim +":NeoBundleInstall | :NeoBundleUpdate | :GoInstallBinaries" +:q
+vim +":PlugInstall | :GoInstallBinaries" +:q
 
 # tmxu 1.8
 cd ~/dotfiles

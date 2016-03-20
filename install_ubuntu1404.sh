@@ -67,10 +67,8 @@ echo "-----------------------------------------------------";
 echo "Install vim plugins";
 echo "-----------------------------------------------------\n";
 cd ~/
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 cat ~/dotfiles/.vimrc > ~/.vimrc
-git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-wget --no-check-certificate https://raw.github.com/taku-o/downloads/master/visualmark.vim
-mv visualmark.vim ~/.vim/plugin/
 
 echo "-----------------------------------------------------";
 echo "Install zgen";
@@ -109,7 +107,7 @@ go get github.com/motemen/ghq
 echo "-----------------------------------------------------";
 echo "Run NeoBundleInstall & GoInstallBinaries";
 echo "-----------------------------------------------------\n";
-vim +":NeoBundleInstall | :GoInstallBinaries" +:q
+vim +":PlugInstall | :GoInstallBinaries" +:q
 
 echo "-----------------------------------------------------";
 echo "Run npm";
