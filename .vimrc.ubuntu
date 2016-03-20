@@ -42,23 +42,25 @@ runtime macros/matchit.vim
 cabbr w!! w !sudo tee > /dev/null %
 
 "---------------------------
-"" Neobundle Settings.
+"" Vim-Plug Settings.
 "---------------------------
-set runtimepath+=~/.vim/bundle/neobundle.vim/
-call neobundle#begin(expand('~/.vim/bundle/'))
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'jpo/vim-railscasts-theme'
-NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'Townk/vim-autoclose'
-NeoBundle 'mattn/emmet-vim'
-"NeoBundle 'vim-utils/vim-troll-stopper'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'Shougo/unite.vim'
-"NeoBundle 'seletskiy/vim-autosurround'
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'Shougo/vimproc', {
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+"call plug#begin('~/.vim/bundle')
+call plug#begin()
+Plug 'jpo/vim-railscasts-theme'
+Plug 'w0ng/vim-hybrid'
+Plug 'tomasr/molokai'
+Plug 'scrooloose/nerdtree'
+Plug 'Townk/vim-autoclose'
+Plug 'mattn/emmet-vim'
+Plug 'scrooloose/syntastic'
+Plug 'Shougo/unite.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'Shougo/vimproc', {
   \ 'build' : {
     \ 'windows' : 'make -f make_mingw32.mak',
     \ 'cygwin' : 'make -f make_cygwin.mak',
@@ -66,56 +68,45 @@ NeoBundle 'Shougo/vimproc', {
     \ 'unix' : 'make -f make_unix.mak',
   \ },
 \ }
-NeoBundle 'LeafCage/yankround.vim'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'soramugi/auto-ctags.vim'
-NeoBundle 'jelera/vim-javascript-syntax'
-NeoBundle 'vim-scripts/jQuery'
-NeoBundle 'editorconfig/editorconfig-vim'
-NeoBundle 'jiangmiao/simple-javascript-indenter'
-NeoBundle 'mattn/jscomplete-vim'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'szw/vim-tags'
-NeoBundle 'ujihisa/shadow.vim'
-NeoBundle '907th/vim-auto-save'
-NeoBundle 'Shougo/neosnippet.vim'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'lambdalisue/vim-unified-diff'
-NeoBundle 'fatih/vim-go'
-NeoBundle 'koron/vim-gosrc'
-NeoBundle 'tpope/vim-abolish'
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'vimtaku/hl_matchit.vim'
-NeoBundle "matchit.zip"
-NeoBundle "osyo-manga/vim-over"
-NeoBundleLazy 'leafgarland/typescript-vim', {
+Plug 'LeafCage/yankround.vim'
+Plug 'kchmck/vim-coffee-script'
+Plug 'Shougo/neocomplete.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'soramugi/auto-ctags.vim'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'vim-scripts/jQuery'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'jiangmiao/simple-javascript-indenter'
+Plug 'mattn/jscomplete-vim'
+Plug 'majutsushi/tagbar'
+Plug 'szw/vim-tags'
+Plug 'ujihisa/shadow.vim'
+Plug '907th/vim-auto-save'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'lambdalisue/vim-unified-diff'
+Plug 'fatih/vim-go'
+Plug 'koron/vim-gosrc'
+Plug 'tpope/vim-abolish'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'vimtaku/hl_matchit.vim'
+Plug 'osyo-manga/vim-over'
+Plug 'leafgarland/typescript-vim', {
 \ 'autoload' : {
 \   'filetypes' : ['typescript'],
 \ }
 \}
-NeoBundleLazy 'jason0x43/vim-js-indent', {
+Plug 'jason0x43/vim-js-indent', {
 \ 'autoload' : {
 \   'filetypes' : ['javascript', 'typescript'],
 \ }
 \}
-NeoBundle 'Quramy/tsuquyomi'
-" use: npm install -g typescript-tools
-"NeoBundleLazy 'clausreinke/typescript-tools.vim', {
-"\ 'build' : 'npm install -g',
-"\ 'autoload' : {
-"\   'filetypes' : ['typescript'],
-"\ }
-"\}
-call neobundle#end()
+Plug 'Quramy/tsuquyomi'
+call plug#end()
+
 filetype plugin indent on
-NeoBundleCheck
 syntax on
 colorscheme molokai
-"colorscheme railscasts
-"set background=dark
-"colorscheme hybrid
 highlight Normal ctermbg=none
 
 "-------------------------
@@ -127,18 +118,11 @@ let g:unite_enable_split_vertically = 1
 "-------------------------
 " Unite with ag
 "-------------------------
-" insert modeã§éå§
-"let g:unite_enable_start_insert = 1
-" å¤§æå­å°æå­ãåºå¥ããªã
 let g:unite_enable_ignore_case = 1
 let g:unite_enable_smart_case = 1
-" grepæ¤ç´¢
 nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-" ã«ã¼ã½ã«ä½ç½®ã®åèªãgrepæ¤ç´¢
 nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
-" grepæ¤ç´¢çµæã®åå¼åº
 nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
-" unite grep ã« ag(The Silver Searcher) ãä½¿ã
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
@@ -319,15 +303,9 @@ let unified_diff#iwhite_arguments = [
 "-------------------------
 " easymotion
 "-------------------------
-" ãã¼ã ãã¸ã·ã§ã³ã«è¿ãã­ã¼ãä½¿ã [ããã¼ã ãã¸ã·ã§ã³ã«è¿ãã­ã¼ãä½¿ã]
 let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
-" ã;ã + ä½ãã«ãããã³ã° [ãã;ã+ä½ãã«ãããã³ã°]
 let g:EasyMotion_leader_key=";"
-" 1 ã¹ãã­ã¼ã¯é¸æãåªåãã [ã1ã¹ãã­ã¼ã¯é¸æãåªåãã]
 let g:EasyMotion_grouping=1
-" ã«ã©ã¼è¨­å®å¤æ´ [ãã«ã©ã¼è¨­å®å¤æ´]
-"hi EasyMotionTarget ctermbg=none ctermfg=red
-"hi EasyMotionShadeÂ ctermbg=none ctermfg=blue
 
 "-------------------------
 " visualmark.vim
@@ -388,8 +366,7 @@ function! s:my_tabline()  "{{{
   return s
 endfunction "}}}
 let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
-set showtabline=2 " å¸¸ã«ã¿ãã©ã¤ã³ãè¡¨ç¤º
-
+set showtabline=2 
 " The prefix key.
 nnoremap    [Tag]   <Nop>
 nmap    t [Tag]
@@ -397,13 +374,9 @@ nmap    t [Tag]
 for n in range(1, 9)
   execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
-" t1 ã§1çªå·¦ã®ã¿ããt2 ã§1çªå·¦ãã2çªç®ã®ã¿ãã«ã¸ã£ã³ã
-
+" Tab map
 map <silent> [Tag]c :tablast <bar> tabnew<CR>
-" tc æ°ããã¿ããä¸çªå³ã«ä½ã
 map <silent> [Tag]x :tabclose<CR>
-" tx ã¿ããéãã
 map <silent> [Tag]n :tabnext<CR>
-" tn æ¬¡ã®ã¿ã
 map <silent> [Tag]p :tabprevious<CR>
-" tp åã®ã¿ã
+
