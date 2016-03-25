@@ -14,9 +14,10 @@ sudo yum -y install ctags curl tig ncurses-devel make gcc wget php-cli openssl-d
 sudo yum -y install python-devel lua-devel dstat curl-devel zlib-devel
 sudo yum -y remove vim git
 
-# switch zsh
-#sudo yum -y install zsh
-#chsh -s /bin/zsh
+# install zsh 4.3.17
+wget http://downloads.sourceforge.net/project/zsh/zsh-dev/4.3.17/zsh-4.3.17.tar.gz
+tar xvzf zsh-4.3.17.tar.gz
+cd zsh-4.3.17 && ./configure --enable-multibyte && make && sudo make install
 
 # install git,tig
 cd ~/
@@ -26,11 +27,13 @@ cd git-2.6.3 && \
 ./configure && \
 make && \
 sudo make install
-cd ~/
-git clone https://github.com/jonas/tig
-cd tig
-make
-sudo make install
+source ~/.zshrc
+
+#cd ~/
+#git clone https://github.com/jonas/tig
+#cd tig
+#make
+#sudo make install
 
 # put files to cache
 mkdir ~/dotfiles
@@ -78,7 +81,7 @@ npm install -g typescript typescript-tools
 
 # install golang
 wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz --no-check-certificate
-tar -C /usr/local -xzf go1.5.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.5.linux-amd64.tar.gz
 source ~/.zshrc
 
 # install utils
@@ -93,23 +96,23 @@ echo "[ghq]
 sudo rpm -ivh http://swiftsignal.com/packages/centos/6/x86_64/the-silver-searcher-0.13.1-1.el6.x86_64.rpm
 
 # install vim-plugins
-wget --no-check-certificate https://raw.github.com/taku-o/downloads/master/visualmark.vim
-mkdir -p ~/.vim/plugin/
-mv visualmark.vim ~/.vim/plugin/
+#wget --no-check-certificate https://raw.github.com/taku-o/downloads/master/visualmark.vim
+#mkdir -p ~/.vim/plugin/
+#mv visualmark.vim ~/.vim/plugin/
 
 # setup vim-plugins
 vim +":PlugInstall | :GoInstallBinaries" +:q
 
-# tmxu 1.8
-cd ~/dotfiles
-wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
-tar xvzf libevent-2.0.21-stable.tar.gz
-cd libevent-2.0.21-stable
-./configure && make && make install
-wget -O tmux-1.8.tar.gz "http://sourceforge.net/projects/tmux/files/tmux/tmux-1.8/tmux-1.8.tar.gz/download?use_mirror=jaist"
-tar xvzf tmux-1.8.tar.gz
-cd tmux-1.8
-./configure && make && make install
+# tmux 1.8
+#cd ~/dotfiles
+#wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
+#tar xvzf libevent-2.0.21-stable.tar.gz
+#cd libevent-2.0.21-stable
+#./configure && make && make install
+#wget -O tmux-1.8.tar.gz "http://sourceforge.net/projects/tmux/files/tmux/tmux-1.8/tmux-1.8.tar.gz/download?use_mirror=jaist"
+#tar xvzf tmux-1.8.tar.gz
+#cd tmux-1.8
+#./configure && make && make install
 
 # remove cache
 rm -rf ~/dotfiles
