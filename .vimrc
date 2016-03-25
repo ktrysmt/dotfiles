@@ -311,8 +311,8 @@ let g:EasyMotion_grouping=1
 " visualmark.vim
 "-------------------------
 " http://nanasi.jp/articles/vim/visualmark_vim.html
-map <unique> <F3> <Plug>Vm_toggle_sign
-map <silent> <unique> mm <Plug>Vm_toggle_sign
+"map <unique> <F3> <Plug>Vm_toggle_sign
+"map <silent> <unique> mm <Plug>Vm_toggle_sign
 
 "-------------------------
 " TypeScript
