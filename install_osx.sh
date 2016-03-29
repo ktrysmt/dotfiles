@@ -1,4 +1,5 @@
 brew update
-brew install ctags lua wget tig tmux
+brew tap peco
+brew install ctags lua wget tig tmux peco
 brew install vim --with-lua
 
