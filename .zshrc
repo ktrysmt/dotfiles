@@ -21,8 +21,9 @@ zplug "k4rthik/git-cal", as:command, frozen:1
 # コマンド化するときに file: でリネームできる（この例では fzf-bin を fzf にしてる）
 zplug "junegunn/fzf-bin", \
     as:command, \
+    file:"fzf", \
     from:gh-r, \
-    file:fzf
+    | zplug "b4b4r07/enhancd", of:enhancd.sh
 
 # from: では gh-r の他に oh-my-zsh と gist が使える
 # oh-my-zsh を指定すると oh-my-zsh のリポジトリにある plugin/ 以下を
