@@ -51,6 +51,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 "call plug#begin('~/.vim/bundle')
 call plug#begin()
+Plug 'jbgutierrez/vim-babel'
+Plug 'mattn/webapi-vim'
 Plug 'jpo/vim-railscasts-theme'
 Plug 'w0ng/vim-hybrid'
 Plug 'tomasr/molokai'
