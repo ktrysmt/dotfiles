@@ -71,11 +71,11 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 cat ~/dotfiles/.vimrc > ~/.vimrc
 
 echo "-----------------------------------------------------";
-echo "Install zplug";
+echo "Install zgen";
 echo "-----------------------------------------------------\n";
 cd ~/
 touch ~/.zshrc
-git clone https://github.com/b4b4r07/zplug ~/.zplug
+git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 cat ~/dotfiles/.zshrc > ~/.zshrc
 
 echo "-----------------------------------------------------";
