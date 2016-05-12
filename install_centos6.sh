@@ -65,7 +65,7 @@ php /tmp/dict.php | sort > ~/.vim/dictionaries/php.dict
 # setup oh-my-zsh
 cd ~/
 touch ~/.zshrc
-git clone https://github.com/b4b4r07/zplug ~/.zplug
+git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 cat ~/dotfiles/.zshrc >> ~/.zshrc
 source ~/.zshrc
 
