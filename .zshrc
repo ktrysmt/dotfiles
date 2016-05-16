@@ -17,6 +17,7 @@ if ! zgen saved; then
     # bulk load
     zgen loadall <<EOPLUGINS
         zsh-users/zsh-history-substring-search
+        b4b4r07/enhancd
 EOPLUGINS
     # ^ can't indent this EOPLUGINS
 
