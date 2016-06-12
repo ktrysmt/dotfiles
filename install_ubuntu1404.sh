@@ -11,6 +11,7 @@ echo "-----------------------------------------------------";
 echo "Update & install libraries";
 echo "-----------------------------------------------------\n";
 sudo apt-get -y update
+sudo apt-get -y upgrade
 sudo apt-get -y install ctags curl zsh tig make gcc dstat silversearcher-ag
 sudo apt-get -y install libssl-dev libcurl4-openssl-dev
 sudo apt-get -y install liblua5.2-dev lua5.2 python-dev ncurses-dev
