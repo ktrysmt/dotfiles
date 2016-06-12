@@ -114,10 +114,5 @@ echo "Apply .zshrc";
 echo "-----------------------------------------------------\n";
 source ~/.zshrc
 
-echo "-----------------------------------------------------";
-echo "Run npm";
-echo "-----------------------------------------------------\n";
-npm install -g typescript typescript-tools
-
 # remove cache
 rm -rf ~/dotfiles
