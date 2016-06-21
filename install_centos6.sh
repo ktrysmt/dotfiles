@@ -74,8 +74,8 @@ cd ~/
 curl -L git.io/nodebrew | perl - setup
 echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.zshrc
 source ~/.zshrc
-nodebrew install-binary v0.10
-nodebrew use v0.10
+nodebrew install-binary v4
+nodebrew use v4
 source ~/.zshrc
 npm install -g typescript typescript-tools
 
