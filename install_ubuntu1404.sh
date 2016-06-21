@@ -95,8 +95,8 @@ echo "-----------------------------------------------------\n";
 cd ~/
 curl -L git.io/nodebrew | perl - setup
 export PATH=$HOME/.nodebrew/current/bin:$PATH
-nodebrew install-binary v0.10
-nodebrew use v0.10
+nodebrew install-binary v4
+nodebrew use v4
 
 echo "-----------------------------------------------------";
 echo "Run go get";
