@@ -59,6 +59,7 @@ Plug 'tomasr/molokai'
 Plug 'scrooloose/nerdtree'
 Plug 'Townk/vim-autoclose'
 Plug 'mattn/emmet-vim'
+Plug 'roxma/SimpleAutoComplPop'
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/unite.vim'
 Plug 'scrooloose/nerdcommenter'
@@ -381,4 +382,11 @@ map <silent> [Tag]x :tabclose<CR>
 map <silent> [Tag]n :tabnext<CR>
 map <silent> [Tag]p :tabprevious<CR>
 
-
+"-------------------------
+" roxma/SimpleAutoComplPop
+"-------------------------
+autocmd FileType go call sacp#enableForThisBuffer({ "matches": [
+  \ { '=~': '\v[a-zA-Z]{4}$' , 'feedkeys': "\<C-x>\<C-o>"} ,
+  \ { '=~': '\.$'            , 'feedkeys': "\<C-x>\<C-o>", "ignoreCompletionMode":1} ,
+  \ ]
+  \ })
