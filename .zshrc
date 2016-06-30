@@ -12,12 +12,10 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/sudo
     zgen oh-my-zsh plugins/command-not-found
     zgen load zsh-users/zsh-syntax-highlighting
-#    zgen load /path/to/super-secret-private-plugin
 
     # bulk load
     zgen loadall <<EOPLUGINS
         zsh-users/zsh-history-substring-search
-        b4b4r07/enhancd
 EOPLUGINS
     # ^ can't indent this EOPLUGINS
 
