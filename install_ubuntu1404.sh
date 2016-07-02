@@ -90,13 +90,16 @@ export PATH=$HOME/project/bin:$PATH
 export GOPATH=$HOME/project
 
 echo "-----------------------------------------------------";
-echo "Install nodebrew for node (use stable:0.10)";
+echo "Install node;
 echo "-----------------------------------------------------\n";
 cd ~/
-curl -L git.io/nodebrew | perl - setup
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-nodebrew install-binary v4
-nodebrew use v4
+sudo apt-get install -y nodejs npm
+sudo npm cache clean
+sudo npm install n -g
+sudo ln -sf /usr/local/bin/node /usr/bin/node
+sudo n stable
+sudo apt-get purge -y nodejs npm
+
 
 echo "-----------------------------------------------------";
 echo "Run go get";
