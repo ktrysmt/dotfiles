@@ -1,3 +1,5 @@
+GOLANG_VERSION=1.6.2
+
 echo "-----------------------------------------------------";
 echo "You should install zsh and do that 'chsh -s /bin/zsh'";
 echo " "
@@ -82,8 +84,8 @@ cat ~/dotfiles/.zshrc > ~/.zshrc
 echo "-----------------------------------------------------";
 echo "Install golang";
 echo "-----------------------------------------------------\n";
-wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz --no-check-certificate
-sudo tar -C /usr/local -xzf go1.5.linux-amd64.tar.gz
+wget https://storage.googleapis.com/golang/go$GOLANG_VERSION.linux-amd64.tar.gz --no-check-certificate
+tar -C /usr/local -xzf go$GOLANG_VERSION.linux-amd64.tar.gz
 mkdir -p ~/project/bin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/project/bin:$PATH
