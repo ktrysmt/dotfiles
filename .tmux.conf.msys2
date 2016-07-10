@@ -69,3 +69,6 @@ bind C-s run "tmux last-pane || tmux last-window || tmux new-window"
 
 # msys2 clipboard
 bind-key -t vi-copy Enter copy-pipe "cat > /dev/clipboard"
+
+# zsh
+set-option -g default-shell /usr/bin/zsh
