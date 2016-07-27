@@ -340,6 +340,7 @@ let g:go_fmt_fail_silently = 1
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "gofmt"
 let g:go_disable_autoinstall = 0
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 
 "-------------------------
 " tab control
