@@ -21,7 +21,8 @@ set ruler
 set shiftwidth=2
 set statusline=%F%r%h%=
 set showmatch
-set tabstop=8
+set tabstop=2
+set softtabstop=2
 set vb t_vb=
 set whichwrap=b,s,[,],<,>,~
 set number
