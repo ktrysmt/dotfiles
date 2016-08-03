@@ -23,6 +23,8 @@ set statusline=%F%r%h%=
 set showmatch
 set tabstop=2
 set softtabstop=2
+set showcmd
+set smartcase
 set vb t_vb=
 set whichwrap=b,s,[,],<,>,~
 set number
@@ -42,6 +44,11 @@ nnoremap - <C-x>
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 runtime macros/matchit.vim
 cabbr w!! w !sudo tee > /dev/null %
+augroup highlightIdegraphicSpace
+  autocmd!
+  autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=DarkGreen guibg=DarkGreen
+  autocmd VimEnter,WinEnter * match IdeographicSpace /　/
+augroup END
 
 "---------------------------
 "" Vim-Plug Settings.
@@ -112,6 +119,7 @@ call plug#end()
 filetype plugin indent on
 syntax on
 colorscheme molokai
+autocmd colorscheme molokai highlight Visual ctermbg=8
 highlight Normal ctermbg=none
 
 "-------------------------
