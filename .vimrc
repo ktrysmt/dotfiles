@@ -114,6 +114,10 @@ Plug 'jason0x43/vim-js-indent', {
 \ }
 \}
 Plug 'Quramy/tsuquyomi'
+Plug 'othree/yajs.vim'
+Plug 'othree/es.next.syntax.vim'
+Plug 'mxw/vim-jsx'
+Plug 'mtscout6/syntastic-local-eslint.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -401,3 +405,15 @@ autocmd FileType go call sacp#enableForThisBuffer({ "matches": [
   \ { '=~': '\.$'            , 'feedkeys': "\<C-x>\<C-o>", "ignoreCompletionMode":1} ,
   \ ]
   \ })
+
+
+"-------------------------
+" jsx
+"-------------------------
+let g:jsx_ext_required = 1        " ファイルタイプがjsxのとき読み込む．
+let g:jsx_pragma_required = 0     " @から始まるプラグマでは読み込まない．
+
+augroup Vimrc
+  autocmd!
+  autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+augroup END
