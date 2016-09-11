@@ -92,6 +92,10 @@ touch ~/.gitconfig
 echo "[ghq]
   root = ~/project/src" >> ~/.gitconfig
 
+# setup peco
+mkdir -p ~/.config/peco/
+cat ~/dotfiles/peco/config.json > ~/.config/peco/config.json
+
 # ag
 sudo rpm -ivh http://swiftsignal.com/packages/centos/6/x86_64/the-silver-searcher-0.13.1-1.el6.x86_64.rpm
 

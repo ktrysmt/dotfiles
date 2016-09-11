@@ -110,6 +110,12 @@ go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
 
 echo "-----------------------------------------------------";
+echo "Setup peco";
+echo "-----------------------------------------------------\n";
+mkdir -p ~/.config/peco/
+cat ~/dotfiles/peco/config.json > ~/.config/peco/config.json
+
+echo "-----------------------------------------------------";
 echo "Run NeoBundleInstall & GoInstallBinaries";
 echo "-----------------------------------------------------\n";
 vim +":PlugInstall | :GoInstallBinaries" +:q
