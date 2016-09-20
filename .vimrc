@@ -118,6 +118,7 @@ Plug 'othree/yajs.vim'
 Plug 'othree/es.next.syntax.vim'
 Plug 'mxw/vim-jsx'
 Plug 'mtscout6/syntastic-local-eslint.vim'
+Plug 'tomtom/tcomment_vim'
 call plug#end()
 
 filetype plugin indent on
