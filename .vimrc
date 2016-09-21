@@ -63,6 +63,7 @@ call plug#begin()
 Plug 'jbgutierrez/vim-babel'
 Plug 'mattn/webapi-vim'
 Plug 'jpo/vim-railscasts-theme'
+Plug 'flowtype/vim-flow', {'for': 'javascript'}
 Plug 'w0ng/vim-hybrid'
 Plug 'tomasr/molokai'
 Plug 'scrooloose/nerdtree'
@@ -419,3 +420,7 @@ let g:user_emmet_leader_key='<c-u>'
 let g:user_emmet_mode='i'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
+
+let g:syntastic_javascript_checkers=['eslint']
+
+

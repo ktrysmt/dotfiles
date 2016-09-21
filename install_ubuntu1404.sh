@@ -80,6 +80,7 @@ cd ~/
 touch ~/.zshrc
 git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 cat ~/dotfiles/.zshrc > ~/.zshrc
+cat ~/dotfiles/.zshenv > ~/.zshenv
 
 echo "-----------------------------------------------------";
 echo "Install golang";
