@@ -62,7 +62,8 @@ export GOPATH=$HOME/project
 
 # node
 export PATH=$HOME/.nodebrew/current/bin:$PATH
-nodebrew use v0.10
+nodebrew use stable
+export PATH=$PATH:./node_modules/.bin
 
 # alias
 unalias gb

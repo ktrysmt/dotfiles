@@ -94,14 +94,9 @@ export GOPATH=$HOME/project
 echo "-----------------------------------------------------";
 echo "Install node;
 echo "-----------------------------------------------------\n";
-cd ~/
-sudo apt-get install -y nodejs npm
-sudo npm cache clean
-sudo npm install n -g
-sudo ln -sf /usr/local/bin/node /usr/bin/node
-sudo n stable
-sudo apt-get purge -y nodejs npm
-
+curl -L git.io/nodebrew | perl - setup
+~/.nodebrew/nodebrew install-binary stable
+~/.nodebrew/nodebrew use stable
 
 echo "-----------------------------------------------------";
 echo "Run go get";
