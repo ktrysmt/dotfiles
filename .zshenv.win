@@ -1,0 +1,8 @@
+export PATH="$PATH:./node_modules/.bin:/c/Program Files/nodejs:/c/Users/koutaryun/AppData/Roaming/npm"
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$HOME/project/bin:$PATH
+export PATH=$PATH:/home/koutaryun/project/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/c/Windows/System32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0/:/usr/local/go/bin:/c/HashiCorp/Vagrant/bin:/c/ProgramData/chocolatey/bin
+export GOPATH=$HOME/project
+export PATH=$PATH:/c/Go/bin
+export PATH=$PATH:./node_modules/.bin
+ 
