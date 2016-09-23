@@ -58,17 +58,16 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
-"call plug#begin('~/.vim/bundle')
 call plug#begin()
-Plug 'jbgutierrez/vim-babel'
+Plug 'jbgutierrez/vim-babel', { 'for': 'javascript' }
 Plug 'mattn/webapi-vim'
-Plug 'jpo/vim-railscasts-theme'
-Plug 'flowtype/vim-flow', {'for': 'javascript'}
-Plug 'w0ng/vim-hybrid'
+" Plug 'jpo/vim-railscasts-theme'
+" Plug 'flowtype/vim-flow', {'for': 'javascript'}
+" Plug 'w0ng/vim-hybrid'
 Plug 'tomasr/molokai'
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Townk/vim-autoclose'
-Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
 Plug 'roxma/SimpleAutoComplPop'
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/unite.vim'
@@ -82,43 +81,37 @@ Plug 'Shougo/vimproc', {
   \ },
 \ }
 Plug 'LeafCage/yankround.vim'
-Plug 'kchmck/vim-coffee-script'
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
 Plug 'Shougo/neocomplete.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'soramugi/auto-ctags.vim'
-Plug 'jelera/vim-javascript-syntax'
-Plug 'vim-scripts/jQuery'
+Plug 'jelera/vim-javascript-syntax', { 'for': ['javascript','html'] }
 Plug 'editorconfig/editorconfig-vim'
-Plug 'jiangmiao/simple-javascript-indenter'
-Plug 'mattn/jscomplete-vim'
-Plug 'majutsushi/tagbar'
+Plug 'jiangmiao/simple-javascript-indenter', { 'for': ['javascript','html'] }
+Plug 'mattn/jscomplete-vim', { 'for': 'javascript' }
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'szw/vim-tags'
-Plug 'ujihisa/shadow.vim'
 Plug '907th/vim-auto-save'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'lambdalisue/vim-unified-diff'
-Plug 'fatih/vim-go'
-Plug 'koron/vim-gosrc'
+Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'koron/vim-gosrc', { 'for': 'go' }
 Plug 'tpope/vim-abolish'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'vimtaku/hl_matchit.vim'
 Plug 'osyo-manga/vim-over'
-Plug 'leafgarland/typescript-vim', {
-\ 'autoload' : {
-\   'filetypes' : ['typescript'],
-\ }
-\}
-Plug 'jason0x43/vim-js-indent', {
-\ 'autoload' : {
-\   'filetypes' : ['javascript', 'typescript'],
-\ }
-\}
-Plug 'Quramy/tsuquyomi'
-Plug 'othree/yajs.vim'
-Plug 'othree/es.next.syntax.vim'
-Plug 'mxw/vim-jsx'
-Plug 'mtscout6/syntastic-local-eslint.vim'
+" Plug 'leafgarland/typescript-vim', {
+" \ 'autoload' : {
+" \   'filetypes' : ['typescript'],
+" \ }
+" \}
+Plug 'jason0x43/vim-js-indent', { 'for': 'javascript' }
+" Plug 'Quramy/tsuquyomi'
+Plug 'othree/yajs.vim', { 'for': 'javascript' } 
+Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' } 
+Plug 'mxw/vim-jsx', { 'for': ['javascript', 'jsx'] } 
+Plug 'mtscout6/syntastic-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
 Plug 'tomtom/tcomment_vim'
 call plug#end()
 
@@ -338,7 +331,7 @@ let g:tsuquyomi_definition_split = 3
 "-------------------------
 let g:hl_matchit_enable_on_vim_startup = 1
 let g:hl_matchit_hl_groupname = 'Title'
-let g:hl_matchit_allow_ft = 'vim\|ruby\|sh\|php'
+let g:hl_matchit_allow_ft = 'vim\|ruby\|sh\|php\|javascript\|go'
 
 "-------------------------
 " vim-go
@@ -407,7 +400,6 @@ autocmd FileType go call sacp#enableForThisBuffer({ "matches": [
 "-------------------------
 let g:jsx_ext_required = 1        " ファイルタイプがjsxのとき読み込む．
 let g:jsx_pragma_required = 0     " @から始まるプラグマでは読み込まない．
-
 augroup Vimrc
   autocmd!
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
