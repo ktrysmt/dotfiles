@@ -71,6 +71,7 @@ alias gdw="git diff --color-words"
 alias ggpull="git pull origin $(current_branch)"
 alias ggpush="git push origin $(current_branch)"
 alias gh='cd $(ghq list -p | peco)'
+alias glogg='git log --graph --name-status --pretty=format:"%C(red)%h %C(green)%an %Creset%s %C(yellow)%d%Creset"'
 alias dstat='dstat -tlamp'
 
 # tmux
