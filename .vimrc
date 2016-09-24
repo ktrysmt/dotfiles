@@ -86,6 +86,7 @@ Plug 'Shougo/neocomplete.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'soramugi/auto-ctags.vim'
 Plug 'jelera/vim-javascript-syntax', { 'for': ['javascript','html'] }
+Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript'] }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jiangmiao/simple-javascript-indenter', { 'for': ['javascript','html'] }
 Plug 'mattn/jscomplete-vim', { 'for': 'javascript' }
