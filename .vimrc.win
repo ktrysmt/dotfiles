@@ -53,7 +53,7 @@ filetype plugin indent on
 
 "---------------------------
 "" Simple commands.
-"--------------------------- 
+"---------------------------
 command! Rv source $MYVIMRC
 command! Ev edit $MYVIMRC
 
@@ -78,7 +78,6 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
 Plug 'roxma/SimpleAutoComplPop'
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/unite.vim'
-Plug 'scrooloose/nerdcommenter'
 Plug 'Shougo/vimproc', {'do' : 'make'}
 " Plug 'Shougo/vimproc', {
 "   \ 'build' : {
@@ -118,25 +117,20 @@ Plug 'osyo-manga/vim-over'
 " \}
 Plug 'jason0x43/vim-js-indent', { 'for': 'javascript' }
 " Plug 'Quramy/tsuquyomi'
-Plug 'othree/yajs.vim', { 'for': ['javascript', 'html'] } 
-" Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' } 
-Plug 'mxw/vim-jsx', { 'for': ['javascript', 'jsx'] } 
+Plug 'othree/yajs.vim', { 'for': ['javascript', 'html'] }
+" Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
+Plug 'mxw/vim-jsx', { 'for': ['javascript', 'jsx'] }
 Plug 'mtscout6/syntastic-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
 Plug 'tomtom/tcomment_vim'
 call plug#end()
- 
+
 "-------------------------
 " Color Scheme
-"-------------------------  
+"-------------------------
 syntax on
 colorscheme molokai
 autocmd colorscheme molokai highlight Visual ctermbg=8
 highlight Normal ctermbg=none
-
-"-------------------------
-" BufWritePre
-"------------------------- 
-autocmd BufWritePre *.js,*.jsx exe ":Fixmyjs" 
 
 "-------------------------
 " Unite Settings
@@ -277,8 +271,7 @@ imap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
 cmap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let g:NERDTreeShowHidden=1
-let NERDTreeShowHidden = 1
-let file_name = expand("%:p")
+"let file_name = expand("%:p")
 " if has('vim_starting') &&  file_name == ""
 "     autocmd VimEnter * execute 'NERDTree ./'
 " endif
@@ -458,22 +451,34 @@ endfunction
 "-------------------------
 " async eslint
 "-------------------------
-function! s:callback(file, channel) abort
-    execute 'cgetfile ' . a:file
+function! s:callback(channel) abort
+    execute 'cgetbuffer ' . s:bufnr
     cwindow
     wincmd p
+    execute 'bwipeout ' . s:bufnr
+    unlet s:bufnr
     echo 'finish'
 endfunction
 function! s:check() abort
     set errorformat=%f:\ line\ %l\\,\ col\ %c\\,\ %m,%-G%.%#
-    let l:file = tempname()
+    new
+    let s:bufnr = bufnr('')
+    setlocal bufhidden=hide
+    setlocal buftype=nofile
+    hide
     let job = job_start(add(split('eslint -f compact'), expand('%')), {
-                \ 'out_io': 'file',
-                \ 'out_name': l:file,
-                \ 'close_cb': function('s:callback', [l:file]),
+                \ 'out_io': 'buffer',
+                \ 'out_buf': s:bufnr,
+                \ 'close_cb': function('s:callback'),
                 \ })
 endfunction
 augroup sample
     autocmd!
     autocmd BufWritePost *.js call <SID>check()
 augroup END
+
+"-------------------------
+" Fixmyjs
+"-------------------------
+" autocmd BufWritePre *.js,*.jsx exe ':Fixmyjs'
+

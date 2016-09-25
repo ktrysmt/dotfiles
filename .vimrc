@@ -78,7 +78,6 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
 Plug 'roxma/SimpleAutoComplPop'
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/unite.vim'
-Plug 'scrooloose/nerdcommenter'
 Plug 'Shougo/vimproc', {'do' : 'make'}
 " Plug 'Shougo/vimproc', {
 "   \ 'build' : {
@@ -277,8 +276,7 @@ imap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
 cmap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let g:NERDTreeShowHidden=1
-let NERDTreeShowHidden = 1
-let file_name = expand("%:p")
+" let file_name = expand("%:p")
 " if has('vim_starting') &&  file_name == ""
 "     autocmd VimEnter * execute 'NERDTree ./'
 " endif
