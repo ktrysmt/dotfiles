@@ -50,6 +50,7 @@ augroup highlightIdegraphicSpace
   autocmd VimEnter,WinEnter * match IdeographicSpace /　/
 augroup END
 filetype plugin indent on
+autocmd QuickFixCmdPost *grep* cwindow
 
 "---------------------------
 "" Simple commands.
