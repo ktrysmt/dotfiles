@@ -53,7 +53,7 @@ filetype plugin indent on
 
 "---------------------------
 "" Simple commands.
-"---------------------------
+"--------------------------- 
 command! Rv source $MYVIMRC
 command! Ev edit $MYVIMRC
 
@@ -118,16 +118,16 @@ Plug 'osyo-manga/vim-over'
 " \}
 Plug 'jason0x43/vim-js-indent', { 'for': 'javascript' }
 " Plug 'Quramy/tsuquyomi'
-Plug 'othree/yajs.vim', { 'for': ['javascript', 'html'] }
-" Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
-Plug 'mxw/vim-jsx', { 'for': ['javascript', 'jsx'] }
+Plug 'othree/yajs.vim', { 'for': ['javascript', 'html'] } 
+" Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' } 
+Plug 'mxw/vim-jsx', { 'for': ['javascript', 'jsx'] } 
 Plug 'mtscout6/syntastic-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
 Plug 'tomtom/tcomment_vim'
 call plug#end()
-
+ 
 "-------------------------
 " Color Scheme
-"-------------------------
+"-------------------------  
 syntax on
 colorscheme molokai
 autocmd colorscheme molokai highlight Visual ctermbg=8
@@ -135,8 +135,8 @@ highlight Normal ctermbg=none
 
 "-------------------------
 " BufWritePre
-"-------------------------
-autocmd BufWritePre *.js,*.jsx exe "Fixmyjs"
+"------------------------- 
+autocmd BufWritePre *.js,*.jsx exe ":Fixmyjs" 
 
 "-------------------------
 " Unite Settings
@@ -454,3 +454,26 @@ function! s:filter_header(lines) abort
         \ 'repeat(" ", (&columns / 2) - (longest_line / 2)) . v:val')
     return centered_lines
 endfunction
+
+"-------------------------
+" async eslint
+"-------------------------
+function! s:callback(file, channel) abort
+    execute 'cgetfile ' . a:file
+    cwindow
+    wincmd p
+    echo 'finish'
+endfunction
+function! s:check() abort
+    set errorformat=%f:\ line\ %l\\,\ col\ %c\\,\ %m,%-G%.%#
+    let l:file = tempname()
+    let job = job_start(add(split('eslint -f compact'), expand('%')), {
+                \ 'out_io': 'file',
+                \ 'out_name': l:file,
+                \ 'close_cb': function('s:callback', [l:file]),
+                \ })
+endfunction
+augroup sample
+    autocmd!
+    autocmd BufWritePost *.js call <SID>check()
+augroup END
