@@ -78,6 +78,7 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
 Plug 'roxma/SimpleAutoComplPop'
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/unite.vim'
+Plug 'junegunn/vim-easy-align'
 Plug 'Shougo/vimproc', {'do' : 'make'}
 " Plug 'Shougo/vimproc', {
 "   \ 'build' : {
@@ -452,3 +453,11 @@ function! s:filter_header(lines) abort
         \ 'repeat(" ", (&columns / 2) - (longest_line / 2)) . v:val')
     return centered_lines
 endfunction
+
+"-------------------------
+" easy-align
+"-------------------------
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)

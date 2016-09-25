@@ -78,6 +78,7 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
 Plug 'roxma/SimpleAutoComplPop'
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/unite.vim'
+Plug 'junegunn/vim-easy-align'
 Plug 'Shougo/vimproc', {'do' : 'make'}
 " Plug 'Shougo/vimproc', {
 "   \ 'build' : {
@@ -482,3 +483,11 @@ augroup END
 "-------------------------
 " autocmd BufWritePre *.js,*.jsx exe ':Fixmyjs'
 
+
+"-------------------------
+" easy-align
+"-------------------------
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
