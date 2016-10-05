@@ -282,7 +282,8 @@ let g:NERDTreeShowHidden=1
 " if has('vim_starting') &&  file_name == ""
 "     autocmd VimEnter * execute 'NERDTree ./'
 " endif
-
+let NERDTreeIgnore = ['node_modules','.git']
+let g:NERDTreeChDirMode = 2
 
 "-------------------------
 " NERDTree
