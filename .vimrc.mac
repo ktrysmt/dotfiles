@@ -137,7 +137,7 @@ highlight Normal ctermbg=none
 "-------------------------
 " BufWritePre
 "-------------------------
-autocmd BufWritePre *.js,*.jsx exe "Fixmyjs"
+autocmd BufWritePre *.js,*.jsx exe ":Fixmyjs"
 
 "-------------------------
 " Unite Settings
@@ -432,6 +432,9 @@ let g:user_emmet_mode='i'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
 
+"-------------------------
+" eslint
+"------------------------- 
 let g:syntastic_javascript_checkers=['eslint']
 
 "-------------------------
