@@ -123,7 +123,11 @@ Plug 'othree/yajs.vim', { 'for': ['javascript', 'html'] }
 " Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'jsx'] }
 Plug 'mtscout6/syntastic-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
+Plug 'salomvary/vim-eslint-compiler'
 Plug 'tomtom/tcomment_vim'
+Plug 'kana/vim-operator-user'
+Plug 'kana/vim-operator-replace'
+Plug 'rhysd/vim-operator-surround'
 call plug#end()
 
 "-------------------------
@@ -454,31 +458,31 @@ endfunction
 "-------------------------
 " async eslint
 "-------------------------
-function! s:callback(channel) abort
-    execute 'cgetbuffer ' . s:bufnr
-    cwindow
-    wincmd p
-    execute 'bwipeout ' . s:bufnr
-    unlet s:bufnr
-    echo 'finish'
-endfunction
-function! s:check() abort
-    set errorformat=%f:\ line\ %l\\,\ col\ %c\\,\ %m,%-G%.%#
-    new
-    let s:bufnr = bufnr('')
-    setlocal bufhidden=hide
-    setlocal buftype=nofile
-    hide
-    let job = job_start(add(split('eslint -f compact'), expand('%')), {
-                \ 'out_io': 'buffer',
-                \ 'out_buf': s:bufnr,
-                \ 'close_cb': function('s:callback'),
-                \ })
-endfunction
-augroup sample
-    autocmd!
-    autocmd BufWritePost *.js call <SID>check()
-augroup END
+" function! s:callback(channel) abort
+"     execute 'cgetbuffer ' . s:bufnr
+"     cwindow
+"     wincmd p
+"     execute 'bwipeout ' . s:bufnr
+"     unlet s:bufnr
+"     echo 'finish'
+" endfunction
+" function! s:check() abort
+"     set errorformat=%f:\ line\ %l\\,\ col\ %c\\,\ %m,%-G%.%#
+"     new
+"     let s:bufnr = bufnr('')
+"     setlocal bufhidden=hide
+"     setlocal buftype=nofile
+"     hide
+"     let job = job_start(add(split('eslint -f compact'), expand('%')), {
+"                 \ 'out_io': 'buffer',
+"                 \ 'out_buf': s:bufnr,
+"                 \ 'close_cb': function('s:callback'),
+"                 \ })
+" endfunction
+" augroup sample
+"     autocmd!
+"     autocmd BufWritePost *.js call <SID>check()
+" augroup END
 
 "-------------------------
 " Fixmyjs
@@ -493,3 +497,11 @@ augroup END
 vmap <Enter> <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+"-------------------------
+" operetor-user
+"-------------------------
+nmap s <Plug>(operator-replace)
+map <silent> sa <Plug>(operator-surround-append)
+map <silent> sd <Plug>(operator-surround-delete)
+map <silent> sr <Plug>(operator-surround-replace)

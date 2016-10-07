@@ -124,6 +124,9 @@ Plug 'othree/yajs.vim', { 'for': ['javascript', 'html'] }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'jsx'] }
 Plug 'mtscout6/syntastic-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
 Plug 'tomtom/tcomment_vim'
+Plug 'kana/vim-operator-user'
+Plug 'kana/vim-operator-replace'
+Plug 'rhysd/vim-operator-surround'
 call plug#end()
 
 "-------------------------
@@ -463,3 +466,11 @@ endfunction
 vmap <Enter> <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+"-------------------------
+" operetor-user
+"-------------------------
+nmap s <Plug>(operator-replace)
+map <silent> sa <Plug>(operator-surround-append)
+map <silent> sd <Plug>(operator-surround-delete)
+map <silent> sr <Plug>(operator-surround-replace)
