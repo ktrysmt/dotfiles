@@ -64,6 +64,7 @@ export GOPATH=$HOME/project
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 nodebrew use stable
 export PATH=$PATH:./node_modules/.bin
+export PATH="$HOME/.yarn/bin:$PATH"
 
 # alias
 unalias gb
@@ -80,3 +81,5 @@ export EDITOR='vim'
 
 
 
+
+export PATH="$HOME/.yarn/bin:$PATH"
