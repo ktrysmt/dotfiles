@@ -5,6 +5,7 @@ echo "#### Install homebrew, softwares and libraries"
 brew update
 brew tap peco/peco
 brew install ctags lua wget tmux peco git zsh nkf tree the_silver_searcher
+brew install reattach-to-user-namespace
 brew install vim --with-lua
 brew install Caskroom/cask/iterm2
 brew install Caskroom/cask/shiftit

@@ -68,5 +68,5 @@ bind -r L resize-pane -R 10
 # monitor
 #set-window-option -g monitor-activity on
 bind C-s run "tmux last-pane || tmux last-window || tmux new-window"
-
+bind-key -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
 
