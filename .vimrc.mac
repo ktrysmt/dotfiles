@@ -127,6 +127,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-operator-replace'
 Plug 'rhysd/vim-operator-surround'
+Plug 'thinca/vim-qfreplace'
 call plug#end()
 
 "-------------------------
@@ -140,7 +141,7 @@ highlight Normal ctermbg=none
 "-------------------------
 " BufWritePre
 "-------------------------
-autocmd BufWritePre *.js,*.jsx exe ":Fixmyjs"
+"autocmd BufWritePre *.js,*.jsx exe ":Fixmyjs"
 
 "-------------------------
 " Unite Settings
