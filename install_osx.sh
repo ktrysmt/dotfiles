@@ -26,7 +26,7 @@ curl -o- -L https://yarnpkg.com/install.sh | bash
 
 echo "#### Install Go"
 wget https://storage.googleapis.com/golang/go$GOLANG_VERSION.darwin-amd64.tar.gz --no-check-certificate
-tar -C /usr/local -xzf go$GOLANG_VERSION.linux-amd64.tar.gz
+tar -C /usr/local -xzf go$GOLANG_VERSION.darwin-amd64.tar.gz
 mkdir -p ~/project/bin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/project/bin:$PATH
