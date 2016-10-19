@@ -36,7 +36,7 @@ export GOPATH=$HOME/project
 echo "#### Setup Other"
 go get github.com/motemen/ghq
 mkdir -p ~/.config/peco/
-cat ~dotfiles/.config/peco/config.json > ~/.config/peco/config.jso
+cat ~/dotfiles/.config/peco/config.json > ~/.config/peco/config.json
 vim +":PlugInstall | :GoInstallBinaries" +:q
 
 echo "#### Rested tasks"
