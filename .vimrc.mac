@@ -419,7 +419,6 @@ autocmd FileType go call sacp#enableForThisBuffer({ "matches": [
   \ ]
   \ })
 
-
 "-------------------------
 " jsx
 "-------------------------
