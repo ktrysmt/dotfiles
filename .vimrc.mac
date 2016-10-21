@@ -57,6 +57,7 @@ autocmd QuickFixCmdPost *grep* cwindow
 "---------------------------
 command! Rv source $MYVIMRC
 command! Ev edit $MYVIMRC
+command! Edv edit $HOME/dotfiles/.vimrc.mac
 
 "---------------------------
 "" Vim-Plug Settings.
@@ -439,7 +440,7 @@ autocmd FileType html,css EmmetInstall
 
 "-------------------------
 " eslint
-"------------------------- 
+"-------------------------
 let g:syntastic_javascript_checkers=['eslint']
 
 "-------------------------
