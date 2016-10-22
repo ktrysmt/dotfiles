@@ -57,6 +57,7 @@ autocmd QuickFixCmdPost *grep* cwindow
 "---------------------------
 command! Rv source $MYVIMRC
 command! Ev edit $MYVIMRC
+command! Edv edit $HOME/dotfiles/.vimrc.win
 
 "---------------------------
 "" Vim-Plug Settings.
