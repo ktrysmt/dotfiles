@@ -81,15 +81,15 @@ Plug 'roxma/SimpleAutoComplPop'
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/unite.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'Shougo/vimproc', {'do' : 'make'}
-" Plug 'Shougo/vimproc', {
-"   \ 'build' : {
-"     \ 'windows' : 'make -f make_mingw32.mak',
-"     \ 'cygwin' : 'make -f make_cygwin.mak',
-"     \ 'mac' : 'make -f make_mac.mak',
-"     \ 'unix' : 'make -f make_unix.mak',
-"   \ },
-" \ }
+" Plug 'Shougo/vimproc', {'do' : 'make'}
+Plug 'Shougo/vimproc', {
+  \ 'build' : {
+    \ 'windows' : 'make -f make_mingw32.mak',
+    \ 'cygwin' : 'make -f make_cygwin.mak',
+    \ 'mac' : 'make -f make_mac.mak',
+    \ 'unix' : 'make -f make_unix.mak',
+  \ },
+\ }
 Plug 'LeafCage/yankround.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
 Plug 'mhinz/vim-startify'
@@ -132,6 +132,7 @@ Plug 'kana/vim-operator-replace'
 Plug 'rhysd/vim-operator-surround'
 Plug 'thinca/vim-qfreplace'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 "-------------------------
