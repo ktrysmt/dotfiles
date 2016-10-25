@@ -81,15 +81,15 @@ Plug 'roxma/SimpleAutoComplPop'
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/unite.vim'
 Plug 'junegunn/vim-easy-align'
-" Plug 'Shougo/vimproc', {'do' : 'make'}
-Plug 'Shougo/vimproc', {
-  \ 'build' : {
-    \ 'windows' : 'make -f make_mingw32.mak',
-    \ 'cygwin' : 'make -f make_cygwin.mak',
-    \ 'mac' : 'make -f make_mac.mak',
-    \ 'unix' : 'make -f make_unix.mak',
-  \ },
-\ }
+Plug 'Shougo/vimproc', {'do' : 'make'}
+" Plug 'Shougo/vimproc', {
+"   \ 'build' : {
+"     \ 'windows' : 'make -f make_mingw32.mak',
+"     \ 'cygwin' : 'make -f make_cygwin.mak',
+"     \ 'mac' : 'make -f make_mac.mak',
+"     \ 'unix' : 'make -f make_unix.mak',
+"   \ },
+" \ }
 Plug 'LeafCage/yankround.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
 Plug 'mhinz/vim-startify'
@@ -125,7 +125,7 @@ Plug 'othree/yajs.vim', { 'for': ['javascript', 'html'] }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'jsx'] }
 " Plug 'mtscout6/syntastic-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
 Plug 'neomake/neomake'
-Plug 'benjie/neomake-local-eslint.vim', { 'for': ['javascript', 'jsx'] } 
+Plug 'benjie/neomake-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-operator-replace'
@@ -438,7 +438,7 @@ autocmd FileType html,css EmmetInstall
 "-------------------------
 " eslint
 "-------------------------
-autocmd! BufWritePost * :Neomake 
+autocmd! BufWritePost * :Neomake
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
 let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
