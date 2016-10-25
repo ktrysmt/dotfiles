@@ -124,8 +124,8 @@ Plug 'othree/yajs.vim', { 'for': ['javascript', 'html'] }
 " Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'jsx'] }
 " Plug 'mtscout6/syntastic-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
+Plug 'neomake/neomake'
 Plug 'benjie/neomake-local-eslint.vim', { 'for': ['javascript', 'jsx'] } 
-Plug 'neomake/neomake', { 'for': ['javascript', 'jsx'] } 
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-operator-replace'
@@ -364,7 +364,7 @@ let g:go_fmt_fail_silently = 1
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "gofmt"
 let g:go_disable_autoinstall = 0
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 
 "-------------------------
 " tab control
@@ -437,8 +437,11 @@ autocmd FileType html,css EmmetInstall
 "-------------------------
 " eslint
 "-------------------------
-autocmd! BufWritePost * Neomake 
+autocmd! BufWritePost * :Neomake 
 let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
+let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
+let g:neomake_verbose = 0
 
 "-------------------------
 " startify
