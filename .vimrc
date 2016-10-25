@@ -123,7 +123,9 @@ Plug 'jason0x43/vim-js-indent', { 'for': 'javascript' }
 Plug 'othree/yajs.vim', { 'for': ['javascript', 'html'] }
 " Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'jsx'] }
-Plug 'mtscout6/syntastic-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
+" Plug 'mtscout6/syntastic-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
+Plug 'benjie/neomake-local-eslint.vim', { 'for': ['javascript', 'jsx'] } 
+Plug 'neomake/neomake', { 'for': ['javascript', 'jsx'] } 
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-operator-replace'
@@ -435,7 +437,8 @@ autocmd FileType html,css EmmetInstall
 "-------------------------
 " eslint
 "-------------------------
-let g:syntastic_javascript_checkers=['eslint']
+autocmd! BufWritePost * Neomake 
+let g:neomake_javascript_enabled_makers = ['eslint']
 
 "-------------------------
 " startify
