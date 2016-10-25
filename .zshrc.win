@@ -55,6 +55,17 @@ PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_i
 # history
 HIST_STAMPS="yyyy/mm/dd"
 
+# go
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$HOME/project/bin:$PATH
+export GOPATH=$HOME/project
+
+# node
+# export PATH=$HOME/.nodebrew/current/bin:$PATH
+# nodebrew use stable
+export PATH=$PATH:./node_modules/.bin
+export PATH="$HOME/.yarn/bin:$PATH"
+
 # alias
 unalias gb
 alias gdw="git diff --color-words"
@@ -68,4 +79,3 @@ alias dstat='dstat -tlamp'
 #alias tmux="LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/tmux"
 export EDITOR='vim'
 
-cd /c/Users/koutaryun/Dropbox/Projects/home_vagrant

@@ -57,7 +57,7 @@ autocmd QuickFixCmdPost *grep* cwindow
 "---------------------------
 command! Rv source $MYVIMRC
 command! Ev edit $MYVIMRC
-command! Edv edit $HOME/dotfiles/.vimrc.win
+command! Edv edit $HOME/dotfiles/.vimrc
 
 "---------------------------
 "" Vim-Plug Settings.
@@ -124,7 +124,6 @@ Plug 'othree/yajs.vim', { 'for': ['javascript', 'html'] }
 " Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'jsx'] }
 Plug 'mtscout6/syntastic-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
-Plug 'salomvary/vim-eslint-compiler'
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-operator-replace'
@@ -280,7 +279,7 @@ imap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
 cmap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let g:NERDTreeShowHidden=1
-"let file_name = expand("%:p")
+" let file_name = expand("%:p")
 " if has('vim_starting') &&  file_name == ""
 "     autocmd VimEnter * execute 'NERDTree ./'
 " endif
@@ -415,7 +414,6 @@ autocmd FileType go call sacp#enableForThisBuffer({ "matches": [
   \ ]
   \ })
 
-
 "-------------------------
 " jsx
 "-------------------------
@@ -434,6 +432,9 @@ let g:user_emmet_mode='i'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
 
+"-------------------------
+" eslint
+"-------------------------
 let g:syntastic_javascript_checkers=['eslint']
 
 "-------------------------
@@ -459,41 +460,6 @@ function! s:filter_header(lines) abort
 endfunction
 
 "-------------------------
-" async eslint
-"-------------------------
-" function! s:callback(channel) abort
-"     execute 'cgetbuffer ' . s:bufnr
-"     cwindow
-"     wincmd p
-"     execute 'bwipeout ' . s:bufnr
-"     unlet s:bufnr
-"     echo 'finish'
-" endfunction
-" function! s:check() abort
-"     set errorformat=%f:\ line\ %l\\,\ col\ %c\\,\ %m,%-G%.%#
-"     new
-"     let s:bufnr = bufnr('')
-"     setlocal bufhidden=hide
-"     setlocal buftype=nofile
-"     hide
-"     let job = job_start(add(split('eslint -f compact'), expand('%')), {
-"                 \ 'out_io': 'buffer',
-"                 \ 'out_buf': s:bufnr,
-"                 \ 'close_cb': function('s:callback'),
-"                 \ })
-" endfunction
-" augroup sample
-"     autocmd!
-"     autocmd BufWritePost *.js call <SID>check()
-" augroup END
-
-"-------------------------
-" Fixmyjs
-"-------------------------
-" autocmd BufWritePre *.js,*.jsx exe ':Fixmyjs'
-
-
-"-------------------------
 " easy-align
 "-------------------------
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
@@ -508,3 +474,18 @@ nmap s <Plug>(operator-replace)
 map <silent> sa <Plug>(operator-surround-append)
 map <silent> sd <Plug>(operator-surround-delete)
 map <silent> sr <Plug>(operator-surround-replace)
+
+"-------------------------
+" env
+"-------------------------
+if has("mac")
+" mac用の設定
+elseif has("unix")
+" unix固有の設定
+elseif has("win64")
+" 64bit_windows固有の設定
+elseif has("win32unix")
+" Cygwin固有の設定
+elseif has("win32")
+" 32bit_windows固有の設定
+endif
