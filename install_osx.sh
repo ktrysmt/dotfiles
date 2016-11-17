@@ -1,5 +1,3 @@
-GOLANG_VERSION=1.7.1
-
 echo "#### Install homebrew, softwares and libraries"
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
@@ -26,6 +24,7 @@ curl -L git.io/nodebrew | perl - setup
 curl -o- -L https://yarnpkg.com/install.sh | bash
 
 echo "#### Install Go"
+GOLANG_VERSION=1.7.1
 wget https://storage.googleapis.com/golang/go$GOLANG_VERSION.darwin-amd64.tar.gz --no-check-certificate
 tar -C /usr/local -xzf go$GOLANG_VERSION.darwin-amd64.tar.gz
 mkdir -p ~/project/bin
