@@ -32,7 +32,9 @@ export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/project/bin:$PATH
 export GOPATH=$HOME/project
 
-echo "#### Setup Other"
+echo "#### Setup Other";
+echo "[ghq]
+  root = ~/project/src" > ~/.gitconfig
 go get github.com/motemen/ghq
 mkdir -p ~/.config/peco/
 cat ~/dotfiles/.config/peco/config.json > ~/.config/peco/config.json
