@@ -130,9 +130,12 @@ Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-operator-replace'
 Plug 'rhysd/vim-operator-surround'
+Plug 'osyo-manga/vim-operator-stay-cursor'
 Plug 'thinca/vim-qfreplace'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'vimwiki/vimwiki'
+Plug 'yuttie/comfortable-motion.vim'
 call plug#end()
 
 "-------------------------
@@ -481,6 +484,7 @@ nmap s <Plug>(operator-replace)
 map <silent> sa <Plug>(operator-surround-append)
 map <silent> sd <Plug>(operator-surround-delete)
 map <silent> sr <Plug>(operator-surround-replace)
+map y <Plug>(operator-stay-cursor-yank)
 
 "-------------------------
 " env
