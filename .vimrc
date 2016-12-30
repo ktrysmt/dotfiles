@@ -135,7 +135,7 @@ Plug 'thinca/vim-qfreplace'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'vimwiki/vimwiki'
-Plug 'yuttie/comfortable-motion.vim'
+" Plug 'yuttie/comfortable-motion.vim'
 call plug#end()
 
 "-------------------------
@@ -446,6 +446,14 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
 let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
 let g:neomake_verbose = 0
+
+"-------------------------
+" rust
+"------------------------- 
+augroup NeomakeRustConfig
+  autocmd!
+  autocmd BufWritePost *.rs Neomake! clippy
+augroup END
 
 "-------------------------
 " startify
