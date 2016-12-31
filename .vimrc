@@ -134,8 +134,10 @@ Plug 'osyo-manga/vim-operator-stay-cursor'
 Plug 'thinca/vim-qfreplace'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'vimwiki/vimwiki'
+" Plug 'vimwiki/vimwiki'
 " Plug 'yuttie/comfortable-motion.vim'
+Plug 'rust-lang/rust.vim', { 'for': ['rust'] } 
+Plug 'racer-rust/vim-racer', { 'for': ['rust'] } 
 call plug#end()
 
 "-------------------------
@@ -450,6 +452,7 @@ let g:neomake_verbose = 0
 "-------------------------
 " rust
 "------------------------- 
+let g:rustfmt_autosave = 1
 augroup NeomakeRustConfig
   autocmd!
   autocmd BufWritePost *.rs Neomake! clippy
