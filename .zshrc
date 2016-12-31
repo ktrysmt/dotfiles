@@ -67,7 +67,6 @@ export PATH=$PATH:./node_modules/.bin
 export PATH="$HOME/.yarn/bin:$PATH"
 
 # alias
-unalias gb
 alias gdw="git diff --color-words"
 alias ggpull="git pull origin $(current_branch)"
 alias ggpush="git push origin $(current_branch)"
