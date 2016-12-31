@@ -79,4 +79,6 @@ alias dstat='dstat -tlamp'
 #alias tmux="LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/tmux"
 export EDITOR='vim'
 
+# rust
+source $HOME/.cargo/env
 
