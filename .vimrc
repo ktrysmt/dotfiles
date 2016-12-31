@@ -69,7 +69,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 call plug#begin()
 Plug 'jbgutierrez/vim-babel', { 'for': 'javascript' }
-Plug 'mattn/webapi-vim'
+" Plug 'mattn/webapi-vim'
 " Plug 'jpo/vim-railscasts-theme'
 " Plug 'flowtype/vim-flow', {'for': 'javascript'}
 " Plug 'w0ng/vim-hybrid'
@@ -77,11 +77,11 @@ Plug 'tomasr/molokai'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Townk/vim-autoclose'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
-Plug 'roxma/SimpleAutoComplPop'
+" Plug 'roxma/SimpleAutoComplPop'
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/unite.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'Shougo/vimproc', {'do' : 'make'}
+" Plug 'Shougo/vimproc', {'do' : 'make'}
 " Plug 'Shougo/vimproc', {
 "   \ 'build' : {
 "     \ 'windows' : 'make -f make_mingw32.mak',
@@ -108,8 +108,8 @@ Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'lambdalisue/vim-unified-diff'
 Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'koron/vim-gosrc', { 'for': 'go' }
-Plug 'tpope/vim-abolish'
+" Plug 'koron/vim-gosrc', { 'for': 'go' }
+" Plug 'tpope/vim-abolish'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'vimtaku/hl_matchit.vim'
 Plug 'osyo-manga/vim-over'
@@ -194,6 +194,7 @@ if !exists('g:neocomplete#keyword_patterns')
  let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
 " Plugin key-mappings.
 inoremap <expr><C-g>     neocomplete#undo_completion()
 inoremap <expr><C-l>     neocomplete#complete_common_string()
@@ -225,12 +226,8 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 "let g:neocomplete#disable_auto_complete = 1
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-"autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-"autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-"let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 "-------------------------
 " syntax check
@@ -295,7 +292,7 @@ let NERDTreeIgnore = ['node_modules','.git']
 let g:NERDTreeChDirMode = 2
 
 "-------------------------
-" NERDTree
+" neosnippet
 "-------------------------
 " Plugin key-mappings.
 imap <C-s>     <Plug>(neosnippet_expand_or_jump)
@@ -416,11 +413,11 @@ map <silent> [Tag]p :tabprevious<CR>
 "-------------------------
 " roxma/SimpleAutoComplPop
 "-------------------------
-autocmd FileType go call sacp#enableForThisBuffer({ "matches": [
-  \ { '=~': '\v[a-zA-Z]{4}$' , 'feedkeys': "\<C-x>\<C-o>"} ,
-  \ { '=~': '\.$'            , 'feedkeys': "\<C-x>\<C-o>", "ignoreCompletionMode":1} ,
-  \ ]
-  \ })
+" autocmd FileType go call sacp#enableForThisBuffer({ "matches": [
+"   \ { '=~': '\v[a-zA-Z]{4}$' , 'feedkeys': "\<C-x>\<C-o>"} ,
+"   \ { '=~': '\.$'            , 'feedkeys': "\<C-x>\<C-o>", "ignoreCompletionMode":1} ,
+"   \ ]
+"   \ })
 
 "-------------------------
 " jsx

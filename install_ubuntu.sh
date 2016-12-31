@@ -1,4 +1,4 @@
-GOLANG_VERSION=1.6.2
+GOLANG_VERSION=1.7.2
 
 echo "-----------------------------------------------------";
 echo "You should install zsh and do that 'chsh -s /bin/zsh'";
