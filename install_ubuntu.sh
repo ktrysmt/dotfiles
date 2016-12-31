@@ -6,7 +6,7 @@ sudo apt-get -y install git ctags curl zsh tig make gcc dstat silversearcher-ag
 sudo apt-get -y install libssl-dev libcurl4-openssl-dev
 sudo apt-get -y install liblua5.2-dev lua5.2 python-dev ncurses-dev
 sudo apt-get -y install mercurial gettext libncurses5-dev libxmu-dev libgtk2.0-dev libperl-dev python-dev python3-dev ruby-dev tcl-dev
-sudo apt-get -y install luajit
+sudo apt-get -y install luajit tmux
 
 echo "-----------------------------------------------------";
 echo "Setup my env"
@@ -16,6 +16,7 @@ git clone https://github.com/ktrysmt/dotfiles  ~/dotfiles
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/.vimrc ~/.vimrc
+ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 echo "[ghq]
   root = ~/project/src" > ~/.gitconfig
 
