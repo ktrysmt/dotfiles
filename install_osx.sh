@@ -9,6 +9,7 @@ brew install reattach-to-user-namespace
 brew install vim --with-lua
 brew install Caskroom/cask/iterm2
 brew install Caskroom/cask/shiftit
+brew cask install atom
 brew tap jhawthorn/fzy
 brew install fzy
 

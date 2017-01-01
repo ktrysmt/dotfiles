@@ -288,7 +288,7 @@ let g:NERDTreeShowHidden=1
 " if has('vim_starting') &&  file_name == ""
 "     autocmd VimEnter * execute 'NERDTree ./'
 " endif
-let NERDTreeIgnore = ['node_modules','.git']
+let NERDTreeIgnore = ['node_modules','.git', ".DS_Store"]
 let g:NERDTreeChDirMode = 2
 
 "-------------------------
@@ -432,7 +432,7 @@ augroup END
 "-------------------------
 " emmet
 "-------------------------
-let g:user_emmet_leader_key='<c-u>'
+let g:user_emmet_leader_key='<C-y>'
 let g:user_emmet_mode='i'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
