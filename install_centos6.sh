@@ -80,10 +80,9 @@ curl -o- -L https://yarnpkg.com/install.sh | bash
 echo "-----------------------------------------------------";
 echo "Setup Other";
 echo "-----------------------------------------------------\n";
+sudo rpm -ivh http://swiftsignal.com/packages/centos/6/x86_64/the-silver-searcher-0.13.1-1.el6.x86_64.rpm
 go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
 mkdir -p ~/.config/peco/
 cat ~/dotfiles/peco/config.json > ~/.config/peco/config.json
 vim +":PlugInstall | :GoInstallBinaries" +:q
-# ag
-sudo rpm -ivh http://swiftsignal.com/packages/centos/6/x86_64/the-silver-searcher-0.13.1-1.el6.x86_64.rpm
