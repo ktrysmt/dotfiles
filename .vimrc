@@ -113,6 +113,7 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'Lokaltog/vim-easymotion'
 Plug 'vimtaku/hl_matchit.vim'
 Plug 'osyo-manga/vim-over'
+Plug 'Chiel92/vim-autoformat', { 'for': 'javascript' }
 " Plug 'leafgarland/typescript-vim', {
 " \ 'autoload' : {
 " \   'filetypes' : ['typescript'],
@@ -441,7 +442,8 @@ autocmd FileType html,css EmmetInstall
 "-------------------------
 autocmd! BufWritePost * :Neomake
 let g:neomake_go_enabled_makers = ['go', 'golint', 'govet', 'errcheck']
-let g:neomake_javascript_enabled_makers = ['eslint', 'xo']
+let g:neomake_javascript_enabled_makers = ['xo', 'eslint']
+let g:neomake_javascript_xo_maker = { 'args': ['--space'] }
 let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
 let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
 let g:neomake_verbose = 0
@@ -493,6 +495,12 @@ map <silent> sa <Plug>(operator-surround-append)
 map <silent> sd <Plug>(operator-surround-delete)
 map <silent> sr <Plug>(operator-surround-replace)
 map y <Plug>(operator-stay-cursor-yank)
+
+"-------------------------
+" vim-autoformat
+"-------------------------
+let g:formatdef_xo = '"xo --fix --space --stdin"'
+let g:formatters_javascript = ['xo']
 
 "-------------------------
 " env
