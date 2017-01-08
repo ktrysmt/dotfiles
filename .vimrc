@@ -100,6 +100,7 @@ Plug 'airblade/vim-gitgutter'
 " [for Javascript]
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript', 'jsx'] }
 Plug 'scrooloose/syntastic', { 'for': ['rust', 'javascript'] }
+Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'jsx'] }
 Plug 'Chiel92/vim-autoformat', { 'for': 'javascript' }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'jsx'] }  
 Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript', 'jsx'] } 
@@ -325,9 +326,10 @@ autocmd FileType html,css EmmetInstall
 "-------------------------
 " Neomake
 "-------------------------
-autocmd! BufWritePost * :Neomake
+" autocmd! BufWritePost * :Neomake
+autocmd! BufWritePost,BufEnter * Neomake
 let g:neomake_go_enabled_makers = ['go', 'golint', 'govet', 'errcheck']
-let g:neomake_javascript_enabled_makers = ['xo', 'eslint']
+let g:neomake_javascript_enabled_makers = ['eslint', 'xo']
 let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
 let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
 let g:neomake_verbose = 0
