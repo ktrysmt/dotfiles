@@ -53,7 +53,7 @@ filetype plugin indent on
 autocmd QuickFixCmdPost *grep* cwindow
 
 "---------------------------
-"" Simple commands.
+" Vimrc
 "---------------------------
 command! Rv source $MYVIMRC
 command! Ev edit $MYVIMRC
@@ -68,64 +68,27 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 call plug#begin()
-Plug 'jbgutierrez/vim-babel', { 'for': 'javascript' }
-" Plug 'mattn/webapi-vim'
-" Plug 'jpo/vim-railscasts-theme'
-" Plug 'flowtype/vim-flow', {'for': 'javascript'}
-" Plug 'w0ng/vim-hybrid'
+" [for All]
 Plug 'tomasr/molokai'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Townk/vim-autoclose'
-Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
-" Plug 'roxma/SimpleAutoComplPop'
-Plug 'scrooloose/syntastic'
 Plug 'Shougo/unite.vim'
 Plug 'junegunn/vim-easy-align'
-" Plug 'Shougo/vimproc', {'do' : 'make'}
-" Plug 'Shougo/vimproc', {
-"   \ 'build' : {
-"     \ 'windows' : 'make -f make_mingw32.mak',
-"     \ 'cygwin' : 'make -f make_cygwin.mak',
-"     \ 'mac' : 'make -f make_mac.mak',
-"     \ 'unix' : 'make -f make_unix.mak',
-"   \ },
-" \ }
 Plug 'LeafCage/yankround.vim'
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
-Plug 'mhinz/vim-startify'
 Plug 'Shougo/neocomplete.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'soramugi/auto-ctags.vim'
-" Plug 'jelera/vim-javascript-syntax', { 'for': ['javascript','html'] }
-Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript'] }
 Plug 'editorconfig/editorconfig-vim'
-Plug 'jiangmiao/simple-javascript-indenter', { 'for': ['javascript','html'] }
-Plug 'mattn/jscomplete-vim', { 'for': 'javascript' }
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'szw/vim-tags'
 Plug '907th/vim-auto-save'
-Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'lambdalisue/vim-unified-diff'
-Plug 'fatih/vim-go', { 'for': 'go' }
-" Plug 'koron/vim-gosrc', { 'for': 'go' }
-" Plug 'tpope/vim-abolish'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'vimtaku/hl_matchit.vim'
 Plug 'osyo-manga/vim-over'
-Plug 'Chiel92/vim-autoformat', { 'for': 'javascript' }
-" Plug 'leafgarland/typescript-vim', {
-" \ 'autoload' : {
-" \   'filetypes' : ['typescript'],
-" \ }
-" \}
-Plug 'jason0x43/vim-js-indent', { 'for': 'javascript' }
-" Plug 'Quramy/tsuquyomi'
-Plug 'othree/yajs.vim', { 'for': ['javascript', 'html'] }
-" Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
-Plug 'mxw/vim-jsx', { 'for': ['javascript', 'jsx'] }
 Plug 'neomake/neomake'
-Plug 'benjie/neomake-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-operator-replace'
@@ -134,8 +97,16 @@ Plug 'osyo-manga/vim-operator-stay-cursor'
 Plug 'thinca/vim-qfreplace'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-" Plug 'vimwiki/vimwiki'
-" Plug 'yuttie/comfortable-motion.vim'
+" [for Javascript]
+Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript', 'jsx'] }
+Plug 'scrooloose/syntastic', { 'for': ['rust', 'javascript'] }
+Plug 'Chiel92/vim-autoformat', { 'for': 'javascript' }
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'jsx'] }  
+Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript', 'jsx'] } 
+Plug 'benjie/neomake-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
+" [for Go]
+Plug 'fatih/vim-go', { 'for': 'go' }
+" [for Rust]
 Plug 'rust-lang/rust.vim', { 'for': ['rust'] } 
 Plug 'racer-rust/vim-racer', { 'for': ['rust'] } 
 call plug#end()
@@ -172,75 +143,34 @@ endif
 "-------------------------
 " neocomplete
 "-------------------------
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
-" Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
 let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-" Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
    \ 'default' : '',
    \ 'vimshell' : $HOME.'/.vimshell_hist',
    \ 'php' : $HOME.'/.vim/dictionaries/php.dict',
    \ 'scheme' : $HOME.'/.gosh_completions'
    \ }
-" Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
  let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
 inoremap <expr><C-g>     neocomplete#undo_completion()
 inoremap <expr><C-l>     neocomplete#complete_common_string()
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
  return neocomplete#close_popup() . "\<CR>"
- " For no inserting <CR> key.
 endfunction
-" <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-"inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
-" Close popup by <Space>.
-" For cursor moving in insert mode(Not recommended)
-" Or set this.
-"let g:neocomplete#enable_cursor_hold_i = 1
-" Or set this.
-"let g:neocomplete#enable_insert_char_pre = 1
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#disable_auto_complete = 1
-" Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-
-"-------------------------
-" syntax check
-"-------------------------
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_enable_signs = 1
-" let g:syntastic_echo_current_error = 1
-" let g:syntastic_auto_loc_list = 2
-" let g:syntastic_enable_highlighting = 1
-" let g:syntastic_php_php_args = '-l'
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
 
 "-------------------------
 " lightline
@@ -284,28 +214,21 @@ imap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
 cmap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let g:NERDTreeShowHidden=1
-" let file_name = expand("%:p")
-" if has('vim_starting') &&  file_name == ""
-"     autocmd VimEnter * execute 'NERDTree ./'
-" endif
 let NERDTreeIgnore = ['node_modules','.git', ".DS_Store"]
 let g:NERDTreeChDirMode = 2
 
 "-------------------------
 " neosnippet
 "-------------------------
-" Plugin key-mappings.
 imap <C-s>     <Plug>(neosnippet_expand_or_jump)
 smap <C-s>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-s>     <Plug>(neosnippet_expand_target)
-" SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)"
 \: pumvisible() ? "\<C-n>" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)"
 \: "\<TAB>"
-" For snippet_complete marker.
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
@@ -314,7 +237,6 @@ endif
 " vimdiff
 "-------------------------
 set diffexpr=unified_diff#diffexpr()
-" configure with the followings (default values are shown below)
 let unified_diff#executable = 'git'
 let unified_diff#arguments = [
       \   'diff', '--no-index', '--no-color', '--no-ext-diff', '--unified=0',
@@ -324,32 +246,11 @@ let unified_diff#iwhite_arguments = [
       \ ]
 
 "-------------------------
-" incsearch
-"-------------------------
-"map /  <Plug>(incsearch-forward)
-"map ?  <Plug>(incsearch-backward)
-"map g/ <Plug>(incsearch-stay)
-
-"-------------------------
 " easymotion
 "-------------------------
 let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
 let g:EasyMotion_leader_key=";"
 let g:EasyMotion_grouping=1
-
-"-------------------------
-" visualmark.vim
-"-------------------------
-" http://nanasi.jp/articles/vim/visualmark_vim.html
-"map <unique> <F3> <Plug>Vm_toggle_sign
-"map <silent> <unique> mm <Plug>Vm_toggle_sign
-
-"-------------------------
-" TypeScript
-"-------------------------
-let g:js_indent_typescript = 1
-let g:tsuquyomi_definition_split = 3
-"let g:typescript_compiler_options = '--module commonjs --target ES5 --noImplicitAny'
 
 "-------------------------
 " for hl_matchit
@@ -372,11 +273,9 @@ let g:go_disable_autoinstall = 0
 "-------------------------
 " tab control
 "-------------------------
-" Anywhere SID.
 function! s:SID_PREFIX()
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
-" Set tabline.
 function! s:my_tabline()  "{{{
   let s = ''
   for i in range(1, tabpagenr('$'))
@@ -411,23 +310,9 @@ map <silent> [Tag]n :tabnext<CR>
 map <silent> [Tag]p :tabprevious<CR>
 
 "-------------------------
-" roxma/SimpleAutoComplPop
+" vim-jsx
 "-------------------------
-" autocmd FileType go call sacp#enableForThisBuffer({ "matches": [
-"   \ { '=~': '\v[a-zA-Z]{4}$' , 'feedkeys': "\<C-x>\<C-o>"} ,
-"   \ { '=~': '\.$'            , 'feedkeys': "\<C-x>\<C-o>", "ignoreCompletionMode":1} ,
-"   \ ]
-"   \ })
-
-"-------------------------
-" jsx
-"-------------------------
-let g:jsx_ext_required = 1        " ファイルタイプがjsxのとき読み込む．
-let g:jsx_pragma_required = 0     " @から始まるプラグマでは読み込まない．
-augroup Vimrc
-  autocmd!
-  autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-augroup END
+let g:vim_jsx_pretty_colorful_config = 1
 
 "-------------------------
 " emmet
@@ -443,7 +328,6 @@ autocmd FileType html,css EmmetInstall
 autocmd! BufWritePost * :Neomake
 let g:neomake_go_enabled_makers = ['go', 'golint', 'govet', 'errcheck']
 let g:neomake_javascript_enabled_makers = ['xo', 'eslint']
-let g:neomake_javascript_xo_maker = { 'args': ['--space'] }
 let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
 let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
 let g:neomake_verbose = 0
@@ -458,33 +342,9 @@ augroup NeomakeRustConfig
 augroup END
 
 "-------------------------
-" startify
-"-------------------------
-let g:startify_files_number = 5
-let g:startify_list_order = [
-        \ ['♻  最近使ったファイル:'],
-        \ 'files',
-        \ ['♲  最近使ったファイル(カレントディレクトリ下):'],
-        \ 'dir',
-        \ ['⚑  セッション:'],
-        \ 'sessions',
-        \ ['☺  ブックマーク:'],
-        \ 'bookmarks',
-        \ ]
-let g:startify_bookmarks = ["~/.vimrc", "~/.gvimrc"]
-function! s:filter_header(lines) abort
-    let longest_line   = max(map(copy(a:lines), 'len(v:val)'))
-    let centered_lines = map(copy(a:lines),
-        \ 'repeat(" ", (&columns / 2) - (longest_line / 2)) . v:val')
-    return centered_lines
-endfunction
-
-"-------------------------
 " easy-align
 "-------------------------
-" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vmap <Enter> <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
 "-------------------------
