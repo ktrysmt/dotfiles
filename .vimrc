@@ -98,17 +98,18 @@ Plug 'thinca/vim-qfreplace'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " [for Javascript]
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'jsx'], 'do': 'yarn' }
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript', 'jsx'] }
 Plug 'scrooloose/syntastic', { 'for': ['rust', 'javascript'] }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'jsx'] }
-Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'jsx'] }  
-Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript', 'jsx'] } 
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'jsx'] }
+Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript', 'jsx'] }
 Plug 'benjie/neomake-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
 " [for Go]
-Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 " [for Rust]
-Plug 'rust-lang/rust.vim', { 'for': ['rust'] } 
-Plug 'racer-rust/vim-racer', { 'for': ['rust'] } 
+Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
+Plug 'racer-rust/vim-racer', { 'for': ['rust'] }
 call plug#end()
 
 "-------------------------
@@ -170,7 +171,7 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-e>  neocomplete#cancel_popup()
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
 "-------------------------
 " lightline
@@ -335,7 +336,7 @@ let g:neomake_verbose = 0
 
 "-------------------------
 " rust
-"------------------------- 
+"-------------------------
 let g:rustfmt_autosave = 1
 augroup NeomakeRustConfig
   autocmd!
