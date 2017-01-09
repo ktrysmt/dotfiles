@@ -23,8 +23,8 @@ ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/.vimrc ~/.vimrc
 ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
-echo "[ghq]
-  root = ~/project/src" > ~/.gitconfig
+ln -s ~/dotfiles/.tern-project ~/.tern-project
+ln -s ~/dotfiles/.gitconfig ~/.gitconfig
 
 echo "-----------------------------------------------------";
 echo "Install Node"
