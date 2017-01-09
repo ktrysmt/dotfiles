@@ -1,20 +1,26 @@
 # dotfiles
 
-## how to use
+## How to Install
+
+### Ubuntu
+
+```
+sh -c "$(curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_ubuntu.sh)"
+```
+
+### macOS
+
+```
+sh -c "$(curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_osx.sh)"
+```
 
 ### CentOS 6
 
 ```
-sh -c "$(wget https://raw.github.com/keidrip/dotfiles/master/install_centos6.sh -O -)"
+sh -c "$(curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_centos6.sh)"
 ```
 
-### Ubuntu 14.04
-
-```
-sh -c "$(wget https://raw.github.com/keidrip/dotfiles/master/install_ubuntu1404.sh -O -)"
-```
-
-## about windows
+### Windows
 
 - use msys2
 - and add module {git, make, gcc, vim}
