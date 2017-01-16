@@ -122,21 +122,6 @@ let g:unite_enable_split_vertically = 1
 :map <C-p> :Unite yankround<Return>
 
 "-------------------------
-" Unite with ag
-"-------------------------
-let g:unite_enable_start_insert = 1
-let g:unite_enable_ignore_case = 1
-let g:unite_enable_smart_case = 1
-nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
-nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
-if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-  let g:unite_source_grep_recursive_opt = ''
-endif
-
-"-------------------------
 " neocomplete
 "-------------------------
 let g:acp_enableAtStartup = 0
@@ -147,25 +132,17 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 let g:neocomplete#sources#dictionary#dictionaries = {
    \ 'default' : '',
    \ 'vimshell' : $HOME.'/.vimshell_hist',
-   \ 'php' : $HOME.'/.vim/dictionaries/php.dict',
    \ 'scheme' : $HOME.'/.gosh_completions'
    \ }
 if !exists('g:neocomplete#keyword_patterns')
  let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
- return neocomplete#close_popup() . "\<CR>"
-endfunction
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-e>  neocomplete#cancel_popup()
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType * setlocal completeopt-=preview
 " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
 "-------------------------
@@ -310,7 +287,7 @@ autocmd FileType html,css EmmetInstall
 "-------------------------
 " Neomake
 "-------------------------
-autocmd! BufWritePost * :Neomake
+autocmd! BufWritePost,BufEnter * Neomake
 let g:neomake_go_enabled_makers = ['go', 'golint', 'govet']
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
