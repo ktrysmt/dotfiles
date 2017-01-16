@@ -10,8 +10,13 @@ brew install vim --with-lua
 brew install Caskroom/cask/iterm2
 brew install Caskroom/cask/shiftit
 brew cask install atom
-brew tap jhawthorn/fzy
-brew install fzy
+brew cask install hyperswitch
+brew cask install karabiner
+brew cask install diffmerge
+brew cask install flux
+brew cask install virtualbox
+brew cask install vagrant
+brew cask install firefox
 
 echo "-----------------------------------------------------";
 echo "Setup my env"
@@ -58,5 +63,5 @@ echo "Rested tasks"
 echo "-----------------------------------------------------";
 echo "1. chsh -s /bin/zsh"
 echo "2. source ~/.zshrc"
-echo "3. After, should install coteditor atom hyperswitch karabiner diffmerge flux virtualbox vagrant firefox, and Ricty diminished Font."
+echo "3. After; should install coteditor, Ricty diminished Font."
 

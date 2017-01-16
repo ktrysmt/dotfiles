@@ -11,7 +11,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_ubunt
 ### macOS
 
 ```
-sh -c "$(curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_osx.sh)"
+sh -c "$(curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_macos.sh)"
 ```
 
 ### CentOS 6
