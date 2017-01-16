@@ -39,8 +39,6 @@ set matchtime=1
 set wrap
 set wildmode=longest:full,full
 set ignorecase
-nnoremap + <C-a>
-nnoremap - <C-x>
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 runtime macros/matchit.vim
 cabbr w!! w !sudo tee > /dev/null %
@@ -74,14 +72,12 @@ Plug 'Townk/vim-autoclose'
 Plug 'Shougo/unite.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'LeafCage/yankround.vim'
-Plug 'Shougo/neocomplete.vim'
+Plug 'Shougo/neocomplete.vim', { 'for': ['html', 'css', 'php', 'go'] } 
 Plug 'itchyny/lightline.vim'
 Plug 'soramugi/auto-ctags.vim'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'szw/vim-tags'
-Plug '907th/vim-auto-save'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'lambdalisue/vim-unified-diff'
@@ -99,11 +95,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " [for Javascript]
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'jsx'], 'do': 'yarn' }
-Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript', 'jsx'] }
-Plug 'scrooloose/syntastic', { 'for': ['rust', 'javascript'] }
+Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'jsx'] }
+Plug 'scrooloose/syntastic', { 'for': 'rust' }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'jsx'] }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'jsx'] }
-Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript', 'jsx'] }
 Plug 'benjie/neomake-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
 " [for Go]
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
@@ -200,12 +195,6 @@ imap <silent> <C-a> <Esc>:TagbarToggle<CR>
 cmap <silent> <C-a> <C-u>:TagbarToggle<CR>
 
 "-------------------------
-" auto save
-"-------------------------
-let g:auto_save = 0
-let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
-
-"-------------------------
 " NERDTree
 "-------------------------
 nmap <silent> <C-e>      :NERDTreeToggle<CR>
@@ -258,7 +247,7 @@ let g:EasyMotion_grouping=1
 "-------------------------
 let g:hl_matchit_enable_on_vim_startup = 1
 let g:hl_matchit_hl_groupname = 'Title'
-let g:hl_matchit_allow_ft = 'vim\|ruby\|sh\|php\|javascript\|go'
+let g:hl_matchit_allow_ft = 'vim\|ruby\|sh\|php\|javascript\|go\|rust'
 
 "-------------------------
 " vim-go
@@ -311,11 +300,6 @@ map <silent> [Tag]n :tabnext<CR>
 map <silent> [Tag]p :tabprevious<CR>
 
 "-------------------------
-" vim-jsx
-"-------------------------
-let g:vim_jsx_pretty_colorful_config = 1
-
-"-------------------------
 " emmet
 "-------------------------
 let g:user_emmet_leader_key='<C-y>'
@@ -326,9 +310,8 @@ autocmd FileType html,css EmmetInstall
 "-------------------------
 " Neomake
 "-------------------------
-" autocmd! BufWritePost * :Neomake
-autocmd! BufWritePost,BufEnter * Neomake
-let g:neomake_go_enabled_makers = ['go', 'golint', 'govet', 'errcheck']
+autocmd! BufWritePost * :Neomake
+let g:neomake_go_enabled_makers = ['go', 'golint', 'govet']
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
 let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
