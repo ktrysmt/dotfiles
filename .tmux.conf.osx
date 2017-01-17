@@ -25,7 +25,7 @@ bind - split-window -v -c "#{pane_current_path}";
 # ---------
 set -sg escape-time 0
 #set-window-option -g mode-keys vi
-set -g status-interval 1
+# set -g status-interval 1
 # ウィンドウ分割後もカレントディレクトリに留まる
 set -g base-index 1
 set -g pane-base-index 1
@@ -44,13 +44,13 @@ set -g status-bg colour235
 set -g status-left '[#[fg=cyan,bold]#(whoami)#[default]]'
 set -g status-right-length 80
 set -g status-right-bg colour235
+set -g status-right '#[fg=white][%Y/%m/%d(%a)%H:%M]#[default]'
 set -g status-right \
 "#{?client_prefix,#[reverse],}"\
-"#[fg=white]#(${HOME}/dotfiles/bin/git-echo-username-and-email)"\
-" #[fg=cyan][%Y/%m/%d(%a)%H:%M]#[default]"
+"#[fg=cyan][%Y/%m/%d(%a)%H:%M]#[default]"
+# "#[fg=white]#(${HOME}/dotfiles/bin/git-echo-username-and-email)"\
 # "#[fg=white]#(${HOME}/dotfiles/bin/git-echo-branch-tmux-current-pane)"\
 
-# set -g status-right '#[fg=white][%Y/%m/%d(%a)%H:%M]#[default]'
 # コピーモードのキーバインドをviライクにする
 setw -g mode-keys vi
 # ウィンドウ名が実行中のコマンド名になるのを止める
@@ -62,9 +62,8 @@ setw -g automatic-rename off
 setw -g window-status-current-fg black
 setw -g window-status-current-bg white
 # set-window-option -g allow-rename off
-set-window-option -g window-status-format " #I: #(basename $PWD) "
-set-window-option -g window-status-current-format "#[fg=colour255,bg=colour27,bold] #I: #(${HOME}/dotfiles/bin/sh-echo-current-dir) #[default]"
-
+# set-window-option -g window-status-format " #I: #(basename $PWD) "
+# set-window-option -g window-status-current-format "#[fg=colour255,bg=colour27,bold] #I: #(${HOME}/dotfiles/bin/sh-echo-current-dir) #[default]"
 
 # -------------- 
 # pane

@@ -76,12 +76,12 @@ alias dstat='dstat -tlamp'
 
 # tmux
 #alias tmux="LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/tmux"
-# show-current-dir-as-window-name() {
-#     tmux set-window-option window-status-format " #I ${PWD:t} " > /dev/null
-#     tmux set-window-option window-status-current-format " #I ${PWD:t} " > /dev/null
-# }
-# show-current-dir-as-window-name
-# add-zsh-hook chpwd show-current-dir-as-window-name
+show-current-dir-as-window-name() {
+    tmux set-window-option window-status-format " #I: ${PWD:t} " > /dev/null
+    tmux set-window-option window-status-current-format " #I: ${PWD:t} " > /dev/null
+}
+show-current-dir-as-window-name
+add-zsh-hook chpwd show-current-dir-as-window-name
 
 # vim
 export EDITOR='vim'
