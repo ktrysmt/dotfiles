@@ -62,8 +62,9 @@ setw -g automatic-rename off
 setw -g window-status-current-fg black
 setw -g window-status-current-bg white
 # set-window-option -g allow-rename off
-set-window-option -g window-status-format " #I: #W "
-set-window-option -g window-status-current-format "#[fg=colour255,bg=colour241,bold] #I: #W #[default]"
+set-window-option -g window-status-format " #I: #(basename $PWD) "
+set-window-option -g window-status-current-format "#[fg=colour255,bg=colour27,bold] #I: #(${HOME}/dotfiles/bin/sh-echo-current-dir) #[default]"
+
 
 # -------------- 
 # pane
