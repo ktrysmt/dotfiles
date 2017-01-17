@@ -100,7 +100,7 @@ Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html'], 'do': 'yarn' }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript'] }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 " [for Go]
-Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
+Plug 'fatih/vim-go', { 'for': 'go' }
 " [for Rust]
 Plug 'scrooloose/syntastic', { 'for': ['rust'] }
 Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
