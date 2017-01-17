@@ -72,7 +72,7 @@ Plug 'Townk/vim-autoclose'
 Plug 'Shougo/unite.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'LeafCage/yankround.vim'
-Plug 'Shougo/neocomplete.vim', { 'for': ['html', 'css', 'php', 'go'] } 
+Plug 'Shougo/neocomplete.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'soramugi/auto-ctags.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -94,15 +94,15 @@ Plug 'thinca/vim-qfreplace'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " [for Javascript]
-Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'jsx'], 'do': 'yarn' }
-Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'jsx'] }
-Plug 'scrooloose/syntastic', { 'for': 'rust' }
-Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'jsx'] }
-Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'jsx'] }
-Plug 'benjie/neomake-local-eslint.vim', { 'for': ['javascript', 'jsx'] }
+Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
+Plug 'jaawerth/nrun.vim', { 'for': ['javascript'] } 
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html'], 'do': 'yarn' }
+Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript'] }
+Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 " [for Go]
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 " [for Rust]
+Plug 'scrooloose/syntastic', { 'for': ['rust'] }
 Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
 Plug 'racer-rust/vim-racer', { 'for': ['rust'] }
 call plug#end()
@@ -289,7 +289,10 @@ autocmd FileType html,css EmmetInstall
 "-------------------------
 autocmd! BufWritePost,BufEnter * Neomake
 let g:neomake_go_enabled_makers = ['go', 'golint', 'govet']
-let g:neomake_javascript_enabled_makers = ['eslint']
+if executable('nrun')
+  let g:neomake_javascript_eslint_exe = nrun#Which('eslint')
+  let g:neomake_javascript_enabled_makers = ['eslint']
+endif
 let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
 let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
 let g:neomake_verbose = 0
