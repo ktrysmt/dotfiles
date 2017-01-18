@@ -25,7 +25,7 @@ bind - split-window -v -c "#{pane_current_path}";
 # ---------
 set -sg escape-time 0
 #set-window-option -g mode-keys vi
-# set -g status-interval 1
+set -g status-interval 30
 # ウィンドウ分割後もカレントディレクトリに留まる
 set -g base-index 1
 set -g pane-base-index 1
@@ -64,6 +64,10 @@ setw -g window-status-current-bg white
 # set-window-option -g allow-rename off
 # set-window-option -g window-status-format " #I: #(basename $PWD) "
 # set-window-option -g window-status-current-format "#[fg=colour255,bg=colour27,bold] #I: #(${HOME}/dotfiles/bin/sh-echo-current-dir) #[default]"
+# set -g visual-activity on
+# setw -g monitor-activity on
+# set -g visual-silence on
+# setw -g monitor-silence 30
 
 # -------------- 
 # pane
