@@ -26,7 +26,6 @@ bind-key -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
 set -sg escape-time 0
 #set-window-option -g mode-keys vi
 set -g status-interval 30
-# ウィンドウ分割後もカレントディレクトリに留まる
 set -g base-index 1
 set -g pane-base-index 1
 set -g terminal-overrides 'xterm*:smcup@:rmcup@'
