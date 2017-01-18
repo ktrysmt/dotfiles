@@ -93,8 +93,9 @@ Plug 'osyo-manga/vim-operator-stay-cursor'
 Plug 'thinca/vim-qfreplace'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-" [for Javascript]
+" [for HTML/CSS ]
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
+" [for Javascript]
 Plug 'jaawerth/nrun.vim', { 'for': ['javascript'] } 
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html'], 'do': 'yarn' }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript'] }
