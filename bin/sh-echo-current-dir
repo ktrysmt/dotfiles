@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+dir_name=`tmux display-message -p -F "#{pane_current_path}"`
+
+[ ! -z ${dir_name} ] && echo "$(basename ${dir_name})"
