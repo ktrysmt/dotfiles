@@ -31,7 +31,6 @@ set number
 set noswapfile
 set nrformats=
 set cindent
-nnoremap Y y$
 set display=lastline
 set pumheight=10
 set showmatch
@@ -39,6 +38,8 @@ set matchtime=1
 set wrap
 set wildmode=longest:full,full
 set ignorecase
+nnoremap Y y$
+nnoremap cn *``cgn
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 runtime macros/matchit.vim
 cabbr w!! w !sudo tee > /dev/null %
