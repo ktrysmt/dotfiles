@@ -296,8 +296,10 @@ autocmd FileType html,css EmmetInstall
 " Neomake
 "-------------------------
 autocmd! BufWritePost,BufEnter * Neomake
-let g:neomake_go_enabled_makers = ['go', 'golint', 'govet']
-if executable('nrun')
+if (&ft=='go')
+  let g:neomake_go_enabled_makers = ['go', 'golint', 'govet']
+endif
+if (&ft=='javascript')
   let g:neomake_javascript_eslint_exe = nrun#Which('eslint')
   let g:neomake_javascript_enabled_makers = ['eslint']
 endif
