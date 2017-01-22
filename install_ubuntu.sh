@@ -23,6 +23,7 @@ ln -s ~/dotfiles/.gitconfig ~/.gitconfig
 echo "-----------------------------------------------------";
 echo "Install Vim with lua";
 echo "-----------------------------------------------------\n";
+mkdir /tmp/dotfiles
 cd /tmp/dotfiles
 git clone https://github.com/vim/vim
 cd vim;
@@ -37,6 +38,7 @@ make && sudo make install
 echo "-----------------------------------------------------";
 echo "Install Go";
 echo "-----------------------------------------------------\n";
+cd /tmp/dotfiles
 GOLANG_VERSION=1.7.4
 wget https://storage.googleapis.com/golang/go$GOLANG_VERSION.linux-amd64.tar.gz --no-check-certificate
 tar -C /usr/local -xzf go$GOLANG_VERSION.linux-amd64.tar.gz
@@ -48,6 +50,7 @@ export GOPATH=$HOME/project
 echo "-----------------------------------------------------";
 echo "Install Node"
 echo "-----------------------------------------------------";
+cd ~/;
 curl -L git.io/nodebrew | perl - setup
 ~/.nodebrew/nodebrew install-binary stable
 ~/.nodebrew/nodebrew use stable
