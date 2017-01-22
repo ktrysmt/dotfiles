@@ -1,3 +1,10 @@
+#!/bin/sh
+set -e
+GOLANG_VERSION=1.7.4;
+if [ ! $PASSWORD ] && [ `who am i | awk '{print $1}'` = "vagrant" ]; then \
+  PASSWORD="vagrant";
+fi;
+
 echo -e "\e[31m-----------------------------------------------------
  Set Swapfile
 -----------------------------------------------------\e[m";
@@ -23,6 +30,8 @@ echo -e "\e[31m-----------------------------------------------------
 -----------------------------------------------------\e[m";
 git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 git clone https://github.com/ktrysmt/dotfiles  ~/dotfiles
+mkdir -p ~/.config/peco/
+ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/.vimrc ~/.vimrc
@@ -49,7 +58,6 @@ echo -e "\e[31m-----------------------------------------------------
  Install Go
 -----------------------------------------------------\e[m";
 cd /tmp/dotfiles
-GOLANG_VERSION=1.7.4
 wget https://storage.googleapis.com/golang/go$GOLANG_VERSION.linux-amd64.tar.gz --no-check-certificate
 sudo tar -C /usr/local -xzf go$GOLANG_VERSION.linux-amd64.tar.gz
 mkdir -p ~/project/bin
@@ -71,7 +79,5 @@ echo -e "\e[31m-----------------------------------------------------
 -----------------------------------------------------\e[m";
 go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
-mkdir -p ~/.config/peco/
-cat ~/dotfiles/peco/config.json > ~/.config/peco/config.json
-vim +":PlugInstall | :GoInstallBinaries" +:q
-
+vim +":PlugInstall" +":GoInstallBinaries" +:q
+echo $PASSWORD | chsh -s /bin/zsh
