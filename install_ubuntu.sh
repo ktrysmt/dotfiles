@@ -79,5 +79,6 @@ echo -e "\e[31m-----------------------------------------------------
 -----------------------------------------------------\e[m";
 go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
+curl https://glide.sh/get | sh
 vim +":PlugInstall" +":GoInstallBinaries" +:q
 echo $PASSWORD | chsh -s /bin/zsh
