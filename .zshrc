@@ -68,20 +68,20 @@ export PATH="$HOME/.yarn/bin:$PATH"
 
 # alias
 alias gdw="git diff --color-words"
-alias ggpull="git pull origin $(current_branch)"
-alias ggpush="git push origin $(current_branch)"
 alias gh='cd $(ghq list -p | peco)'
 alias glogg='git log --graph --name-status --pretty=format:"%C(red)%h %C(green)%an %Creset%s %C(yellow)%d%Creset"'
 alias dstat='dstat -tlamp'
 
 # tmux
 #alias tmux="LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/tmux"
-show-current-dir-as-window-name() {
+if [ `who am i | awk '{print $1}'` != "vagrant" ];then \
+  show-current-dir-as-window-name() {
     tmux set-window-option window-status-format " #I: ${PWD:t} " > /dev/null
     tmux set-window-option window-status-current-format " #I: ${PWD:t} " > /dev/null
-}
-show-current-dir-as-window-name
-add-zsh-hook chpwd show-current-dir-as-window-name
+  }
+  show-current-dir-as-window-name
+  add-zsh-hook chpwd show-current-dir-as-window-name
+fi;
 
 # vim
 export EDITOR='vim'

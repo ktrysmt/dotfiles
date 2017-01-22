@@ -37,7 +37,7 @@ make && sudo make install
 echo "-----------------------------------------------------";
 echo "Install Go";
 echo "-----------------------------------------------------\n";
-GOLANG_VERSION=1.7.2
+GOLANG_VERSION=1.7.4
 wget https://storage.googleapis.com/golang/go$GOLANG_VERSION.linux-amd64.tar.gz --no-check-certificate
 tar -C /usr/local -xzf go$GOLANG_VERSION.linux-amd64.tar.gz
 mkdir -p ~/project/bin
