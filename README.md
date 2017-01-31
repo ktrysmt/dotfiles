@@ -25,6 +25,7 @@ sh -c "curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_centos6
 <details>
 <summary>You have to install manually some settings.</summary>
 
+1. Install the font [RictyDiminished](https://github.com/edihbrandon/RictyDiminished)
 1. Install [MSYS2](https://msys2.github.io/).
 2. Install Packages via pacman.
   - `pacman -S git tig make zsh tmux make winpty`
