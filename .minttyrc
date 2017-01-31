@@ -1,5 +1,5 @@
-BoldAsFont=-1
-Transparency=high
+BoldAsFont=no
+Transparency=low
 CursorType=underscore
 CursorBlinks=no
 Font=Ricty Diminished
