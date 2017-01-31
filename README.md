@@ -24,4 +24,4 @@ sh -c "curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_centos6
 
 1. Install [MSYS2](https://msys2.github.io/)
 2. Setup `.minttyrc`
-3. Install Packages via `pacman -S git tig make zsh tmux`
+3. Install Packages via `pacman -S git tig make zsh tmux make`
