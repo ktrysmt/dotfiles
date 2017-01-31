@@ -22,6 +22,6 @@ sh -c "curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_centos6
 
 ### Windows
 
-- use msys2
-- and add module {git, make, gcc, vim}
-- add it to .bashrc that `alias ls='ls -hF --color=tty'`
+1. Install msys2
+2. Setup `.minttyrc`
+3. Install Packages via `pacman -S git tig make zsh tmux`
