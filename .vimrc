@@ -4,7 +4,7 @@
 let mapleader = "\<Space>"
 set encoding=utf-8
 scriptencoding
-set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+set fileencodings=utf-8,euc-jp,sjis,iso-2022-jp,
 set fileformats=unix,dos,mac
 set ambiwidth=double
 set backspace=start,eol,indent
