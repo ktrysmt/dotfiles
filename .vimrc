@@ -38,6 +38,9 @@ set matchtime=1
 set wrap
 set wildmode=longest:full,full
 set ignorecase
+set completeopt-=preview
+set wildmenu 
+set history=5000 
 nnoremap Y y$
 nnoremap cn *``cgn
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
@@ -50,8 +53,6 @@ augroup highlightIdegraphicSpace
 augroup END
 filetype plugin indent on
 autocmd QuickFixCmdPost *grep* cwindow
-" disable omnifunc preview as scratch
-set completeopt-=preview
 
 "---------------------------
 " Vimrc
