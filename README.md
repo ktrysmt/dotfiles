@@ -23,5 +23,18 @@ sh -c "curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_centos6
 ### Windows
 
 1. Install [MSYS2](https://msys2.github.io/)
-2. Setup `.minttyrc`
-3. Install Packages via `pacman -S git tig make zsh tmux make`
+2. Install Packages via pacman.
+  - `pacman -S git tig make zsh tmux make`
+  - `git clone https://github.com/tarjoilija/zgen.git ~/.zgen`
+  - `git clone https://github.com/ktrysmt/dotfiles ~/dotfiles`
+3. mklink
+  - Open cmd.exe by Administrator.
+  - `cd C:\mssy64\home\USERNAME`
+  - `mklink .minttyrc dotfiles\.minttyrc`
+  - `mklink .zshenv dotfiles\.zshenv.win`
+  - `mklink .zshrc dotfiles\.zshrc.win`
+  - `mklink .vimrc dotfiles\.vimrc`
+  - `mklink .tmux.conf dotfiles\.tmux.conf.win`
+  - `mklink .gitconfig dotfiles\.gitconfig`
+  - `mklink .tern-project dotfiles\.tern-project`
+  - `mklink /D .config dotfiles\.config`
