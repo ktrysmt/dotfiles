@@ -32,7 +32,7 @@ sh -c "curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_centos6
   - `git clone https://github.com/ktrysmt/dotfiles ~/dotfiles`
 3. mklink
   - Open cmd.exe by Administrator.
-  - `cd C:\mssy64\home\USERNAME`
+  - `cd C:\msys64\home\USERNAME`
   - `mklink .minttyrc dotfiles\.minttyrc`
   - `mklink .zshenv dotfiles\.zshenv.win`
   - `mklink .zshrc dotfiles\.zshrc.win`
