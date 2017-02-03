@@ -76,7 +76,7 @@ Plug 'Townk/vim-autoclose'
 Plug 'Shougo/unite.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'LeafCage/yankround.vim'
-" Plug 'Shougo/neocomplete.vim'
+Plug 'Shougo/neocomplete.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'soramugi/auto-ctags.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -130,26 +130,26 @@ let g:unite_enable_split_vertically = 1
 "-------------------------
 " neocomplete
 "-------------------------
-" let g:acp_enableAtStartup = 0
-" let g:neocomplete#enable_at_startup = 1
-" let g:neocomplete#enable_smart_case = 1
-" let g:neocomplete#sources#syntax#min_keyword_length = 3
-" let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-" let g:neocomplete#sources#dictionary#dictionaries = {
-"    \ 'default' : '',
-"    \ 'vimshell' : $HOME.'/.vimshell_hist',
-"    \ 'scheme' : $HOME.'/.gosh_completions'
-"    \ }
-" if !exists('g:neocomplete#keyword_patterns')
-"  let g:neocomplete#keyword_patterns = {}
-" endif
-" let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-" inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-" autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType * setlocal completeopt-=preview
-" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+let g:neocomplete#sources#dictionary#dictionaries = {
+   \ 'default' : '',
+   \ 'vimshell' : $HOME.'/.vimshell_hist',
+   \ 'scheme' : $HOME.'/.gosh_completions'
+   \ }
+if !exists('g:neocomplete#keyword_patterns')
+ let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType * setlocal completeopt-=preview
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
 "-------------------------
 " lightline
