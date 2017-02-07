@@ -1,17 +1,13 @@
 echo "-----------------------------------------------------";
-echo "Export Envirnment valiables"
-echo "-----------------------------------------------------";
-GOLANG_VERSION=1.7.4
-
-echo "-----------------------------------------------------";
 echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
-brew install peco
+sudo brew install peco
 brew install ctags lua wget tmux peco git zsh nkf tree the_silver_searcher
 brew install reattach-to-user-namespace
 brew install vim --with-lua
+sudo brew install go
 
 echo "-----------------------------------------------------";
 echo "Setup my env"
@@ -35,10 +31,8 @@ curl -L git.io/nodebrew | perl - setup
 curl -o- -L https://yarnpkg.com/install.sh | bash
 
 echo "-----------------------------------------------------";
-echo "Install Go"
+echo "Setup Go"
 echo "-----------------------------------------------------";
-wget https://storage.googleapis.com/golang/go$GOLANG_VERSION.darwin-amd64.tar.gz --no-check-certificate
-sudo tar -C /usr/local -xzf go$GOLANG_VERSION.darwin-amd64.tar.gz
 mkdir -p ~/project/bin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/project/bin:$PATH
@@ -69,6 +63,7 @@ brew cask install clipy
 brew cask install google-japanese-ime
 brew cask install firefox
 brew cask install visual-studio-code
+brew cask install google-chrome
 
 echo "-----------------------------------------------------";
 echo "Rested tasks"
