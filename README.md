@@ -5,19 +5,19 @@
 ### Ubuntu
 
 ```
-PASSWORD=vagrant && sh -c "curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_ubuntu.sh"
+PASSWORD=vagrant && curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_ubuntu.sh | sh
 ```
 
 ### macOS
 
 ```
-sh -c "curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_macos.sh"
+curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_macos.sh | sh
 ```
 
 ### CentOS 6
 
 ```
-sh -c "curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_centos6.sh"
+curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_centos6.sh | sh
 ```
 
 ### Windows
