@@ -1,14 +1,19 @@
 echo "-----------------------------------------------------";
+echo "Export Envirnment valiables"
+echo "-----------------------------------------------------";
+GOLANG_VERSION=1.7.4
+
+echo "-----------------------------------------------------";
 echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
-brew tap peco/peco
+brew install peco
 brew install ctags lua wget tmux peco git zsh nkf tree the_silver_searcher
 brew install reattach-to-user-namespace
 brew install vim --with-lua
-brew install Caskroom/cask/iterm2
-brew install Caskroom/cask/shiftit
+brew cask install iterm2
+brew cask install shiftit
 brew cask install atom
 brew cask install hyperswitch
 brew cask install karabiner
@@ -42,7 +47,6 @@ curl -o- -L https://yarnpkg.com/install.sh | bash
 echo "-----------------------------------------------------";
 echo "Install Go"
 echo "-----------------------------------------------------";
-GOLANG_VERSION=1.7.2
 wget https://storage.googleapis.com/golang/go$GOLANG_VERSION.darwin-amd64.tar.gz --no-check-certificate
 tar -C /usr/local -xzf go$GOLANG_VERSION.darwin-amd64.tar.gz
 mkdir -p ~/project/bin
