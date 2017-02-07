@@ -60,7 +60,7 @@ echo "-----------------------------------------------------";
 go get github.com/motemen/ghq
 mkdir -p ~/.config/peco/
 cat ~/dotfiles/.config/peco/config.json > ~/.config/peco/config.json
-vim +":PlugInstall | :GoInstallBinaries" +:q
+vim +":PlugInstall" +":GoInstallBinaries" +:q
 
 echo "-----------------------------------------------------";
 echo "Rested tasks"
