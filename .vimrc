@@ -72,6 +72,7 @@ endif
 call plug#begin()
 " [for All]
 Plug 'tomasr/molokai'
+Plug 'vim-scripts/mru.vim'
 Plug 'Townk/vim-autoclose'
 Plug 'Shougo/unite.vim'
 Plug 'junegunn/vim-easy-align'
