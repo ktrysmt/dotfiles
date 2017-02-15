@@ -339,14 +339,14 @@ map <silent> sd <Plug>(operator-surround-delete)
 map <silent> sr <Plug>(operator-surround-replace)
 map y <Plug>(operator-stay-cursor-yank)
 
+"-------------------------
 " fzf
-
+"-------------------------
 augroup gopkgs
   autocmd!
   autocmd FileType go command! -buffer Import exe 'GoImport' fzf#run({'source': 'gopkgs'})[0]
   autocmd FileType go command! -buffer Doc exe 'GoDoc' fzf#run({'source': 'gopkgs'})[0]
 augroup END
-
 
 "-------------------------
 " env
