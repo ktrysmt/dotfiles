@@ -9,7 +9,10 @@ mv /tmp/RictyDiminished-Regular.ttf /usr/local/share/fonts/
 sudo fc-cache -fv
 
 # applications
-sudo apt-get install launchy
+sudo add-apt-repository ppa:nilarimogard/webupd8
+sudo apt-get update
+sudo apt-get install albert
+#sudo apt-get install launchy
 sudo apt-get install chromium-browser
 
 # xkb
