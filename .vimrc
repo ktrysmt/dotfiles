@@ -106,7 +106,7 @@ Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html'], 'do': 'yarn' }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript'] }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 " [for Go]
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all', 'for': 'go' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'thinca/vim-quickrun', { 'for': ['go', 'rust'] }
 " [for Rust]
