@@ -1,2 +1,6 @@
 [ghq]
   root = ~/project/src
+[http "https://gopkg.in"]
+  followRedirects = true
+[alias]
+  refs = !git checkout $(git branch | peco | awk '{ print $NF }')
