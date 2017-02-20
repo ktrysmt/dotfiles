@@ -102,7 +102,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
 " [for Javascript]
 Plug 'jaawerth/nrun.vim', { 'for': ['javascript'] } 
-Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html'], 'do': 'yarn' }
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript'] }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 " [for Go]
