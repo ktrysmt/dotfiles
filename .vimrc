@@ -91,7 +91,7 @@ Plug 'osyo-manga/vim-over'
 Plug 'neomake/neomake'
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
-Plug 'kana/vim-operator-replace'
+" Plug 'kana/vim-operator-replace'
 Plug 'rhysd/vim-operator-surround'
 Plug 'osyo-manga/vim-operator-stay-cursor'
 Plug 'thinca/vim-qfreplace'
@@ -155,7 +155,7 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 "-------------------------
 " lightline
 "-------------------------
-let g:lightline = {'colorscheme': 'landscape'}
+let g:lightline = {'colorscheme': 'wombat'}
 set laststatus=2
 if !has('gui_running')
 set t_Co=256
@@ -333,11 +333,24 @@ nmap ga <Plug>(EasyAlign)
 "-------------------------
 " operetor-user
 "-------------------------
-nmap s <Plug>(operator-replace)
+" nmap s <Plug>(operator-replace)
 map <silent> sa <Plug>(operator-surround-append)
 map <silent> sd <Plug>(operator-surround-delete)
 map <silent> sr <Plug>(operator-surround-replace)
 map y <Plug>(operator-stay-cursor-yank)
+
+"-------------------------
+" vp doesn't replace paste buffer
+"-------------------------
+function! RestoreRegister()
+  let @" = s:restore_reg
+  return ''
+endfunction
+function! s:Repl()
+  let s:restore_reg = @"
+  return "p@=RestoreRegister()\<cr>"
+endfunction
+vmap <silent> <expr> p <sid>Repl()
 
 "-------------------------
 " fzf
