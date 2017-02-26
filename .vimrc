@@ -41,7 +41,6 @@ set ignorecase
 set completeopt-=preview
 set wildmenu 
 set history=5000 
-nnoremap Y y$
 nnoremap cn *``cgn
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 runtime macros/matchit.vim
