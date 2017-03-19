@@ -107,7 +107,7 @@ Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 " [for Go]
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'thinca/vim-quickrun', { 'for': ['go', 'rust'] }
+Plug 'thinca/vim-quickrun', { 'for': ['go', 'rust', 'javascript'] }
 " [for Rust]
 Plug 'scrooloose/syntastic', { 'for': ['rust'] }
 Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
