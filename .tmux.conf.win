@@ -37,7 +37,7 @@ set-option -g terminal-overrides "xterm-color:khome=\033[1~"
 # -------------- 
 # status
 # -------------- 
-# set -g status-position top;
+set -g status-position top;
 set -g status-fg white
 set -g status-bg colour235
 set -g status-left '[#[fg=cyan,bold]#(whoami)#[default]]'
