@@ -4,3 +4,5 @@
   followRedirects = true
 [alias]
   refs = !git checkout $(git branch | peco | awk '{ print $NF }')
+[diff]
+  indentHeuristic = true
