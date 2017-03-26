@@ -16,9 +16,9 @@ bind -r L resize-pane -R 10
 bind C-s run "tmux last-pane || tmux last-window || tmux new-window"
 #set-window-option -g monitor-activity on
 bind-key -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
-# bind c new-window -c "#{pane_current_path}";
-# bind | split-window -h -c "#{pane_current_path}";
-# bind - split-window -v -c "#{pane_current_path}";
+bind 'C' new-window -c "#{pane_current_path}";
+bind '%' split-window -h -c "#{pane_current_path}";
+bind '"' split-window -v -c "#{pane_current_path}"; 
 
 # ---------
 # general
