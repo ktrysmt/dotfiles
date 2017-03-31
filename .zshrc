@@ -55,6 +55,7 @@ alias gdw="git diff --color-words"
 alias gh='cd $(ghq list -p | peco)'
 alias glogg='git log --graph --name-status --pretty=format:"%C(red)%h %C(green)%an %Creset%s %C(yellow)%d%Creset"'
 alias dstat='dstat -tlamp'
+alias rg='rg -S'
 
 # tmux
 #alias tmux="LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/tmux"
