@@ -57,6 +57,7 @@ make && sudo make install
 echo "-----------------------------------------------------"; 
 echo "Install Rust";
 echo "-----------------------------------------------------"; 
+cd /tmp/dotfiles
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
 cargo install ripgrep
