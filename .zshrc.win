@@ -88,4 +88,4 @@ add-zsh-hook chpwd show-current-dir-as-window-name
 export EDITOR='vim'
 
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
