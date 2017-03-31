@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-GOLANG_VERSION=1.7.4;
+GOLANG_VERSION=1.8;
 if [ ! $PASSWORD ] && [ `who am i | awk '{print $1}'` = "vagrant" ]; then \
   PASSWORD="vagrant";
 fi;
