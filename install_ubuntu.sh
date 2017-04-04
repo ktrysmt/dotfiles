@@ -19,9 +19,9 @@ echo "-----------------------------------------------------";
 echo " Update & install libraries";
 echo "-----------------------------------------------------"; 
 sudo apt-get -y update
-sudo apt-get -y install git ctags curl zsh tig make gcc dstat 
+sudo apt-get -y install git ctags curl zsh tig make gcc dstat wget
 sudo apt-get -y install libssl-dev libcurl4-openssl-dev
-sudo apt-get -y install liblua5.2-dev lua5.2 python-dev ncurses-dev
+sudo apt-get -y install liblua5.2-dev lua5.2 python-dev ncurses-dev 
 sudo apt-get -y install mercurial gettext libncurses5-dev libxmu-dev libgtk2.0-dev libperl-dev python-dev python3-dev ruby-dev tcl-dev
 sudo apt-get -y install luajit tmux
 
@@ -38,6 +38,8 @@ ln -s ~/dotfiles/.vimrc ~/.vimrc
 ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 ln -s ~/dotfiles/.tern-project ~/.tern-project
 cp ~/dotfiles/.gitconfig ~/.gitconfig
+wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker
+wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker-compose https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose
 
 echo "-----------------------------------------------------"; 
 echo "Install Vim with lua";
