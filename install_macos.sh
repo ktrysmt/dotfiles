@@ -23,8 +23,9 @@ ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
 ln -s ~/dotfiles/.tern-project ~/.tern-project
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
 cp ~/dotfiles/.gitconfig ~/.gitconfig
-wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker
-wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker-compose https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose
+echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker" | zsh
+echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker-compose https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose" | zsh
+wget -O ~/Library/Fonts/RictyDiminished-Regular.ttf https://github.com/edihbrandon/RictyDiminished/raw/master/RictyDiminished-Regular.ttf
 
 echo "-----------------------------------------------------"; 
 echo "Install Rust";
@@ -32,7 +33,6 @@ echo "-----------------------------------------------------";
 cd /tmp/dotfiles
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
-cargo install ripgrep
 
 echo "-----------------------------------------------------";
 echo "Install Node"
@@ -79,6 +79,5 @@ brew cask install google-chrome
 echo "-----------------------------------------------------";
 echo "Rested tasks"
 echo "-----------------------------------------------------";
-echo "1. chsh -s /bin/zsh"
-echo "2. source ~/.zshrc"
-echo "3. After; should install coteditor, Ricty diminished Font."
+sudo sh -c "echo $(which zsh) >> /etc/shells";
+sudo chsh -s $(which zsh)
