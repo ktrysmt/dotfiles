@@ -4,7 +4,7 @@ echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 sudo brew install peco
-brew install ctags lua wget tmux peco git zsh nkf tree the_silver_searcher
+brew install ctags lua wget tmux peco git zsh nkf tree ripgrep
 brew install reattach-to-user-namespace
 brew install vim --with-lua
 sudo brew install go
