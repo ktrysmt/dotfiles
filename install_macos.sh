@@ -15,16 +15,29 @@ echo "-----------------------------------------------------";
 cd ~/
 git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 git clone https://github.com/ktrysmt/dotfiles  ~/dotfiles
+mkdir -p ~/.config/peco/
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/.vimrc ~/.vimrc
 ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
 ln -s ~/dotfiles/.tern-project ~/.tern-project
-ln -s ~/dotfiles/.gitconfig ~/.gitconfig
+ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
+cp ~/dotfiles/.gitconfig ~/.gitconfig
+wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker
+wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker-compose https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose
+
+echo "-----------------------------------------------------"; 
+echo "Install Rust";
+echo "-----------------------------------------------------"; 
+cd /tmp/dotfiles
+curl https://sh.rustup.rs -sSf | sh -s -- -y
+source $HOME/.cargo/env
+cargo install ripgrep
 
 echo "-----------------------------------------------------";
 echo "Install Node"
 echo "-----------------------------------------------------";
+cd ~/
 curl -L git.io/nodebrew | perl - setup
 ~/.nodebrew/nodebrew install-binary stable
 ~/.nodebrew/nodebrew use stable
@@ -42,9 +55,7 @@ echo "-----------------------------------------------------";
 echo "Setup Other";
 echo "-----------------------------------------------------";
 go get github.com/motemen/ghq
-mkdir -p ~/.config/peco/
-cat ~/dotfiles/.config/peco/config.json > ~/.config/peco/config.json
-vim +":PlugInstall" +":GoInstallBinaries" +:q
+vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 
 echo "-----------------------------------------------------";
 echo "Extra applications by brew cask";
