@@ -3,11 +3,8 @@ echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
-sudo brew install peco
-brew install ctags lua wget tmux peco git zsh nkf tree ripgrep
-brew install reattach-to-user-namespace
+brew install peco ctags lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go
 brew install vim --with-lua
-sudo brew install go
 
 echo "-----------------------------------------------------";
 echo "Setup my env"
