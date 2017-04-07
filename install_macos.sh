@@ -3,11 +3,8 @@ echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
-sudo brew install peco
-brew install ctags lua wget tmux peco git zsh nkf tree ripgrep
-brew install reattach-to-user-namespace
+brew install peco ctags lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go
 brew install vim --with-lua
-sudo brew install go
 
 echo "-----------------------------------------------------";
 echo "Setup my env"
@@ -30,14 +27,12 @@ wget -O ~/Library/Fonts/RictyDiminished-Regular.ttf https://github.com/edihbrand
 echo "-----------------------------------------------------"; 
 echo "Install Rust";
 echo "-----------------------------------------------------"; 
-cd /tmp/dotfiles
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
 
 echo "-----------------------------------------------------";
 echo "Install Node"
 echo "-----------------------------------------------------";
-cd ~/
 curl -L git.io/nodebrew | perl - setup
 ~/.nodebrew/nodebrew install-binary stable
 ~/.nodebrew/nodebrew use stable
@@ -55,14 +50,17 @@ echo "-----------------------------------------------------";
 echo "Setup Other";
 echo "-----------------------------------------------------";
 go get github.com/motemen/ghq
+go get github.com/golang/dep/...
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 
 echo "-----------------------------------------------------";
 echo "Extra applications by brew cask";
 echo "-----------------------------------------------------";
+brew cask install google-japanese-ime
 brew cask install iterm2
+brew cask install visual-studio-code
+brew cask install google-chrome
 brew cask install shiftit
-brew cask install atom
 brew cask install hyperswitch
 brew cask install karabiner
 brew cask install diffmerge
@@ -71,13 +69,10 @@ brew cask install virtualbox
 brew cask install vagrant
 brew cask install alfred
 brew cask install clipy
-brew cask install google-japanese-ime
 brew cask install firefox
-brew cask install visual-studio-code
-brew cask install google-chrome
 
 echo "-----------------------------------------------------";
 echo "Rested tasks"
 echo "-----------------------------------------------------";
 sudo sh -c "echo $(which zsh) >> /etc/shells";
-sudo chsh -s $(which zsh)
+chsh -s $(which zsh)
