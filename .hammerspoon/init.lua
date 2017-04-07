@@ -7,6 +7,7 @@ hs.alert.show("config reloaded.")
 local kana = false
 local function handleEvent(e)
   local keyCode = e:getKeyCode()
+  -- hs.alert.show(keyCode)
   local keyUp = (e:getType() == hs.eventtap.event.types.keyUp)
   local result = false
   if keyCode == 104 then
@@ -70,10 +71,12 @@ appsWatcher:start()
 -- escape
 remapKey({'cmd'}, 30, keyCode('escape'))
 
+remapKey({'cmd'}, 48, keyCode('right', {'cmd', 'alt'})) -- tab
+remapKey({'cmd', 'shift'}, 48, keyCode('left', {'cmd', 'alt'}))
+
 -- カーソル移動
 remapKey({'cmd'}, 'h', keyCode('p', {'ctrl'}))
 remapKey({'cmd'}, 39, keyCode('n', {'ctrl'})) -- colon
--- remapKey({'cmd'}, 'j', keyCode('home'))
 remapKey({'cmd'}, 'j', keyCode('a', {'ctrl'}))
 remapKey({'cmd'}, 41, keyCode('e', {'ctrl'})) -- semicolon
 remapKey({'cmd'}, 'k', keyCode('b', {'ctrl'}))
