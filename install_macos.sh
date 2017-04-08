@@ -69,6 +69,7 @@ brew cask install virtualbox
 brew cask install vagrant
 brew cask install alfred
 brew cask install clipy
+brew cask install docker
 brew cask install firefox
 
 echo "-----------------------------------------------------";
