@@ -13,12 +13,14 @@ cd ~/
 git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 git clone https://github.com/ktrysmt/dotfiles  ~/dotfiles
 mkdir -p ~/.config/peco/
+mkdir -p ~/.hammerspoon/
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/.vimrc ~/.vimrc
 ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
 ln -s ~/dotfiles/.tern-project ~/.tern-project
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
+ln -s ~/dotfiles/.hammerspoon/init.lua ~/.hammerspoon/init.lua
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 wget -O ~/Library/Fonts/RictyDiminished-Regular.ttf https://github.com/edihbrandon/RictyDiminished/raw/master/RictyDiminished-Regular.ttf
 
@@ -60,7 +62,6 @@ brew cask install visual-studio-code
 brew cask install google-chrome
 brew cask install shiftit
 brew cask install hyperswitch
-brew cask install karabiner
 brew cask install diffmerge
 brew cask install flux
 brew cask install virtualbox

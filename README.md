@@ -5,10 +5,28 @@
 ### Ubuntu
 
 ```
+curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_ubuntu.sh | sh
+```
+
+### Ubuntu (for Vagrant)
+
+```
 PASSWORD=vagrant && curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_ubuntu.sh | sh
 ```
 
-### macOS
+### Ubuntu (for Desktop)
+
+```
+curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_ubuntu_desktop.sh | sh
+```
+
+### macOS (for Sierra)
+
+```
+curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_macos_sierra.sh | sh
+```
+
+### macOS (<= ElCapitan)
 
 ```
 curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_macos.sh | sh
@@ -48,3 +66,7 @@ curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_centos6.sh | s
   - Open `msys2_zsh.cmd` and Enjoy! :smile:
   
 </details>
+
+## Author
+
+[ktrysmt](https://github.com/ktrysmt)
