@@ -1,0 +1,11 @@
+#!/bin/bash -e
+
+if type networksetup > /dev/null 2>&1; then
+  WIFI_POWER=$(networksetup -getairportpower en0 | grep "On" > /dev/null 2>&1; echo $?)
+  WIFI_NAME=$(networksetup -getairportnetwork en0 | awk -F ": " '{print $2}')
+
+  if [ $WIFI_POWER -eq 0 ];then 
+    echo "⚡︎" \
+      "$WIFI_NAME"
+  fi
+fi
