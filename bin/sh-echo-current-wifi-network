@@ -7,5 +7,7 @@ if type networksetup > /dev/null 2>&1; then
   if [ $WIFI_POWER -eq 0 ];then 
     echo "⚡︎" \
       "$WIFI_NAME"
+  else
+    echo "OFFLINE"
   fi
 fi
