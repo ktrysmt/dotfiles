@@ -49,6 +49,7 @@ export GOPATH=$HOME/project
 echo "-----------------------------------------------------";
 echo "Extra applications by brew cask";
 echo "-----------------------------------------------------";
+brew tap caskroom/cask
 brew cask install google-japanese-ime
 brew cask install iterm2
 brew cask install visual-studio-code
@@ -64,6 +65,7 @@ brew cask install alfred
 brew cask install clipy
 brew cask install docker
 brew cask install firefox
+brew cask cleanup
 
 echo "-----------------------------------------------------";
 echo "Setup Other";
