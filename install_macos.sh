@@ -32,9 +32,11 @@ echo "-----------------------------------------------------";
 echo "Install Node"
 echo "-----------------------------------------------------";
 curl -L git.io/nodebrew | perl - setup
+export PATH=$HOME/.nodebrew/current/bin:$PATH
 ~/.nodebrew/nodebrew install-binary stable
 ~/.nodebrew/nodebrew use stable
 curl -o- -L https://yarnpkg.com/install.sh | bash
+export PATH="$HOME/.yarn/bin:$PATH"
 
 echo "-----------------------------------------------------";
 echo "Setup Go"
@@ -43,13 +45,6 @@ mkdir -p ~/project/bin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/project/bin:$PATH
 export GOPATH=$HOME/project
-
-echo "-----------------------------------------------------";
-echo "Setup Other";
-echo "-----------------------------------------------------";
-go get github.com/motemen/ghq
-go get github.com/golang/dep/...
-vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 
 echo "-----------------------------------------------------";
 echo "Extra applications by brew cask";
@@ -69,6 +64,13 @@ brew cask install alfred
 brew cask install clipy
 brew cask install docker
 brew cask install firefox
+
+echo "-----------------------------------------------------";
+echo "Setup Other";
+echo "-----------------------------------------------------";
+go get github.com/motemen/ghq
+go get github.com/golang/dep/...
+vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 
 echo "-----------------------------------------------------";
 echo "Rested tasks"
