@@ -88,3 +88,6 @@ echo " "
 echo "> Input below for zsh completion."
 echo 'echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker" | zsh'
 echo 'echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker-compose https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose" | zsh'
+echo "> Get it."
+echo "* https://www.dropbox.com/sh/mvtyuvjl8ht5tnz/AABe5m8YmCcKYhUFEiUT7v58a?dl=0"
+echo "* https://s3.amazonaws.com/LACRM_blog/createGcApp.dmg"
