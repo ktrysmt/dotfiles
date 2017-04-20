@@ -57,8 +57,6 @@ brew cask install visual-studio-code
 brew cask install google-chrome
 brew cask install shiftit
 brew cask install hyperswitch
-brew cask install karabiner
-brew cask install diffmerge
 brew cask install flux
 brew cask install virtualbox
 brew cask install vagrant
@@ -66,6 +64,7 @@ brew cask install alfred
 brew cask install clipy
 brew cask install docker
 brew cask install firefox
+brew cask install karabiner
 brew cask cleanup
 
 echo "-----------------------------------------------------";
