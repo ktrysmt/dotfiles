@@ -66,6 +66,7 @@ alias rg='rg -S'
 #
 # tmux func
 #
+PERIOD=5
 if [ `who am i | awk '{print $1}'` != "vagrant" ];then \
   show-current-dir-as-window-name() {
     local PROMPT=$($HOME/dotfiles/bin/git-echo-prompt-is-clean)
@@ -74,6 +75,7 @@ if [ `who am i | awk '{print $1}'` != "vagrant" ];then \
   }
   show-current-dir-as-window-name
   add-zsh-hook chpwd show-current-dir-as-window-name
+  add-zsh-hook periodic show-current-dir-as-window-name
 fi;
 
 #
