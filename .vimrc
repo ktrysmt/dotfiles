@@ -169,6 +169,9 @@ let g:auto_ctags = 1
 set tags+=.git/tags
 let g:auto_ctags_directory_list = ['.git']
 let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes --format=2'
+" open ctag in tab/vertical split
+map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+map <leader><C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 "-------------------------
 " tagbar
@@ -178,7 +181,6 @@ vmap <silent> <C-a> <Esc>:TagbarToggle<CR>
 omap <silent> <C-a>      :TagbarToggle<CR>
 imap <silent> <C-a> <Esc>:TagbarToggle<CR>
 cmap <silent> <C-a> <C-u>:TagbarToggle<CR>
-
 if executable("gotags")
   let g:tagbar_type_go = {
         \ 'ctagstype' : 'go',

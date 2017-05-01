@@ -37,7 +37,7 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 ~/.nodebrew/nodebrew use stable
 curl -o- -L https://yarnpkg.com/install.sh | bash
 export PATH="$HOME/.yarn/bin:$PATH"
-npm install -g jsctags
+
 
 echo "-----------------------------------------------------";
 echo "Setup Go"

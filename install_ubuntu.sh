@@ -84,7 +84,7 @@ curl -L git.io/nodebrew | perl - setup
 ~/.nodebrew/nodebrew use stable
 curl -o- -L https://yarnpkg.com/install.sh | bash
 export PATH="$HOME/.yarn/bin:$PATH"
-npm install -g jsctags
+
 
 echo "-----------------------------------------------------"; 
 echo " Setup Other";
