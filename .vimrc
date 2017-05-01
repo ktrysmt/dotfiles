@@ -106,7 +106,7 @@ Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html'], 'dir': '~/.vim/plug
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript'] }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 " [for Go]
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'thinca/vim-quickrun', { 'for': ['go', 'rust', 'javascript'] }
 " [for Rust]
@@ -356,11 +356,11 @@ vmap <silent> <expr> p <sid>Repl()
 "-------------------------
 " fzf
 "-------------------------
-augroup gopkgs
-  autocmd!
-  autocmd FileType go command! -buffer Import exe 'GoImport' fzf#run({'source': 'gopkgs'})[0]
-  autocmd FileType go command! -buffer Doc exe 'GoDoc' fzf#run({'source': 'gopkgs'})[0]
-augroup END
+" augroup gopkgs
+"   autocmd!
+"   autocmd FileType go command! -buffer Import exe 'GoImport' fzf#run({'source': 'gopkgs'})[0]
+"   autocmd FileType go command! -buffer Doc exe 'GoDoc' fzf#run({'source': 'gopkgs'})[0]
+" augroup END
 
 "-------------------------
 " ripgrep
