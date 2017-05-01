@@ -75,7 +75,7 @@ if [ `who am i | awk '{print $1}'` != "vagrant" ];then \
   }
   show-current-dir-as-window-name
   add-zsh-hook chpwd show-current-dir-as-window-name
-  add-zsh-hook periodic show-current-dir-as-window-name
+  add-zsh-hook precmd show-current-dir-as-window-name
 fi;
 
 #
