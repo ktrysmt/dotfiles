@@ -74,7 +74,6 @@ if [ `who am i | awk '{print $1}'` != "vagrant" ];then \
     tmux set-window-option window-status-current-format " #I:${PWD:t}$PROMPT " > /dev/null
   }
   show-current-dir-as-window-name
-  add-zsh-hook chpwd show-current-dir-as-window-name
   add-zsh-hook precmd show-current-dir-as-window-name
 fi;
 
