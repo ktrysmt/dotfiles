@@ -2,7 +2,7 @@
 
 if type git > /dev/null 2>&1; then
   STATUS=$(git status -s $PWD 2>/dev/null)
-  if [ "$HOGE" = "" ]; then 
+  if [ "$STATUS" ]; then 
     echo "*"; 
     exit 0
   fi
