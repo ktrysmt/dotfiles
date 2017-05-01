@@ -83,12 +83,15 @@ curl -L git.io/nodebrew | perl - setup
 ~/.nodebrew/nodebrew install-binary stable
 ~/.nodebrew/nodebrew use stable
 curl -o- -L https://yarnpkg.com/install.sh | bash
+export PATH="$HOME/.yarn/bin:$PATH"
+npm install -g jsctags
 
 echo "-----------------------------------------------------"; 
 echo " Setup Other";
 echo "-----------------------------------------------------"; 
 go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
+go get -u github.com/jstemmer/gotags
 curl https://glide.sh/get | sh
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 echo $PASSWORD | chsh -s /bin/zsh

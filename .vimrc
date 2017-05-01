@@ -179,6 +179,41 @@ omap <silent> <C-a>      :TagbarToggle<CR>
 imap <silent> <C-a> <Esc>:TagbarToggle<CR>
 cmap <silent> <C-a> <C-u>:TagbarToggle<CR>
 
+if executable("gotags")
+  let g:tagbar_type_go = {
+        \ 'ctagstype' : 'go',
+        \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+        \ ],
+        \ 'sro' : '.',
+        \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+        \ },
+        \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+        \ },
+        \ 'ctagsbin'  : 'gotags',
+        \ 'ctagsargs' : '-sort -silent'
+        \ }
+endif
+if executable("jsctags")
+  let g:tagbar_type_javascript = {
+        \ 'ctagsbin' : 'jsctags'
+        \ }
+endif
+
 "-------------------------
 " NERDTree
 "-------------------------

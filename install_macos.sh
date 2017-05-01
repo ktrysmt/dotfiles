@@ -3,7 +3,7 @@ echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
-brew install peco ctags lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go
+brew install peco ctags lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go gotags
 brew install vim --with-lua
 
 echo "-----------------------------------------------------";
@@ -37,6 +37,7 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 ~/.nodebrew/nodebrew use stable
 curl -o- -L https://yarnpkg.com/install.sh | bash
 export PATH="$HOME/.yarn/bin:$PATH"
+npm install -g jsctags
 
 echo "-----------------------------------------------------";
 echo "Setup Go"
