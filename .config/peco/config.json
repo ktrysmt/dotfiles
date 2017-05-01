@@ -1,5 +1,11 @@
 {
     "Style": {
         "Selected": ["underline", "on_black", "cyan"]
+    },
+    "keymap": {
+        "C-j": "peco.SelectDown",
+        "C-k": "peco.SelectUp",
+        "C-b": "peco.ScrollPageDown",
+        "C-f": "peco.ScrollPageUp"
     }
 }
