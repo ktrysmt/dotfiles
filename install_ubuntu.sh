@@ -91,7 +91,6 @@ echo " Setup Other";
 echo "-----------------------------------------------------"; 
 go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
-go get -u github.com/jstemmer/gotags
 curl https://glide.sh/get | sh
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 echo $PASSWORD | chsh -s /bin/zsh
