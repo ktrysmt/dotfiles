@@ -90,7 +90,8 @@ Plug 'lambdalisue/vim-unified-diff'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'vimtaku/hl_matchit.vim'
 Plug 'osyo-manga/vim-over'
-Plug 'neomake/neomake'
+" Plug 'neomake/neomake'
+Plug 'w0rp/ale'
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
 " Plug 'kana/vim-operator-replace'
@@ -162,6 +163,26 @@ set laststatus=2
 if !has('gui_running')
 set t_Co=256
 endif
+let g:lightline = {
+  \'active': {
+  \  'left': [
+  \    ['mode', 'paste'],
+  \    ['readonly', 'filename', 'modified'],
+  \    ['ale'],
+  \  ]
+  \},
+  \'component_function': {
+  \  'ale': 'ALEStatus'
+  \}
+\ }
+function! ALEStatus()
+  return ALEGetStatusLine()
+endfunction
+
+"-------------------------
+" ale
+"-------------------------
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 
 "-------------------------
 " ctags
@@ -305,26 +326,26 @@ autocmd FileType html,css EmmetInstall
 "-------------------------
 " Neomake
 "-------------------------
-autocmd! BufWritePost,BufEnter * Neomake
-if (&ft=='go')
-  let g:neomake_go_enabled_makers = ['go', 'golint', 'govet']
-endif
-if (&ft=='javascript')
-  let g:neomake_javascript_eslint_exe = nrun#Which('eslint')
-  let g:neomake_javascript_enabled_makers = ['eslint']
-endif
-let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
-let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
-let g:neomake_verbose = 0
+" autocmd! BufWritePost,BufEnter * Neomake
+" if (&ft=='go')
+"   let g:neomake_go_enabled_makers = ['go', 'golint', 'govet']
+" endif
+" if (&ft=='javascript')
+"   let g:neomake_javascript_eslint_exe = nrun#Which('eslint')
+"   let g:neomake_javascript_enabled_makers = ['eslint']
+" endif
+" let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
+" let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
+" let g:neomake_verbose = 0
 
 "-------------------------
 " rust
 "-------------------------
 let g:rustfmt_autosave = 1
-augroup NeomakeRustConfig
-  autocmd!
-  autocmd BufWritePost *.rs Neomake! clippy
-augroup END
+" augroup NeomakeRustConfig
+"   autocmd!
+"   autocmd BufWritePost *.rs Neomake! clippy
+" augroup END
 let g:racer_cmd = '$HOME/.cargo/bin/racer'
 let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
 let $RUST_SRC_PATH = '$HOME/.cargo/src'
