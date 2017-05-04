@@ -90,7 +90,6 @@ Plug 'lambdalisue/vim-unified-diff'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'vimtaku/hl_matchit.vim'
 Plug 'osyo-manga/vim-over'
-" Plug 'neomake/neomake'
 Plug 'w0rp/ale'
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
@@ -108,7 +107,6 @@ Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html'], 'dir': '~/.vim/plug
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript'] }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 " [for Go]
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'thinca/vim-quickrun', { 'for': ['go', 'rust', 'javascript'] }
 " [for Rust]
@@ -324,28 +322,9 @@ let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
 
 "-------------------------
-" Neomake
-"-------------------------
-" autocmd! BufWritePost,BufEnter * Neomake
-" if (&ft=='go')
-"   let g:neomake_go_enabled_makers = ['go', 'golint', 'govet']
-" endif
-" if (&ft=='javascript')
-"   let g:neomake_javascript_eslint_exe = nrun#Which('eslint')
-"   let g:neomake_javascript_enabled_makers = ['eslint']
-" endif
-" let g:neomake_error_sign = {'text': '>>', 'texthl': 'Error'}
-" let g:neomake_warning_sign = {'text': '>>',  'texthl': 'Todo'}
-" let g:neomake_verbose = 0
-
-"-------------------------
 " rust
 "-------------------------
 let g:rustfmt_autosave = 1
-" augroup NeomakeRustConfig
-"   autocmd!
-"   autocmd BufWritePost *.rs Neomake! clippy
-" augroup END
 let g:racer_cmd = '$HOME/.cargo/bin/racer'
 let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
 let $RUST_SRC_PATH = '$HOME/.cargo/src'
@@ -377,15 +356,6 @@ function! s:Repl()
   return "p@=RestoreRegister()\<cr>"
 endfunction
 vmap <silent> <expr> p <sid>Repl()
-
-"-------------------------
-" fzf
-"-------------------------
-" augroup gopkgs
-"   autocmd!
-"   autocmd FileType go command! -buffer Import exe 'GoImport' fzf#run({'source': 'gopkgs'})[0]
-"   autocmd FileType go command! -buffer Doc exe 'GoDoc' fzf#run({'source': 'gopkgs'})[0]
-" augroup END
 
 "-------------------------
 " ripgrep
