@@ -40,6 +40,9 @@ ln -s ~/dotfiles/.tern-project ~/.tern-project
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker" | zsh
 echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker-compose https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose" | zsh
+cd ~/
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
 
 echo "-----------------------------------------------------"; 
 echo "Install Vim with lua";
