@@ -59,7 +59,7 @@ autocmd QuickFixCmdPost *grep* cwindow
 command! Rv source $MYVIMRC
 command! Ev edit $MYVIMRC
 command! Edv edit $HOME/dotfiles/.vimrc
-command! -nargs=1 Rg :tabnew | :silent grep <args>
+command! -nargs=* -complete=file Rg :tabnew | :silent grep <args>
 
 "---------------------------
 "" Vim-Plug Settings.
