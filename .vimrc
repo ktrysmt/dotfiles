@@ -72,7 +72,7 @@ endif
 call plug#begin()
 " [for All]
 Plug 'tomasr/molokai'
-" Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'vim-scripts/mru.vim'
 Plug 'Townk/vim-autoclose'
 Plug 'Shougo/unite.vim'
@@ -121,8 +121,8 @@ call plug#end()
 "-------------------------
 syntax on
 " set background=dark
-" colorscheme hybrid_material
-colorscheme molokai
+colorscheme hybrid_material
+" colorscheme molokai
 autocmd colorscheme molokai highlight Visual ctermbg=8
 highlight Normal ctermbg=none
 
