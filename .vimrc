@@ -52,6 +52,7 @@ augroup highlightIdegraphicSpace
 augroup END
 filetype plugin indent on
 autocmd QuickFixCmdPost *grep* cwindow
+au BufNewFile,BufRead *.conf,*.conf.j2 set ft=conf
 
 "---------------------------
 " Vimrc
