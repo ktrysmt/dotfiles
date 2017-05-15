@@ -62,7 +62,7 @@ alias gh='cd $(ghq list -p | peco)'
 alias glogg='git log --graph --name-status --pretty=format:"%C(red)%h %C(green)%an %Creset%s %C(yellow)%d%Creset"'
 alias dstat='dstat -tlamp'
 alias rg='rg -S'
-alias grebase='git rebase -i $(git log --date=short --pretty='format:%C(yellow)%h %C(green)%cd %C(blue)%ae %C(red)%d %C(reset)%s' |fzf| cut -d" " -f1)'
+alias grebase='git rebase -i $(git log --date=short --pretty="format:%h %cd %ae %d %s" |fzf| cut -d" " -f1)'
 
 #
 # tmux func
