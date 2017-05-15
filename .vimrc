@@ -121,7 +121,7 @@ call plug#end()
 " Color Scheme
 "-------------------------
 syntax on
-" set background=dark
+set background=dark
 colorscheme hybrid_material
 " colorscheme molokai
 autocmd colorscheme molokai highlight Visual ctermbg=8
