@@ -122,10 +122,11 @@ call plug#end()
 "-------------------------
 syntax on
 set background=dark
-colorscheme hybrid_material
+autocmd ColorScheme * highlight LineNr ctermfg=239
+" autocmd ColorScheme * highlight Normal ctermbg=none
+colorscheme hybrid_reverse
+" autocmd colorscheme molokai highlight Visual ctermbg=8
 " colorscheme molokai
-autocmd colorscheme molokai highlight Visual ctermbg=8
-highlight Normal ctermbg=none
 
 "-------------------------
 " Unite Settings
