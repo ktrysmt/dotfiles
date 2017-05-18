@@ -42,6 +42,7 @@ set completeopt-=preview
 set wildmenu 
 set history=5000 
 nnoremap cn *``cgn
+command! -nargs=* -complete=file Rg :tabnew | :silent grep <args>
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 runtime macros/matchit.vim
 cabbr w!! w !sudo tee > /dev/null %
@@ -60,7 +61,6 @@ au BufNewFile,BufRead *.conf,*.conf.j2 set ft=conf
 command! Rv source $MYVIMRC
 command! Ev edit $MYVIMRC
 command! Edv edit $HOME/dotfiles/.vimrc
-command! -nargs=* -complete=file Rg :tabnew | :silent grep <args>
 
 "---------------------------
 "" Vim-Plug Settings.
@@ -122,8 +122,10 @@ call plug#end()
 "-------------------------
 syntax on
 set background=dark
-autocmd ColorScheme * highlight LineNr ctermfg=239
-" autocmd ColorScheme * highlight Normal ctermbg=none
+set cursorline
+autocmd ColorScheme * hi clear CursorLine
+autocmd ColorScheme * hi LineNr ctermfg=239
+autocmd ColorScheme * hi Normal ctermbg=none
 colorscheme hybrid_reverse
 " autocmd colorscheme molokai highlight Visual ctermbg=8
 " colorscheme molokai
