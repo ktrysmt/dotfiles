@@ -54,6 +54,7 @@ augroup END
 filetype plugin indent on
 autocmd QuickFixCmdPost *grep* cwindow
 au BufNewFile,BufRead *.conf,*.conf.j2 set ft=conf
+:map <C-g> :echo expand('%:p')<Return>
 
 "---------------------------
 " Vimrc
