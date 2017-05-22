@@ -104,6 +104,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " [for HTML/CSS ]
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
+Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
 " [for Javascript]
 Plug 'jaawerth/nrun.vim', { 'for': ['javascript'] } 
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
@@ -272,7 +273,7 @@ let g:go_bin_path = expand(globpath($GOPATH, "bin"))
 let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_autosave = 1
-let g:go_fmt_command = "gofmt"
+let g:go_fmt_command = "goimports"
 let g:go_fmt_options = "-s"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
