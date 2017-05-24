@@ -17,6 +17,7 @@ git clone https://github.com/ktrysmt/dotfiles  ~/dotfiles
 mkdir -p ~/.config/peco/
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
+ln -s ~/dotfiles/.tigrc ~/.tigrc
 ln -s ~/dotfiles/.vimrc ~/.vimrc
 ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
 ln -s ~/dotfiles/.tern-project ~/.tern-project
