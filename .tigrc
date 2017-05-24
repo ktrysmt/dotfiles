@@ -1,1 +1,10 @@
-set line-graphics = ascii
+bind main G move-last-line
+bind generic g move-first-line
+bind generic G move-last-line
+bind status V !git commit -v
+set main-view = id:width=6 date author commit-title:graph=yes,refs=yes
+set diff-context = 6
+set split-view-width = 70%
+set line-graphics = utf-8
+
+
