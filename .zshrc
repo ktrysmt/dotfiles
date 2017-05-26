@@ -18,7 +18,7 @@ EOPLUGINS
     # completions
     zgen load zsh-users/zsh-completions src
     # theme
-    zgen oh-my-zsh themes/robbyrussell
+    # zgen oh-my-zsh themes/robbyrussell
     # save all to init script
     zgen save
 fi

@@ -23,7 +23,7 @@ EOPLUGINS
     zgen load zsh-users/zsh-completions src
 
     # theme
-    zgen oh-my-zsh themes/robbyrussell
+    # zgen oh-my-zsh themes/robbyrussell
 
     # save all to init script
     zgen save
@@ -91,3 +91,7 @@ export EDITOR='vim'
 
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.zsh-private ] && source ~/.zsh-private
+
+if (which zprof > /dev/null) ;then
+  zprof | less
+fi

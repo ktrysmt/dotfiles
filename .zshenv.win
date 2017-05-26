@@ -6,3 +6,4 @@ export GOPATH=$HOME/project
 export PATH=$PATH:/c/Go/bin
 export PATH=$PATH:./node_modules/.bin
  
+# zmodload zsh/zprof && zprof
