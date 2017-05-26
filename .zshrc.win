@@ -1,30 +1,16 @@
 # load zgen
 source "${HOME}/.zgen/zgen.zsh"
-
 # check if there's no init script
 if ! zgen saved; then
     echo "Creating a zgen save"
-
     zgen oh-my-zsh
-
     # plugins
     zgen oh-my-zsh plugins/git
     zgen oh-my-zsh plugins/sudo
     zgen oh-my-zsh plugins/command-not-found
     zgen load zsh-users/zsh-syntax-highlighting
-
-    # bulk load
-    zgen loadall <<EOPLUGINS
-        zsh-users/zsh-history-substring-search
-EOPLUGINS
-    # ^ can't indent this EOPLUGINS
-
-    # completions
+    zgen load zsh-users/zsh-history-substring-search 
     zgen load zsh-users/zsh-completions src
-
-    # theme
-    # zgen oh-my-zsh themes/robbyrussell
-
     # save all to init script
     zgen save
 fi
@@ -67,7 +53,7 @@ export PATH=$PATH:./node_modules/.bin
 export PATH="$HOME/.yarn/bin:$PATH"
 
 # alias
-unalias gb
+# unalias gb
 alias gdw="git diff --color-words"
 alias ggpull="git pull origin $(current_branch)"
 alias ggpush="git push origin $(current_branch)"
