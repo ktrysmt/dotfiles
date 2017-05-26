@@ -47,6 +47,7 @@ alias glogg='git log --graph --name-status --pretty=format:"%C(red)%h %C(green)%
 alias dstat='dstat -tlamp'
 alias rg='rg -S'
 alias grebase='git rebase -i $(git log --date=short --pretty="format:%h %cd %ae %d %s" |fzf| cut -d" " -f1)'
+alias gitbr="~/dotfiles/bin/git-checkout-remote-branch"
 
 #
 # tmux func
