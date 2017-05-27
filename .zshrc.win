@@ -17,26 +17,58 @@ fi
 
 PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
 
-# using peco
-#function vig {
-#    STR="$1"
-#    vim $(grep -n ${STR} **/*.go | grep -v "[0-9]:\s*//" | peco | awk -F ":" '{print "-c "$2" "$1}')
-#}
-#function peco-select-history() {
-#    local tac
-#    if which tac > /dev/null; then
-#        tac="tac"
-#    else
-#        tac="tail -r"
-#    fi
-#    BUFFER=$(\history -n 1 | \
-#        eval $tac | \
-#        peco --query "$LBUFFER")
-#    CURSOR=$#BUFFER
-#    zle clear-screen
-#}
-#zle -N peco-select-history
-#bindkey '^r' peco-select-history
+function chpwd() {
+  powered_cd_add_log
+}
+function powered_cd_add_log() {
+  local i=0
+  cat ~/.powered_cd.log | while read line; do
+    (( i++ ))
+    if [ i = 30 ]; then
+      sed -i -e "30,30d" ~/.powered_cd.log
+    elif [ "$line" = "$PWD" ]; then
+      sed -i -e "${i},${i}d" ~/.powered_cd.log 
+    fi
+  done
+  echo "$PWD" >> ~/.powered_cd.log
+}
+function powered_cd() {
+  if which gtac > /dev/null; then
+    tac="gtac"
+  else
+    tac="tac"
+  fi
+  if [ $# = 0 ]; then
+    cd $(eval $tac ~/.powered_cd.log | fzy)
+  elif [ $# = 1 ]; then
+    cd $1
+  else
+    echo "powered_cd: too many arguments"
+  fi
+}
+_powered_cd() {
+  _files -/
+}
+compdef _powered_cd powered_cd
+[ -e ~/.powered_cd.log ] || touch ~/.powered_cd.log
+alias c="powered_cd"
+
+function fzy-select-history() {
+   local tac
+   if which tac > /dev/null; then
+       tac="tac"
+   else
+       tac="tail -r"
+   fi
+   BUFFER=$(\history -n 1 | \
+       # sort | uniq -c | sort -n | perl -pe "s/ +?[0-9]+ //" | \
+       eval $tac | \
+       fzy -s --query "$LBUFFER")
+   CURSOR=$#BUFFER
+   zle clear-screen
+}
+zle -N fzy-select-history
+bindkey '^r' fzy-select-history
 
 # history
 HIST_STAMPS="yyyy/mm/dd"
@@ -60,7 +92,7 @@ alias ggpush="git push origin $(current_branch)"
 alias gh='cd $(ghq list -p | fzy)'
 alias glogg='git log --graph --name-status --pretty=format:"%C(red)%h %C(green)%an %Creset%s %C(yellow)%d%Creset"'
 alias dstat='dstat -tlamp'
-alias grebase='git rebase -i $(git log --date=short --pretty="format:%h %cd %ae %d %s" |fzf| cut -d" " -f1)'
+alias grebase='git rebase -i $(git log --date=short --pretty="format:%h %cd %ae %d %s" |fzy| cut -d" " -f1)'
 alias rg="rg -S"
 alias gitbr="~/dotfiles/bin/git-checkout-remote-branch"
 

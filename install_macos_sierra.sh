@@ -3,7 +3,7 @@ echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
-brew install peco lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig
+brew install peco lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig fzy
 brew install vim --with-lua
 brew tap universal-ctags/universal-ctags
 brew install --HEAD universal-ctags
