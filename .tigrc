@@ -1,6 +1,8 @@
-bind main G move-last-line
 bind generic g move-first-line
 bind generic G move-last-line
+bind main G move-last-line
+bind main R !git rebase -i %(commit)
+bind diff R !git rebase -i %(commit)
 bind status V !git commit -v
 set main-view = id:width=6 date author commit-title:graph=yes,refs=yes
 set diff-context = 6
