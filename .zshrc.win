@@ -60,7 +60,7 @@ function fzy-select-history() {
    else
        tac="tail -r"
    fi
-   BUFFER=$(\history -n 1 | \
+   BUFFER=$(\history -nr 1 | awk '!a[$0]++' | \
        eval $tac | \
        fzy --query "$LBUFFER")
    CURSOR=$#BUFFER

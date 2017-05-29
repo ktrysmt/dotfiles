@@ -64,6 +64,45 @@ if [ `who am i | awk '{print $1}'` != "vagrant" ];then \
 fi;
 
 #
+# powered_cd
+#
+function chpwd() {
+  powered_cd_add_log
+}
+function powered_cd_add_log() {
+  local i=0
+  cat ~/.powered_cd.log | while read line; do
+    (( i++ ))
+    if [ i = 30 ]; then
+      sed -i -e "30,30d" ~/.powered_cd.log
+    elif [ "$line" = "$PWD" ]; then
+      sed -i -e "${i},${i}d" ~/.powered_cd.log 
+    fi
+  done
+  echo "$PWD" >> ~/.powered_cd.log
+}
+function powered_cd() {
+  if which gtac > /dev/null; then
+    tac="gtac"
+  else
+    tac="tac"
+  fi
+  if [ $# = 0 ]; then
+    cd $(eval $tac ~/.powered_cd.log | fzy)
+  elif [ $# = 1 ]; then
+    cd $1
+  else
+    echo "powered_cd: too many arguments"
+  fi
+}
+_powered_cd() {
+  _files -/
+}
+compdef _powered_cd powered_cd
+[ -e ~/.powered_cd.log ] || touch ~/.powered_cd.log
+alias c="powered_cd"
+
+#
 # peco func
 #
 function peco-select-history() {
