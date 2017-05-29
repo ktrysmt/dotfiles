@@ -82,10 +82,10 @@ function powered_cd_add_log() {
   echo "$PWD" >> ~/.powered_cd.log
 }
 function powered_cd() {
-  if which gtac > /dev/null; then
-    tac="gtac"
-  else
+  if which tac > /dev/null; then
     tac="tac"
+  else
+    tac="tail -r"
   fi
   if [ $# = 0 ]; then
     cd $(eval $tac ~/.powered_cd.log | fzy)
