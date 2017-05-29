@@ -30,7 +30,8 @@ nodebrew use stable
 export PATH=$PATH:./node_modules/.bin
 export PATH="$HOME/.yarn/bin:$PATH"
 # fzf
-export FZF_CTRL_R_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%}"
+export FZF_DEFAULT_COMMAND='rg ""'
+export FZF_DEFAULT_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%} --select-1 --exit-0"
 
 #
 # source
@@ -88,7 +89,7 @@ function powered_cd() {
     tac="tail -r"
   fi
   if [ $# = 0 ]; then
-    cd $(eval $tac ~/.powered_cd.log | fzy)
+    cd $(eval $tac ~/.powered_cd.log | fzf)
   elif [ $# = 1 ]; then
     cd $1
   else
