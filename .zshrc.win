@@ -61,9 +61,8 @@ function fzy-select-history() {
        tac="tail -r"
    fi
    BUFFER=$(\history -n 1 | \
-       # sort | uniq -c | sort -n | perl -pe "s/ +?[0-9]+ //" | \
        eval $tac | \
-       fzy -s --query "$LBUFFER")
+       fzy --query "$LBUFFER")
    CURSOR=$#BUFFER
    zle clear-screen
 }
