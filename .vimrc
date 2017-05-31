@@ -42,7 +42,8 @@ set completeopt-=preview
 set wildmenu 
 set history=5000 
 nnoremap cn *``cgn
-command! -nargs=* -complete=file Rg :tabnew | :silent grep <args>
+command! -nargs=* -complete=file Rg :tabnew | :silent grep --sort-files <args>
+command! -nargs=* -complete=file Rgg :tabnew | :silent grep <args>
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 runtime macros/matchit.vim
 cabbr w!! w !sudo tee > /dev/null %
