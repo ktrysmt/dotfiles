@@ -3,7 +3,7 @@ echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
-brew install peco lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig fzy 
+brew install peco lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig fzy autoconf automake 
 brew install vim --with-lua
 
 echo "-----------------------------------------------------";
@@ -29,11 +29,8 @@ echo "Install universal-ctags"
 echo "-----------------------------------------------------";
 cd /tmp/
 git clone --depth 1 https://github.com/universal-ctags/ctags.git
-cd ctags
-./autogen.sh
-./configure
-make
-make install
+cd ctags; 
+./autogen.sh && ./configure && make && make install;
 cd ~/
 
 echo "-----------------------------------------------------"; 

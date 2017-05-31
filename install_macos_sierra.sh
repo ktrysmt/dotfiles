@@ -5,6 +5,8 @@ echo "-----------------------------------------------------";
 brew update
 brew install peco lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig fzy
 brew install vim --with-lua
+brew tap universal-ctags/universal-ctags
+brew install --HEAD universal-ctags
 
 echo "-----------------------------------------------------";
 echo "Setup my env"
@@ -24,18 +26,6 @@ ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
 ln -s ~/dotfiles/.hammerspoon/init.lua ~/.hammerspoon/init.lua
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 wget -O ~/Library/Fonts/RictyDiminished-Regular.ttf https://github.com/edihbrandon/RictyDiminished/raw/master/RictyDiminished-Regular.ttf
-
-echo "-----------------------------------------------------";
-echo "Install universal-ctags"
-echo "-----------------------------------------------------";
-cd /tmp/
-git clone --depth 1 https://github.com/universal-ctags/ctags.git
-cd ctags
-./autogen.sh
-./configure
-make
-make install
-cd ~/
 
 echo "-----------------------------------------------------"; 
 echo "Install Rust";
