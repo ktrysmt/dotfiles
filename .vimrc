@@ -197,7 +197,7 @@ let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:auto_ctags = 1
 set tags+=.git/tags
 let g:auto_ctags_directory_list = ['.git']
-let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes --format=2'
+let g:auto_ctags_tags_args = '--tag-relative=yes --recurse --sort=yes --append=no --format=2'
 " open ctag in tab/vertical split
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <leader><C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
