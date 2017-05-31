@@ -106,6 +106,7 @@ Plug 'airblade/vim-gitgutter'
 " [for HTML/CSS ]
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
 Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
+Plug 'flyinshadow/php_localvarcheck.vim', { 'for': ['php'] }
 " [for Javascript]
 Plug 'jaawerth/nrun.vim', { 'for': ['javascript'] } 
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
@@ -374,6 +375,12 @@ if executable("rg")
     set grepprg=rg\ --vimgrep\ --no-heading
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
+
+"-------------------------
+" php_localvarcheck
+"-------------------------
+let g:php_localvarcheck_enable = 1
+let g:php_localvarcheck_global = 0
 
 "-------------------------
 " env
