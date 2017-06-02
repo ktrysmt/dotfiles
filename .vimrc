@@ -65,6 +65,15 @@ command! Ev edit $MYVIMRC
 command! Edv edit $HOME/dotfiles/.vimrc
 
 "---------------------------
+" FZF
+"---------------------------
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>x :Commands<CR>
+nnoremap <Leader>f :GFiles<CR>
+nnoremap <Leader>a :Ag<CR>
+nnoremap <Leader>k :bd<CR>`
+
+"---------------------------
 "" Vim-Plug Settings.
 "---------------------------
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -104,6 +113,8 @@ Plug 'thinca/vim-qfreplace'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 " [for HTML/CSS ]
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
 Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
