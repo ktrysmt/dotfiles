@@ -9,8 +9,9 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/sudo
     zgen oh-my-zsh plugins/command-not-found
     zgen load zsh-users/zsh-syntax-highlighting
-    zgen load zsh-users/zsh-history-substring-search 
+    zgen load zsh-users/zsh-history-substring-search
     zgen load zsh-users/zsh-completions src
+    zgen load zchee/go-zsh-completions
     zgen save
 fi
 
@@ -41,7 +42,7 @@ export FZF_DEFAULT_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%} --select-1 -
 
 #
 # alias
-# 
+#
 alias gdw="git diff --color-words"
 alias gh='cd $(ghq list -p | peco)'
 alias glogg='git log --graph --name-status --pretty=format:"%C(red)%h %C(green)%an %Creset%s %C(yellow)%d%Creset"'
@@ -77,7 +78,7 @@ function powered_cd_add_log() {
     if [ i = 30 ]; then
       sed -i -e "30,30d" ~/.powered_cd.log
     elif [ "$line" = "$PWD" ]; then
-      sed -i -e "${i},${i}d" ~/.powered_cd.log 
+      sed -i -e "${i},${i}d" ~/.powered_cd.log
     fi
   done
   echo "$PWD" >> ~/.powered_cd.log
@@ -139,7 +140,7 @@ else
 fi
 
 #
-# private 
+# private
 #
 if [ -e ~/.zshrc.private ]; then
   source ~/.zshrc.private
@@ -147,4 +148,4 @@ fi
 
 if (which zprof > /dev/null) ;then
   zprof | less
-fi 
+fi
