@@ -65,6 +65,12 @@ command! Ev edit $MYVIMRC
 command! Edv edit $HOME/dotfiles/.vimrc
 
 "---------------------------
+" Async git pull/push
+"---------------------------
+nnoremap <Leader>gps :Dispatch git push<cr>
+nnoremap <Leader>gpl :Dispatch git pull<cr>
+
+"---------------------------
 " FZF
 "---------------------------
 nnoremap <Leader>b :Buffers<CR>
@@ -91,6 +97,7 @@ Plug 'Shougo/unite.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'LeafCage/yankround.vim'
 Plug 'Shougo/neocomplete.vim'
+Plug 'tpope/vim-dispatch'
 Plug 'itchyny/lightline.vim'
 Plug 'soramugi/auto-ctags.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
