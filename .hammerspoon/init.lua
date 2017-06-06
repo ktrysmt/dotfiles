@@ -23,11 +23,9 @@ local function handleGlobalKeyEvent(e)
   end
   return result
 end
-
 eventtap = hs.eventtap.new({hs.eventtap.event.types.keyDown, hs.eventtap.event.types.keyUp}, handleGlobalKeyEvent)
 eventtap:start()
 
--- hotkey
 local function keyCode(key, modifiers)
    modifiers = modifiers or {}
    return function()
@@ -41,7 +39,6 @@ local function remapKey(modifiers, key, keyCode)
    hs.hotkey.bind(modifiers, key, keyCode, nil, keyCode)
 end
 
-
 local function disableAllHotkeys()
    for k, v in pairs(hs.hotkey.getHotkeys()) do
       v['_hk']:disable()
@@ -52,23 +49,11 @@ local function enableAllHotkeys()
       v['_hk']:enable()
    end
 end
-local function handleGlobalAppEvent(name, event, app)
-   if event == hs.application.watcher.activated then
-      -- hs.alert.show(name)
-      if name ~= "iTerm2" then
-        enableAllHotkeys()
-      else
-        enableAllHotkeys()
-      end
-   end
-end
---appsWatcher = hs.application.watcher.new(handleGlobalAppEvent)
---appsWatcher:start()
-
 
 -- escape
 remapKey({'cmd'}, 30, keyCode('escape'))
 
+-- move
 remapKey({'cmd'}, 'h', keyCode('up'))
 remapKey({'cmd'}, 39, keyCode('down')) -- colon
 remapKey({'cmd'}, 'j', keyCode('a', {'ctrl'}))
