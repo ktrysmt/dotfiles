@@ -63,6 +63,8 @@ vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 echo "-----------------------------------------------------";
 echo "Extra applications by brew cask";
 echo "-----------------------------------------------------";
+export HOMEBREW_CASK_OPTS="--appdir=/Applications";
+brew tap caskroom/cask
 brew cask install google-japanese-ime
 brew cask install iterm2
 brew cask install visual-studio-code
@@ -77,6 +79,8 @@ brew cask install alfred
 brew cask install clipy
 brew cask install docker
 brew cask install firefox
+brew cask install itsycal
+brew cask cleanup
 
 echo "-----------------------------------------------------";
 echo "Rested tasks"

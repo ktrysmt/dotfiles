@@ -3,7 +3,7 @@ echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
-brew install peco lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig fzy autoconf automake 
+brew install peco lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig fzy autoconf automake
 brew install vim --with-lua
 
 echo "-----------------------------------------------------";
@@ -29,13 +29,13 @@ echo "Install universal-ctags"
 echo "-----------------------------------------------------";
 cd /tmp/
 git clone --depth 1 https://github.com/universal-ctags/ctags.git
-cd ctags; 
+cd ctags;
 ./autogen.sh && ./configure && make && make install;
 cd ~/
 
-echo "-----------------------------------------------------"; 
+echo "-----------------------------------------------------";
 echo "Install Rust";
-echo "-----------------------------------------------------"; 
+echo "-----------------------------------------------------";
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
 
@@ -63,7 +63,6 @@ echo "Extra applications by brew cask";
 echo "-----------------------------------------------------";
 export HOMEBREW_CASK_OPTS="--appdir=/Applications";
 brew tap caskroom/cask
-brew cask install slack
 brew cask install google-japanese-ime
 brew cask install iterm2
 brew cask install visual-studio-code
@@ -78,6 +77,7 @@ brew cask install clipy
 brew cask install docker
 brew cask install firefox
 brew cask install karabiner
+brew cask install itsycal
 brew cask cleanup
 
 echo "-----------------------------------------------------";
