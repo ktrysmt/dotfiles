@@ -80,6 +80,7 @@ brew cask install clipy
 brew cask install docker
 brew cask install firefox
 brew cask install itsycal
+brew cask install keybase
 brew cask cleanup
 
 echo "-----------------------------------------------------";

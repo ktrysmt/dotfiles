@@ -78,6 +78,7 @@ brew cask install docker
 brew cask install firefox
 brew cask install karabiner
 brew cask install itsycal
+brew cask install keybase
 brew cask cleanup
 
 echo "-----------------------------------------------------";
