@@ -79,6 +79,7 @@ brew cask install firefox
 brew cask install karabiner
 brew cask install itsycal
 brew cask install keybase
+brew cask install qblocker
 brew cask cleanup
 
 echo "-----------------------------------------------------";
