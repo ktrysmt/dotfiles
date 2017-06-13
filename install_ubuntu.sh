@@ -20,7 +20,7 @@ echo " Update & install libraries";
 echo "-----------------------------------------------------";
 sudo apt-get -y update
 sudo apt-get -y install git curl zsh tig make gcc dstat wget
-sudo apt-get -y install libssl-dev libcurl4-openssl-dev autoconf automake
+sudo apt-get -y install libssl-dev libcurl4-openssl-dev autoconf
 sudo apt-get -y install liblua5.2-dev lua5.2 python-dev ncurses-dev
 sudo apt-get -y install mercurial gettext libncurses5-dev libxmu-dev libgtk2.0-dev libperl-dev python-dev python3-dev ruby-dev tcl-dev
 sudo apt-get -y install luajit tmux
@@ -35,7 +35,7 @@ echo "-----------------------------------------------------";
 cd /tmp/
 git clone --depth 1 https://github.com/universal-ctags/ctags.git
 cd ctags;
-./autogen.sh && ./configure && make && make install;
+./autogen.sh && ./configure && make && sudo make install;
 cd ~/
 
 echo "-----------------------------------------------------";
