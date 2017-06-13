@@ -34,6 +34,7 @@ echo "Install Rust";
 echo "-----------------------------------------------------";
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
+cargo install --git https://github.com/sharkdp/fd
 
 echo "-----------------------------------------------------";
 echo "Install Node"
