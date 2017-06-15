@@ -33,20 +33,20 @@ if [[ -z $branch ]]; then
     exit 0
 fi
 
-is_already_branched() { git branch | grep -q "${branch##*/}" &>/dev/null; }
+is_already_branched() { git branch | grep -q "${branch#*/*/}" &>/dev/null; }
 
 if [[ $branch =~ ^remotes ]]; then
     if is_already_branched; then
         # already exists
         if $is_force; then
             git checkout -q master
-            git branch -D "${branch##*/}"
-            git checkout -b "${branch##*/}" "${branch#*/}"
+            git branch -D "${branch#*/*/}"
+            git checkout -b "${branch#*/*/}" "${branch#*/}"
         else
-            git checkout "${branch##*/}"
+            git checkout "${branch#*/*/}"
         fi
     else
-        git checkout -b "${branch##*/}" "${branch#*/}"
+        git checkout -b "${branch#*/*/}" "${branch#*/}"
     fi
 else
     if is_already_branched; then
