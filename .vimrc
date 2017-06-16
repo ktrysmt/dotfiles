@@ -123,15 +123,19 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " [for HTML/CSS ]
-Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
+Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript'] }
 Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
 " [for PHP ]
 Plug 'flyinshadow/php_localvarcheck.vim', { 'for': ['php'] }
 " [for Javascript]
+Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript'] }   
+Plug 'fleischie/vim-styled-components', { 'for': ['javascript'] }  
+Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript'] }  
 Plug 'jaawerth/nrun.vim', { 'for': ['javascript'] } 
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript'] }
-Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
+" Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
+Plug 'othree/yajs.vim', { 'for': ['javascript'] }
 " [for Go]
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'thinca/vim-quickrun', { 'for': ['go', 'rust', 'javascript'] }
@@ -347,10 +351,11 @@ map <silent> [Tag]p :tabprevious<CR>
 "-------------------------
 " emmet
 "-------------------------
-let g:user_emmet_leader_key='<C-y>'
+let g:user_emmet_leader_key='<C-Y>'
 let g:user_emmet_mode='i'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
+autocmd FileType javascript EmmetInstall
 
 "-------------------------
 " rust
