@@ -100,7 +100,8 @@ Plug 'Shougo/neocomplete.vim'
 Plug 'tpope/vim-dispatch'
 Plug 'itchyny/lightline.vim'
 Plug 'soramugi/auto-ctags.vim'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'szw/vim-tags'
@@ -240,12 +241,12 @@ cmap <silent> <C-a> <C-u>:TagbarToggle<CR>
 "-------------------------
 " NERDTree
 "-------------------------
-nmap <silent> <C-e>      :NERDTreeToggle<CR>
-vmap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
-omap <silent> <C-e>      :NERDTreeToggle<CR>
-imap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
-cmap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+nmap <silent> <C-e>      :NERDTreeTabsToggle<CR>
+vmap <silent> <C-e> <Esc>:NERDTreeTabsToggle<CR>
+omap <silent> <C-e>      :NERDTreeTabsToggle<CR>
+imap <silent> <C-e> <Esc>:NERDTreeTabsToggle<CR>
+cmap <silent> <C-e> <C-u>:NERDTreeTabsToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeShowHidden=1
 let NERDTreeIgnore = ['node_modules','.git', ".DS_Store"]
 let g:NERDTreeChDirMode = 2
