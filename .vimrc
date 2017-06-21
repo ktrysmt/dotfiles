@@ -132,11 +132,11 @@ Plug 'flyinshadow/php_localvarcheck.vim', { 'for': ['php'] }
 Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript'] }   
 Plug 'fleischie/vim-styled-components', { 'for': ['javascript'] }  
 Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript'] }  
-Plug 'jaawerth/nrun.vim', { 'for': ['javascript'] } 
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript'] }
-" Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
-Plug 'othree/yajs.vim', { 'for': ['javascript'] }
+Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
+" Plug 'jaawerth/nrun.vim', { 'for': ['javascript'] } 
+" Plug 'othree/yajs.vim', { 'for': ['javascript'] }
 " [for Go]
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'thinca/vim-quickrun', { 'for': ['go', 'rust', 'javascript'] }
