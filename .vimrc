@@ -39,8 +39,8 @@ set wrap
 set wildmode=longest:full,full
 set ignorecase
 set completeopt-=preview
-set wildmenu 
-set history=5000 
+set wildmenu
+set history=5000
 nnoremap cn *``cgn
 command! -nargs=* -complete=file Rg :tabnew | :silent grep --sort-files <args>
 command! -nargs=* -complete=file Rgg :tabnew | :silent grep <args>
@@ -129,13 +129,13 @@ Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
 " [for PHP ]
 Plug 'flyinshadow/php_localvarcheck.vim', { 'for': ['php'] }
 " [for Javascript]
-Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript'] }   
-Plug 'fleischie/vim-styled-components', { 'for': ['javascript'] }  
-Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript'] }  
+Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript'] }
+Plug 'fleischie/vim-styled-components', { 'for': ['javascript'] }
+Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript'] }
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript'] }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
-" Plug 'jaawerth/nrun.vim', { 'for': ['javascript'] } 
+" Plug 'jaawerth/nrun.vim', { 'for': ['javascript'] }
 " Plug 'othree/yajs.vim', { 'for': ['javascript'] }
 " [for Go]
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -355,8 +355,7 @@ map <silent> [Tag]p :tabprevious<CR>
 let g:user_emmet_leader_key='<C-Y>'
 let g:user_emmet_mode='i'
 let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
-autocmd FileType javascript EmmetInstall
+autocmd FileType html,css,scss,javascript EmmetInstall
 
 "-------------------------
 " rust

@@ -31,7 +31,7 @@ set -g pane-base-index 1
 set -g terminal-overrides 'xterm*:smcup@:rmcup@'
 set -g default-terminal xterm
 set-option -g renumber-windows on; 
-set-option -g history-limit 100000
+set-option -g history-limit 10000000
 set-option -g terminal-overrides "xterm-color:khome=\033[1~"
 
 # -------------- 
