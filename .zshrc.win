@@ -9,8 +9,9 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/sudo
     zgen oh-my-zsh plugins/command-not-found
     zgen load zsh-users/zsh-syntax-highlighting
-    zgen load zsh-users/zsh-history-substring-search 
+    zgen load zsh-users/zsh-history-substring-search
     zgen load zsh-users/zsh-completions src
+    zgen load wbinglee/zsh-wakatime
     # save all to init script
     zgen save
 fi
@@ -27,7 +28,7 @@ function powered_cd_add_log() {
     if [ i = 30 ]; then
       sed -i -e "30,30d" ~/.powered_cd.log
     elif [ "$line" = "$PWD" ]; then
-      sed -i -e "${i},${i}d" ~/.powered_cd.log 
+      sed -i -e "${i},${i}d" ~/.powered_cd.log
     fi
   done
   echo "$PWD" >> ~/.powered_cd.log
