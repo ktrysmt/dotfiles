@@ -89,14 +89,15 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 call plug#begin()
 " [for All]
-Plug 'tomasr/molokai'
+" Plug 'tomasr/molokai'
 Plug 'kristijanhusak/vim-hybrid-material'
-Plug 'vim-scripts/mru.vim'
+" Plug 'vim-scripts/mru.vim'
 Plug 'Townk/vim-autoclose'
 Plug 'Shougo/unite.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'LeafCage/yankround.vim'
 Plug 'Shougo/neocomplete.vim'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-dispatch'
 Plug 'itchyny/lightline.vim'
 Plug 'soramugi/auto-ctags.vim'
@@ -154,8 +155,9 @@ call plug#end()
 "-------------------------
 syntax on
 set background=dark
-set cursorline
-autocmd ColorScheme * hi clear CursorLine
+" cursorline is slow...
+" set cursorline
+" autocmd ColorScheme * hi clear CursorLine
 autocmd ColorScheme * hi LineNr ctermfg=239
 autocmd ColorScheme * hi Normal ctermbg=none
 colorscheme hybrid_reverse
@@ -191,6 +193,19 @@ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType * setlocal completeopt-=preview
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+
+"-------------------------
+" deoplete
+"-------------------------
+" " inoremap <expr><tab> pumvisible() ? '\<c-n>' : '\<tab>'
+" let g:deoplete#enable_smart_case = 1
+" let g:deoplete#enable_at_startup = 1
+" inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+" function! s:my_cr_function() abort
+" 	return deoplete#close_popup() . "\<CR>"
+" endfunction
 
 "-------------------------
 " lightline

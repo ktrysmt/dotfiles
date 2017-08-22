@@ -3,8 +3,9 @@ echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
-brew install peco lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig fzy autoconf automake exa
+brew install peco lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig fzy autoconf automake exa python2 python3
 brew install vim --with-lua
+brew install neovim/neovim/neovim
 
 echo "-----------------------------------------------------";
 echo "Setup my env"
@@ -13,6 +14,8 @@ cd ~/
 git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 git clone https://github.com/ktrysmt/dotfiles  ~/dotfiles
 mkdir -p ~/.config/peco/
+mkdir ~/.cache
+mkdir ~/.local
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/.tigrc ~/.tigrc
@@ -89,6 +92,16 @@ echo "-----------------------------------------------------";
 go get github.com/motemen/ghq
 go get github.com/golang/dep/...
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
+
+echo "-----------------------------------------------------";
+echo "Neovim";
+echo "-----------------------------------------------------";
+ln -s ~/.vim ~/.config/nvim
+ln -s ~/.vimrc ~/.config/nvim/init.vim
+sudo easy_install-2.7 pip
+sudo easy_install-3.6 pip
+pip2 install neovim
+pip3 install neovim
 
 echo "-----------------------------------------------------";
 echo "Rested tasks"
