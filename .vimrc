@@ -145,6 +145,8 @@ Plug 'thinca/vim-quickrun', { 'for': ['go', 'rust', 'javascript'] }
 Plug 'scrooloose/syntastic', { 'for': ['rust'] }
 Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
 Plug 'racer-rust/vim-racer', { 'for': ['rust'] }
+" [for Terraform]
+Plug 'hashivim/vim-terraform', { 'for': ['tf', 'terraform'] }
 call plug#end()
 
 "-------------------------
@@ -406,8 +408,13 @@ endif
 "-------------------------
 " php_localvarcheck
 "-------------------------
-let g:php_localvarcheck_enable = 1
-let g:php_localvarcheck_global = 0
+"let g:php_localvarcheck_enable = 1
+"let g:php_localvarcheck_global = 0
+
+"-------------------------
+" Terraform
+"-------------------------
+let g:terraform_fmt_on_save = 1
 
 "-------------------------
 " env
