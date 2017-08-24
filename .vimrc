@@ -1,9 +1,7 @@
 "---------------------------
-" General Settings
+"" Set env
 "---------------------------
-let mapleader = "\<Space>"
 set encoding=utf-8
-scriptencoding
 set fileencodings=utf-8,euc-jp,sjis,iso-2022-jp,
 set fileformats=unix,dos,mac
 set ambiwidth=double
@@ -41,46 +39,45 @@ set ignorecase
 set completeopt-=preview
 set wildmenu
 set history=5000
+scriptencoding
+filetype plugin indent on
+
+"---------------------------
+"" Mapping
+"---------------------------
+let mapleader = "\<Space>"
 nnoremap cn *``cgn
+nmap <ESC><ESC> :nohlsearch<CR><ESC>
+map <C-g> :echo expand('%:p')<Return>
+nnoremap <Leader>gps :Dispatch git push<cr>
+nnoremap <Leader>gpl :Dispatch git pull<cr>
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>x :Commands<CR>
+nnoremap <Leader>f :GFiles<CR>
+nnoremap <Leader>a :Ag<CR>
+nnoremap <Leader>k :bd<CR>`
+map <C-]> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+map <leader><C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+"---------------------------
+"" Custom commands
+"---------------------------
 command! -nargs=* -complete=file Rg :tabnew | :silent grep --sort-files <args>
 command! -nargs=* -complete=file Rgg :tabnew | :silent grep <args>
-nmap <ESC><ESC> :nohlsearch<CR><ESC>
-runtime macros/matchit.vim
+command! Rv source $MYVIMRC
+command! Ev edit $MYVIMRC
+command! Edv edit $HOME/dotfiles/.vimrc
 cabbr w!! w !sudo tee > /dev/null %
 augroup highlightIdegraphicSpace
   autocmd!
   autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=DarkGreen guibg=DarkGreen
   autocmd VimEnter,WinEnter * match IdeographicSpace /　/
 augroup END
-filetype plugin indent on
 autocmd QuickFixCmdPost *grep* cwindow
 au BufNewFile,BufRead *.conf,*.conf.j2 set ft=conf
-:map <C-g> :echo expand('%:p')<Return>
 
 "---------------------------
-" Vimrc
-"---------------------------
-command! Rv source $MYVIMRC
-command! Ev edit $MYVIMRC
-command! Edv edit $HOME/dotfiles/.vimrc
-
-"---------------------------
-" Async git pull/push
-"---------------------------
-nnoremap <Leader>gps :Dispatch git push<cr>
-nnoremap <Leader>gpl :Dispatch git pull<cr>
-
-"---------------------------
-" FZF
-"---------------------------
-nnoremap <Leader>b :Buffers<CR>
-nnoremap <Leader>x :Commands<CR>
-nnoremap <Leader>f :GFiles<CR>
-nnoremap <Leader>a :Ag<CR>
-nnoremap <Leader>k :bd<CR>`
-
-"---------------------------
-"" Vim-Plug Settings.
+"" Vim-Plug Settings
 "---------------------------
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -88,12 +85,19 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 call plug#begin()
-" [for All]
+
+"---------------------------
+"" Plugins
+"---------------------------
+"" [for All]
 " Plug 'tomasr/molokai'
 Plug 'kristijanhusak/vim-hybrid-material'
 " Plug 'vim-scripts/mru.vim'
 Plug 'Townk/vim-autoclose'
 Plug 'Shougo/unite.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/vim-easy-align'
 Plug 'LeafCage/yankround.vim'
 Plug 'Shougo/neocomplete.vim'
@@ -101,15 +105,13 @@ Plug 'Shougo/neocomplete.vim'
 Plug 'tpope/vim-dispatch'
 Plug 'itchyny/lightline.vim'
 Plug 'soramugi/auto-ctags.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'szw/vim-tags'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'lambdalisue/vim-unified-diff'
 Plug 'Lokaltog/vim-easymotion'
+Plug 'tmhedberg/matchit'
 Plug 'vimtaku/hl_matchit.vim'
 Plug 'osyo-manga/vim-over'
 Plug 'w0rp/ale'
@@ -150,19 +152,14 @@ Plug 'racer-rust/vim-racer', { 'for': ['rust'] }
 Plug 'hashivim/vim-terraform', { 'for': ['tf', 'terraform'] }
 call plug#end()
 
-"-------------------------
-" Color Scheme
-"-------------------------
+"---------------------------
+"" Color scheme
+"---------------------------
 syntax on
 set background=dark
-" cursorline is slow...
-" set cursorline
-" autocmd ColorScheme * hi clear CursorLine
 autocmd ColorScheme * hi LineNr ctermfg=239
 autocmd ColorScheme * hi Normal ctermbg=none
 colorscheme hybrid_reverse
-" autocmd colorscheme molokai highlight Visual ctermbg=8
-" colorscheme molokai
 
 "-------------------------
 " Unite Settings
@@ -432,7 +429,7 @@ endif
 let g:terraform_fmt_on_save = 1
 
 "-------------------------
-" env
+" Set os env
 "-------------------------
 if has("mac")
 " mac用の設定
