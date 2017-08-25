@@ -4,7 +4,7 @@ echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 brew install peco lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig fzy exa python2 python3 rbenv
-brew install vim --with-lua
+# brew install vim --with-lua
 brew install neovim/neovim/neovim
 brew tap universal-ctags/universal-ctags
 brew install --HEAD universal-ctags
@@ -58,13 +58,6 @@ export PATH=$HOME/project/bin:$PATH
 export GOPATH=$HOME/project
 
 echo "-----------------------------------------------------";
-echo "Setup Other";
-echo "-----------------------------------------------------";
-go get github.com/motemen/ghq
-go get github.com/golang/dep/...
-vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
-
-echo "-----------------------------------------------------";
 echo "Neovim";
 echo "-----------------------------------------------------";
 ln -s ~/.vim ~/.config/nvim
@@ -73,6 +66,14 @@ sudo easy_install-2.7 pip
 sudo easy_install-3.6 pip
 pip2 install neovim
 pip3 install neovim
+ln -sf $(which nvim) /usr/local/bin/vim
+
+echo "-----------------------------------------------------";
+echo "Setup Other";
+echo "-----------------------------------------------------";
+go get github.com/motemen/ghq
+go get github.com/golang/dep/...
+vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 
 echo "-----------------------------------------------------";
 echo "Extra applications by brew cask";

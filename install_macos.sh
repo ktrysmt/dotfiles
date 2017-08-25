@@ -4,7 +4,7 @@ echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 brew install peco lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig fzy autoconf automake exa python2 python3
-brew install vim --with-lua
+# brew install vim --with-lua
 brew install neovim/neovim/neovim
 
 echo "-----------------------------------------------------";
@@ -25,7 +25,6 @@ ln -s ~/dotfiles/.tern-project ~/.tern-project
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 wget -O ~/Library/Fonts/RictyDiminished-Regular.ttf https://github.com/edihbrandon/RictyDiminished/raw/master/RictyDiminished-Regular.ttf
-
 
 echo "-----------------------------------------------------";
 echo "Install universal-ctags"
@@ -52,7 +51,6 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 ~/.nodebrew/nodebrew use stable
 curl -o- -L https://yarnpkg.com/install.sh | bash
 export PATH="$HOME/.yarn/bin:$PATH"
-
 
 echo "-----------------------------------------------------";
 echo "Setup Go"
@@ -87,13 +85,6 @@ brew cask install qblocker
 brew cask cleanup
 
 echo "-----------------------------------------------------";
-echo "Setup Other";
-echo "-----------------------------------------------------";
-go get github.com/motemen/ghq
-go get github.com/golang/dep/...
-vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
-
-echo "-----------------------------------------------------";
 echo "Neovim";
 echo "-----------------------------------------------------";
 ln -s ~/.vim ~/.config/nvim
@@ -102,6 +93,14 @@ sudo easy_install-2.7 pip
 sudo easy_install-3.6 pip
 pip2 install neovim
 pip3 install neovim
+ln -sf $(which nvim) /usr/local/bin/vim
+
+echo "-----------------------------------------------------";
+echo "Setup Other";
+echo "-----------------------------------------------------";
+go get github.com/motemen/ghq
+go get github.com/golang/dep/...
+vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 
 echo "-----------------------------------------------------";
 echo "Rested tasks"

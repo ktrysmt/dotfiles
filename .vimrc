@@ -100,8 +100,11 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/vim-easy-align'
 Plug 'LeafCage/yankround.vim'
-Plug 'Shougo/neocomplete.vim'
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/neocomplete.vim'
+end
 Plug 'tpope/vim-dispatch'
 Plug 'itchyny/lightline.vim'
 Plug 'soramugi/auto-ctags.vim'
@@ -167,42 +170,44 @@ colorscheme hybrid_reverse
 let g:unite_enable_split_vertically = 1
 :map <C-p> :Unite yankround<Return>
 
-"-------------------------
-" neocomplete
-"-------------------------
-let g:acp_enableAtStartup = 0
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-let g:neocomplete#sources#dictionary#dictionaries = {
-   \ 'default' : '',
-   \ 'vimshell' : $HOME.'/.vimshell_hist',
-   \ 'scheme' : $HOME.'/.gosh_completions'
-   \ }
-if !exists('g:neocomplete#keyword_patterns')
- let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType * setlocal completeopt-=preview
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
 "-------------------------
-" deoplete
+"" Completion
 "-------------------------
-" " inoremap <expr><tab> pumvisible() ? '\<c-n>' : '\<tab>'
-" let g:deoplete#enable_smart_case = 1
-" let g:deoplete#enable_at_startup = 1
-" inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
-" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-" function! s:my_cr_function() abort
-" 	return deoplete#close_popup() . "\<CR>"
-" endfunction
+if has('nvim')
+  "" deoplete
+  " inoremap <expr><tab> pumvisible() ? '\<c-n>' : '\<tab>'
+  let g:deoplete#enable_smart_case = 1
+  let g:deoplete#enable_at_startup = 1
+  inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+  function! s:my_cr_function() abort
+    return deoplete#close_popup() . "\<CR>"
+  endfunction
+else
+  "" neocomplete
+  let g:acp_enableAtStartup = 0
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#enable_smart_case = 1
+  let g:neocomplete#sources#syntax#min_keyword_length = 3
+  let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+  let g:neocomplete#sources#dictionary#dictionaries = {
+        \ 'default' : '',
+        \ 'vimshell' : $HOME.'/.vimshell_hist',
+        \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+  if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+  endif
+  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+  inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType * setlocal completeopt-=preview
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+end
 
 "-------------------------
 " lightline
