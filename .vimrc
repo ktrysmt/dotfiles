@@ -56,7 +56,10 @@ nnoremap <Leader>x :Commands<CR>
 nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>a :Ag<CR>
 nnoremap <Leader>k :bd<CR>`
-map <C-]> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+" nnoremap <leader>tv :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
+" nnoremap <leader>th :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+" nnoremap <leader>tt :tab sp<CR> :exe("tjump ".expand('<cword>'))<CR>
+map <C-]> :tab <CR>:exec("tjump ".expand("<cword>"))<CR>
 map <leader><C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 "---------------------------
