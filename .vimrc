@@ -41,6 +41,10 @@ set wildmenu
 set history=5000
 scriptencoding
 filetype plugin indent on
+if has('nvim')
+  tnoremap <silent> <ESC> <C-\><C-n>
+  set sh=zsh
+end
 
 "---------------------------
 "" Mapping

@@ -122,6 +122,7 @@ ln -sf $(which nvim) /usr/local/bin/vim
 echo "-----------------------------------------------------";
 echo "Setup Other";
 echo "-----------------------------------------------------";
+git clone https://github.com/syndbg/goenv.git ~/.goenv
 go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
 curl https://glide.sh/get | sh
