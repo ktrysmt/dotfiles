@@ -24,6 +24,12 @@ sudo apt-get -y install libssl-dev libcurl4-openssl-dev autoconf
 sudo apt-get -y install liblua5.2-dev lua5.2 python-dev ncurses-dev
 sudo apt-get -y install mercurial gettext libncurses5-dev libxmu-dev libgtk2.0-dev libperl-dev python-dev python3-dev ruby-dev tcl-dev
 sudo apt-get -y install luajit tmux
+sudo apt-get -y install software-properties-common
+sudo add-apt-repository ppa:neovim-ppa/unstable -y
+sudo apt-get -y update
+sudo apt-get -y install neovim
+sudo apt-get -y install python-dev python-pip python3-dev python3-pip
+
 cd /tmp
 wget https://github.com/jhawthorn/fzy/releases/download/0.9/fzy_0.9-1_amd64.deb
 sudo dpkg -i fzy_0.9-1_amd64.deb
@@ -81,6 +87,7 @@ curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
 cargo install ripgrep
 cargo install --git https://github.com/sharkdp/fd
+cargo install --no-default-features --git https://github.com/ogham/exa
 
 echo "-----------------------------------------------------";
 echo "Install Golang";
@@ -103,12 +110,22 @@ curl -L git.io/nodebrew | perl - setup
 curl -o- -L https://yarnpkg.com/install.sh | bash
 export PATH="$HOME/.yarn/bin:$PATH"
 
+echo "-----------------------------------------------------";
+echo "Neovim";
+echo "-----------------------------------------------------";
+sudo easy_install3 pip
+sudo easy_install-2.7 pip
+sudo pip2 install neovim
+sudo pip3 install neovim
+ln -sf $(which nvim) /usr/local/bin/vim
 
 echo "-----------------------------------------------------";
-echo " Setup Other";
+echo "Setup Other";
 echo "-----------------------------------------------------";
 go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
 curl https://glide.sh/get | sh
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 echo $PASSWORD | chsh -s /bin/zsh
+
+
