@@ -1,6 +1,6 @@
-# -------------- 
+# --------------
 # bind
-# -------------- 
+# --------------
 # prefix
 unbind C-b
 set -g prefix C-s
@@ -16,9 +16,10 @@ bind -r L resize-pane -R 10
 bind C-s run "tmux last-pane || tmux last-window || tmux new-window"
 #set-window-option -g monitor-activity on
 bind-key -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
+bind-key -t vi-copy C-v rectangle-toggle
 bind 'C' new-window -c "#{pane_current_path}";
 bind '%' split-window -h -c "#{pane_current_path}";
-bind '"' split-window -v -c "#{pane_current_path}"; 
+bind '"' split-window -v -c "#{pane_current_path}";
 
 # ---------
 # general
@@ -30,13 +31,13 @@ set -g base-index 1
 set -g pane-base-index 1
 set -g terminal-overrides 'xterm*:smcup@:rmcup@'
 set -g default-terminal xterm
-set-option -g renumber-windows on; 
+set-option -g renumber-windows on;
 set-option -g history-limit 100000
 set-option -g terminal-overrides "xterm-color:khome=\033[1~"
 
-# -------------- 
+# --------------
 # status
-# -------------- 
+# --------------
 set -g status-position top;
 set -g status-fg white
 set -g status-bg colour235
@@ -55,24 +56,24 @@ setw -g mode-keys vi
 # ウィンドウ名が実行中のコマンド名になるのを止める
 setw -g automatic-rename off
 
-# -------------- 
+# --------------
 # window
-# -------------- 
+# --------------
 setw -g window-status-current-fg black
 setw -g window-status-current-bg white
 # set-window-option -g window-status-format " #I: #W "
 # set-window-option -g window-status-current-format "#[fg=colour255,bg=colour27,bold] #I: #W "
 
-# -------------- 
+# --------------
 # pane
-# -------------- 
+# --------------
 # pane-active-border
 set -g pane-active-border-fg white
 set -g pane-active-border-bg black
 
-# -------------- 
+# --------------
 # !Win Only
-# -------------- 
+# --------------
 # msys2 clipboard
 bind-key -t vi-copy Enter copy-pipe "cat > /dev/clipboard"
 # zsh
