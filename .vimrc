@@ -55,11 +55,11 @@ nmap <ESC><ESC> :nohlsearch<CR><ESC>
 map <C-g> :echo expand('%:p')<Return>
 nnoremap <Leader>gps :Dispatch git push<cr>
 nnoremap <Leader>gpl :Dispatch git pull<cr>
+" see: https://github.com/junegunn/fzf.vim
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>x :Commands<CR>
 nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>a :Ag<CR>
-nnoremap <Leader>k :bd<CR>`
 " nnoremap <leader>tv :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
 " nnoremap <leader>th :split<CR> :exe("tjump ".expand('<cword>'))<CR>
 " nnoremap <leader>tt :tab sp<CR> :exe("tjump ".expand('<cword>'))<CR>
@@ -177,6 +177,19 @@ colorscheme hybrid_reverse
 let g:unite_enable_split_vertically = 1
 :map <C-p> :Unite yankround<Return>
 
+"-------------------------
+" fzf.vim
+"-------------------------
+if has('nvim')
+  function! s:fzf_statusline()
+    " Override statusline as you like
+    highlight fzf1 ctermfg=161 ctermbg=251
+    highlight fzf2 ctermfg=23 ctermbg=251
+    highlight fzf3 ctermfg=237 ctermbg=251
+    setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+  endfunction
+  autocmd! User FzfStatusLine call <SID>fzf_statusline()
+endif
 
 "-------------------------
 "" Completion
