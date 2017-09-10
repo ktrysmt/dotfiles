@@ -154,6 +154,9 @@ Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 " [for Go]
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'thinca/vim-quickrun', { 'for': ['go', 'rust', 'javascript'] }
+if has('nvim')
+  Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make'}
+end
 " [for Rust]
 Plug 'scrooloose/syntastic', { 'for': ['rust'] }
 Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
@@ -205,6 +208,12 @@ if has('nvim')
   function! s:my_cr_function() abort
     return deoplete#close_popup() . "\<CR>"
   endfunction
+
+  "" deoplete-go
+  let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+  let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+  let g:deoplete#sources#go#use_cache = 1
+  let g:deoplete#sources#go#json_directory = $HOME.'/.local/data/deoplete-go'
 else
   "" neocomplete
   let g:acp_enableAtStartup = 0
@@ -441,6 +450,8 @@ if executable("rg")
     set grepprg=rg\ --vimgrep\ --no-heading
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
+
+" deoplete-go
 
 "-------------------------
 " php_localvarcheck
