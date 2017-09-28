@@ -266,6 +266,9 @@ endfunction
 " ale
 "-------------------------
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\}
 
 "-------------------------
 " ctags
