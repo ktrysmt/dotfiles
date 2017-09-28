@@ -3,7 +3,7 @@ echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
-brew install peco lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig fzy autoconf automake exa python2 python3 goenv
+brew install yarn peco lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig fzy autoconf automake exa python2 python3 goenv
 # brew install vim --with-lua
 brew install neovim/neovim/neovim
 
@@ -49,8 +49,6 @@ curl -L git.io/nodebrew | perl - setup
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 ~/.nodebrew/nodebrew install-binary stable
 ~/.nodebrew/nodebrew use stable
-curl -o- -L https://yarnpkg.com/install.sh | bash
-export PATH="$HOME/.yarn/bin:$PATH"
 
 echo "-----------------------------------------------------";
 echo "Setup Go"

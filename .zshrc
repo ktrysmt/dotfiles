@@ -33,7 +33,6 @@
   export PATH=$HOME/.nodebrew/current/bin:$PATH
   nodebrew use stable
   export PATH=$PATH:./node_modules/.bin
-  export PATH="$HOME/.yarn/bin:$PATH"
   # rust
   [ -f ~/.cargo/env ] && source ~/.cargo/env
   # fzf
