@@ -99,6 +99,7 @@ echo "-----------------------------------------------------";
 go get github.com/motemen/ghq
 go get github.com/golang/dep/...
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
+npm install -g npm-check-updates
 
 echo "-----------------------------------------------------";
 echo "Rested tasks"

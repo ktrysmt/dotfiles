@@ -23,7 +23,7 @@ sudo apt-get -y install git curl zsh tig make gcc dstat wget
 sudo apt-get -y install libssl-dev libcurl4-openssl-dev autoconf
 sudo apt-get -y install liblua5.2-dev lua5.2 python-dev ncurses-dev
 sudo apt-get -y install mercurial gettext libncurses5-dev libxmu-dev libgtk2.0-dev libperl-dev python-dev python3-dev ruby-dev tcl-dev
-sudo apt-get -y install luajit tmux
+sudo apt-get -y install luajit tmux yarn
 sudo apt-get -y install software-properties-common
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
 sudo apt-get -y update
@@ -107,8 +107,6 @@ cd ~/;
 curl -L git.io/nodebrew | perl - setup
 ~/.nodebrew/nodebrew install-binary stable
 ~/.nodebrew/nodebrew use stable
-curl -o- -L https://yarnpkg.com/install.sh | bash
-export PATH="$HOME/.yarn/bin:$PATH"
 
 echo "-----------------------------------------------------";
 echo "Neovim";
@@ -127,6 +125,7 @@ go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
 curl https://glide.sh/get | sh
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
+npm install -g npm-check-updates
 echo $PASSWORD | chsh -s /bin/zsh
 
 
