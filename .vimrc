@@ -155,6 +155,7 @@ Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 " [for Go]
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'thinca/vim-quickrun', { 'for': ['go', 'rust', 'javascript'] }
+Plug 'jodosha/vim-godebug', { 'for': 'go' }
 if has('nvim')
   Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make'}
 end
