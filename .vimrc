@@ -141,6 +141,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript'] }
 Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
 " [for PHP ]
+Plug 'lvht/phpcd.vim', { 'for': ['php'] }
 " Plug 'flyinshadow/php_localvarcheck.vim', { 'for': ['php'] }
 " [for Javascript]
 Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript'] }
@@ -455,14 +456,6 @@ if executable("rg")
     set grepprg=rg\ --vimgrep\ --no-heading
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
-
-" deoplete-go
-
-"-------------------------
-" php_localvarcheck
-"-------------------------
-"let g:php_localvarcheck_enable = 1
-"let g:php_localvarcheck_global = 0
 
 "-------------------------
 " Terraform
