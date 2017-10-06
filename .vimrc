@@ -60,9 +60,8 @@ nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>x :Commands<CR>
 nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>a :Ag<CR>
-" nnoremap <leader>tv :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
-" nnoremap <leader>th :split<CR> :exe("tjump ".expand('<cword>'))<CR>
-" nnoremap <leader>tt :tab sp<CR> :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <Leader>t :new \| :terminal<CR>
+nnoremap <Leader>vt :vne \| :terminal<CR>
 map <C-]> :tab <CR>:exec("tjump ".expand("<cword>"))<CR>
 map <leader><C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
@@ -271,6 +270,7 @@ let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \}
+let g:ale_fix_on_save = 1
 
 "-------------------------
 " ctags
