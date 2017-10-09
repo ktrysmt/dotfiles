@@ -302,7 +302,7 @@ vmap <silent> <C-e> <Esc>:NERDTreeTabsToggle<CR>
 omap <silent> <C-e>      :NERDTreeTabsToggle<CR>
 imap <silent> <C-e> <Esc>:NERDTreeTabsToggle<CR>
 cmap <silent> <C-e> <C-u>:NERDTreeTabsToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let g:NERDTreeShowHidden=1
 let NERDTreeIgnore = ['node_modules','.git', ".DS_Store"]
 let g:NERDTreeChDirMode = 2
