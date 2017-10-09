@@ -39,8 +39,8 @@ set ignorecase
 set completeopt-=preview
 set wildmenu
 set history=5000
-set ma
-scriptencoding
+set guifont=Cica\ Regular:h18
+scriptencoding utf-8
 filetype plugin indent on
 if has('nvim')
   tnoremap <silent> <ESC> <C-\><C-n>
@@ -52,6 +52,9 @@ end
 "---------------------------
 let mapleader = "\<Space>"
 nnoremap cn #``cgn
+nnoremap cN #``cgN
+nnoremap / /\v
+nnoremap <Leader>%s  :%s/\v
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 map <C-g> :echo expand('%:p')<Return>
 nnoremap <Leader>gps :Dispatch git push<cr>
@@ -104,6 +107,8 @@ Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'Townk/vim-autoclose'
 Plug 'Shougo/unite.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/vim-easy-align'
@@ -245,12 +250,12 @@ end
 "-------------------------
 " lightline
 "-------------------------
-let g:lightline = {'colorscheme': 'wombat'}
 set laststatus=2
 if !has('gui_running')
 set t_Co=256
 endif
 let g:lightline = {
+  \'colorscheme': 'wombat',
   \'active': {
   \  'left': [
   \    ['mode', 'paste'],
