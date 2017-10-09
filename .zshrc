@@ -12,6 +12,7 @@
     zgen load zsh-users/zsh-completions src
     # zgen load zchee/go-zsh-completions
     zgen load wbinglee/zsh-wakatime
+    zgen load lukechilds/zsh-better-npm-completion
     zgen save
   fi
 }

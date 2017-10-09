@@ -50,7 +50,7 @@ end
 "" Mapping
 "---------------------------
 let mapleader = "\<Space>"
-nnoremap cn *``cgn
+nnoremap cn #``cgn
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 map <C-g> :echo expand('%:p')<Return>
 nnoremap <Leader>gps :Dispatch git push<cr>
@@ -62,6 +62,7 @@ nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>a :Ag<CR>
 nnoremap <Leader>t :new \| :terminal<CR>
 nnoremap <Leader>vt :vne \| :terminal<CR>
+nnoremap <Leader>n :ALENextWrap<CR>
 map <C-]> :tab <CR>:exec("tjump ".expand("<cword>"))<CR>
 map <leader><C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
