@@ -143,6 +143,7 @@ Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
 Plug 'lvht/phpcd.vim', { 'for': ['php'] }
 " Plug 'flyinshadow/php_localvarcheck.vim', { 'for': ['php'] }
 " [for Javascript]
+Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'jsx'] }
 Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript'] }
 Plug 'fleischie/vim-styled-components', { 'for': ['javascript'] }
 Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript'] }
@@ -268,9 +269,15 @@ endfunction
 "-------------------------
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
+  \ 'javascript': ['eslint'],
 \}
+let g:ale_fixers_aliases = {'javascript': 'css'}
 let g:ale_fix_on_save = 1
+let g:ale_linters = {
+  \ 'javascript': ['stylelint','eslint'],
+  \ 'css': ['stylelint']
+\}
+let g:ale_linter_aliases = {'javascript': 'css'}
 
 "-------------------------
 " ctags
