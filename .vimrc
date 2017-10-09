@@ -39,6 +39,7 @@ set ignorecase
 set completeopt-=preview
 set wildmenu
 set history=5000
+set ma
 scriptencoding
 filetype plugin indent on
 if has('nvim')
@@ -272,13 +273,13 @@ let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_fixers = {
   \ 'javascript': ['eslint'],
 \}
-let g:ale_fixers_aliases = {'javascript': 'css'}
 let g:ale_fix_on_save = 1
+let g:ale_fixers_aliases = {'javascript': 'css'}
 let g:ale_linters = {
-  \ 'javascript': ['stylelint','eslint'],
+  \ 'javascript': ['eslint', 'flow', 'stylelint'],
   \ 'css': ['stylelint']
 \}
-let g:ale_linter_aliases = {'javascript': 'css'}
+" let g:ale_linter_aliases = {'javascript': 'css'}
 
 "-------------------------
 " ctags
