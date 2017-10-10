@@ -39,7 +39,7 @@ set ignorecase
 set completeopt-=preview
 set wildmenu
 set history=5000
-set guifont=Cica:h16
+set guifont=Cica:h15
 scriptencoding utf-8
 filetype plugin indent on
 if has('nvim')
@@ -107,8 +107,7 @@ Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'Townk/vim-autoclose'
 Plug 'Shougo/unite.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'ryanoasis/vim-devicons'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'ryanoasis/vim-devicons'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/vim-easy-align'
@@ -266,10 +265,20 @@ let g:lightline = {
   \'component_function': {
   \  'ale': 'ALEStatus'
   \},
-\ }
+\}
+  " \  'filetype': 'MyFiletype',
+  " \  'fileformat': 'MyFileformat',
+  " \'separator': { 'left': "\uE0B0", 'right': "\uE0B2" },
+  " \'subseparator': { 'left': "\uE0B1", 'right': "\uE0B3" }
 function! ALEStatus()
   return ALEGetStatusLine()
 endfunction
+" function! MyFiletype()
+"   return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+" endfunction
+" function! MyFileformat()
+"   return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+" endfunction
 
 "-------------------------
 " ale
@@ -319,6 +328,7 @@ cmap <silent> <C-e> <C-u>:NERDTreeTabsToggle<CR>
 let g:NERDTreeShowHidden=1
 let NERDTreeIgnore = ['node_modules','.git', ".DS_Store"]
 let g:NERDTreeChDirMode = 2
+let g:NERDTreeWinSize = 45
 
 "-------------------------
 " neosnippet
