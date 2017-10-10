@@ -59,6 +59,8 @@ nmap <ESC><ESC> :nohlsearch<CR><ESC>
 map <C-g> :echo expand('%:p')<Return>
 nnoremap <Leader>gps :Dispatch git push<cr>
 nnoremap <Leader>gpl :Dispatch git pull<cr>
+nnoremap <Leader>co :copen<cr>
+nnoremap <Leader>cl :cclose<cr>
 " see: https://github.com/junegunn/fzf.vim
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>x :Commands<CR>
@@ -73,6 +75,7 @@ map <leader><C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 "---------------------------
 "" Custom commands
 "---------------------------
+au FileType qf wincmd L
 command! -nargs=* -complete=file Rg :tabnew | :silent grep --sort-files <args>
 command! -nargs=* -complete=file Rgg :tabnew | :silent grep <args>
 command! Rv source $MYVIMRC
@@ -266,19 +269,9 @@ let g:lightline = {
   \  'ale': 'ALEStatus'
   \},
 \}
-  " \  'filetype': 'MyFiletype',
-  " \  'fileformat': 'MyFileformat',
-  " \'separator': { 'left': "\uE0B0", 'right': "\uE0B2" },
-  " \'subseparator': { 'left': "\uE0B1", 'right': "\uE0B3" }
 function! ALEStatus()
   return ALEGetStatusLine()
 endfunction
-" function! MyFiletype()
-"   return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
-" endfunction
-" function! MyFileformat()
-"   return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-" endfunction
 
 "-------------------------
 " ale
@@ -286,14 +279,19 @@ endfunction
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_fixers = {
   \ 'javascript': ['eslint'],
+  \ 'jsx': ['eslint'],
+  \ 'css': ['stylelint'],
 \}
 let g:ale_fix_on_save = 1
-let g:ale_fixers_aliases = {'javascript': 'css'}
 let g:ale_linters = {
-  \ 'javascript': ['eslint', 'flow', 'stylelint'],
-  \ 'css': ['stylelint']
+  \ 'jsx': ['eslint', 'stylelint'],
+  \ 'css': ['stylelint'],
 \}
-" let g:ale_linter_aliases = {'javascript': 'css'}
+let g:ale_linter_aliases = {'jsx': 'css'}
+augroup FiletypeGroup
+    autocmd!
+    au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+augroup END
 
 "-------------------------
 " ctags
