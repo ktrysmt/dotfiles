@@ -1,7 +1,7 @@
 "---------------------------
 "" Set env
 "---------------------------
-set encoding=utf-8
+set encoding=utf8
 set fileencodings=utf-8,euc-jp,sjis,iso-2022-jp,
 set fileformats=unix,dos,mac
 set ambiwidth=double
@@ -39,7 +39,7 @@ set ignorecase
 set completeopt-=preview
 set wildmenu
 set history=5000
-set guifont=Cica\ Regular:h18
+set guifont=Cica:h16
 scriptencoding utf-8
 filetype plugin indent on
 if has('nvim')
@@ -265,7 +265,7 @@ let g:lightline = {
   \},
   \'component_function': {
   \  'ale': 'ALEStatus'
-  \}
+  \},
 \ }
 function! ALEStatus()
   return ALEGetStatusLine()
