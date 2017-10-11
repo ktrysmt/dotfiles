@@ -152,15 +152,18 @@ Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
 Plug 'lvht/phpcd.vim', { 'for': ['php'] }
 " Plug 'flyinshadow/php_localvarcheck.vim', { 'for': ['php'] }
 " [for Javascript]
-Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'jsx'] }
-Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript'] }
-Plug 'fleischie/vim-styled-components', { 'for': ['javascript'] }
-Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript'] }
-Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
-Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript'] }
-Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
+Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'fleischie/vim-styled-components', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
+Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 " Plug 'jaawerth/nrun.vim', { 'for': ['javascript'] }
-" Plug 'othree/yajs.vim', { 'for': ['javascript'] }
+Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/html5.vim', { 'for': ['javascript', 'javascript.jsx', 'html'] }
+Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " [for Go]
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'thinca/vim-quickrun', { 'for': ['go', 'rust', 'javascript'] }
@@ -293,6 +296,18 @@ augroup FiletypeGroup
     au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 augroup END
 
+" The answer is:
+" https://stackoverflow.com/questions/46678615/how-do-you-set-an-autocmd-to-take-effect-when-filetype-is-none
+" autocmd BufNewFile,BufRead * if empty(&filetype) | execute 'nnoremap <buffer> <leader>f :1,$! cat' | endif
+"
+" autocmd BufEnter * :call SetFiletypeNewBuffer()
+" function! SetFiletypeNewBuffer()
+"   if @% == ""
+"     :set filetype=none
+"   endif
+" endfunction
+" autocmd! FileType none nnoremap <Leader>z :echo "HOGE"
+
 "-------------------------
 " ctags
 "-------------------------
@@ -326,7 +341,7 @@ cmap <silent> <C-e> <C-u>:NERDTreeTabsToggle<CR>
 let g:NERDTreeShowHidden=1
 let NERDTreeIgnore = ['node_modules','.git', ".DS_Store"]
 let g:NERDTreeChDirMode = 2
-let g:NERDTreeWinSize = 45
+let g:NERDTreeWinSize = 35
 
 "-------------------------
 " neosnippet
@@ -483,6 +498,11 @@ endif
 " Terraform
 "-------------------------
 let g:terraform_fmt_on_save = 1
+
+"-------------------------
+" javascript syntax
+"-------------------------
+let g:used_javascript_libs = 'react'
 
 "-------------------------
 " Set os env
