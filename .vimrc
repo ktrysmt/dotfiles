@@ -115,7 +115,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'LeafCage/yankround.vim'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
+  " Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
 else
   Plug 'Shougo/neocomplete.vim'
 end
@@ -150,15 +150,15 @@ Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
 Plug 'lvht/phpcd.vim', { 'for': ['php'] }
 " [for Javascript]
 Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'javascript.jsx', 'css'] }
-Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript', 'javascript.jsx', 'css'] }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/html5.vim', { 'for': ['javascript', 'javascript.jsx', 'html'] }
-Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
+" Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript', 'javascript.jsx', 'css'] }
+" Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'othree/html5.vim', { 'for': ['javascript', 'javascript.jsx', 'html'] }
+" Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " [for Go]
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'thinca/vim-quickrun', { 'for': ['go', 'rust', 'javascript'] }
@@ -492,7 +492,7 @@ let g:terraform_fmt_on_save = 1
 "-------------------------
 " javascript syntax
 "-------------------------
-let g:used_javascript_libs = 'react'
+" let g:used_javascript_libs = 'react'
 
 "-------------------------
 " Set os env
