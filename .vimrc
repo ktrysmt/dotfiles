@@ -289,6 +289,18 @@ augroup FiletypeGroup
     au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 augroup END
 
+" The answer is:
+" https://stackoverflow.com/questions/46678615/how-do-you-set-an-autocmd-to-take-effect-when-filetype-is-none
+" autocmd BufNewFile,BufRead * if empty(&filetype) | execute 'nnoremap <buffer> <leader>f :1,$! cat' | endif
+"
+" autocmd BufEnter * :call SetFiletypeNewBuffer()
+" function! SetFiletypeNewBuffer()
+"   if @% == ""
+"     :set filetype=none
+"   endif
+" endfunction
+" autocmd! FileType none nnoremap <Leader>z :echo "HOGE"
+
 "-------------------------
 " ctags
 "-------------------------
@@ -321,7 +333,7 @@ cmap <silent> <C-e> <C-u>:NERDTreeTabsToggle<CR>
 let g:NERDTreeShowHidden=1
 let NERDTreeIgnore = ['node_modules','.git', ".DS_Store"]
 let g:NERDTreeChDirMode = 2
-let g:NERDTreeWinSize = 45
+let g:NERDTreeWinSize = 35
 
 "-------------------------
 " neosnippet
