@@ -61,8 +61,8 @@ nnoremap <Leader>gps :Dispatch git push<cr>
 nnoremap <Leader>gpl :Dispatch git pull<cr>
 nnoremap <Leader>co :copen<cr>
 nnoremap <Leader>cl :cclose<cr>
-" --- https://github.com/junegunn/fzf.vim 
-nnoremap <Leader>b :Buffers<CR> 
+" --- https://github.com/junegunn/fzf.vim
+nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>x :Commands<CR>
 nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>a :Ag<CR>
@@ -149,15 +149,14 @@ Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
 " [for PHP ]
 Plug 'lvht/phpcd.vim', { 'for': ['php'] }
 " [for Javascript]
-Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'javascript.jsx', 'css'] }
+Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript', 'javascript.jsx', 'css'] }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'fleischie/vim-styled-components', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'tugorez/vim-flow', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/html5.vim', { 'for': ['javascript', 'javascript.jsx', 'html'] } 
+Plug 'othree/html5.vim', { 'for': ['javascript', 'javascript.jsx', 'html'] }
 Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " [for Go]
@@ -207,7 +206,7 @@ endif
 "-------------------------
 "" Completion
 "-------------------------
-if has('nvim') " deoplete 
+if has('nvim') " deoplete
   " inoremap <expr><tab> pumvisible() ? '\<c-n>' : '\<tab>'
   let g:deoplete#enable_smart_case = 1
   let g:deoplete#enable_at_startup = 1
