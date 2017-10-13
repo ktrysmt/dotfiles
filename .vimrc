@@ -57,18 +57,22 @@ nnoremap / /\v
 nnoremap <Leader>%s  :%s/\v
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 map <C-g> :echo expand('%:p')<Return>
-nnoremap <Leader>gps :Dispatch git push<cr>
-nnoremap <Leader>gpl :Dispatch git pull<cr>
-nnoremap <Leader>co :copen<cr>
-nnoremap <Leader>cl :cclose<cr>
-" --- https://github.com/junegunn/fzf.vim
+nnoremap <silent> <Leader>co :copen<cr>
+nnoremap <silent> <Leader>cl :cclose<cr>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>x :Commands<CR>
 nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>a :Ag<CR>
-" ---
-nnoremap <Leader>t :new \| :terminal<CR>
-nnoremap <Leader>vt :vne \| :terminal<CR>
+nnoremap <Leader>h :History:<CR>
+nnoremap <silent> <Leader>gm :Gmerge<CR>
+nnoremap <silent> <Leader>gs :Gstatus<CR>
+nnoremap <silent> <Leader>gl :Glog<CR>
+nnoremap <silent> <Leader>gb :Gblame<CR>
+nnoremap <Leader>gps :Dispatch git push<cr>
+nnoremap <Leader>gpl :Dispatch git pull<cr>
+nnoremap <silent> <Leader>t :new \| :terminal<CR>
+nnoremap <silent> <Leader>T :tabnew \| :terminal<CR>
+nnoremap <silent> <Leader>vt :vne \| :terminal<CR>
 nnoremap <Leader>n :ALENextWrap<CR>
 map <C-]> :tab <CR>:exec("tjump ".expand("<cword>"))<CR>
 map <leader><C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
@@ -80,7 +84,7 @@ au FileType qf wincmd L
 command! -nargs=* -complete=file Rg :tabnew | :silent grep --sort-files <args>
 command! -nargs=* -complete=file Rgg :tabnew | :silent grep <args>
 command! Rv source $MYVIMRC
-command! Ev edit $MYVIMRC
+command! Ev tabnew | edit $MYVIMRC
 command! Edv edit $HOME/dotfiles/.vimrc
 cabbr w!! w !sudo tee > /dev/null %
 augroup highlightIdegraphicSpace
@@ -437,7 +441,7 @@ map <silent> [Tag]p :tabprevious<CR>
 " emmet
 "-------------------------
 let g:user_emmet_leader_key='<C-Y>'
-let g:user_emmet_mode='i'
+let g:user_emmet_mode='in'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,scss,javascript EmmetInstall
 
