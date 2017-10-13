@@ -61,11 +61,12 @@ nnoremap <Leader>gps :Dispatch git push<cr>
 nnoremap <Leader>gpl :Dispatch git pull<cr>
 nnoremap <Leader>co :copen<cr>
 nnoremap <Leader>cl :cclose<cr>
-" see: https://github.com/junegunn/fzf.vim
-nnoremap <Leader>b :Buffers<CR>
+" --- https://github.com/junegunn/fzf.vim 
+nnoremap <Leader>b :Buffers<CR> 
 nnoremap <Leader>x :Commands<CR>
 nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>a :Ag<CR>
+" ---
 nnoremap <Leader>t :new \| :terminal<CR>
 nnoremap <Leader>vt :vne \| :terminal<CR>
 nnoremap <Leader>n :ALENextWrap<CR>
@@ -104,19 +105,17 @@ call plug#begin()
 "" Plugins
 "---------------------------
 "" [for All]
-" Plug 'tomasr/molokai'
 Plug 'kristijanhusak/vim-hybrid-material'
-" Plug 'vim-scripts/mru.vim'
 Plug 'Townk/vim-autoclose'
 Plug 'Shougo/unite.vim'
 Plug 'scrooloose/nerdtree'
-" Plug 'ryanoasis/vim-devicons'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/vim-easy-align'
 Plug 'LeafCage/yankround.vim'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
 else
   Plug 'Shougo/neocomplete.vim'
 end
@@ -136,7 +135,6 @@ Plug 'w0rp/ale'
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
 Plug 'wakatime/vim-wakatime'
-" Plug 'kana/vim-operator-replace'
 Plug 'rhysd/vim-operator-surround'
 Plug 'osyo-manga/vim-operator-stay-cursor'
 Plug 'thinca/vim-qfreplace'
@@ -150,7 +148,6 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript'] }
 Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
 " [for PHP ]
 Plug 'lvht/phpcd.vim', { 'for': ['php'] }
-" Plug 'flyinshadow/php_localvarcheck.vim', { 'for': ['php'] }
 " [for Javascript]
 Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
@@ -158,8 +155,7 @@ Plug 'fleischie/vim-styled-components', { 'for': ['javascript', 'javascript.jsx'
 Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
-" Plug 'jaawerth/nrun.vim', { 'for': ['javascript'] }
+Plug 'tugorez/vim-flow', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/html5.vim', { 'for': ['javascript', 'javascript.jsx', 'html'] } 
 Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
@@ -211,8 +207,7 @@ endif
 "-------------------------
 "" Completion
 "-------------------------
-if has('nvim')
-  "" deoplete
+if has('nvim') " deoplete 
   " inoremap <expr><tab> pumvisible() ? '\<c-n>' : '\<tab>'
   let g:deoplete#enable_smart_case = 1
   let g:deoplete#enable_at_startup = 1
@@ -222,14 +217,12 @@ if has('nvim')
   function! s:my_cr_function() abort
     return deoplete#close_popup() . "\<CR>"
   endfunction
-
-  "" deoplete-go
+  " deoplete-go
   let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
   let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
   let g:deoplete#sources#go#use_cache = 1
   let g:deoplete#sources#go#json_directory = $HOME.'/.local/data/deoplete-go'
-else
-  "" neocomplete
+else " use neoccomplete
   let g:acp_enableAtStartup = 0
   let g:neocomplete#enable_at_startup = 1
   let g:neocomplete#enable_smart_case = 1
@@ -296,18 +289,6 @@ augroup FiletypeGroup
     au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 augroup END
 
-" The answer is:
-" https://stackoverflow.com/questions/46678615/how-do-you-set-an-autocmd-to-take-effect-when-filetype-is-none
-" autocmd BufNewFile,BufRead * if empty(&filetype) | execute 'nnoremap <buffer> <leader>f :1,$! cat' | endif
-"
-" autocmd BufEnter * :call SetFiletypeNewBuffer()
-" function! SetFiletypeNewBuffer()
-"   if @% == ""
-"     :set filetype=none
-"   endif
-" endfunction
-" autocmd! FileType none nnoremap <Leader>z :echo "HOGE"
-
 "-------------------------
 " ctags
 "-------------------------
@@ -319,7 +300,6 @@ let g:auto_ctags_tags_args = '--tag-relative=yes --recurse --sort=yes --append=n
 " map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 " map <leader><C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 " nnoremap <C-\> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
-
 
 "-------------------------
 " tagbar
@@ -467,7 +447,6 @@ nmap ga <Plug>(EasyAlign)
 "-------------------------
 " operetor-user
 "-------------------------
-" nmap s <Plug>(operator-replace)
 map <silent> sa <Plug>(operator-surround-append)
 map <silent> sd <Plug>(operator-surround-delete)
 map <silent> sr <Plug>(operator-surround-replace)
