@@ -51,25 +51,30 @@ end
 "" Mapping
 "---------------------------
 let mapleader = "\<Space>"
-nnoremap cn #``cgn
-nnoremap cN #``cgN
-nnoremap / /\v
+nnoremap cn *Ncgn
+nnoremap cN *NcgN
 nnoremap <Leader>%s  :%s/\v
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 map <C-g> :echo expand('%:p')<Return>
 nnoremap <silent> <Leader>co :copen<cr>
 nnoremap <silent> <Leader>cl :cclose<cr>
-nnoremap <Leader>b :Buffers<CR>
-nnoremap <Leader>x :Commands<CR>
-nnoremap <Leader>f :GFiles<CR>
-nnoremap <Leader>a :Ag<CR>
-nnoremap <Leader>h :History:<CR>
+" nnoremap <Leader>b :Buffers<CR>
+" nnoremap <Leader>x :Commands<CR>
+" nnoremap <Leader>f :GFiles<CR>
+" nnoremap <Leader>a :Ag<CR>
+" nnoremap <Leader>h :History:<CR>
+nnoremap <silent> <expr> <Leader>a (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Ag\<cr>"
+nnoremap <silent> <expr> <Leader>x (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Commands\<cr>"
+nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+nnoremap <silent> <expr> <Leader>b (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Buffers\<cr>"
+nnoremap <silent> <expr> <Leader>h (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":History:\<cr>"
+nnoremap <silent> <expr> <Leader>r (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Ripgrep\<cr>"
 nnoremap <silent> <Leader>gm :Gmerge<CR>
 nnoremap <silent> <Leader>gs :Gstatus<CR>
 nnoremap <silent> <Leader>gl :Glog<CR>
 nnoremap <silent> <Leader>gb :Gblame<CR>
-nnoremap <Leader>gps :Dispatch git push<cr>
-nnoremap <Leader>gpl :Dispatch git pull<cr>
+nnoremap <Leader>gps :Dispatch git push origin<cr>
+nnoremap <Leader>gpl :Dispatch git pull origin<cr>
 nnoremap <silent> <Leader>t :new \| :terminal<CR>
 nnoremap <silent> <Leader>T :tabnew \| :terminal<CR>
 nnoremap <silent> <Leader>vt :vne \| :terminal<CR>
@@ -80,9 +85,15 @@ map <leader><C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 "---------------------------
 "" Custom commands
 "---------------------------
-au FileType qf wincmd L
+" au FileType qf wincmd L
 command! -nargs=* -complete=file Rg :tabnew | :silent grep --sort-files <args>
 command! -nargs=* -complete=file Rgg :tabnew | :silent grep <args>
+command! -bang -nargs=* Ripgrep
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview({'options': '--exact --reverse --delimiter : --nth 3..'}, 'right:50%:hidden', '?'),
+  \   <bang>0)
 command! Rv source $MYVIMRC
 command! Ev tabnew | edit $MYVIMRC
 command! Edv edit $HOME/dotfiles/.vimrc
@@ -119,10 +130,12 @@ Plug 'junegunn/vim-easy-align'
 Plug 'LeafCage/yankround.vim'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  " Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
 else
   Plug 'Shougo/neocomplete.vim'
 end
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/vim-asterisk'
+Plug 'osyo-manga/vim-anzu'
 Plug 'tpope/vim-dispatch'
 Plug 'itchyny/lightline.vim'
 Plug 'soramugi/auto-ctags.vim'
@@ -153,6 +166,10 @@ Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
 " [for PHP ]
 Plug 'lvht/phpcd.vim', { 'for': ['php'] }
 " [for Javascript]
+if has('nvim')
+  Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
+  Plug 'alexlafroscia/deoplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
+end
 Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'javascript.jsx', 'css'] }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
@@ -326,19 +343,6 @@ imap <silent> <C-a> <Esc>:TagbarToggle<CR>
 cmap <silent> <C-a> <C-u>:TagbarToggle<CR>
 
 "-------------------------
-" NERDTree
-"-------------------------
-nmap <silent> <C-e>      :NERDTreeTabsToggle<CR>
-vmap <silent> <C-e> <Esc>:NERDTreeTabsToggle<CR>
-omap <silent> <C-e>      :NERDTreeTabsToggle<CR>
-imap <silent> <C-e> <Esc>:NERDTreeTabsToggle<CR>
-cmap <silent> <C-e> <C-u>:NERDTreeTabsToggle<CR>
-let g:NERDTreeShowHidden=1
-let NERDTreeIgnore = ['node_modules','.git', ".DS_Store"]
-let g:NERDTreeChDirMode = 2
-let g:NERDTreeWinSize = 35
-
-"-------------------------
 " neosnippet
 "-------------------------
 imap <C-s>     <Plug>(neosnippet_expand_or_jump)
@@ -438,6 +442,49 @@ map <silent> [Tag]n :tabnext<CR>
 map <silent> [Tag]p :tabprevious<CR>
 
 "-------------------------
+" NERDTree
+"-------------------------
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+" au VimEnter * exe 'NERDTree'
+" au VimEnter * echo expand('%')
+" autocmd vimenter * NERDTreeTabsToggle
+
+nmap <silent> <C-e>      :NERDTreeTabsToggle<CR>
+vmap <silent> <C-e> <Esc>:NERDTreeTabsToggle<CR>
+omap <silent> <C-e>      :NERDTreeTabsToggle<CR>
+imap <silent> <C-e> <Esc>:NERDTreeTabsToggle<CR>
+cmap <silent> <C-e> <C-u>:NERDTreeTabsToggle<CR>
+let g:NERDTreeShowHidden=1
+let NERDTreeIgnore = ['node_modules','.git', ".DS_Store"]
+let g:NERDTreeChDirMode = 2
+let g:NERDTreeWinSize = 35
+let g:nerdtree_tabs_open_on_console_startup=1
+
+"-------------------------
+" Highlight in NERDTree
+"-------------------------
+"function! IsNERDTreeOpen()
+"  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+"endfunction
+"function! InitSyncNERDTree() abort
+"  if exists("t:NERDTreeBufName") == 0
+"    NERDTreeMirrorOpen
+"  endif
+"endfunction
+"function! SyncNERDTree()
+"  if strlen(expand('%')) > 0 && &modifiable && IsNERDTreeOpen() && !&diff
+"    NERDTreeFind
+"    wincmd p
+"  endif
+"endfunction
+"" autocmd BufNewBufReadFile,BufRead * if empty(&filetype) | execute 'nnoremap <buffer> <leader>f :1,$! cat' | endif
+"" autocmd BufWinEnter if &filetype != 'nerdtree' | call SyncNERDTree() | endif
+" autocmd BufReadPost * call InitSyncNERDTree()
+" autocmd BufEnter * call SyncNERDTree()
+" autocmd BufEnter * call InitSyncNERDTree()
+
+"-------------------------
 " emmet
 "-------------------------
 let g:user_emmet_leader_key='<C-Y>'
@@ -497,6 +544,24 @@ let g:terraform_fmt_on_save = 1
 " javascript syntax
 "-------------------------
 " let g:used_javascript_libs = 'react'
+
+"-------------------------
+" incsearch,asterisk,anzu
+"-------------------------
+map g/ <Plug>(incsearch-forward)
+map ? <Plug>(incsearch-backward)
+map / <Plug>(incsearch-stay)
+" nnoremap / /\v
+let g:incsearch#magic = '\v'
+let g:incsearch#auto_nohlsearch = 1
+map n <Plug>(incsearch-nohl-n)
+map N <Plug>(incsearch-nohl-N)
+nmap n <Plug>(incsearch-nohl)<Plug>(anzu-n-with-echo)
+nmap N <Plug>(incsearch-nohl)<Plug>(anzu-N-with-echo)
+map * <Plug>(incsearch-nohl0)<Plug>(asterisk-z*)
+map g* <Plug>(incsearch-nohl0)<Plug>(asterisk-gz*)
+map # <Plug>(incsearch-nohl0)<Plug>(asterisk-z#)
+map g# <Plug>(incsearch-nohl0)<Plug>(asterisk-gz#)
 
 "-------------------------
 " Set os env
