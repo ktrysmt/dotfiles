@@ -48,7 +48,7 @@ if has('nvim')
 end
 
 "---------------------------
-"" Mapping
+"DTreeToggle()
 "---------------------------
 let mapleader = "\<Space>"
 nnoremap cn *Ncgn
@@ -174,12 +174,12 @@ Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'javascr
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
-" Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript', 'javascript.jsx', 'css'] }
-" Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'othree/html5.vim', { 'for': ['javascript', 'javascript.jsx', 'html'] }
-" Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
+Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript', 'javascript.jsx', 'css'] }
+Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/html5.vim', { 'for': ['javascript', 'javascript.jsx', 'html'] }
+Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " [for Go]
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'thinca/vim-quickrun', { 'for': ['go', 'rust', 'javascript'] }
@@ -449,17 +449,16 @@ map <silent> [Tag]p :tabprevious<CR>
 " au VimEnter * exe 'NERDTree'
 " au VimEnter * echo expand('%')
 " autocmd vimenter * NERDTreeTabsToggle
-
-nmap <silent> <C-e>      :NERDTreeTabsToggle<CR>
-vmap <silent> <C-e> <Esc>:NERDTreeTabsToggle<CR>
-omap <silent> <C-e>      :NERDTreeTabsToggle<CR>
-imap <silent> <C-e> <Esc>:NERDTreeTabsToggle<CR>
-cmap <silent> <C-e> <C-u>:NERDTreeTabsToggle<CR>
+nnoremap <silent> <C-e> :NERDTreeToggle<cr>
+" vmap <silent> <C-e> <Esc>MyNERDTreeToggle()
+" omap <silent> <C-e>      MyNERDTreeToggle()
+" imap <silent> <C-e> <Esc>MyNERDTreeToggle()
+" cmap <silent> <C-e> <C-u>MyNERDTreeToggle()
 let g:NERDTreeShowHidden=1
 let NERDTreeIgnore = ['node_modules','.git', ".DS_Store"]
 let g:NERDTreeChDirMode = 2
 let g:NERDTreeWinSize = 35
-let g:nerdtree_tabs_open_on_console_startup=1
+let g:nerdtree_tabs_open_on_console_startup = 1
 
 "-------------------------
 " Highlight in NERDTree
@@ -543,7 +542,7 @@ let g:terraform_fmt_on_save = 1
 "-------------------------
 " javascript syntax
 "-------------------------
-" let g:used_javascript_libs = 'react'
+let g:used_javascript_libs = 'react'
 
 "-------------------------
 " incsearch,asterisk,anzu
