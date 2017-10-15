@@ -464,24 +464,24 @@ let g:nerdtree_tabs_open_on_console_startup=1
 "-------------------------
 " Highlight in NERDTree
 "-------------------------
-"function! IsNERDTreeOpen()
-"  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-"endfunction
+function! IsNERDTreeOpen()
+ return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
 "function! InitSyncNERDTree() abort
 "  if exists("t:NERDTreeBufName") == 0
 "    NERDTreeMirrorOpen
 "  endif
 "endfunction
-"function! SyncNERDTree()
-"  if strlen(expand('%')) > 0 && &modifiable && IsNERDTreeOpen() && !&diff
-"    NERDTreeFind
-"    wincmd p
-"  endif
-"endfunction
+function! SyncNERDTree()
+ if strlen(expand('%')) > 0 && &modifiable && IsNERDTreeOpen() && !&diff
+   NERDTreeFind
+   wincmd p
+ endif
+endfunction
 "" autocmd BufNewBufReadFile,BufRead * if empty(&filetype) | execute 'nnoremap <buffer> <leader>f :1,$! cat' | endif
-"" autocmd BufWinEnter if &filetype != 'nerdtree' | call SyncNERDTree() | endif
+" autocmd BufWinEnter if &filetype != 'nerdtree' | call SyncNERDTree() | endif
 " autocmd BufReadPost * call InitSyncNERDTree()
-" autocmd BufEnter * call SyncNERDTree()
+autocmd BufEnter * call SyncNERDTree()
 " autocmd BufEnter * call InitSyncNERDTree()
 
 "-------------------------
