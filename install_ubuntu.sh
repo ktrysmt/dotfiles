@@ -124,7 +124,7 @@ git clone https://github.com/syndbg/goenv.git ~/.goenv
 go get github.com/peco/peco/cmd/peco
 go get github.com/motemen/ghq
 curl https://glide.sh/get | sh
-vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
+vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +":PythonSupportInitPython2" +":PythonSupportInitPython3" +qa
 npm install -g npm-check-updates
 echo $PASSWORD | chsh -s /bin/zsh
 

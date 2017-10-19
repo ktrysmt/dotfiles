@@ -70,7 +70,7 @@ echo "Setup Other";
 echo "-----------------------------------------------------";
 go get github.com/motemen/ghq
 go get github.com/golang/dep/...
-vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
+vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +":PythonSupportInitPython2" +":PythonSupportInitPython3" +qa
 npm install -g npm-check-updates
 
 echo "-----------------------------------------------------";

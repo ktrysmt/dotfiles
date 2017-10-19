@@ -121,19 +121,23 @@ call plug#begin()
 "" Plugins
 "---------------------------
 "" [for All]
+Plug 'Shougo/unite.vim'
+if has('nvim')
+  " Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+  " Plug 'Shougo/neoyank.vim'
+  Plug 'roxma/nvim-completion-manager'
+  Plug 'roxma/python-support.nvim'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/neocomplete.vim'
+end
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'Townk/vim-autoclose'
-Plug 'Shougo/unite.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/vim-easy-align'
 Plug 'LeafCage/yankround.vim'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/neocomplete.vim'
-end
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'osyo-manga/vim-anzu'
@@ -168,8 +172,11 @@ Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
 Plug 'lvht/phpcd.vim', { 'for': ['php'] }
 " [for Javascript]
 if has('nvim')
-  Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
-  Plug 'alexlafroscia/deoplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
+  " Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
+  " Plug 'alexlafroscia/deoplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
+  "" 果たしてどちらが良いのか...
+  Plug 'roxma/nvim-cm-tern', { 'do': 'npm install', 'for': ['javascript', 'javascript.jsx'] }
+  Plug 'roxma/ncm-flow', { 'for': ['javascript', 'javascript.jsx'] }
 end
 Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'javascript.jsx', 'css'] }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
@@ -209,7 +216,7 @@ colorscheme hybrid_reverse
 " Unite Settings
 "-------------------------
 let g:unite_enable_split_vertically = 1
-:map <C-p> :Unite yankround<Return>
+nnoremap <silent> <C-p> :Unite -create -buffer-name=yankround yankround<Return>
 
 "-------------------------
 " fzf.vim
@@ -466,7 +473,7 @@ let g:nerdtree_tabs_open_on_console_startup = 1
 " Highlight in NERDTree
 "-------------------------
 function! IsNERDTreeOpen()
- return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 endfunction
 "function! InitSyncNERDTree() abort
 "  if exists("t:NERDTreeBufName") == 0
@@ -474,16 +481,12 @@ endfunction
 "  endif
 "endfunction
 function! SyncNERDTree()
- if strlen(expand('%')) > 0 && &modifiable && IsNERDTreeOpen() && !&diff
+ if strlen(expand('%')) > 0 && &modifiable && IsNERDTreeOpen() && !&diff && !empty(&ft)
    NERDTreeFind
    wincmd p
  endif
 endfunction
-"" autocmd BufNewBufReadFile,BufRead * if empty(&filetype) | execute 'nnoremap <buffer> <leader>f :1,$! cat' | endif
-" autocmd BufWinEnter if &filetype != 'nerdtree' | call SyncNERDTree() | endif
-" autocmd BufReadPost * call InitSyncNERDTree()
 autocmd BufEnter * call SyncNERDTree()
-" autocmd BufEnter * call InitSyncNERDTree()
 
 "-------------------------
 " emmet
@@ -563,6 +566,11 @@ map * <Plug>(incsearch-nohl0)<Plug>(asterisk-z*)
 map g* <Plug>(incsearch-nohl0)<Plug>(asterisk-gz*)
 map # <Plug>(incsearch-nohl0)<Plug>(asterisk-z#)
 map g# <Plug>(incsearch-nohl0)<Plug>(asterisk-gz#)
+
+"-------------------------
+" Python support
+"-------------------------
+let g:python_support_python2_require = 0
 
 "-------------------------
 " Set os env
