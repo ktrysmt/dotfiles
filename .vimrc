@@ -69,6 +69,7 @@ nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" 
 nnoremap <silent> <expr> <Leader>b (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Buffers\<cr>"
 nnoremap <silent> <expr> <Leader>h (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":History:\<cr>"
 nnoremap <silent> <expr> <Leader>r (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Ripgrep\<cr>"
+nnoremap <silent> <expr> <Leader>w (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Windows\<cr>"
 nnoremap <silent> <Leader>gm :Gmerge<CR>
 nnoremap <silent> <Leader>gs :Gstatus<CR>
 nnoremap <silent> <Leader>gl :Glog<CR>
@@ -222,6 +223,7 @@ if has('nvim')
     setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
   endfunction
   autocmd! User FzfStatusLine call <SID>fzf_statusline()
+  command! -bang Windows call fzf#vim#windows({'options': ['--query', '!NERD ']}, <bang>0)
 endif
 
 "-------------------------
