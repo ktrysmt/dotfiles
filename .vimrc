@@ -552,7 +552,7 @@ map ? <Plug>(incsearch-backward)
 map / <Plug>(incsearch-stay)
 " nnoremap / /\v
 let g:incsearch#magic = '\v'
-let g:incsearch#auto_nohlsearch = 1
+let g:incsearch#auto_nohlsearch = 0
 map n <Plug>(incsearch-nohl-n)
 map N <Plug>(incsearch-nohl-N)
 nmap n <Plug>(incsearch-nohl)<Plug>(anzu-n-with-echo)
