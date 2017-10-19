@@ -37,7 +37,8 @@
   # rust
   [ -f ~/.cargo/env ] && source ~/.cargo/env
   # fzf
-  export FZF_DEFAULT_COMMAND='rg ""'
+  export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+  # export FZF_DEFAULT_COMMAND='rg ""'
   export FZF_DEFAULT_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%} --select-1 --exit-0"
   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 }
