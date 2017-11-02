@@ -112,9 +112,15 @@
       # 順番を保持して重複を削除。
       # カーソルの左側の文字列をクエリにしてpecoを起動
       # \nを改行に変換
-      BUFFER="$(\history -nr 1 | awk '!a[$0]++' | peco --query "$LBUFFER" | sed 's/\\n/\n/')"
-      CURSOR=$#BUFFER # カーソルを文末に移動
-      zle -R -c       # refresh
+      #BUFFER="$(\history -nr 1 | awk '!a[$0]++' | peco --query "$LBUFFER" | sed 's/\\n/\n/')"
+      #CURSOR=$#BUFFER # カーソルを文末に移動
+      #zle -R -c       # refresh
+      emulate -L zsh
+      local delimiter=$'\0; \0' newline=$'\n'
+      BUFFER=${"$(print -rl ${history//$newline/$delimiter} | peco --query "$LBUFFER")"//$delimiter/$newline}
+      CURSOR=$#BUFFER
+      zle -Rc
+      zle reset-prompt
   }
   zle -N peco-select-history
   bindkey '^r' peco-select-history
