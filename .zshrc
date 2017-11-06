@@ -156,3 +156,5 @@
     zprof | less
   fi
 }
+
+#export PATH="$HOME/.yarn/bin:$PATH"
