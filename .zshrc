@@ -43,6 +43,16 @@
   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 }
 
+: "set direnv" && {
+  _direnv_hook() {
+    eval "$(direnv export zsh)";
+  }
+  typeset -ag precmd_functions;
+  if [[ -z ${precmd_functions[(r)_direnv_hook]} ]]; then
+    precmd_functions+=_direnv_hook;
+  fi
+}
+
 : "alias" && {
   alias gdw="git diff --color-words"
   alias gh='cd $(ghq list -p | peco)'
