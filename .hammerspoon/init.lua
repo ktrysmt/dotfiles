@@ -62,8 +62,8 @@ remapKey({'cmd'}, 'k', keyCode('left'))
 remapKey({'cmd'}, 'l', keyCode('right'))
 remapKey({'cmd', 'shift'}, 'h', keyCode('up', {'shift'}))
 remapKey({'cmd', 'shift'}, 39,  keyCode('down', {'shift'})) -- colon
-remapKey({'cmd', 'shift'}, 'j', keyCode('home', {'shift'}))
-remapKey({'cmd', 'shift'}, 41, keyCode('end', {'shift'})) -- semicolon
+remapKey({'cmd', 'shift'}, 'j', keyCode('A', {'shift','ctrl'}))
+remapKey({'cmd', 'shift'}, 41, keyCode('E', {'shift','ctrl'})) -- semicolon
 remapKey({'cmd', 'shift'}, 'k', keyCode('left', {'shift'}))
 remapKey({'cmd', 'shift'}, 'l', keyCode('right', {'shift'}))
 
