@@ -401,7 +401,7 @@ let g:go_bin_path = expand(globpath($GOPATH, "bin"))
 let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_autosave = 1
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = "gofmt"
 " let g:go_fmt_options = "-s"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
@@ -476,13 +476,8 @@ let g:nerdtree_tabs_open_on_console_startup = 1
 function! IsNERDTreeOpen()
   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 endfunction
-"function! InitSyncNERDTree() abort
-"  if exists("t:NERDTreeBufName") == 0
-"    NERDTreeMirrorOpen
-"  endif
-"endfunction
 function! SyncNERDTree()
- if strlen(expand('%')) > 0 && &modifiable && IsNERDTreeOpen() && !&diff && !empty(&ft)
+ if strlen(expand('%')) > 0 && &modifiable && IsNERDTreeOpen() && !&diff && !empty(&ft) && &ft != "quickrun"
    NERDTreeFind
    wincmd p
  endif
