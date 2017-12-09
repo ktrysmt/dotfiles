@@ -21,7 +21,22 @@ echo "-----------------------------------------------------";
 sudo apt-get -y update
 
 # common tools
-sudo apt-get -y install git curl zsh tig make gcc dstat wget tmux
+sudo apt-get -y install curl zsh make gcc dstat wget tmux
+
+# ruby2.3
+sudo apt-get -y install software-properties-common
+sudo apt-add-repository ppa:brightbox/ruby-ng
+sudo apt-get -y update
+sudo apt-get -y install ruby2.3
+
+# linuxbrew
+yes | sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+sudo apt-get install -y build-essential
+echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >>~/.profile
+echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' >>~/.profile
+echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' >>~/.profile
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+brew install ripgrep exa fd direnv peco ghq git tig
 
 # neovim
 sudo apt-get -y install software-properties-common
@@ -49,23 +64,6 @@ git clone --depth 1 https://github.com/universal-ctags/ctags.git
 cd ctags;
 ./autogen.sh && ./configure && make && sudo make install;
 cd ~/
-
-# ruby2.3
-sudo apt-get -y install software-properties-common
-sudo apt-add-repository ppa:brightbox/ruby-ng
-sudo apt-get -y update
-sudo apt-get -y install ruby2.3
-
-# linuxbrew
-yes | sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-sudo apt-get install -y build-essential
-echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >>~/.profile
-echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' >>~/.profile
-echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' >>~/.profile
-export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-# brew install gcc
-brew install ripgrep exa fd direnv peco ghq
-brew uninstall --ignore-dependencies python2
 
 echo "-----------------------------------------------------";
 echo " Setup my env";
