@@ -42,6 +42,11 @@
   # export FZF_DEFAULT_COMMAND='rg ""'
   export FZF_DEFAULT_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%} --select-1 --exit-0"
   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  # path
+  export PATH="$HOME/.cargo/bin:$PATH"
+  export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+  export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
+  export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 }
 
 : "set direnv" && {
