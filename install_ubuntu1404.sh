@@ -81,6 +81,8 @@ ln -s ~/dotfiles/.vimrc ~/.vimrc
 ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 ln -s ~/dotfiles/.tern-project ~/.tern-project
 cp ~/dotfiles/.gitconfig ~/.gitconfig
+echo "[credential]
+  helper = gnomekeyring" >> ~/.gitconfig
 echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker" | zsh
 echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker-compose https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose" | zsh
 cd ~/
