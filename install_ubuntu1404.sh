@@ -21,14 +21,11 @@ echo "-----------------------------------------------------";
 sudo apt-get -y update
 
 # common tools
-sudo apt-get -y install git curl zsh tig make gcc dstat wget tmux 
-
-#sudo apt-get -y install luajit libssl-dev libcurl4-openssl-dev autoconf
-#sudo apt-get -y install liblua5.2-dev lua5.2 python-dev ncurses-dev
-#sudo apt-get -y install mercurial gettext libncurses5-dev libxmu-dev libgtk2.0-dev libperl-dev python-dev python3-dev ruby-dev tcl-dev
+sudo apt-get -y install git curl zsh tig make gcc dstat wget tmux
 
 # neovim
 sudo apt-get -y install software-properties-common
+sudo apt-get -y install python3.4-venv
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
 sudo apt-get -y update
 sudo apt-get -y install neovim
@@ -61,13 +58,14 @@ sudo apt-get -y install ruby2.3
 
 # linuxbrew
 yes | sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-sudo apt-get install -y build-essential 
+sudo apt-get install -y build-essential
 echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >>~/.profile
 echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' >>~/.profile
 echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' >>~/.profile
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 # brew install gcc
-brew install ripgrep exa fd direnv
+brew install ripgrep exa fd direnv peco ghq
+brew uninstall --ignore-dependencies python2
 
 echo "-----------------------------------------------------";
 echo " Setup my env";
@@ -106,9 +104,6 @@ echo "-----------------------------------------------------";
 cd /tmp/dotfiles
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
-#cargo install ripgrep
-#cargo install --git https://github.com/sharkdp/fd
-#cargo install --no-default-features --git https://github.com/ogham/exa
 
 echo "-----------------------------------------------------";
 echo "Setup Golang";
@@ -133,12 +128,12 @@ sudo easy_install-2.7 pip
 sudo pip2 install neovim
 sudo pip3 install neovim
 sudo ln -sf $(which nvim) /usr/local/bin/vim
+ln -s ~/.vim ~/.config/nvim
+ln -s ~/.vimrc ~/.config/nvim/init.vim
 
 echo "-----------------------------------------------------";
 echo "Setup Other";
 echo "-----------------------------------------------------";
-go get github.com/peco/peco/cmd/peco
-go get github.com/motemen/ghq
 curl https://glide.sh/get | sh
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +":PythonSupportInitPython2" +":PythonSupportInitPython3" +qa
 npm install -g npm-check-updates

@@ -157,7 +157,7 @@ Plug 'osyo-manga/vim-over'
 Plug 'w0rp/ale'
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
-Plug 'wakatime/vim-wakatime'
+"Plug 'wakatime/vim-wakatime'
 Plug 'rhysd/vim-operator-surround'
 Plug 'osyo-manga/vim-operator-stay-cursor'
 Plug 'thinca/vim-qfreplace'
@@ -582,6 +582,8 @@ if has("mac")
 " mac用の設定
 elseif has("unix")
 " unix固有の設定
+  let g:python_host_prog='/usr/bin/python2'
+  let g:python3_host_prog='/usr/bin/python3'
 elseif has("win64")
 " 64bit_windows固有の設定
 elseif has("win32unix")
