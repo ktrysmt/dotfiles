@@ -8,10 +8,10 @@
 curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_ubuntu.sh | sh
 ```
 
-### Ubuntu (for Vagrant)
+### Ubuntu 14.04 (for Vagrant)
 
 ```
-PASSWORD=vagrant && curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_ubuntu.sh | sh
+PASSWORD=vagrant && curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_ubuntu1404.sh | sh
 ```
 
 ### Ubuntu (for Desktop)
@@ -64,7 +64,7 @@ curl -fsSL https://raw.github.com/ktrysmt/dotfiles/master/install_centos6.sh | s
   - `cp $HOME/../../msys2_shell.cmd $HOME/../../msys2_zsh.cmd`
   - `sed -i -e "s/bash/zsh/g" $HOME/../../msys2_zsh.cmd`
   - Open `msys2_zsh.cmd` and Enjoy! :smile:
-  
+
 </details>
 
 ## Author
