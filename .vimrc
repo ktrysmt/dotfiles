@@ -238,6 +238,7 @@ endif
 "-------------------------
 "" vim-test
 "-------------------------
+let g:test#preserve_screen = 1
 let test#strategy = {
   \ 'nearest': 'neovim',
   \ 'file':    'dispatch',
