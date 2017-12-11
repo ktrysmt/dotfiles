@@ -252,6 +252,8 @@ if has('nvim') " deoplete
   let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
   let g:deoplete#sources#go#use_cache = 1
   let g:deoplete#sources#go#json_directory = $HOME.'/.local/data/deoplete-go'
+  let g:deoplete#sources#go#align_class = 1
+  let g:deoplete#sources#go#package_dot = 1
 else " use neoccomplete
   let g:acp_enableAtStartup = 0
   let g:neocomplete#enable_at_startup = 1
@@ -312,12 +314,14 @@ let g:ale_fix_on_save = 1
 let g:ale_linters = {
   \ 'jsx': ['eslint', 'stylelint'],
   \ 'css': ['stylelint'],
+  \ 'go' : ['gometalinter'],
 \}
 let g:ale_linter_aliases = {'jsx': 'css'}
 augroup FiletypeGroup
     autocmd!
     au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 augroup END
+let g:ale_go_gometalinter_options = '--vendored-linters --disable-all --enable=gotype --enable=vet --enable=golint -t'
 
 " The answer is:
 " https://stackoverflow.com/questions/46678615/how-do-you-set-an-autocmd-to-take-effect-when-filetype-is-none
