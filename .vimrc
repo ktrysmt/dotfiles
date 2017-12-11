@@ -132,6 +132,7 @@ if has('nvim')
 else
   Plug 'Shougo/neocomplete.vim'
 end
+Plug 'janko-m/vim-test'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'Townk/vim-autoclose'
 Plug 'scrooloose/nerdtree'
@@ -233,6 +234,15 @@ if has('nvim')
   autocmd! User FzfStatusLine call <SID>fzf_statusline()
   command! -bang Windows call fzf#vim#windows({'options': ['--query', '!NERD ']}, <bang>0)
 endif
+
+"-------------------------
+"" vim-test
+"-------------------------
+let test#strategy = {
+  \ 'nearest': 'neovim',
+  \ 'file':    'dispatch',
+  \ 'suite':   'basic',
+\}
 
 "-------------------------
 "" Completion
