@@ -12,8 +12,10 @@
     zgen load zsh-users/zsh-completions src
     zgen load Tarrasch/zsh-autoenv
     # zgen load zchee/go-zsh-completions
-    zgen load wbinglee/zsh-wakatime
+    # zgen load wbinglee/zsh-wakatime
     zgen load lukechilds/zsh-better-npm-completion
+    zgen load docker/cli contrib/completion/zsh/_docker
+    zgen load docker/compose contrib/completion/zsh/_docker-compose
     zgen save
   fi
 }
