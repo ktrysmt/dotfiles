@@ -3,7 +3,7 @@ echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
-brew install peco yarn lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig fzy exa python2 python3 rbenv goenv direnv
+brew install peco yarn lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fzf tig fzy exa python2 python3 rbenv goenv direnv jid
 # brew install vim --with-lua
 brew install neovim/neovim/neovim
 brew tap universal-ctags/universal-ctags
@@ -84,14 +84,12 @@ brew cask install visual-studio-code
 brew cask install google-chrome
 brew cask install shiftit
 brew cask install hyperswitch
-brew cask install diffmerge
 brew cask install flux
 brew cask install virtualbox
 brew cask install vagrant
 brew cask install alfred
 brew cask install clipy
 brew cask install docker
-brew cask install firefox
 brew cask install itsycal
 brew cask install keybase
 brew cask install qblocker
@@ -103,10 +101,10 @@ echo "-----------------------------------------------------";
 sudo sh -c "echo $(which zsh) >> /etc/shells";
 chsh -s $(which zsh)
 
-echo "-----------------------------------------------------";
-echo "After the runner..."
-echo "-----------------------------------------------------";
-echo " "
-echo "> Input below for zsh completion."
-echo 'echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker" | zsh'
-echo 'echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker-compose https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose" | zsh'
+#echo "-----------------------------------------------------";
+#echo "After the runner..."
+#echo "-----------------------------------------------------";
+#echo " "
+#echo "> Input below for zsh completion."
+#echo 'echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker" | zsh'
+#echo 'echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker-compose https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose" | zsh'

@@ -7,6 +7,7 @@
     zgen oh-my-zsh plugins/sudo
     zgen oh-my-zsh plugins/aws
     zgen oh-my-zsh plugins/command-not-found
+    # zgen oh-my-zsh plugins/minikube # WAITING FOR RELEASE...
     zgen load zsh-users/zsh-syntax-highlighting
     zgen load zsh-users/zsh-history-substring-search
     zgen load zsh-users/zsh-completions src
