@@ -1,13 +1,28 @@
+: "init" && {
+  if [[ -z "$TMUX" ]]
+  then
+    tmux new-session;
+    exit;
+  fi
+}
+
 : "zgen" && {
   source "${HOME}/.zgen/zgen.zsh"
   if ! zgen saved; then
     echo "Creating a zgen save..."
+
+#    zgen prezto
+#    zgen prezto git
+#    zgen prezto command-not-found
+#     zstyle ':prezto:module:prompt' theme 'sorin'
+
     zgen oh-my-zsh
     zgen oh-my-zsh plugins/git
     zgen oh-my-zsh plugins/sudo
-    zgen oh-my-zsh plugins/aws
+    # zgen oh-my-zsh plugins/aws
     zgen oh-my-zsh plugins/command-not-found
-    # zgen oh-my-zsh plugins/minikube # WAITING FOR RELEASE...
+
+    zgen load aws/aws-cli bin/aws_zsh_completer.sh
     zgen load zsh-users/zsh-syntax-highlighting
     zgen load zsh-users/zsh-history-substring-search
     zgen load zsh-users/zsh-completions src
@@ -52,15 +67,15 @@
   export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 }
 
-: "set direnv" && {
-  _direnv_hook() {
-    eval "$(direnv export zsh)";
-  }
-  typeset -ag precmd_functions;
-  if [[ -z ${precmd_functions[(r)_direnv_hook]} ]]; then
-    precmd_functions+=_direnv_hook;
-  fi
-}
+# : "set direnv" && {
+#   _direnv_hook() {
+#     eval "$(direnv export zsh)";
+#   }
+#   typeset -ag precmd_functions;
+#   if [[ -z ${precmd_functions[(r)_direnv_hook]} ]]; then
+#     precmd_functions+=_direnv_hook;
+#   fi
+# }
 
 : "alias" && {
   alias gdw="git diff --color-words"
@@ -78,12 +93,14 @@
   PERIOD=5
   if [ `who am i | awk '{print $1}'` != "vagrant" ];then \
     show-current-dir-as-window-name() {
-      local PROMPT=$($HOME/dotfiles/bin/git-echo-prompt-is-clean)
-      tmux set-window-option window-status-format " #I:${PWD:t}$PROMPT " > /dev/null
-      tmux set-window-option window-status-current-format " #I:${PWD:t}$PROMPT " > /dev/null
+      # local PROMPT=$($HOME/dotfiles/bin/git-echo-prompt-is-clean)
+      # tmux set-window-option window-status-format " #I:${PWD:t}$PROMPT " > /dev/null
+      tmux set-window-option window-status-format " #I:${PWD:t} " > /dev/null
+      # tmux set-window-option window-status-current-format " #I:${PWD:t}$PROMPT " > /dev/null
+      tmux set-window-option window-status-current-format " #I:${PWD:t} " > /dev/null
     }
-    show-current-dir-as-window-name
-    add-zsh-hook precmd show-current-dir-as-window-name
+   show-current-dir-as-window-name
+   add-zsh-hook precmd show-current-dir-as-window-name
   fi;
 }
 
@@ -172,7 +189,7 @@
 
 : "zprof" && {
   if (which zprof > /dev/null) ;then
-    zprof | less
+    zprof # | less
   fi
 }
 
