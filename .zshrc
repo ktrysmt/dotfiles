@@ -1,11 +1,3 @@
-: "init" && {
-  if [[ -z "$TMUX" ]]
-  then
-    tmux new-session;
-    exit;
-  fi
-}
-
 : "zgen" && {
   source "${HOME}/.zgen/zgen.zsh"
   if ! zgen saved; then
@@ -13,16 +5,12 @@
 
     zgen oh-my-zsh
     zgen oh-my-zsh plugins/git
-    zgen oh-my-zsh plugins/sudo
-    zgen oh-my-zsh plugins/command-not-found
 
     zgen load aws/aws-cli bin/aws_zsh_completer.sh
     zgen load zsh-users/zsh-syntax-highlighting
-    zgen load zsh-users/zsh-history-substring-search
-    # zgen load hchbaw/opp.zsh
+    # zgen load zsh-users/zsh-history-substring-search
     zgen load zsh-users/zsh-completions
     zgen load Tarrasch/zsh-autoenv
-    # zgen load zchee/go-zsh-completions
     zgen load lukechilds/zsh-better-npm-completion
     zgen load docker/cli contrib/completion/zsh/_docker
     zgen load docker/compose contrib/completion/zsh/_docker-compose
