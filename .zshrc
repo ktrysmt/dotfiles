@@ -84,20 +84,20 @@
   alias lt="exa -lhT"
 }
 
-: "tmux" && {
-  PERIOD=5
-  if [ `who am i | awk '{print $1}'` != "vagrant" ];then \
-    show-current-dir-as-window-name() {
-      # local PROMPT=$($HOME/dotfiles/bin/git-echo-prompt-is-clean)
-      # tmux set-window-option window-status-format " #I:${PWD:t}$PROMPT " > /dev/null
-      tmux set-window-option window-status-format " #I:${PWD:t} " > /dev/null
-      # tmux set-window-option window-status-current-format " #I:${PWD:t}$PROMPT " > /dev/null
-      tmux set-window-option window-status-current-format " #I:${PWD:t} " > /dev/null
-    }
-   show-current-dir-as-window-name
-   add-zsh-hook precmd show-current-dir-as-window-name
-  fi;
-}
+# : "tmux" && {
+#   PERIOD=5
+#   if [ `who am i | awk '{print $1}'` != "vagrant" ];then \
+#     show-current-dir-as-window-name() {
+#       # local PROMPT=$($HOME/dotfiles/bin/git-echo-prompt-is-clean)
+#       # tmux set-window-option window-status-format " #I:${PWD:t}$PROMPT " > /dev/null
+#       tmux set-window-option window-status-format " #I:${PWD:t} " > /dev/null
+#       # tmux set-window-option window-status-current-format " #I:${PWD:t}$PROMPT " > /dev/null
+#       tmux set-window-option window-status-current-format " #I:${PWD:t} " > /dev/null
+#     }
+#    show-current-dir-as-window-name
+#    add-zsh-hook precmd show-current-dir-as-window-name
+#   fi;
+# }
 
 : "powered_cd" && {
   function chpwd() {
