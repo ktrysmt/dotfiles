@@ -95,6 +95,12 @@
 #   fi;
 # }
 
+: "k8s" && {
+  if (which kubectl > /dev/null); then
+    source <(kubectl completion zsh)
+  fi
+}
+
 : "powered_cd" && {
   function chpwd() {
     powered_cd_add_log
@@ -112,7 +118,7 @@
   echo "$PWD" >> ~/.powered_cd.log
   }
   function powered_cd() {
-    if which tac > /dev/null; then
+    if (which tac > /dev/null); then
       tac="tac"
     else
       tac="tail -r"
