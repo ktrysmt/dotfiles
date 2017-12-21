@@ -1,3 +1,11 @@
+: "tmux" && {		
+  if [[ -z "$TMUX" ]]		
+  then		
+    tmux new-session;		
+    exit;		
+  fi		
+}
+
 : "zgen" && {
   source "${HOME}/.zgen/zgen.zsh"
   if ! zgen saved; then
