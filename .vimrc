@@ -317,7 +317,7 @@ endfunction
 "-------------------------
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_fixers = {
-  \ 'javascript': ['eslint'],
+  \ 'javascript': ['eslint','prettier'],
   \ 'jsx': ['eslint'],
   \ 'css': ['stylelint'],
 \}
@@ -416,7 +416,7 @@ let g:go_bin_path = expand(globpath($GOPATH, "bin"))
 let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_autosave = 1
-let g:go_fmt_command = "gofmt"
+let g:go_fmt_command = "goimports"
 " let g:go_fmt_options = "-s"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
