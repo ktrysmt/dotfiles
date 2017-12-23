@@ -3,8 +3,15 @@
   if ! zgen saved; then
     echo "Creating a zgen save..."
 
-    zgen oh-my-zsh
-    zgen oh-my-zsh plugins/git
+    # zgen oh-my-zsh
+    # zgen oh-my-zsh plugins/git
+
+    zgen load robbyrussell/oh-my-zsh lib/git
+    zgen load robbyrussell/oh-my-zsh lib/completion
+    zgen load robbyrussell/oh-my-zsh lib/compfix
+    zgen load robbyrussell/oh-my-zsh lib/directories
+    zgen load robbyrussell/oh-my-zsh lib/history
+    zgen load robbyrussell/oh-my-zsh lib/theme-and-appearance
 
     zgen load aws/aws-cli bin/aws_zsh_completer.sh
     zgen load zsh-users/zsh-syntax-highlighting
