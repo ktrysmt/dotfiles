@@ -21,7 +21,7 @@ echo "-----------------------------------------------------";
 sudo apt-get -y update
 
 # common tools
-sudo apt-get -y install curl zsh make gcc dstat wget tmux
+sudo apt-get -y install curl zsh make gcc dstat wget Xvfb xsel
 
 # ruby2.3
 sudo apt-get -y install software-properties-common
@@ -36,7 +36,7 @@ echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >>~/.profile
 echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' >>~/.profile
 echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' >>~/.profile
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-brew install ripgrep exa fd direnv peco ghq git tig
+brew install ripgrep exa fd direnv peco ghq git tig tmux
 
 # neovim
 sudo apt-get -y install software-properties-common
@@ -76,7 +76,7 @@ ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/.tigrc ~/.tigrc
 ln -s ~/dotfiles/.vimrc ~/.vimrc
-ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
+ln -s ~/dotfiles/.tmux.conf.linux ~/.tmux.conf
 ln -s ~/dotfiles/.tern-project ~/.tern-project
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 echo "[credential]

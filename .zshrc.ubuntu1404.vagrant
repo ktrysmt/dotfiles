@@ -1,0 +1,14 @@
+export DISPLAY=:0
+if [ ! "$(ps -ef | grep 'Xvfb' | grep -v grep)" ] && [ ! "$(ps -ef | grep 'VBoxClient' | grep -v grep)" ] && [ -f /tmp/.X0-lock ]; then 
+  rm -f /tmp/.X0-lock
+fi
+if [ -x /usr/bin/Xvfb ] && [ -x /usr/bin/VBoxClient ] && [ ! -f /tmp/.X0-lock ]; then
+  Xvfb -screen 0 320x240x8 > /dev/null 2>&1 &
+  sleep 0.5
+  DISPLAY=:0 VBoxClient --clipboard
+fi
+if [ -x /usr/bin/xsel ]; then
+  alias pbcopy='xsel --display :0 --input --clipboard'
+  alias pbpaste='xsel --display :0 --output --clipboard'
+fi
+

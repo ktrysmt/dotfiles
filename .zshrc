@@ -1,11 +1,3 @@
-: "tmux" && {		
-  if [[ -z "$TMUX" ]]		
-  then		
-    tmux new-session;		
-    exit;		
-  fi		
-}
-
 : "zgen" && {
   source "${HOME}/.zgen/zgen.zsh"
   if ! zgen saved; then
@@ -161,20 +153,23 @@
 
 : "Switch ENV by OSTYPE" && {
   if [[ "$OSTYPE" == "linux-gnu" ]]; then
-          # ...
+    # Linux
+  elif [[ "$OSTYPE" == "linux-gnu" ]] && [[ "$USERNAME" == "vagrant" ]]; then
+    # Ubuntu1404 in Vagrant
+    source ~/dotfiles/.zshrc.ubuntu1404.vagrant;
   elif [[ "$OSTYPE" == "darwin"* ]]; then
-          # Mac OSX
-          export HOMEBREW_CASK_OPTS="--appdir=/Applications";
+    # Mac OSX
+    export HOMEBREW_CASK_OPTS="--appdir=/Applications";
   elif [[ "$OSTYPE" == "cygwin" ]]; then
-          # POSIX compatibility layer and Linux environment emulation for Windows
+    # POSIX compatibility layer and Linux environment emulation for Windows
   elif [[ "$OSTYPE" == "msys" ]]; then
-          # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
+    # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
   elif [[ "$OSTYPE" == "win32" ]]; then
-          # I'm not sure this can happen.
+    # I'm not sure this can happen.
   elif [[ "$OSTYPE" == "freebsd"* ]]; then
-          # ...
+    # ...
   else
-          # Unknown.
+    # Unknown.
   fi
 }
 
