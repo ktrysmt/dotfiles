@@ -2,6 +2,18 @@
 "" Set env
 "---------------------------
 set encoding=utf8
+scriptencoding utf-8
+if !has('gui_running')
+      \ && exists('&termguicolors')
+      \ && $COLORTERM ==# 'truecolor'
+  " https://medium.com/@dubistkomisch/how-to-actually-get-italics-and-true-colour-to-work-in-iterm-tmux-vim-9ebe55ebc2be
+  if !has('nvim')
+    let &t_8f = "\e[38;2;%lu;%lu;%lum"
+    let &t_8b = "\e[48;2;%lu;%lu;%lum"
+  endif
+  set termguicolors " use truecolor in term
+endif
+set secure
 set fileencodings=utf-8,euc-jp,sjis,iso-2022-jp,
 set fileformats=unix,dos,mac
 set ambiwidth=double
@@ -40,7 +52,6 @@ set completeopt-=preview
 set wildmenu
 set history=5000
 set guifont=Cica:h15
-scriptencoding utf-8
 filetype plugin indent on
 if has('nvim')
   tnoremap <silent> <ESC> <C-\><C-n>
@@ -48,7 +59,94 @@ if has('nvim')
 end
 
 "---------------------------
-"DTreeToggle()
+"" Resolve PATH
+"---------------------------
+let s:is_windows = has('win32') || has('win64')
+function! s:configure_path(name, pathlist) abort
+  let path_separator = s:is_windows ? ';' : ':'
+  let pathlist = split(expand(a:name), path_separator)
+  for path in map(filter(a:pathlist, '!empty(v:val)'), 'expand(v:val)')
+    if isdirectory(path) && index(pathlist, path) == -1
+      call insert(pathlist, path, 0)
+    endif
+  endfor
+  execute printf('let %s = join(pathlist, ''%s'')', a:name, path_separator)
+endfunction
+call s:configure_path('$PATH', [
+    \ '/usr/local/bin',
+    \])
+call s:configure_path('$MANPATH', [
+    \ '/usr/local/share/man/',
+    \ '/usr/share/man/',
+    \])
+
+"---------------------------
+"" Fix python version
+"---------------------------
+function! s:pick_executable(pathspecs) abort
+  for pathspec in filter(a:pathspecs, '!empty(v:val)')
+    for path in reverse(glob(pathspec, 0, 1))
+      if executable(path)
+        return path
+      endif
+    endfor
+  endfor
+  return ''
+endfunction
+if has('nvim')
+  let g:python_host_prog = s:pick_executable([
+        \ '/usr/local/bin/python2',
+        \ '/usr/bin/python2',
+        \ '/bin/python2',
+        \])
+  let g:python3_host_prog = s:pick_executable([
+        \ '/usr/local/bin/python3',
+        \ '/usr/bin/python3',
+        \ '/bin/python3',
+        \])
+endif
+
+"---------------------------
+"" auto filetyp edetection
+"---------------------------
+augroup MyAutoCmd
+  autocmd! *
+augroup END
+autocmd MyAutoCmd BufWritePost *
+      \ if &filetype ==# '' && exists('b:ftdetect') |
+      \  unlet! b:ftdetect |
+      \  filetype detect |
+      \ endif
+
+"---------------------------
+"" clipboard
+"---------------------------
+if has('win32') || has('win64') || has('mac')
+  set clipboard=unnamed
+else
+  set clipboard=unnamed,unnamedplus
+endif
+
+"---------------------------
+"" Toggle window zoom
+"---------------------------
+function! s:toggle_window_zoom() abort
+    if exists('t:zoom_winrestcmd')
+        execute t:zoom_winrestcmd
+        unlet t:zoom_winrestcmd
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+    endif
+endfunction
+nnoremap <silent> <Plug>(my-zoom-window)
+      \ :<C-u>call <SID>toggle_window_zoom()<CR>
+nmap <C-w>z <Plug>(my-zoom-window)
+nmap <C-w><C-z> <Plug>(my-zoom-window)
+
+"---------------------------
+"" DTreeToggle()
 "---------------------------
 let mapleader = "\<Space>"
 nnoremap cn *Ncgn
