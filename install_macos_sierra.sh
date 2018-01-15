@@ -81,19 +81,21 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications";
 brew tap caskroom/cask
 brew cask install google-japanese-ime
 brew cask install iterm2
-brew cask install visual-studio-code
-brew cask install google-chrome
 brew cask install shiftit
 brew cask install hyperswitch
-brew cask install flux
 brew cask install virtualbox
 brew cask install vagrant
 brew cask install alfred
 brew cask install clipy
 brew cask install docker
+brew cask install qblocker
+brew cask install hammerspoon
+
+brew cask install flux
+brew cask install visual-studio-code
+brew cask install google-chrome
 brew cask install itsycal
 brew cask install keybase
-brew cask install qblocker
 brew cask cleanup
 
 echo "-----------------------------------------------------";
