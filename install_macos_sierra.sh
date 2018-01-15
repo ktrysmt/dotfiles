@@ -56,7 +56,8 @@ export GOPATH=$HOME/project
 echo "-----------------------------------------------------";
 echo "Neovim";
 echo "-----------------------------------------------------";
-ln -s ~/.vim ~/.config/nvim
+#ln -s ~/.vim ~/.config/nvim
+mkdir -p ~/.config/nvim/
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 sudo easy_install-2.7 pip
 sudo easy_install-3.6 pip
