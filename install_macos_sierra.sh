@@ -62,6 +62,7 @@ ln -s ~/.vimrc ~/.config/nvim/init.vim
 sudo easy_install-2.7 pip
 sudo easy_install-3.6 pip
 pip2 install neovim
+pip2 install virtualenv
 pip3 install neovim
 ln -sf $(which nvim) /usr/local/bin/vim
 
