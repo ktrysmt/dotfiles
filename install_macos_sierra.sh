@@ -3,7 +3,7 @@ echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
-brew install peco yarn lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace fd fzf tig fzy exa python2 python3 rbenv goenv direnv jid
+brew install peco yarn lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fd fzf tig fzy exa python2 python3 rbenv goenv direnv jid
 # brew install vim --with-lua
 brew install neovim/neovim/neovim
 brew tap universal-ctags/universal-ctags
