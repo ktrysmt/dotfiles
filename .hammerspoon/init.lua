@@ -4,27 +4,28 @@ hs.hotkey.bind({"cmd", "alt"}, "R", function()
 end)
 hs.alert.show("config reloaded.")
 
-local kana = false
-local function handleGlobalKeyEvent(e)
-  local keyCode = e:getKeyCode()
-  -- hs.alert.show(keyCode)
-  local keyUp = (e:getType() == hs.eventtap.event.types.keyUp)
-  local result = false
-  if keyCode == 104 then
-    if kana then
-      if keyUp then
-        hs.eventtap.keyStroke({}, 102)
-      end
-      result = true
-    end
-    if keyUp then
-      kana = not kana
-    end
-  end
-  return result
-end
-eventtap = hs.eventtap.new({hs.eventtap.event.types.keyDown, hs.eventtap.event.types.keyUp}, handleGlobalKeyEvent)
-eventtap:start()
+-- ## F3を使う方法に変更。
+-- local kana = false
+-- local function handleGlobalKeyEvent(e)
+--   local keyCode = e:getKeyCode()
+--   hs.alert.show(keyCode)
+--   local keyUp = (e:getType() == hs.eventtap.event.types.keyUp)
+--   local result = false
+--   if keyCode == 104 then
+--     if kana then
+--       if keyUp then
+--         hs.eventtap.keyStroke({}, 102)
+--       end
+--       result = true
+--     end
+--     if keyUp then
+--       kana = not kana
+--     end
+--   end
+--   return result
+-- end
+-- eventtap = hs.eventtap.new({hs.eventtap.event.types.keyDown, hs.eventtap.event.types.keyUp}, handleGlobalKeyEvent)
+-- eventtap:start()
 
 local function keyCode(key, modifiers)
    modifiers = modifiers or {}
@@ -112,4 +113,3 @@ local function handleGlobalEvent(name, event, app)
 end
 watcher = hs.application.watcher.new(handleGlobalEvent)
 watcher:start()
-
