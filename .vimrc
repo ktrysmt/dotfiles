@@ -1,3 +1,4 @@
+" tmf: $0,0=9,9 ; $0,0=$9,9
 "---------------------------
 "" Set env
 "---------------------------
@@ -263,6 +264,7 @@ Plug 'thinca/vim-qfreplace'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'dhruvasagar/vim-table-mode'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " [for HTML/CSS ]
@@ -332,6 +334,13 @@ if has('nvim')
   autocmd! User FzfStatusLine call <SID>fzf_statusline()
   command! -bang Windows call fzf#vim#windows({'options': ['--query', '!NERD ']}, <bang>0)
 endif
+
+
+"-------------------------
+" vim-table-mode
+"-------------------------
+let g:table_mode_corner='|'
+
 
 "-------------------------
 "" vim-test

@@ -31,9 +31,15 @@ cp ~/dotfiles/.gitconfig ~/.gitconfig
 wget -O ~/Library/Fonts/RictyDiminished-Regular.ttf https://github.com/edihbrandon/RictyDiminished/raw/master/RictyDiminished-Regular.ttf
 wget -O ~/dotfiles/.hammerspoon/hyperex.lua https://raw.githubusercontent.com/hetima/hammerspoon-hyperex/master/hyperex.lua
 ln -s ~/dotfiles/.hammerspoon/hyperex.lua ~/.hammerspoon/hyperex.lua
+# git secrets
 git secrets --register-aws --global
 git secrets --install ~/.git-templates/git-secrets
 git config --global init.templatedir '~/.git-templates/git-secrets'
+# anyenv
+git clone https://github.com/riywo/anyenv ~/.anyenv
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"
+exec $SHELL -l
 
 echo "-----------------------------------------------------";
 echo "Install Rust";
@@ -44,9 +50,13 @@ source $HOME/.cargo/env
 echo "-----------------------------------------------------";
 echo "Install Node"
 echo "-----------------------------------------------------";
-curl -L git.io/nodebrew | perl - setup
-~/.nodebrew/nodebrew install-binary stable
-~/.nodebrew/nodebrew use stable
+anyenv install ndenv
+exec $SHELL -l
+ndenv install v8
+ndenv global v8
+# curl -L git.io/nodebrew | perl - setup
+# ~/.nodebrew/nodebrew install-binary stable
+# ~/.nodebrew/nodebrew use stable
 
 echo "-----------------------------------------------------";
 echo "Setup Go"
