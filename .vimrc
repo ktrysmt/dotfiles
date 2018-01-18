@@ -292,7 +292,7 @@ Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " [for Go]
 Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'thinca/vim-quickrun', { 'for': ['go', 'rust', 'javascript'] }
+Plug 'thinca/vim-quickrun'
 Plug 'jodosha/vim-godebug', { 'for': 'go' }
 if has('nvim')
   Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make'}
