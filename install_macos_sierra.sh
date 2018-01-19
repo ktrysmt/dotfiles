@@ -3,7 +3,7 @@ echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
-brew install peco yarn lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fd fzf tig fzy exa python2 python3 rbenv goenv direnv jid git-secrets
+brew install peco yarn lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fd fzf tig fzy exa python2 python3 direnv jid git-secrets
 # brew install vim --with-lua
 brew install neovim/neovim/neovim
 brew tap universal-ctags/universal-ctags
@@ -48,9 +48,11 @@ curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
 
 echo "-----------------------------------------------------";
-echo "Install Node"
+echo "Install *env and node"
 echo "-----------------------------------------------------";
 anyenv install ndenv
+anyenv install rbenv
+anyenv install goenv
 exec $SHELL -l
 ndenv install v8
 ndenv global v8
