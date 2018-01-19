@@ -1,4 +1,3 @@
-" tmf: $0,0=9,9 ; $0,0=$9,9
 "---------------------------
 "" Set env
 "---------------------------
@@ -110,6 +109,7 @@ endif
 "---------------------------
 "" auto filetyp edetection
 "---------------------------
+autocmd VimEnter * nested if @% != '' | :NERDTreeFind | wincmd p | endif
 augroup MyAutoCmd
   autocmd! *
 augroup END

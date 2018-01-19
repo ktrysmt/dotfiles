@@ -84,6 +84,16 @@
   alias lt="exa -lhT"
 }
 
+: "alias of kubect" && {
+  alias k="kubectl"
+  alias kg="kubectl get"
+  alias ka="kubectl apply -f"
+  alias kd="kubectl describe"
+  alias krm="kubectl delete"
+  alias klo="kubectl logs -f"
+  alias kex="kubectl exec -i -t"
+}
+
 # : "tmux" && {
 #   PERIOD=5
 #   if [ `who am i | awk '{print $1}'` != "vagrant" ];then \
