@@ -427,12 +427,14 @@ let g:ale_fixers = {
   \ 'javascript': ['eslint','prettier'],
   \ 'jsx': ['eslint'],
   \ 'css': ['stylelint'],
+  \ 'ruby': ['rubocop'],
 \}
 let g:ale_fix_on_save = 1
 let g:ale_linters = {
   \ 'jsx': ['eslint', 'stylelint'],
   \ 'css': ['stylelint'],
   \ 'go' : ['gometalinter'],
+  \ 'ruby' : ['rubocop'],
 \}
 let g:ale_linter_aliases = {'jsx': 'css'}
 augroup FiletypeGroup
