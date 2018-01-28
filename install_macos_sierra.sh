@@ -108,10 +108,10 @@ brew cask install clipy
 brew cask install docker
 brew cask install qblocker
 brew cask install hammerspoon
-
-brew cask install flux
 brew cask install visual-studio-code
 brew cask install google-chrome
+
+brew cask install flux
 brew cask install itsycal
 brew cask install keybase
 brew cask cleanup
