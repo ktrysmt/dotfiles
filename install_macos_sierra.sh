@@ -53,6 +53,7 @@ echo "-----------------------------------------------------";
 anyenv install ndenv
 anyenv install rbenv
 anyenv install goenv
+eval "$(anyenv init -)"
 exec $SHELL -l
 ndenv install v8
 ndenv global v8
@@ -74,8 +75,8 @@ echo "-----------------------------------------------------";
 #ln -s ~/.vim ~/.config/nvim
 mkdir -p ~/.config/nvim/
 ln -s ~/.vimrc ~/.config/nvim/init.vim
-sudo easy_install-2.7 pip
-sudo easy_install-3.6 pip
+easy_install-2.7 pip
+easy_install-3.6 pip
 pip2 install neovim
 pip2 install virtualenv
 pip3 install neovim
