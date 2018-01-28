@@ -73,6 +73,8 @@ echo "-----------------------------------------------------";
 echo "Neovim";
 echo "-----------------------------------------------------";
 #ln -s ~/.vim ~/.config/nvim
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 mkdir -p ~/.config/nvim/
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 easy_install-2.7 pip
