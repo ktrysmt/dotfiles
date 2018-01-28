@@ -98,12 +98,13 @@ echo "Extra applications by brew cask";
 echo "-----------------------------------------------------";
 export HOMEBREW_CASK_OPTS="--appdir=/Applications";
 brew tap caskroom/cask
-brew cask install google-japanese-ime iterm2 shiftit hyperswitch virtualbox vagrant alfred clipy docker qblocker hammerspoon visual-studio-code google-chrome
-
-brew cask install flux
-brew cask install itsycal
-brew cask install keybase
+brew cask install google-japanese-ime iterm2 shiftit hyperswitch clipy docker qblocker hammerspoon visual-studio-code google-chrome
+brew cask install virtualbox
+brew cask install vagrant
 brew cask cleanup
+
+#brew cask install flux alfred itsycal keybase
+
 
 echo "-----------------------------------------------------";
 echo "Rested tasks"
