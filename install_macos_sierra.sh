@@ -53,6 +53,7 @@ echo "-----------------------------------------------------";
 anyenv install ndenv
 anyenv install rbenv
 anyenv install goenv
+eval "$(anyenv init -)"
 exec $SHELL -l
 ndenv install v8
 ndenv global v8
@@ -72,10 +73,12 @@ echo "-----------------------------------------------------";
 echo "Neovim";
 echo "-----------------------------------------------------";
 #ln -s ~/.vim ~/.config/nvim
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 mkdir -p ~/.config/nvim/
 ln -s ~/.vimrc ~/.config/nvim/init.vim
-sudo easy_install-2.7 pip
-sudo easy_install-3.6 pip
+easy_install-2.7 pip
+easy_install-3.6 pip
 pip2 install neovim
 pip2 install virtualenv
 pip3 install neovim
@@ -86,7 +89,8 @@ echo "Setup Other";
 echo "-----------------------------------------------------";
 go get github.com/motemen/ghq
 go get github.com/golang/dep/...
-vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +":PythonSupportInitPython2" +":PythonSupportInitPython3" +qa
+vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
+vim +":PythonSupportInitPython2" +":PythonSupportInitPython3" +qa
 npm install -g npm-check-updates
 
 echo "-----------------------------------------------------";
@@ -94,24 +98,13 @@ echo "Extra applications by brew cask";
 echo "-----------------------------------------------------";
 export HOMEBREW_CASK_OPTS="--appdir=/Applications";
 brew tap caskroom/cask
-brew cask install google-japanese-ime
-brew cask install iterm2
-brew cask install shiftit
-brew cask install hyperswitch
+brew cask install google-japanese-ime iterm2 shiftit hyperswitch clipy docker qblocker hammerspoon visual-studio-code google-chrome
 brew cask install virtualbox
 brew cask install vagrant
-brew cask install alfred
-brew cask install clipy
-brew cask install docker
-brew cask install qblocker
-brew cask install hammerspoon
-
-brew cask install flux
-brew cask install visual-studio-code
-brew cask install google-chrome
-brew cask install itsycal
-brew cask install keybase
 brew cask cleanup
+
+#brew cask install flux alfred itsycal keybase
+
 
 echo "-----------------------------------------------------";
 echo "Rested tasks"
