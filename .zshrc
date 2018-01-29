@@ -54,6 +54,8 @@
   # export FZF_DEFAULT_COMMAND='rg ""'
   export FZF_DEFAULT_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%} --select-1 --exit-0"
   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  # awscli
+  [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
   # path
   export PATH="$HOME/.cargo/bin:$PATH"
   export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
