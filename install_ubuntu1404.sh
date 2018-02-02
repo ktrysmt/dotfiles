@@ -36,7 +36,7 @@ echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >>~/.profile
 echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' >>~/.profile
 echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' >>~/.profile
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-brew install ripgrep exa fd direnv peco ghq git tig tmux
+brew install ripgrep exa fd direnv peco ghq git tig tmux jid
 
 # neovim
 sudo apt-get -y install software-properties-common
