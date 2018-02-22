@@ -6,3 +6,8 @@
   refs = !git checkout $(git branch | peco | awk '{ print $NF }')
 [diff]
   indentHeuristic = true
+[merge]
+      ff = false
+[pull]
+      ff = only
+
