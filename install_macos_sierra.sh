@@ -19,6 +19,7 @@ mkdir -p ~/.config/peco/
 mkdir -p ~/.hammerspoon/
 mkdir ~/.cache
 mkdir ~/.local
+ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/.vimrc ~/.vimrc

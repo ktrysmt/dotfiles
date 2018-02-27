@@ -156,6 +156,16 @@
   alias c="powered_cd"
 }
 
+: "peco snippet" && {
+  function peco-select-snippet() {
+    BUFFER=$(cat ~/.snippet | peco)
+    CURSOR=$#BUFFER
+    zle -R -c
+  }
+  zle -N peco-select-snippet
+  bindkey '^x^r' peco-select-snippet
+}
+
 : "peco history" && {
   function peco-select-history() {
       # historyを番号なし、逆順、最初から表示。

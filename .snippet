@@ -1,0 +1,13 @@
+wget -S                                                                     # spider
+/System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -s # macos WiFi
+echo | nc 8.8.8.8 53                                                        # test reachable network by nc
+du -d 1 -h .git/                                                            # calc sizes in .git
+du -d 1 -h -I ".git" .                                                      # calc sizes current exclude ".git"
+curl -I localhost                                                           # curl only header
+cat <<EOF > text.txt                                                        # redirect heredoc
+tcpdump -nn src host 0.0.0.0 and not port 22 and not port 3306              # tcpdump
+dig -x localhost                                                            # reverse w/ dig
+rg foo -g '!*.min.js'                                                       # exclude w/ rg
+rg foo -g '*.min.js'                                                        # include w/ rg
+WAIT=$(( RANDOM %= 30 )) sleep $WAIT && echo "foo"                          # jitter
+perl -i -pe 's/foo/bar/' text.txt                                           # overwrite replacement by PCRE
