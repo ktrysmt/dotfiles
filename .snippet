@@ -11,3 +11,5 @@ rg foo -g '!*.min.js'                                                       # ex
 rg foo -g '*.min.js'                                                        # include w/ rg
 WAIT=$(( RANDOM %= 30 )) sleep $WAIT && echo "foo"                          # jitter
 perl -i -pe 's/foo/bar/' text.txt                                           # overwrite replacement by PCRE
+cut -d' ' -f1,3                                                             # cut
+history | cut -d " " -f 4-11                                                # cut numbers of history
