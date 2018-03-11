@@ -232,6 +232,7 @@ if has('nvim')
 else
   Plug 'Shougo/neocomplete.vim'
 end
+Plug 'haya14busa/vim-edgemotion'
 Plug 'janko-m/vim-test'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'Townk/vim-autoclose'
@@ -511,6 +512,12 @@ let unified_diff#iwhite_arguments = [
 let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
 let g:EasyMotion_leader_key=";"
 let g:EasyMotion_grouping=1
+
+"-------------------------
+" edgemotion
+"-------------------------
+map <C-j> <Plug>(edgemotion-j)
+map <C-k> <Plug>(edgemotion-k)
 
 "-------------------------
 " for hl_matchit
