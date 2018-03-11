@@ -13,3 +13,5 @@ WAIT=$(( RANDOM %= 30 )) sleep $WAIT && echo "foo"                          # ji
 perl -i -pe 's/foo/bar/' text.txt                                           # overwrite replacement by PCRE
 cut -d' ' -f1,3                                                             # cut
 history | cut -d " " -f 4-11                                                # cut numbers of history
+find . -type f -regextype posix-egrep -regex ".*.(csv|txt)" ! -regex ".*.gem/ruby/2.0/gems.*" # find w/ regex
+cat readme.md | awk '!/^$/'                                                 # remove empty lines by awk
