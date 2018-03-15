@@ -1,17 +1,20 @@
-wget -S                                                                     # spider
-/System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -s # macos WiFi
-echo | nc 8.8.8.8 53                                                        # test reachable network by nc
-du -d 1 -h .git/                                                            # calc sizes in .git
-du -d 1 -h -I ".git" .                                                      # calc sizes current exclude ".git"
-curl -I localhost                                                           # curl only header
-cat <<EOF > text.txt                                                        # redirect heredoc
-tcpdump -nn src host 0.0.0.0 and not port 22 and not port 3306              # tcpdump
-dig -x localhost                                                            # reverse w/ dig
-rg foo -g '!*.min.js'                                                       # exclude w/ rg
-rg foo -g '*.min.js'                                                        # include w/ rg
-WAIT=$(( RANDOM %= 30 )) sleep $WAIT && echo "foo"                          # jitter
-perl -i -pe 's/foo/bar/' text.txt                                           # overwrite replacement by PCRE
-cut -d' ' -f1,3                                                             # cut
-history | cut -d " " -f 4-11                                                # cut numbers of history
-find . -type f -regextype posix-egrep -regex ".*.(csv|txt)" ! -regex ".*.gem/ruby/2.0/gems.*" # find w/ regex
-cat readme.md | awk '!/^$/'                                                 # remove empty lines by awk
+wget -S                                                                                   # spider
+/System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -s               # macOS WiFi
+echo | nc 8.8.8.8 53                                                                      # test network by nc
+du -d 1 -h .git/                                                                          # calc sizes in .git
+du -d 1 -h -I ".git" .                                                                    # calc sizes current exclude ".git"
+curl -I localhost                                                                         # curl only header
+cat <<EOF > text.txt                                                                      # redirect heredoc
+tcpdump -nn src host 0.0.0.0 and not port 22 and not port 3306                            # tcpdump
+dig -x localhost                                                                          # reverse w/ dig
+rg foo -g '!*.min.js'                                                                     # exclude w/ rg
+rg foo -g '*.min.js'                                                                      # include w/ rg
+WAIT=$(( RANDOM %= 30 )) sleep $WAIT && echo "foo"                                        # jitter
+perl -i -pe 's/foo/bar/' text.txt                                                         # overwrite replacement by PCRE
+cut -d' ' -f1,3                                                                           # cut
+history | cut -d " " -f 4-11                                                              # cut numbers of history
+find . -type f -regextype posix-egrep -regex ".*.(csv|txt)" ! -regex ".*./ruby/2.0/.*"    # find w/ regex
+cat readme.md | awk '!/^$/'                                                               # remove empty lines by awk
+[ -f `which yarn` ] && echo hoge                                                          # if by bash 
+if [ "" != `which yarn` ]; then echo hoge; else echo fuga; fi                             # if-else by bash
+
