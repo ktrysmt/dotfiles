@@ -206,7 +206,12 @@ augroup highlightIdegraphicSpace
   autocmd VimEnter,WinEnter * match IdeographicSpace /　/
 augroup END
 autocmd QuickFixCmdPost *grep* cwindow
-au BufNewFile,BufRead *.conf,*.conf.j2 set ft=conf
+augroup FiletypeGroup
+  autocmd!
+  au BufNewFile,BufRead *.yml.j2,*.yaml.j2 set ft=yaml
+  au BufNewFile,BufRead *.conf,*.conf.j2 set ft=conf
+  au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+augroup END
 
 "---------------------------
 "" Vim-Plug Settings
@@ -439,10 +444,6 @@ let g:ale_linters = {
   \ 'ruby' : ['rubocop'],
 \}
 let g:ale_linter_aliases = {'jsx': 'css'}
-augroup FiletypeGroup
-    autocmd!
-    au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-augroup END
 let g:ale_go_gometalinter_options = '--vendored-linters --disable-all --enable=gotype --enable=vet --enable=golint -t'
 
 " The answer is:
