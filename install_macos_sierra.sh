@@ -68,7 +68,7 @@ echo "-----------------------------------------------------";
 mkdir -p ~/project/bin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/project/bin:$PATH
-export GOPATH=$HOME/project
+export GOPATH=$HOME/go:$HOME/project
 
 echo "-----------------------------------------------------";
 echo "Neovim";

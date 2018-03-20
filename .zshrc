@@ -35,7 +35,7 @@
   # go
   export PATH=$PATH:/usr/local/go/bin
   export PATH=$HOME/project/bin:$PATH
-  export GOPATH=$HOME/project
+  export GOPATH=$HOME/go:$HOME/project
   # goenv
   export GOENV_ROOT="$HOME/.goenv"
   export PATH="$GOENV_ROOT/bin:$PATH"
