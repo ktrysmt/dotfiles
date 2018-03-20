@@ -99,7 +99,7 @@ echo "Extra applications by brew cask";
 echo "-----------------------------------------------------";
 export HOMEBREW_CASK_OPTS="--appdir=/Applications";
 brew tap caskroom/cask
-brew cask install google-japanese-ime iterm2 shiftit hyperswitch clipy docker qblocker hammerspoon visual-studio-code google-chrome
+brew cask install google-japanese-ime iterm2 shiftit hyperswitch clipy docker qblocker hammerspoon visual-studio-code google-chrome google-chrome-canary
 brew cask install virtualbox
 brew cask install vagrant
 brew cask cleanup
