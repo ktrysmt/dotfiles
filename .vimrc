@@ -319,7 +319,7 @@ syntax on
 set background=dark
 autocmd ColorScheme * hi LineNr ctermfg=239
 autocmd ColorScheme * hi Normal ctermbg=none
-colorscheme hybrid_reverse
+colorscheme hybrid_material
 
 "-------------------------
 " Unite Settings
@@ -600,7 +600,7 @@ nnoremap <silent> <C-e> :NERDTreeToggle<cr>
 let g:NERDTreeShowHidden=1
 let NERDTreeIgnore = ['node_modules','.git', ".DS_Store"]
 let g:NERDTreeChDirMode = 2
-let g:NERDTreeWinSize = 35
+let g:NERDTreeWinSize = 45
 let g:nerdtree_tabs_open_on_console_startup = 1
 
 "-------------------------
