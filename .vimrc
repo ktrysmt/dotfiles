@@ -650,31 +650,7 @@ map y <Plug>(operator-stay-cursor-yank)
 "-------------------------
 " vp doesn't replace paste buffer
 "-------------------------
-" こっちボツ
-" function! RestoreRegister()
-"   let @" = s:restore_reg
-"   return ''
-" endfunction
-" function! s:Repl()
-"   let s:restore_reg = @"
-"   return "p@=RestoreRegister()\<cr>"
-" endfunction
-" vmap <silent> <expr> p <sid>Repl()
-"
-" vモードの置換連続ペースト用
-function! Put_text_without_override_register()
-  let line_len = strlen(getline('.'))
-  execute "normal! `>"
-  let col_loc = col('.')
-  execute 'normal! gv"_x'
-  if line_len == col_loc
-    execute 'normal! p'
-  else 
-    execute 'normal! P'
-  endif
-endfunction
-xnoremap <silent> p :call Put_text_without_override_register()<CR>
-
+nnoremap p "0p
 
 "-------------------------
 " ripgrep

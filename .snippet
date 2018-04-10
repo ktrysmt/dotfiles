@@ -17,4 +17,4 @@ find . -type f -regextype posix-egrep -regex ".*.(csv|txt)" ! -regex ".*./ruby/2
 cat readme.md | awk '!/^$/'                                                                      # remove empty lines by awk
 [ -f `which yarn` ] && echo hoge                                                                 # if by bash 
 if [ "" != `which yarn` ]; then echo 1; elif [ "" != `which npm` ]; then echo 2; else echo 3; fi # if-else by bash
-
+tree -d -L 2 -I "node_modules"                                                                   # tree w/ ignoring
