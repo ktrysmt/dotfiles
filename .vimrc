@@ -121,6 +121,11 @@ autocmd MyAutoCmd BufWritePost *
       \ endif
 
 "---------------------------
+"" auto set nopaste
+"---------------------------
+autocmd InsertLeave * set nopaste
+
+"---------------------------
 "" clipboard
 "---------------------------
 if has('win32') || has('win64') || has('mac')
@@ -650,7 +655,7 @@ map y <Plug>(operator-stay-cursor-yank)
 "-------------------------
 " vp doesn't replace paste buffer
 "-------------------------
-nnoremap p "0p
+map P "0p
 
 "-------------------------
 " ripgrep
