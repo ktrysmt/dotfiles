@@ -85,6 +85,7 @@
   alias gbc="~/dotfiles/bin/git-checkout-remote-branch"
   alias l="exa -lha"
   alias lt="exa -lhT"
+  alias nswitch="source ~/.switch-proxy"
 }
 
 : "alias of kubect" && {
