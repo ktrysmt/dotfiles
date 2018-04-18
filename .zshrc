@@ -36,14 +36,14 @@
   export PATH=$PATH:/usr/local/go/bin
   export PATH=$HOME/project/bin:$PATH
   export GOPATH=$HOME/go:$HOME/project
+  # anyenv and node
+  export PATH="$HOME/.anyenv/bin:$PATH"
+  eval "$(anyenv init -)"
+  ndenv global v8
   # goenv
   export GOENV_ROOT="$HOME/.goenv"
   export PATH="$GOENV_ROOT/bin:$PATH"
   eval "$(goenv init -)"
-  # node
-  export PATH="$HOME/.anyenv/bin:$PATH"
-  eval "$(anyenv init -)"
-  ndenv global v8
   # export PATH=$HOME/.nodebrew/current/bin:$PATH
   # nodebrew use stable
   # export PATH=$PATH:./node_modules/.bin
