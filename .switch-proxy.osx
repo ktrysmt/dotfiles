@@ -31,7 +31,7 @@ function unset_proxy() {
   git config --global --unset http.proxy
   git config --global --unset https.proxy
 
-  npm config set http-proxy null
+  npm config set proxy null
   npm config set https-proxy null
 }
 
