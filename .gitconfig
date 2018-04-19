@@ -8,7 +8,9 @@
 [diff]
   indentHeuristic = true
 [merge]
-      ff = false
+  ff = false
 [pull]
-      ff = only
+  ff = only
+[url "https://"]
+  insteadOf = git://
 
