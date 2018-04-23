@@ -19,3 +19,4 @@ cat readme.md | awk '!/^$/'                                                     
 if [ "" != `which yarn` ]; then echo 1; elif [ "" != `which npm` ]; then echo 2; else echo 3; fi        # if-else by bash
 tree -d -L 2 -I "node_modules"                                                                          # tree w/ ignoring
 ls | grep template | awk -F '.' '{print "."$2"."$3"."$4}' | xargs -I % -L 1 -P 1 mv "template"% "tmpl"% # rename
+lt -L 2                                                                                                 # ls w/ tree by exa and --level option
