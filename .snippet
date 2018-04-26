@@ -15,8 +15,11 @@ cut -d' ' -f1,3                                                                 
 history | cut -d " " -f 4-11                                                                            # cut numbers of history
 find . -type f -regextype posix-egrep -regex ".*.(csv|txt)" ! -regex ".*./ruby/2.0/.*"                  # find w/ regex
 cat readme.md | awk '!/^$/'                                                                             # remove empty lines by awk
-[ -f `which yarn` ] && echo hoge                                                                        # if by bash 
+[ -f `which yarn` ] && echo hoge                                                                        # if by bash
 if [ "" != `which yarn` ]; then echo 1; elif [ "" != `which npm` ]; then echo 2; else echo 3; fi        # if-else by bash
 tree -d -L 2 -I "node_modules"                                                                          # tree w/ ignoring
 ls | grep template | awk -F '.' '{print "."$2"."$3"."$4}' | xargs -I % -L 1 -P 1 mv "template"% "tmpl"% # rename
 lt -L 2 -I node_*                                                                                       # ls w/ tree by exa w/ --level and --ignore-glob option
+perl -lnae 'print $F[1]' log.txt                                                                        # parse file by default "white space" delimiter
+perl -F, -lnae 'print $F[1]' log.txt                                                                    # parse file by "comma" delimiter
+perl -F/,/ -lane 'print @F[1,2]' data.csv                                                               # parse csv and print multi columns by "comma" delimiter
