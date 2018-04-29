@@ -34,6 +34,7 @@
   export HISTSIZE=5000000
   # go
   export PATH=$PATH:/usr/local/go/bin
+  export PATH=$HOME/go/bin:$PATH
   export PATH=$HOME/project/bin:$PATH
   export GOPATH=$HOME/go:$HOME/project
   # anyenv and node
