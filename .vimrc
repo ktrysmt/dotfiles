@@ -279,6 +279,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'elzr/vim-json'
 " [for HTML/CSS ]
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript'] }
 Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
@@ -363,6 +364,11 @@ let test#strategy = {
   \ 'file':    'dispatch',
   \ 'suite':   'basic',
 \}
+
+"-------------------------
+" vim-json
+"-------------------------
+let g:vim_json_syntax_conceal = 0
 
 "-------------------------
 "" Completion
