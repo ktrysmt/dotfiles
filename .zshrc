@@ -21,6 +21,7 @@
     zgen load lukechilds/zsh-better-npm-completion
     zgen load docker/cli contrib/completion/zsh/_docker
     zgen load docker/compose contrib/completion/zsh/_docker-compose
+    zgen load zchee/zsh-completions src/go/go-zsh-completions.plugin.zsh 
 
     zgen save
   fi
