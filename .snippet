@@ -19,7 +19,7 @@ cat readme.md | awk '!/^$/'                                                     
 if [ "" != `which yarn` ]; then echo 1; elif [ "" != `which npm` ]; then echo 2; else echo 3; fi        # if-else by bash
 tree -d -L 2 -I "node_modules"                                                                          # tree w/ ignoring
 ls | grep template | awk -F '.' '{print "."$2"."$3"."$4}' | xargs -I % -L 1 -P 1 mv "template"% "tmpl"% # rename
-lt -L 2 -I node_*                                                                                       # ls w/ tree by exa w/ --level and --ignore-glob option
+lt -L 2 -a -I 'node_*|.git|.circleci'                                                                   # ls w/ tree by exa w/ --level and --ignore-glob option
 eval $(aws ecr get-login --no-include-email --region ap-northeast-1)                                    # docker login w/ ecr
 perl -lnae 'print $F[1]' log.txt                                                                        # parse file by default "white space" delimiter
 perl -F, -lnae 'print $F[1]' log.txt                                                                    # parse file by "comma" delimiter
