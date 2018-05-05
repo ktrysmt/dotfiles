@@ -93,6 +93,7 @@ go get github.com/golang/dep/...
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 vim +":PythonSupportInitPython2" +":PythonSupportInitPython3" +qa
 npm install -g npm-check-updates
+npm i -g neovim
 
 echo "-----------------------------------------------------";
 echo "Extra applications by brew cask";

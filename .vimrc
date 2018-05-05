@@ -1,17 +1,17 @@
 "---------------------------
-"" Set env
+"" General
 "---------------------------
+"" set env
 set encoding=utf8
 scriptencoding utf-8
 if !has('gui_running')
       \ && exists('&termguicolors')
       \ && $COLORTERM ==# 'truecolor'
-  " https://medium.com/@dubistkomisch/how-to-actually-get-italics-and-true-colour-to-work-in-iterm-tmux-vim-9ebe55ebc2be
   if !has('nvim')
     let &t_8f = "\e[38;2;%lu;%lu;%lum"
     let &t_8b = "\e[48;2;%lu;%lu;%lum"
   endif
-  set termguicolors " use truecolor in term
+  set termguicolors
 endif
 set secure
 set fileencodings=utf-8,euc-jp,sjis,iso-2022-jp,
@@ -59,9 +59,14 @@ if has('nvim')
   set sh=zsh
 end
 
-"---------------------------
+"" clipboard
+if has('win32') || has('win64') || has('mac')
+  set clipboard=unnamed
+else
+  set clipboard=unnamed,unnamedplus
+endif
+
 "" Resolve PATH
-"---------------------------
 let s:is_windows = has('win32') || has('win64')
 function! s:configure_path(name, pathlist) abort
   let path_separator = s:is_windows ? ';' : ':'
@@ -81,9 +86,7 @@ call s:configure_path('$MANPATH', [
     \ '/usr/share/man/',
     \])
 
-"---------------------------
 "" Fix python version
-"---------------------------
 function! s:pick_executable(pathspecs) abort
   for pathspec in filter(a:pathspecs, '!empty(v:val)')
     for path in reverse(glob(pathspec, 0, 1))
@@ -107,54 +110,7 @@ if has('nvim')
         \])
 endif
 
-"---------------------------
-"" auto filetyp edetection
-"---------------------------
-autocmd VimEnter * nested if @% != '' | :NERDTreeFind | wincmd p | endif
-augroup MyAutoCmd
-  autocmd! *
-augroup END
-autocmd MyAutoCmd BufWritePost *
-      \ if &filetype ==# '' && exists('b:ftdetect') |
-      \  unlet! b:ftdetect |
-      \  filetype detect |
-      \ endif
-
-"---------------------------
-"" auto set nopaste
-"---------------------------
-autocmd InsertLeave * set nopaste
-
-"---------------------------
-"" clipboard
-"---------------------------
-if has('win32') || has('win64') || has('mac')
-  set clipboard=unnamed
-else
-  set clipboard=unnamed,unnamedplus
-endif
-
-"---------------------------
-"" Toggle window zoom
-"---------------------------
-function! s:toggle_window_zoom() abort
-    if exists('t:zoom_winrestcmd')
-        execute t:zoom_winrestcmd
-        unlet t:zoom_winrestcmd
-    else
-        let t:zoom_winrestcmd = winrestcmd()
-        resize
-        vertical resize
-    endif
-endfunction
-nnoremap <silent> <Plug>(my-zoom-window)
-      \ :<C-u>call <SID>toggle_window_zoom()<CR>
-nmap <C-w>z <Plug>(my-zoom-window)
-nmap <C-w><C-z> <Plug>(my-zoom-window)
-
-"---------------------------
-"" DTreeToggle()
-"---------------------------
+"" leader mapping
 let mapleader = "\<Space>"
 nnoremap cn *Ncgn
 nnoremap cN *NcgN
@@ -163,11 +119,6 @@ nmap <ESC><ESC> :nohlsearch<CR><ESC>
 map <C-g> :echo expand('%:p')<Return>
 nnoremap <silent> <Leader>co :copen<cr>
 nnoremap <silent> <Leader>cl :cclose<cr>
-" nnoremap <Leader>b :Buffers<CR>
-" nnoremap <Leader>x :Commands<CR>
-" nnoremap <Leader>f :GFiles<CR>
-" nnoremap <Leader>a :Ag<CR>
-" nnoremap <Leader>h :History:<CR>
 nnoremap <silent> <expr> <Leader>a (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Ag\<cr>"
 nnoremap <silent> <expr> <Leader>x (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Commands\<cr>"
 nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
@@ -189,10 +140,47 @@ nnoremap <Leader>n :ALENextWrap<CR>
 map <C-]> :tab <CR>:exec("tjump ".expand("<cword>"))<CR>
 map <leader><C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
-"---------------------------
-"" Custom commands
-"---------------------------
-" au FileType qf wincmd L
+"" autocmd
+autocmd VimEnter * nested if @% != '' | :NERDTreeFind | wincmd p | endif
+autocmd InsertLeave * set nopaste
+autocmd QuickFixCmdPost *grep* cwindow
+augroup highlightIdegraphicSpace
+  autocmd!
+  autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=DarkGreen guibg=DarkGreen
+  autocmd VimEnter,WinEnter * match IdeographicSpace /　/
+augroup END
+augroup FiletypeGroup
+  autocmd!
+  au BufNewFile,BufRead *.yml.j2,*.yaml.j2 set ft=yaml
+  au BufNewFile,BufRead *.conf,*.conf.j2 set ft=conf
+  au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+augroup END
+augroup MyAutoCmd
+  autocmd! *
+augroup END
+autocmd MyAutoCmd BufWritePost *
+      \ if &filetype ==# '' && exists('b:ftdetect') |
+      \  unlet! b:ftdetect |
+      \  filetype detect |
+      \ endif
+
+"" Toggle window zoom
+function! s:toggle_window_zoom() abort
+    if exists('t:zoom_winrestcmd')
+        execute t:zoom_winrestcmd
+        unlet t:zoom_winrestcmd
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+    endif
+endfunction
+nnoremap <silent> <Plug>(my-zoom-window)
+      \ :<C-u>call <SID>toggle_window_zoom()<CR>
+nmap <C-w>z <Plug>(my-zoom-window)
+nmap <C-w><C-z> <Plug>(my-zoom-window)
+
+"" custom commands
 command! -nargs=* -complete=file Rg :tabnew | :silent grep --sort-files <args>
 command! -nargs=* -complete=file Rgg :tabnew | :silent grep <args>
 command! -bang -nargs=* Ripgrep
@@ -205,37 +193,22 @@ command! Rv source $MYVIMRC
 command! Ev tabnew | edit $MYVIMRC
 command! Edv edit $HOME/dotfiles/.vimrc
 cabbr w!! w !sudo tee > /dev/null %
-augroup highlightIdegraphicSpace
-  autocmd!
-  autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=DarkGreen guibg=DarkGreen
-  autocmd VimEnter,WinEnter * match IdeographicSpace /　/
-augroup END
-autocmd QuickFixCmdPost *grep* cwindow
-augroup FiletypeGroup
-  autocmd!
-  au BufNewFile,BufRead *.yml.j2,*.yaml.j2 set ft=yaml
-  au BufNewFile,BufRead *.conf,*.conf.j2 set ft=conf
-  au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-augroup END
+
+
 
 "---------------------------
-"" Vim-Plug Settings
+"" Vim-Plug
 "---------------------------
+"" Settings
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 call plug#begin()
-
-"---------------------------
-"" Plugins
-"---------------------------
 "" [for All]
 Plug 'Shougo/unite.vim'
 if has('nvim')
-  " Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
-  " Plug 'Shougo/neoyank.vim'
   Plug 'roxma/nvim-completion-manager'
   Plug 'roxma/python-support.nvim'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -269,7 +242,6 @@ Plug 'osyo-manga/vim-over'
 Plug 'w0rp/ale'
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
-"Plug 'wakatime/vim-wakatime'
 Plug 'rhysd/vim-operator-surround'
 Plug 'osyo-manga/vim-operator-stay-cursor'
 Plug 'thinca/vim-qfreplace'
@@ -287,9 +259,6 @@ Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
 Plug 'lvht/phpcd.vim', { 'for': ['php'] }
 " [for Javascript]
 if has('nvim')
-  " Plug 'carlitux/deoplete-ternjs', { 'do': 'yarn global add tern' }
-  " Plug 'alexlafroscia/deoplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
-  "" 果たしてどちらが良いのか...
   Plug 'roxma/nvim-cm-tern', { 'do': 'npm install', 'for': ['javascript', 'javascript.jsx'] }
   Plug 'roxma/ncm-flow', { 'for': ['javascript', 'javascript.jsx'] }
 end
@@ -297,7 +266,6 @@ Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'javascr
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript', 'javascript.jsx', 'css'] }
 Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/html5.vim', { 'for': ['javascript', 'javascript.jsx', 'html'] }
@@ -308,6 +276,7 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'thinca/vim-quickrun'
 Plug 'jodosha/vim-godebug', { 'for': 'go' }
 if has('nvim')
+  Plug 'nsf/gocode', { 'for': 'go', 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
   Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make'}
 end
 " [for Rust]
@@ -318,24 +287,23 @@ Plug 'racer-rust/vim-racer', { 'for': ['rust'] }
 Plug 'hashivim/vim-terraform', { 'for': ['tf', 'terraform'] }
 call plug#end()
 
+
+
 "---------------------------
-"" Color scheme
+"" Plugin configuration
 "---------------------------
+"" custom theme
 syntax on
 set background=dark
 autocmd ColorScheme * hi LineNr ctermfg=239
 autocmd ColorScheme * hi Normal ctermbg=none
 colorscheme hybrid_material
 
-"-------------------------
-" Unite Settings
-"-------------------------
+"" unite settings
 let g:unite_enable_split_vertically = 1
 nnoremap <silent> <C-p> :Unite -create -buffer-name=yankround yankround<Return>
 
-"-------------------------
-" fzf.vim
-"-------------------------
+"" fzf.vim
 if has('nvim')
   function! s:fzf_statusline()
     " Override statusline as you like
@@ -348,16 +316,11 @@ if has('nvim')
   command! -bang Windows call fzf#vim#windows({'options': ['--query', '!NERD ']}, <bang>0)
 endif
 
-
-"-------------------------
-" vim-table-mode
-"-------------------------
+"" vim-table-mode
 let g:table_mode_corner='|'
 
 
-"-------------------------
 "" vim-test
-"-------------------------
 let g:test#preserve_screen = 1
 let test#strategy = {
   \ 'nearest': 'neovim',
@@ -365,16 +328,12 @@ let test#strategy = {
   \ 'suite':   'basic',
 \}
 
-"-------------------------
-" vim-json
-"-------------------------
+"" vim-json
 let g:vim_json_syntax_conceal = 0
 
-"-------------------------
-"" Completion
-"-------------------------
-if has('nvim') " deoplete
-  " inoremap <expr><tab> pumvisible() ? '\<c-n>' : '\<tab>'
+"" completion
+if has('nvim')
+  " deoplete
   let g:deoplete#enable_smart_case = 1
   let g:deoplete#enable_at_startup = 1
   inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
@@ -390,7 +349,8 @@ if has('nvim') " deoplete
   let g:deoplete#sources#go#json_directory = $HOME.'/.local/data/deoplete-go'
   let g:deoplete#sources#go#align_class = 1
   let g:deoplete#sources#go#package_dot = 1
-else " use neoccomplete
+else
+  " use neoccomplete
   let g:acp_enableAtStartup = 0
   let g:neocomplete#enable_at_startup = 1
   let g:neocomplete#enable_smart_case = 1
@@ -413,9 +373,7 @@ else " use neoccomplete
   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 end
 
-"-------------------------
-" lightline
-"-------------------------
+"" lightline
 set laststatus=2
 if !has('gui_running')
 set t_Co=256
@@ -437,9 +395,7 @@ function! ALEStatus()
   return ALEGetStatusLine()
 endfunction
 
-"-------------------------
-" ale
-"-------------------------
+"" ale
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_fixers = {
   \ 'javascript': ['eslint','prettier'],
@@ -457,42 +413,20 @@ let g:ale_linters = {
 let g:ale_linter_aliases = {'jsx': 'css'}
 let g:ale_go_gometalinter_options = '--vendored-linters --disable-all --enable=gotype --enable=vet --enable=golint -t'
 
-" The answer is:
-" https://stackoverflow.com/questions/46678615/how-do-you-set-an-autocmd-to-take-effect-when-filetype-is-none
-" autocmd BufNewFile,BufRead * if empty(&filetype) | execute 'nnoremap <buffer> <leader>f :1,$! cat' | endif
-"
-" autocmd BufEnter * :call SetFiletypeNewBuffer()
-" function! SetFiletypeNewBuffer()
-"   if @% == ""
-"     :set filetype=none
-"   endif
-" endfunction
-" autocmd! FileType none nnoremap <Leader>z :echo "HOGE"
-
-"-------------------------
-" ctags
-"-------------------------
+"" ctags
 let g:auto_ctags = 1
 set tags+=.git/tags
 let g:auto_ctags_directory_list = ['.git']
 let g:auto_ctags_tags_args = '--tag-relative=yes --recurse --sort=yes --append=no --format=2'
-" open ctag in tab/vertical split
-" map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-" map <leader><C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-" nnoremap <C-\> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
 
-"-------------------------
-" tagbar
-"-------------------------
+"" tagbar
 nmap <silent> <C-a>      :TagbarToggle<CR>
 vmap <silent> <C-a> <Esc>:TagbarToggle<CR>
 omap <silent> <C-a>      :TagbarToggle<CR>
 imap <silent> <C-a> <Esc>:TagbarToggle<CR>
 cmap <silent> <C-a> <C-u>:TagbarToggle<CR>
 
-"-------------------------
-" neosnippet
-"-------------------------
+"" neosnippet
 imap <C-s>     <Plug>(neosnippet_expand_or_jump)
 smap <C-s>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-s>     <Plug>(neosnippet_expand_target)
@@ -506,9 +440,7 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
-"-------------------------
-" vimdiff
-"-------------------------
+"" vimdiff
 set diffexpr=unified_diff#diffexpr()
 let unified_diff#executable = 'git'
 let unified_diff#arguments = [
@@ -518,35 +450,27 @@ let unified_diff#iwhite_arguments = [
       \   '--ignore--all-space',
       \ ]
 
-"-------------------------
-" easymotion
-"-------------------------
+"" easymotion
 let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
 let g:EasyMotion_leader_key=";"
 let g:EasyMotion_grouping=1
 
-"-------------------------
-" edgemotion
-"-------------------------
+"" edgemotion
 map <C-j> <Plug>(edgemotion-j)
 map <C-k> <Plug>(edgemotion-k)
 
-"-------------------------
-" for hl_matchit
-"-------------------------
+"" for hl_matchit
 let g:hl_matchit_enable_on_vim_startup = 1
 let g:hl_matchit_hl_groupname = 'Title'
 let g:hl_matchit_allow_ft = 'vim\|ruby\|sh\|php\|javascript\|go\|rust'
 
-"-------------------------
-" vim-go
-"-------------------------
+"" vim-go
 let g:go_bin_path = expand(globpath($GOPATH, "bin"))
 let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "goimports"
-" let g:go_fmt_options = "-s"
+  " let g:go_fmt_options = "-s"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
@@ -556,9 +480,7 @@ let g:go_highlight_build_constraints = 1
 let g:go_disable_autoinstall = 0
 let g:go_gocode_unimported_packages = 1
 
-"-------------------------
-" tab control
-"-------------------------
+"" tab control
 function! s:SID_PREFIX()
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
@@ -595,28 +517,15 @@ map <silent> [Tag]x :tabclose<CR>
 map <silent> [Tag]n :tabnext<CR>
 map <silent> [Tag]p :tabprevious<CR>
 
-"-------------------------
-" NERDTree
-"-------------------------
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-" au VimEnter * exe 'NERDTree'
-" au VimEnter * echo expand('%')
-" autocmd vimenter * NERDTreeTabsToggle
+"" NERDTree
 nnoremap <silent> <C-e> :NERDTreeToggle<cr>
-" vmap <silent> <C-e> <Esc>MyNERDTreeToggle()
-" omap <silent> <C-e>      MyNERDTreeToggle()
-" imap <silent> <C-e> <Esc>MyNERDTreeToggle()
-" cmap <silent> <C-e> <C-u>MyNERDTreeToggle()
 let g:NERDTreeShowHidden=1
 let NERDTreeIgnore = ['node_modules','.git', ".DS_Store"]
 let g:NERDTreeChDirMode = 2
 let g:NERDTreeWinSize = 45
 let g:nerdtree_tabs_open_on_console_startup = 1
 
-"-------------------------
-" Highlight in NERDTree
-"-------------------------
+"" highlight in NERDTree
 function! IsNERDTreeOpen()
   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 endfunction
@@ -628,74 +537,53 @@ function! SyncNERDTree()
 endfunction
 autocmd BufEnter * call SyncNERDTree()
 
-"-------------------------
-" emmet
-"-------------------------
+"" emmet
 let g:user_emmet_leader_key='<C-Y>'
 let g:user_emmet_mode='in'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,scss,javascript EmmetInstall
 
-"-------------------------
-" rust
-"-------------------------
+"" rust
 let g:rustfmt_autosave = 1
 let g:racer_cmd = '$HOME/.cargo/bin/racer'
 let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
 let $RUST_SRC_PATH = '$HOME/.cargo/src'
 
-"-------------------------
-" easy-align
-"-------------------------
+"" easy-align
 vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-"-------------------------
-" operetor-user
-"-------------------------
+"" operetor-user
 map <silent> sa <Plug>(operator-surround-append)
 map <silent> sd <Plug>(operator-surround-delete)
 map <silent> sr <Plug>(operator-surround-replace)
 map y <Plug>(operator-stay-cursor-yank)
 
-"-------------------------
-" vp doesn't replace paste buffer
-"-------------------------
+"" vp doesn't replace paste buffer
 map P "0p
 
-"-------------------------
-" ripgrep
-"-------------------------
+"" ripgrep
 if executable("rg")
     set grepprg=rg\ --vimgrep\ --no-heading
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
-"-------------------------
-" Terraform
-"-------------------------
+"" terraform
 let g:terraform_fmt_on_save = 1
 
-"-------------------------
-" javascript syntax
-"-------------------------
+"" javascript syntax
 let g:used_javascript_libs = 'react'
 
-"-------------------------
-" incsearch,asterisk,anzu
-"-------------------------
+"" incsearch,asterisk,anzu
 map g/ <Plug>(incsearch-forward)
 map ? <Plug>(incsearch-backward)
 map / <Plug>(incsearch-stay)
-" nnoremap / /\v
 let g:incsearch#magic = '\v'
 let g:incsearch#auto_nohlsearch = 1
 map n <Plug>(incsearch-nohl-n)
 map N <Plug>(incsearch-nohl-N)
 map *  <Plug>(incsearch-nohl-*)
 map #  <Plug>(incsearch-nohl-#)
-" nmap n <Plug>(incsearch-nohl)<Plug>(anzu-n-with-echo)
-" nmap N <Plug>(incsearch-nohl)<Plug>(anzu-N-with-echo)
 nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
 map * <Plug>(incsearch-nohl0)<Plug>(asterisk-z*)
@@ -703,13 +591,11 @@ map g* <Plug>(incsearch-nohl0)<Plug>(asterisk-gz*)
 map # <Plug>(incsearch-nohl0)<Plug>(asterisk-z#)
 map g# <Plug>(incsearch-nohl0)<Plug>(asterisk-gz#)
 
-"-------------------------
-" Python support
-"-------------------------
+"" python support
 let g:python_support_python2_require = 0
 
 "-------------------------
-" Set os env
+"" Set os env
 "-------------------------
 if has("mac")
 " mac用の設定
