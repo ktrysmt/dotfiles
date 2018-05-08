@@ -3,15 +3,40 @@ echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
-brew install peco yarn lua wget tmux peco git zsh nkf tree ripgrep reattach-to-user-namespace go fd fzf tig fzy exa python2 python3 direnv jq git-secrets mdcat goenv
+# general
+brew install peco wget tmux git zsh nkf tree ripgrep reattach-to-user-namespace fd fzf tig fzy exa python2 python3 jq git-secrets mdcat goenv
+# k8s
 brew install kubectl kubectx kubernetes-helm caskroom/cask/minikube
+# neovim
 brew install neovim/neovim/neovim
 brew tap universal-ctags/universal-ctags
 brew install --HEAD universal-ctags
+# anyenv
+git clone https://github.com/riywo/anyenv ~/.anyenv
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"
+exec $SHELL -l
+# rbenv and ndenv
+anyenv install ndenv
+anyenv install rbenv
+ndenv install v8.11.1
+ndenv rehash
+ndenv global v8.11.1
+# goenv
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"
+eval "$(goenv init -)"
+goenv install 1.10.1
+goenv rehash
+goenv global 1.10.1
+# rust
+curl https://sh.rustup.rs -sSf | sh -s -- -y
+source $HOME/.cargo/env
 
 echo "-----------------------------------------------------";
 echo "Setup my env"
 echo "-----------------------------------------------------";
+# general
 cd ~/
 git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 git clone https://github.com/ktrysmt/dotfiles  ~/dotfiles
@@ -37,43 +62,18 @@ ln -s ~/dotfiles/.hammerspoon/hyperex.lua ~/.hammerspoon/hyperex.lua
 git secrets --register-aws --global
 git secrets --install ~/.git-templates/git-secrets
 git config --global init.templatedir '~/.git-templates/git-secrets'
-# anyenv
-git clone https://github.com/riywo/anyenv ~/.anyenv
-export PATH="$HOME/.anyenv/bin:$PATH"
-eval "$(anyenv init -)"
-exec $SHELL -l
-
-echo "-----------------------------------------------------";
-echo "Install Rust";
-echo "-----------------------------------------------------";
-curl https://sh.rustup.rs -sSf | sh -s -- -y
-source $HOME/.cargo/env
-
-echo "-----------------------------------------------------";
-echo "Install *env and node"
-echo "-----------------------------------------------------";
-anyenv install ndenv
-anyenv install rbenv
-eval "$(anyenv init -)"
-exec $SHELL -l
-ndenv install v8
-ndenv global v8
-# curl -L git.io/nodebrew | perl - setup
-# ~/.nodebrew/nodebrew install-binary stable
-# ~/.nodebrew/nodebrew use stable
 
 echo "-----------------------------------------------------";
 echo "Setup Go"
 echo "-----------------------------------------------------";
 mkdir -p ~/project/bin
 export PATH=$PATH:/usr/local/go/bin
-export PATH=$HOME/project/bin:$PATH
+export PATH=$HOME/go/bin:$HOME/project/bin:$PATH
 export GOPATH=$HOME/go:$HOME/project
 
 echo "-----------------------------------------------------";
-echo "Neovim";
+echo "Setup Neovim";
 echo "-----------------------------------------------------";
-#ln -s ~/.vim ~/.config/nvim
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 mkdir -p ~/.config/nvim/
@@ -92,8 +92,7 @@ go get github.com/motemen/ghq
 go get github.com/golang/dep/...
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 vim +":PythonSupportInitPython2" +":PythonSupportInitPython3" +qa
-npm install -g npm-check-updates
-npm i -g neovim
+npm install -g npm-check-updates neovim yarn
 
 echo "-----------------------------------------------------";
 echo "Extra applications by brew cask";
@@ -107,17 +106,9 @@ brew cask cleanup
 
 #brew cask install flux alfred itsycal keybase
 
-
 echo "-----------------------------------------------------";
 echo "Rested tasks"
 echo "-----------------------------------------------------";
 sudo sh -c "echo $(which zsh) >> /etc/shells";
 chsh -s $(which zsh)
 
-#echo "-----------------------------------------------------";
-#echo "After the runner..."
-#echo "-----------------------------------------------------";
-#echo " "
-#echo "> Input below for zsh completion."
-#echo 'echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker" | zsh'
-#echo 'echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker-compose https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose" | zsh'

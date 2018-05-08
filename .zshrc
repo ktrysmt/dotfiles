@@ -12,16 +12,16 @@
     #zgen load robbyrussell/oh-my-zsh lib/directories
     #zgen load robbyrussell/oh-my-zsh lib/history
     #zgen load robbyrussell/oh-my-zsh lib/theme-and-appearance
+    #zgen load zsh-users/zsh-history-substring-search
 
     zgen load aws/aws-cli bin/aws_zsh_completer.sh
     zgen load zsh-users/zsh-syntax-highlighting
-    # zgen load zsh-users/zsh-history-substring-search
     zgen load zsh-users/zsh-completions
     zgen load Tarrasch/zsh-autoenv
     zgen load lukechilds/zsh-better-npm-completion
     zgen load docker/cli contrib/completion/zsh/_docker
     zgen load docker/compose contrib/completion/zsh/_docker-compose
-    zgen load zchee/zsh-completions src/go/go-zsh-completions.plugin.zsh 
+    zgen load zchee/zsh-completions src/go/go-zsh-completions.plugin.zsh
 
     zgen save
   fi
@@ -41,15 +41,10 @@
   # anyenv and node
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
-  ndenv global v8
   # goenv
   export GOENV_ROOT="$HOME/.goenv"
   export PATH="$GOENV_ROOT/bin:$PATH"
   eval "$(goenv init -)"
-  # export PATH=$HOME/.nodebrew/current/bin:$PATH
-  # nodebrew use stable
-  # export PATH=$PATH:./node_modules/.bin
-  # ---
   # rust
   [ -f ~/.cargo/env ] && source ~/.cargo/env
   # fzf
@@ -59,23 +54,13 @@
   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
   # awscli
   [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
-  # path
+  # other path
   export PATH="$HOME/.cargo/bin:$PATH"
   export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
   export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
   export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
   export PATH=$HOME/.rbenv/shims:$PATH
 }
-
-# : "set direnv" && {
-#   _direnv_hook() {
-#     eval "$(direnv export zsh)";
-#   }
-#   typeset -ag precmd_functions;
-#   if [[ -z ${precmd_functions[(r)_direnv_hook]} ]]; then
-#     precmd_functions+=_direnv_hook;
-#   fi
-# }
 
 : "alias" && {
   alias gdw="git diff --color-words"
@@ -99,21 +84,6 @@
   alias klo="kubectl logs -f"
   alias kex="kubectl exec -i -t"
 }
-
-# : "tmux" && {
-#   PERIOD=5
-#   if [ `who am i | awk '{print $1}'` != "vagrant" ];then \
-#     show-current-dir-as-window-name() {
-#       # local PROMPT=$($HOME/dotfiles/bin/git-echo-prompt-is-clean)
-#       # tmux set-window-option window-status-format " #I:${PWD:t}$PROMPT " > /dev/null
-#       tmux set-window-option window-status-format " #I:${PWD:t} " > /dev/null
-#       # tmux set-window-option window-status-current-format " #I:${PWD:t}$PROMPT " > /dev/null
-#       tmux set-window-option window-status-current-format " #I:${PWD:t} " > /dev/null
-#     }
-#    show-current-dir-as-window-name
-#    add-zsh-hook precmd show-current-dir-as-window-name
-#   fi;
-# }
 
 : "k8s" && {
   if (which kubectl > /dev/null); then
