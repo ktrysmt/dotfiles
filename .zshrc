@@ -64,6 +64,7 @@
 
 : "alias" && {
   alias gdw="git diff --color-words"
+  alias gdww="git diff --word-diff-regex=$'[^\x80-\xbf][\x80-\xbf]*' --word-diff=color"
   alias gh='cd $(ghq list -p | peco)'
   alias glogg='git log --graph --name-status --pretty=format:"%C(red)%h %C(green)%an %Creset%s %C(yellow)%d%Creset"'
   alias dstat='dstat -tlamp'
