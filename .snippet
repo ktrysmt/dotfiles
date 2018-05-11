@@ -24,3 +24,4 @@ eval $(aws ecr get-login --no-include-email --region ap-northeast-1)            
 perl -lnae 'print $F[1]' log.txt                                                                        # parse file by default "white space" delimiter
 perl -F, -lnae 'print $F[1]' log.txt                                                                    # parse file by "comma" delimiter
 perl -F/,/ -lane 'print @F[1,2]' data.csv                                                               # parse csv and print multi columns by "comma" delimiter
+docker run -d ubuntu:16.04 tail -f /dev/null                                                            # run docker w/ ubuntu as deamon

@@ -5,6 +5,7 @@ echo "-----------------------------------------------------";
 brew update
 # general
 brew install peco wget tmux git zsh nkf tree ripgrep reattach-to-user-namespace fd fzf tig fzy exa python2 python3 jq git-secrets mdcat goenv
+brew install yarn --without-node
 # k8s
 brew install kubectl kubectx kubernetes-helm caskroom/cask/minikube
 # neovim
@@ -92,7 +93,7 @@ go get github.com/motemen/ghq
 go get github.com/golang/dep/...
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 vim +":PythonSupportInitPython2" +":PythonSupportInitPython3" +qa
-npm install -g npm-check-updates neovim yarn
+yarn global add npm-check-updates neovim
 
 echo "-----------------------------------------------------";
 echo "Extra applications by brew cask";
