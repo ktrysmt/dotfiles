@@ -25,3 +25,4 @@ perl -lnae 'print $F[1]' log.txt                                                
 perl -F, -lnae 'print $F[1]' log.txt                                                                    # parse file by "comma" delimiter
 perl -F/,/ -lane 'print @F[1,2]' data.csv                                                               # parse csv and print multi columns by "comma" delimiter
 docker run -d ubuntu:16.04 tail -f /dev/null                                                            # run docker w/ ubuntu as deamon
+for i in `seq 1 10`; do echo $i && sleep 1; done                                                        # seq and sleep
