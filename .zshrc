@@ -33,6 +33,7 @@
   export HIST_STAMPS="yyyy/mm/dd"
   export EDITOR='vim'
   export HISTSIZE=5000000
+  export MANPAGER="col -b -x|vim -"
   # go
   export PATH=$PATH:/usr/local/go/bin
   export PATH=$HOME/go/bin:$PATH

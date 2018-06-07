@@ -430,7 +430,7 @@ let g:ale_linters = {
   \ 'jsx': ['eslint', 'stylelint'],
   \ 'css': ['stylelint'],
   \ 'go' : ['gometalinter'],
-  \ 'ruby' : ['rubocop'],
+  \ 'ruby' : ['rubocop','ruby'],
 \}
 let g:ale_linter_aliases = {'jsx': 'css'}
 let g:ale_go_gometalinter_options = '--vendored-linters --disable-all --enable=gotype --enable=vet --enable=golint -t'
@@ -442,6 +442,7 @@ let g:auto_ctags_directory_list = ['.git']
 let g:auto_ctags_tags_args = '--tag-relative=yes --recurse --sort=yes --append=no --format=2'
 
 "" tagbar
+let g:tagbar_width = 60
 nmap <silent> <C-a>      :TagbarToggle<CR>
 vmap <silent> <C-a> <Esc>:TagbarToggle<CR>
 omap <silent> <C-a>      :TagbarToggle<CR>
