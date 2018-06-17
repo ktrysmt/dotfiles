@@ -293,9 +293,9 @@ Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " [for Go]
 Plug 'tpope/vim-pathogen', { 'for': 'go' } " for vim-godebug 
+Plug 'jodosha/vim-godebug', { 'for': 'go' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'thinca/vim-quickrun'
-Plug 'jodosha/vim-godebug', { 'for': 'go' }
 if has('nvim')
   Plug 'nsf/gocode', { 'for': 'go', 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
   Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make'}
@@ -502,6 +502,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_disable_autoinstall = 0
 let g:go_gocode_unimported_packages = 1
+command! GoDebugStart : "dummy for :GoDebugTest at vim-go  
 
 "" tab control
 function! s:SID_PREFIX()
