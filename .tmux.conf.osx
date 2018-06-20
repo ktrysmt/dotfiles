@@ -46,15 +46,16 @@ set-option -g default-terminal "screen-256color"
 set -g status-position top
 set -g status-fg white
 set -g status-bg colour235
-set -g status-left '[#[fg=cyan,bold]#(whoami)#[default]]'
+set -g status-left '[#[fg=cyan,bold]#(whoami)#[default]] '
+set -g status-left-length 30
 set -g status-right-length 120
 set -g status-right-bg colour235
 set -g status-right \
 "#{?client_prefix,#[reverse],}"\
-"#[fg=yellow]#(${HOME}/dotfiles/bin/git-echo-branch-tmux-current-pane)"\
 "#[fg=white] ( #(${HOME}/dotfiles/bin/git-echo-username-and-email) ) "\
-"#[fg=green][#(${HOME}/dotfiles/bin/sh-echo-current-wifi-network)]"\
+"#[fg=green][#(${HOME}/dotfiles/bin/sh-echo-current-wifi-network)]#[default] "\
 "#[fg=cyan][%Y/%m/%d(%a)%H:%M]#[default]"
+# "#[fg=yellow]#(${HOME}/dotfiles/bin/git-echo-branch-tmux-current-pane)"\
 # set -g status-right '#[fg=white][%Y/%m/%d(%a)%H:%M]#[default]'
 
 # --------------
