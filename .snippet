@@ -29,6 +29,6 @@ docker run -d ubuntu:16.04 tail -f /dev/null                                    
 for i in `seq 1 10`; do echo $i && sleep 1; done                                                                                                            # seq and sleep
 openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -nodes -subj "/C=GO/ST=Golang/L=Golang/O=Golang/OU=IT Department/CN=golang.org"  # create self signed certification
 while true; do { echo -e 'HTTP/1.1 200 OK\r\n'; } | nc -l 8000; done                                                                                        # run dummy http server in 8000
-ssh BASTION_SERVER -L 8080:DB_SERVER:3306 -N # -f (<= backgroud flag)                                                                                       # ssh forwarding (=8080=> local =22=> bastion =3306=> db)                             
+ssh BASTION_SERVER -L 8080:DB_SERVER:3306 -N # -f (<= backgroud flag)                                                                                       # ssh forwarding (=8080=> local =22=> bastion =3306=> db)
 tmux swap-window -t 1                                                                                                                                       # swap window
-
+cat /dev/urandom | tr -dc "[:graph:]" | head -c 12                                                                                                          # make random password
