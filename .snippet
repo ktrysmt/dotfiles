@@ -33,4 +33,5 @@ ssh BASTION_SERVER -L 8080:DB_SERVER:3306 -N # -f (<= backgroud flag)           
 tmux swap-window -t 1                                                                                                                                       # swap window
 cat /dev/urandom | tr -dc "[:alnum:]" | fold -w 12 | head -n 10                                                                                             # make random password
 cat /dev/urandom | tr -dc "[:graph:]" | tr -d "1Il0O~^" | fold -w 12 | head -n 10                                                                           # make random password strongly
+fd -0 | xargs -0 -I % echo %                                                                                                                                # use null separate in xargs
 
