@@ -29,7 +29,8 @@
 
 : "set env" && {
   # general
-  export PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
+  # export PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
+  export PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
   export HIST_STAMPS="yyyy/mm/dd"
   export EDITOR='vim'
   export HISTSIZE=5000000
@@ -160,6 +161,36 @@
   }
   zle -N peco-select-history
   bindkey '^r' peco-select-history
+}
+
+# <not use>
+: "fzf history" && {
+  # fzf-history-widget() {
+  # local selected num
+  # setopt localoptions noglobsubst noposixbuiltins pipefail 2> /dev/null
+  # selected=( $(fc -rl 1 |
+  #   FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m" $(__fzfcmd)) )
+  # local ret=$?
+  # if [ -n "$selected" ]; then
+  #   num=$selected[1]
+  #   if [ -n "$num" ]; then
+  #     zle vi-fetch-history -n $num
+  #   fi
+  # fi
+  # zle redisplay
+  # typeset -f zle-line-init >/dev/null && zle zle-line-init
+  # return $ret
+  # }
+  # zle     -N   fzf-history-widget
+  # bindkey '^R' fzf-history-widget
+}
+
+: "tmux refresh" && {
+  function precmd() {
+    if [ ! -z $TMUX ]; then
+      tmux refresh-client -S
+    fi
+  }
 }
 
 : "Switch ENV by OSTYPE" && {
