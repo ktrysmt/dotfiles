@@ -4,7 +4,7 @@ echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 # general
-brew install peco wget tmux git zsh nkf tree ripgrep reattach-to-user-namespace fd fzf tig fzy exa python2 python3 jq git-secrets mdcat goenv
+brew install peco wget tmux git zsh nkf tree ripgrep reattach-to-user-namespace fd fzf tig fzy exa python2 python3 jq git-secrets goenv
 brew install yarn --without-node
 # k8s
 brew install kubectl kubectx kubernetes-helm caskroom/cask/minikube
