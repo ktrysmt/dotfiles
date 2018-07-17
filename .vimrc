@@ -48,7 +48,8 @@ set matchtime=1
 set wrap
 set wildmode=longest:full,full
 set ignorecase
-set completeopt-=preview
+" set completeopt-=preview
+set completeopt=noinsert,menuone,noselect
 set wildmenu
 set history=5000
 set guifont=Cica:h15
@@ -229,8 +230,8 @@ call plug#begin()
 "" [for All]
 Plug 'Shougo/unite.vim'
 if has('nvim')
-  Plug 'roxma/nvim-completion-manager'
-  Plug 'roxma/python-support.nvim'
+  Plug 'ncm2/ncm2'
+  Plug 'roxma/nvim-yarp'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
   Plug 'Shougo/neocomplete.vim'
@@ -274,7 +275,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'elzr/vim-json'
 " [for HTML/CSS ]
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript'] }
-Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
+" Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
 " [for PHP ]
 Plug 'lvht/phpcd.vim', { 'for': ['php'] }
 " [for Javascript]
@@ -292,7 +293,7 @@ Plug 'othree/html5.vim', { 'for': ['javascript', 'javascript.jsx', 'html'] }
 Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " [for Go]
-Plug 'tpope/vim-pathogen', { 'for': 'go' } " for vim-godebug 
+Plug 'tpope/vim-pathogen', { 'for': 'go' } " for vim-godebug
 Plug 'jodosha/vim-godebug', { 'for': 'go' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'thinca/vim-quickrun'
@@ -413,9 +414,9 @@ let g:lightline = {
   \  'ale': 'ALEStatus'
   \},
 \}
-function! ALEStatus()
-  return ALEGetStatusLine()
-endfunction
+" function! ALEStatus()
+"   return ALEGetStatusLine()
+" endfunction
 
 "" ale
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
@@ -436,7 +437,7 @@ let g:ale_linter_aliases = {'jsx': 'css'}
 let g:ale_go_gometalinter_options = '--vendored-linters --disable-all --enable=gotype --enable=vet --enable=golint -t'
 
 "" ctags
-let g:auto_ctags = 1
+let g:auto_ctags = 0
 set tags+=.git/tags
 let g:auto_ctags_directory_list = ['.git']
 let g:auto_ctags_tags_args = '--tag-relative=yes --recurse --sort=yes --append=no --format=2'
@@ -502,7 +503,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_disable_autoinstall = 0
 let g:go_gocode_unimported_packages = 1
-command! GoDebugStart : "dummy for :GoDebugTest at vim-go  
+command! GoDebugStart : "dummy for :GoDebugTest at vim-go
 
 "" tab control
 function! s:SID_PREFIX()
@@ -615,8 +616,9 @@ map g* <Plug>(incsearch-nohl0)<Plug>(asterisk-gz*)
 map # <Plug>(incsearch-nohl0)<Plug>(asterisk-z#)
 map g# <Plug>(incsearch-nohl0)<Plug>(asterisk-gz#)
 
-"" python support
-let g:python_support_python2_require = 0
+"" ncm2
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
 
 "-------------------------
 "" Set os env
@@ -625,8 +627,6 @@ if has("mac")
 " mac用の設定
 elseif has("unix")
 " unix固有の設定
-  let g:python_host_prog='/usr/bin/python2'
-  let g:python3_host_prog='/usr/bin/python3'
 elseif has("win64")
 " 64bit_windows固有の設定
 elseif has("win32unix")
