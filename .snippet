@@ -31,6 +31,7 @@ openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -node
 while true; do { echo -e 'HTTP/1.1 200 OK\r\n'; } | nc -l 8000; done                                                                                        # run dummy http server in 8000
 ssh BASTION_SERVER -L 8080:DB_SERVER:3306 -N # -f (<= backgroud flag)                                                                                       # ssh forwarding (=8080=> local =22=> bastion =3306=> db)
 tmux swap-window -t 1                                                                                                                                       # swap window
+git branch | colrm 1 2                                                                                                                                      # list branch names
 cat /dev/urandom | tr -dc "[:alnum:]" | fold -w 12 | head -n 10                                                                                             # make random password
 cat /dev/urandom | tr -dc "[:graph:]" | tr -d "1Il0O~^" | fold -w 12 | head -n 10                                                                           # make random password strongly
 fd -0 | xargs -0 -I % echo %                                                                                                                                # use null separate in xargs
