@@ -18,18 +18,20 @@ export PATH="$HOME/.anyenv/bin:$PATH"
 eval "$(anyenv init -)"
 exec $SHELL -l
 # rbenv and ndenv
+mkdir -p $(anyenv root)/plugins
+git clone https://github.com/znz/anyenv-update.git $(anyenv root)/plugins/anyenv-update
 anyenv install ndenv
 anyenv install rbenv
-ndenv install v8.11.1
+anyenv install goenv
+ndenv install v10.6.0
 ndenv rehash
-ndenv global v8.11.1
-# goenv
-export GOENV_ROOT="$HOME/.goenv"
-export PATH="$GOENV_ROOT/bin:$PATH"
-eval "$(goenv init -)"
-goenv install 1.10.1
+ndenv global v10.6.0
+# export GOENV_ROOT="$HOME/.goenv"
+# export PATH="$GOENV_ROOT/bin:$PATH"
+# eval "$(goenv init -)"
+goenv install 1.10.3
 goenv rehash
-goenv global 1.10.1
+goenv global 1.10.3
 # rust
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
