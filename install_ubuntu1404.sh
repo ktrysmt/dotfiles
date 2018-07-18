@@ -1,11 +1,16 @@
 #!/bin/sh
 set -e
+
+echo "-----------------------------------------------------";
+echo "for Vagrant";
+echo "-----------------------------------------------------";
 if [ ! $PASSWORD ] && [ `who am i | awk '{print $1}'` = "vagrant" ]; then \
   PASSWORD="vagrant";
+  sudo chown -R vagrant:vagrant /usr/local;
 fi;
 
 echo "-----------------------------------------------------";
-echo " Set Swapfile";
+echo "Set Swapfile";
 echo "-----------------------------------------------------";
 if [ `free -m | grep Swap | awk '{print $4}'` = 0 ];then \
   sudo dd if=/dev/zero of=/swapfile bs=1024K count=512;
@@ -15,15 +20,15 @@ if [ `free -m | grep Swap | awk '{print $4}'` = 0 ];then \
 fi;
 
 echo "-----------------------------------------------------";
-echo " Update & install libraries";
+echo "Update & install libraries";
 echo "-----------------------------------------------------";
 # update
 sudo apt-get -y update
 
 # common tools
-sudo apt-get -y install curl zsh make gcc dstat wget Xvfb xsel
+sudo apt-get -y install curl zsh make gcc dstat wget xsel #Xvfb
 
-# ruby2.3
+# ruby2.3 (for linuxbrew)
 sudo apt-get -y install software-properties-common
 sudo apt-add-repository ppa:brightbox/ruby-ng
 sudo apt-get -y update
@@ -36,33 +41,38 @@ echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >>~/.profile
 echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' >>~/.profile
 echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' >>~/.profile
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-brew install ripgrep exa fd direnv peco ghq git tig tmux jid
+brew install ripgrep exa fd direnv peco ghq git tig tmux jid python python@2 neovim fzy fzf
+
+# anyenv
+git clone https://github.com/riywo/anyenv ~/.anyenv
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"
+exec $SHELL -l
+# rbenv and ndenv
+mkdir -p $(anyenv root)/plugins
+git clone https://github.com/znz/anyenv-update.git $(anyenv root)/plugins/anyenv-update
+anyenv install ndenv
+anyenv install rbenv
+anyenv install goenv
+ndenv install v10.6.0
+ndenv rehash
+ndenv global v10.6.0
+goenv install 1.10.3
+goenv rehash
+goenv global 1.10.3
 
 # neovim
-sudo apt-get -y install software-properties-common
-sudo apt-get -y install python3.4-venv
-sudo add-apt-repository ppa:neovim-ppa/unstable -y
-sudo apt-get -y update
-sudo apt-get -y install neovim
-sudo apt-get -y install python-dev python-pip python3-dev python3-pip
-
-# fzy
-cd /tmp
-wget https://github.com/jhawthorn/fzy/releases/download/0.9/fzy_0.9-1_amd64.deb
-sudo dpkg -i fzy_0.9-1_amd64.deb
-cd ~/
+sudo ln -sf $(which nvim) /usr/local/bin/vim
 
 # yarn
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt-get -y update && sudo apt-get -y install yarn
+brew install yarn --without-node
 
 # ctags
 sudo apt-get -y install pkg-config autoconf
 cd /tmp/
 git clone --depth 1 https://github.com/universal-ctags/ctags.git
 cd ctags;
-./autogen.sh && ./configure && make && sudo make install;
+./autogen.sh && ./configure && make && make install;
 cd ~/
 
 echo "-----------------------------------------------------";
@@ -71,7 +81,10 @@ echo "-----------------------------------------------------";
 git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 git clone https://github.com/ktrysmt/dotfiles  ~/dotfiles
 mkdir -p ~/.config/peco/
+mkdir ~/.cache
+mkdir ~/.local
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
+ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/.tigrc ~/.tigrc
@@ -81,22 +94,15 @@ ln -s ~/dotfiles/.tern-project ~/.tern-project
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 echo "[credential]
   helper = gnomekeyring" >> ~/.gitconfig
-echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker" | zsh
-echo "wget -O ~/.zgen/zsh-users/zsh-completions-master/src/_docker-compose https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose" | zsh
 cd ~/
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-yes | ~/.fzf/install
 
 echo "-----------------------------------------------------";
-echo "Install Goenv";
+echo "Setup Go"
 echo "-----------------------------------------------------";
-git clone https://github.com/syndbg/goenv.git ~/.goenv
-export GOENV_ROOT="$HOME/.goenv"
-export PATH="$GOENV_ROOT/bin:$PATH"
-goenv install 1.9.2
-goenv global 1.9.2
-goenv rehash
-eval "$(goenv init -)"
+mkdir -p ~/project/bin
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$HOME/go/bin:$HOME/project/bin:$PATH
+export GOPATH=$HOME/go:$HOME/project
 
 echo "-----------------------------------------------------";
 echo "Install Rust";
@@ -106,37 +112,27 @@ curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
 
 echo "-----------------------------------------------------";
-echo "Setup Golang";
+echo "Setup Neovim";
 echo "-----------------------------------------------------";
-mkdir -p ~/project/bin
-export PATH=$HOME/project/bin:$PATH
-export GOPATH=$HOME/project
-
-echo "-----------------------------------------------------";
-echo "Install NodeJS";
-echo "-----------------------------------------------------";
-cd ~/;
-curl -L git.io/nodebrew | perl - setup
-~/.nodebrew/nodebrew install-binary stable
-~/.nodebrew/nodebrew use stable
-
-echo "-----------------------------------------------------";
-echo "Neovim";
-echo "-----------------------------------------------------";
-sudo easy_install3 pip
-sudo easy_install-2.7 pip
-sudo pip2 install neovim
-sudo pip3 install neovim
-sudo ln -sf $(which nvim) /usr/local/bin/vim
-ln -s ~/.vim ~/.config/nvim
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+mkdir -p ~/.config/nvim/
 ln -s ~/.vimrc ~/.config/nvim/init.vim
+pip2 install neovim
+pip3 install neovim
+ln -sf $(which nvim) /usr/local/bin/vim
 
 echo "-----------------------------------------------------";
 echo "Setup Other";
 echo "-----------------------------------------------------";
-curl https://glide.sh/get | sh
-vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +":PythonSupportInitPython2" +":PythonSupportInitPython3" +qa
-npm install -g npm-check-updates
+go get github.com/motemen/ghq
+go get github.com/golang/dep/...
+vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
+yarn global add npm-check-updates neovim
+
+echo "-----------------------------------------------------";
+echo "Rested tasks"
+echo "-----------------------------------------------------";
 echo $PASSWORD | chsh -s /bin/zsh
 zsh
 

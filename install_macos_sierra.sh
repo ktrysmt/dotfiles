@@ -4,7 +4,7 @@ echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 # general
-brew install peco wget tmux git zsh nkf tree ripgrep reattach-to-user-namespace fd fzf tig fzy exa python jq git-secrets goenv
+brew install peco wget tmux git zsh nkf tree ripgrep reattach-to-user-namespace fd fzf tig fzy exa python jq git-secrets
 brew install yarn --without-node
 brew install python@2
 # k8s
@@ -82,10 +82,7 @@ curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 mkdir -p ~/.config/nvim/
 ln -s ~/.vimrc ~/.config/nvim/init.vim
-easy_install-2.7 pip
-easy_install-3.6 pip
 pip2 install neovim
-pip2 install virtualenv
 pip3 install neovim
 ln -sf $(which nvim) /usr/local/bin/vim
 
@@ -95,7 +92,6 @@ echo "-----------------------------------------------------";
 go get github.com/motemen/ghq
 go get github.com/golang/dep/...
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
-vim +":PythonSupportInitPython2" +":PythonSupportInitPython3" +qa
 yarn global add npm-check-updates neovim
 
 echo "-----------------------------------------------------";

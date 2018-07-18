@@ -15,11 +15,16 @@ bind -r L resize-pane -R 10
 # monitor
 bind C-s run "tmux last-pane || tmux last-window || tmux new-window"
 #set-window-option -g monitor-activity on
-bind-key -T copy-mode-vi Enter send -X copy-pipe-and-cancel "cat | xsel -i --clipboard" 
+bind-key -T copy-mode-vi Enter send -X copy-pipe-and-cancel "cat | xsel -i --clipboard"
 bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
 bind 'C' new-window -c "#{pane_current_path}";
 bind '%' split-window -h -c "#{pane_current_path}";
 bind '"' split-window -v -c "#{pane_current_path}";
+# move pane
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
 
 # ---------
 # general
@@ -41,16 +46,25 @@ set-option -g default-terminal "screen-256color"
 set -g status-position top
 set -g status-fg white
 set -g status-bg colour235
-set -g status-left '[#[fg=cyan,bold]#(whoami)#[default]]'
+set -g status-left '[#[fg=cyan,bold]#(whoami)#[default]] '
+set -g status-left-length 30
 set -g status-right-length 120
 set -g status-right-bg colour235
 set -g status-right \
 "#{?client_prefix,#[reverse],}"\
-"#[fg=yellow]#(${HOME}/dotfiles/bin/git-echo-branch-tmux-current-pane)"\
 "#[fg=white] ( #(${HOME}/dotfiles/bin/git-echo-username-and-email) ) "\
-"#[fg=green][#(${HOME}/dotfiles/bin/sh-echo-current-wifi-network)]"\
 "#[fg=cyan][%Y/%m/%d(%a)%H:%M]#[default]"
+# "#[fg=green][#(${HOME}/dotfiles/bin/sh-echo-current-wifi-network)]#[default] "\
+# "#[fg=yellow]#(${HOME}/dotfiles/bin/git-echo-branch-tmux-current-pane)"\
 # set -g status-right '#[fg=white][%Y/%m/%d(%a)%H:%M]#[default]'
+
+# --------------
+# pane-status
+# --------------
+set-option -g pane-border-status bottom
+set-option -g pane-border-format " #[fg=black,bg=blue] #P #[default] #(~/dotfiles/bin/tmux-pane-border '#{pane_current_path}')#[default] "
+set-option -g pane-border-fg colour023
+set-option -g pane-active-border-fg blue
 
 # コピーモードのキーバインドをviライクにする
 setw -g mode-keys vi
@@ -76,6 +90,8 @@ setw -g window-status-current-bg white
 # pane-active-border
 set -g pane-active-border-fg white
 set -g pane-active-border-bg black
+set -g pane-border-fg white
+set -g pane-border-bg black
 
 # --------------
 # mouse
