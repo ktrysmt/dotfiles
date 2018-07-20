@@ -97,6 +97,9 @@ cp ~/dotfiles/.gitconfig ~/.gitconfig
 echo "[credential]
   helper = gnomekeyring" >> ~/.gitconfig
 cd ~/
+if [ `who am i | awk '{print $1}'` = "vagrant" ]; then \
+  ln -s ~/dotfiles/.zshrc.ubuntu1404.vagrant ~/.zshrc.private
+fi;
 
 echo "-----------------------------------------------------";
 echo "Setup Go"
