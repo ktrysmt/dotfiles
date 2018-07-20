@@ -1,5 +1,6 @@
-#!/bin/sh
-set -e
+#!/bin/bash
+set -o pipefail 
+set -vxeu
 
 echo "-----------------------------------------------------";
 echo "for Vagrant";
@@ -26,22 +27,21 @@ echo "-----------------------------------------------------";
 sudo apt-get -y update
 
 # common tools
-sudo apt-get -y install curl zsh make gcc dstat wget xsel Xvfb
+sudo apt-get -y install build-essential zsh make gcc wget xsel Xvfb
 
 # ruby2.3 (for linuxbrew)
 sudo apt-get -y install software-properties-common
-sudo apt-add-repository ppa:brightbox/ruby-ng
+yes | sudo apt-add-repository ppa:brightbox/ruby-ng
 sudo apt-get -y update
 sudo apt-get -y install ruby2.3
 
 # linuxbrew
 yes | sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-sudo apt-get install -y build-essential
 echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >>~/.profile
 echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' >>~/.profile
 echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' >>~/.profile
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-brew install ripgrep exa fd direnv peco ghq git tig tmux jid python python@2 neovim fzy fzf jq
+brew install git python python@2 ripgrep exa fd direnv peco ghq tig tmux neovim fzy fzf jq
 
 # anyenv
 git clone https://github.com/riywo/anyenv ~/.anyenv
