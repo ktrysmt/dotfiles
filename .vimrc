@@ -232,8 +232,8 @@ call plug#begin()
 "" [for All]
 Plug 'Shougo/unite.vim'
 if has('nvim')
-  Plug 'ncm2/ncm2'
-  Plug 'roxma/nvim-yarp'
+  " Plug 'ncm2/ncm2'
+  " Plug 'roxma/nvim-yarp'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
   Plug 'Shougo/neocomplete.vim'
@@ -271,23 +271,21 @@ Plug 'thinca/vim-qfreplace'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'dhruvasagar/vim-table-mode'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elzr/vim-json'
 " [for HTML/CSS ]
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript'] }
-" Plug 'elmcast/elm-vim', { 'for': ['elm'], 'do': 'npm install -g elm' }
 " [for PHP ]
 Plug 'lvht/phpcd.vim', { 'for': ['php'] }
 " [for Javascript]
 if has('nvim')
-  Plug 'roxma/nvim-cm-tern', { 'do': 'npm install', 'for': ['javascript', 'javascript.jsx'] }
-  Plug 'roxma/ncm-flow', { 'for': ['javascript', 'javascript.jsx'] }
+  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+else
+  Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
 end
 Plug 'styled-components/vim-styled-components', { 'for': ['javascript', 'javascript.jsx', 'css'] }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript', 'javascript.jsx', 'css'] }
 Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
@@ -617,10 +615,6 @@ map * <Plug>(incsearch-nohl0)<Plug>(asterisk-z*)
 map g* <Plug>(incsearch-nohl0)<Plug>(asterisk-gz*)
 map # <Plug>(incsearch-nohl0)<Plug>(asterisk-z#)
 map g# <Plug>(incsearch-nohl0)<Plug>(asterisk-gz#)
-
-"" ncm2
-autocmd BufEnter * call ncm2#enable_for_buffer()
-
 
 "-------------------------
 "" Set os env
