@@ -41,7 +41,7 @@ echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >>~/.profile
 echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' >>~/.profile
 echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' >>~/.profile
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-brew install ripgrep exa fd direnv peco ghq git tig tmux jid python python@2 neovim fzy fzf
+brew install ripgrep exa fd direnv peco ghq git tig tmux jid python python@2 neovim fzy fzf jq
 
 # anyenv
 git clone https://github.com/riywo/anyenv ~/.anyenv
