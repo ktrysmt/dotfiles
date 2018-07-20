@@ -54,9 +54,11 @@ git clone https://github.com/znz/anyenv-update.git $(anyenv root)/plugins/anyenv
 anyenv install ndenv
 anyenv install rbenv
 anyenv install goenv
-ndenv install v10.6.0
+eval "$(anyenv init -)"
+exec $SHELL -l
+ndenv install v8.11.3
 ndenv rehash
-ndenv global v10.6.0
+ndenv global v8.11.3
 goenv install 1.10.3
 goenv rehash
 goenv global 1.10.3
