@@ -1,3 +1,7 @@
+#!/bin/bash
+set -o pipefail 
+set -vxeu
+
 echo "-----------------------------------------------------";
 echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
