@@ -26,7 +26,7 @@ echo "-----------------------------------------------------";
 sudo apt-get -y update
 
 # common tools
-sudo apt-get -y install curl zsh make gcc dstat wget xsel #Xvfb
+sudo apt-get -y install curl zsh make gcc dstat wget xsel Xvfb
 
 # ruby2.3 (for linuxbrew)
 sudo apt-get -y install software-properties-common
