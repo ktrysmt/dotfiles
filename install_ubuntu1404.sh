@@ -63,9 +63,6 @@ goenv install 1.10.3
 goenv rehash
 goenv global 1.10.3
 
-# neovim
-sudo ln -sf $(which nvim) /usr/local/bin/vim
-
 # yarn
 brew install yarn --without-node
 
@@ -124,7 +121,8 @@ mkdir -p ~/.config/nvim/
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 pip2 install neovim
 pip3 install neovim
-ln -sf $(which nvim) /usr/local/bin/vim
+sudo ln -sf $(which nvim) /usr/local/bin/vim
+
 
 echo "-----------------------------------------------------";
 echo "Setup Other";
