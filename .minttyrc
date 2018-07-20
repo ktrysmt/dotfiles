@@ -1,5 +1,5 @@
 BoldAsFont=no
-Transparency=low
+Transparency=off
 CursorType=underscore
 CursorBlinks=no
 Font=Ricty Diminished
@@ -12,7 +12,7 @@ CopyAsRTF=no
 Term=xterm-256color
 Scrollbar=none
 
-BackgroundColour=13,25,38
+BackgroundColour=0,0,0
 ForegroundColour=217,230,242
 CursorColour=217,230,242
 Black=0,0,0
