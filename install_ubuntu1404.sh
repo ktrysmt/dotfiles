@@ -29,6 +29,9 @@ sudo apt-get -y update
 # common tools
 sudo apt-get -y install build-essential zsh make gcc wget xsel Xvfb
 
+# clipboard tools
+sudo apt-get -y xorg xvfb firefox dbus-x11 xfonts-100dpi xfonts-75dpi xfonts-cyrillic
+
 # ruby2.3 (for linuxbrew)
 sudo apt-get -y install software-properties-common
 yes | sudo apt-add-repository ppa:brightbox/ruby-ng
