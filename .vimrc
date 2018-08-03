@@ -105,15 +105,15 @@ endfunction
 if has('nvim')
   let g:python_host_prog = s:pick_executable([
         \ '/usr/local/bin/python2',
+        \ '/home/linuxbrew/.linuxbrew/bin/python2',
         \ '/usr/bin/python2',
         \ '/bin/python2',
-        \ '/home/linuxbrew/.linuxbrew/bin/python2',
         \])
   let g:python3_host_prog = s:pick_executable([
         \ '/usr/local/bin/python3',
+        \ '/home/linuxbrew/.linuxbrew/bin/python3',
         \ '/usr/bin/python3',
         \ '/bin/python3',
-        \ '/home/linuxbrew/.linuxbrew/bin/python3',
         \])
 endif
 
@@ -569,7 +569,7 @@ function! IsNERDTreeOpen()
   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 endfunction
 function! SyncNERDTree()
- if strlen(expand('%')) > 0 && &modifiable && IsNERDTreeOpen() && !&diff && !empty(&ft) && &ft != "quickrun"
+ if strlen(expand('%')) > 0 && &modifiable && IsNERDTreeOpen() && !&diff && !empty(&ft) && &ft != "quickrun" && &ft != "qfreplace"
    NERDTreeFind
    wincmd p
  endif
