@@ -55,8 +55,8 @@ set history=5000
 set guifont=Cica:h15
 filetype plugin indent on
 " 不可視文字の表示
-" set list 
-" set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:% 
+" set list
+" set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 " nvim用 terminal shell
 if has('nvim')
   set inccommand=split
@@ -146,6 +146,16 @@ nnoremap <silent> <Leader>vt :vne \| :terminal<CR>
 nnoremap <Leader>n :ALENextWrap<CR>
 map <C-]> :tab <CR>:exec("tjump ".expand("<cword>"))<CR>
 map <leader><C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+" nnoremap <silent> <Leader>csc :<C-u>call <SID>replace_snace_to_camel()<CR>
+function! s:replace_snace_to_camel()
+  let s = substitute(expand("<cword>"), "_\\(.\\)", "\\u\\1", "g")
+  return s
+endfunction
+nnoremap <silent> <Leader>csc <ESC>i<C-r>=replace_snace_to_camel()<CR>
+" nnoremap <silent> csc :'<,'>:s/\%V_\(.\)/\u\1/g<CR>
+" mod_func snake_case_dayo_ne!
+" mod_fff
 
 "" autocmd
 autocmd VimEnter * nested if @% != '' | :NERDTreeFind | wincmd p | endif
