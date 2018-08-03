@@ -54,6 +54,10 @@ set wildmenu
 set history=5000
 set guifont=Cica:h15
 filetype plugin indent on
+" 不可視文字の表示
+" set list 
+" set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:% 
+" nvim用 terminal shell
 if has('nvim')
   set inccommand=split
   tnoremap <silent> <ESC> <C-\><C-n>

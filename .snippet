@@ -6,7 +6,7 @@ du -d 1 -h -I ".git" .                                                          
 curl -I localhost                                                                                                                                           # curl only header
 cat <<EOF > text.txt                                                                                                                                        # redirect heredoc
 tcpdump -nn src host 0.0.0.0 and not port 22 and not port 3306                                                                                              # tcpdump 1
-tcpdump -nn src host 0.0.0.0 and port \( 80 or 443 \)                                                                                                       # tcpdump 2
+tcpdump -nn src port 80 or src port 443                                                                                                                     # tcpdump 2
 dig -x localhost                                                                                                                                            # reverse w/ dig
 rg foo -g '!*.min.js'                                                                                                                                       # exclude w/ rg
 rg foo -g '*.min.js'                                                                                                                                        # include w/ rg
