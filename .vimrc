@@ -147,15 +147,43 @@ nnoremap <Leader>n :ALENextWrap<CR>
 map <C-]> :tab <CR>:exec("tjump ".expand("<cword>"))<CR>
 map <leader><C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
-" nnoremap <silent> <Leader>csc :<C-u>call <SID>replace_snace_to_camel()<CR>
-function! s:replace_snace_to_camel()
-  let s = substitute(expand("<cword>"), "_\\(.\\)", "\\u\\1", "g")
-  return s
+nnoremap <silent> <C-x>sc :<C-u>call <SID>change_case("sc")<CR>
+nnoremap <silent> <C-x>sk :<C-u>call <SID>change_case("sk")<CR>
+nnoremap <silent> <C-x>cs :<C-u>call <SID>change_case("cs")<CR>
+nnoremap <silent> <C-x>ck :<C-u>call <SID>change_case("ck")<CR>
+nnoremap <silent> <C-x>kc :<C-u>call <SID>change_case("kc")<CR>
+nnoremap <silent> <C-x>ks :<C-u>call <SID>change_case("ks")<CR>
+
+" mod_func snakeCaseDayoNe!
+" modFff
+" mod-bbb
+
+function! s:change_case(v1, ...)
+  let t = a:v1
+  let p = getpos(".")
+  if t == "sc"
+    let s = substitute(expand("<cword>"), "_\\(.\\)", "\\u\\1", "g")
+    execute ":normal diw"
+  elseif t == "sk"
+    let s = substitute(expand("<cword>"), "_", "-", "g")
+    execute ":normal diw"
+  elseif t == "cs"
+    let s = substitute(expand("<cword>"), "\\(\\u\\)", "_\\l\\1", "g")
+    execute ":normal diw"
+  elseif t == "ck"
+    let s = substitute(expand("<cword>"), "\\(\\u\\)", "-\\l\\1", "g")
+    execute ":normal diw"
+  elseif t == "kc"
+    let s = substitute(expand("<cWORD>"), "-\\(.\\)", "\\u\\1", "g")
+    execute ":normal diW"
+  elseif t == "ks"
+    let s = substitute(expand("<cWORD>"), "-", "_", "g")
+    execute ":normal diW"
+  endif
+  " echo  t .":". s
+  execute ":normal i" . s
+  call setpos(".", p)
 endfunction
-nnoremap <silent> <Leader>csc <ESC>i<C-r>=replace_snace_to_camel()<CR>
-" nnoremap <silent> csc :'<,'>:s/\%V_\(.\)/\u\1/g<CR>
-" mod_func snake_case_dayo_ne!
-" mod_fff
 
 "" autocmd
 autocmd VimEnter * nested if @% != '' | :NERDTreeFind | wincmd p | endif
@@ -288,6 +316,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elzr/vim-json'
+" Plug 'tpope/vim-abolish'
 " [for HTML/CSS ]
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript'] }
 " [for PHP ]
