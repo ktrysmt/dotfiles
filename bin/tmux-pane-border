@@ -1,21 +1,23 @@
 #!/bin/zsh
 
-git_branch=$(git status | awk 'NR==1 {print $3}')
+if git_branch="$(cd $1 && git status 2>/dev/null | awk 'NR==1 {print $3}')"; then
 
-if g_status=$(cd $1 && git status -s 2>/dev/null); then
+  g_status="$(cd $1 && git status -s 2>/dev/null)";
 
-  if [ $(echo $g_status | grep -c -E '^( M|MM) ') > 0 ]; then
+  if [[ $(echo $g_status | grep -c -E '^( M|MM) ') > 0 ]]; then
     state="#[bg=yellow,fg=black] * #[fg=default]" ;
-  elif [ $(echo $g_status | grep -c -E "^M  ") > 0 ]; then
+  elif [[ $(echo $g_status | grep -c -E "^M  ") > 0 ]]; then
     state="#[bg=colour013,fg=black] + #[default]" ;
-  elif [ $(echo $g_status | grep -c -E "^UU ") > 0 ]; then
+  elif [[ $(echo $g_status | grep -c -E "^UU ") > 0 ]]; then
     state="#[bg=red,fg=black] x #[fg=default]" ;
   else
     state="#[bg=green,fg=black] o #[default]" ;
   fi
 
+
   if [[ $git_branch != "master" ]]; then
     git_info="#[underscore]#[bg=black,fg=colour014] (${git_branch}) #[default]${state}"
+  flag=$git_branch
   else
     git_info="#[underscore]#[bg=black,fg=blue] (master) #[default]${state}"
   fi
