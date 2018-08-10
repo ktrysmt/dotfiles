@@ -1,30 +1,33 @@
 #!/bin/zsh
 
-if git_branch="$(cd $1 && git status 2>/dev/null | awk 'NR==1 {print $3}')"; then
+git_branch="$(cd $1 && git status 2>/dev/null | awk 'NR==1 {print $3}')"
+# flag=0
 
-  g_status="$(cd $1 && git status -s 2>/dev/null)";
+if [ "$git_branch" != "" ]; then
 
-  if [[ $(echo $g_status | grep -c -E '^( M|MM) ') > 0 ]]; then
-    state="#[bg=yellow,fg=black] * #[fg=default]" ;
-  elif [[ $(echo $g_status | grep -c -E "^M  ") > 0 ]]; then
-    state="#[bg=colour013,fg=black] + #[default]" ;
-  elif [[ $(echo $g_status | grep -c -E "^UU ") > 0 ]]; then
+  g_status="$(cd $1 && git status -s 2>/dev/null | sort -r)";
+  if [[ $(echo $g_status | grep -c -E "^UU ") > 0 ]]; then
     state="#[bg=red,fg=black] x #[fg=default]" ;
+  elif [[ $(echo $g_status | grep -c -E '^( M|MM) ') > 0 ]]; then
+    state="#[bg=yellow,fg=black] * #[fg=default]" ;
+  elif [[ $(echo $g_status | grep -c -E "^(M|A)  ") > 0 ]]; then
+    state="#[bg=colour013,fg=black] + #[default]" ;
   else
     state="#[bg=green,fg=black] o #[default]" ;
   fi
 
-
   if [[ $git_branch != "master" ]]; then
     git_info="#[underscore]#[bg=black,fg=colour014] (${git_branch}) #[default]${state}"
-  flag=$git_branch
   else
     git_info="#[underscore]#[bg=black,fg=blue] (master) #[default]${state}"
   fi
+
 else
+  # flag=1
   git_info=""
 fi
 
 directory="#[underscore]#[bg=black,fg=cyan]$1#[default]"
 
 echo "$directory$git_info"
+# echo "<$git_branch>$flag"
