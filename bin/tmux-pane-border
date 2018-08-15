@@ -8,7 +8,7 @@ if [ "$git_branch" != "" ]; then
   g_status="$(cd $1 && git status -s 2>/dev/null | sort -r)";
   if [[ $(echo $g_status | grep -c -E "^UU ") > 0 ]]; then
     state="#[bg=red,fg=black] x #[fg=default]" ;
-  elif [[ $(echo $g_status | grep -c -E '^( M|MM) ') > 0 ]]; then
+  elif [[ $(echo $g_status | grep -c -E '^( M|MM| D) ') > 0 ]]; then
     state="#[bg=yellow,fg=black] * #[fg=default]" ;
   elif [[ $(echo $g_status | grep -c -E "^(M|A)  ") > 0 ]]; then
     state="#[bg=colour013,fg=black] + #[default]" ;
