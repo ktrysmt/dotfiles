@@ -36,4 +36,4 @@ cat /dev/urandom | tr -dc "[:alnum:]" | fold -w 12 | head -n 10                 
 cat /dev/urandom | tr -dc "[:graph:]" | tr -d "1Il0O~^" | fold -w 12 | head -n 10                                                                           # make random password strongly
 fd -0 | xargs -0 -I % echo %                                                                                                                                # use null separate in xargs
 netstat -tanp                                                                                                                                               # show relationship of ip/port and process
-
+gss | sed -e "s/^...\(.*\)$/'\1'/" |xargs rm -f                                                                                                             # delete specific files in git by sed 
