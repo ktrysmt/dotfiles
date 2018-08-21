@@ -54,16 +54,16 @@ set wildmenu
 set history=5000
 set guifont=Cica:h15
 filetype plugin indent on
-" 不可視文字の表示
-" set list
-" set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
+set list " 不可視文字の表示1
+"set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:% " 不可視文字の表示2
+set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:% " 不可視文字の表示2
+autocmd BufWritePre * :%s/\s\+$//ge " 行末の空白を除去
 " nvim用 terminal shell
 if has('nvim')
   set inccommand=split
   tnoremap <silent> <ESC> <C-\><C-n>
   set sh=zsh
 end
-
 "" clipboard
 if has('win32') || has('win64') || has('mac')
   set clipboard=unnamed
