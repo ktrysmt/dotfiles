@@ -56,7 +56,7 @@ set guifont=Cica:h15
 filetype plugin indent on
 set list " 不可視文字の表示1
 "set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:% " 不可視文字の表示2
-set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:% " 不可視文字の表示2
+set listchars=tab:^-,trail:-,extends:»,precedes:«,nbsp:% " 不可視文字の表示2
 autocmd BufWritePre * :%s/\s\+$//ge " 行末の空白を除去
 " nvim用 terminal shell
 if has('nvim')
