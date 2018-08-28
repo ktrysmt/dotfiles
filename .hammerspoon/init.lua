@@ -51,6 +51,8 @@ local function enableAllHotkeys()
    end
 end
 
+-- from karabiner-elements
+
 -- escape
 remapKey({'cmd'}, 30, keyCode('escape'))
 
@@ -102,12 +104,18 @@ end)
 local function handleGlobalEvent(name, event, app)
     if event == hs.application.watcher.activated then
         local bundleId = string.lower(app.frontmostApplication():bundleID())
+        -- hs.alert.show(bundleId)
         if (bundleId:match("iterm2")) then
             keyEventtap:start()
             disableAllHotkeys()
+        elseif (bundleId:match("com.apple.terminal")) then
+            keyEventtap:start()
+            disableAllHotkeys()
+            hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Naked profile'")
         else
             keyEventtap:stop()
             enableAllHotkeys()
+            hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Default profile'")
         end
     end
 end
