@@ -83,11 +83,13 @@
 : "alias of kubect" && {
   alias k="kubectl"
   alias kg="kubectl get"
-  alias ka="kubectl apply -f"
+  alias ka="kubectl apply"
   alias kd="kubectl describe"
   alias krm="kubectl delete"
   alias klo="kubectl logs -f"
   alias kex="kubectl exec -i -t"
+  alias kns="kubens"
+  alias kctx="kubectx"
 }
 
 : "k8s" && {

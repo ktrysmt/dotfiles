@@ -350,6 +350,8 @@ Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
 Plug 'racer-rust/vim-racer', { 'for': ['rust'] }
 " [for Terraform]
 Plug 'hashivim/vim-terraform', { 'for': ['tf', 'terraform'] }
+" [for Dockerfile]
+Plug 'docker/docker', { 'for': ['tf', 'Dockerfile'] }
 call plug#end()
 
 
