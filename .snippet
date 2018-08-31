@@ -38,3 +38,4 @@ fd -0 | xargs -0 -I % echo %                                                    
 netstat -tanp                                                                                                                                               # show relationship of ip/port and process
 gss | sed -e "s/^...\(.*\)$/'\1'/" |xargs rm -f                                                                                                             # delete specific files in git by sed
 curl -k -L -o /usr/local/bin/BINARY http://fqdn/BINARY                                                                                                      # download binary from url by curl
+shasum -a 256 /path/to/file                                                                                                                                 # check sum by sha256
