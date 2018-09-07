@@ -5,6 +5,9 @@
 
     zgen oh-my-zsh
     zgen oh-my-zsh plugins/git
+    # zgen oh-my-zsh plugins/gitfast
+
+    zgen load git/git contrib/completion/git-completion.zsh
 
     #zgen load robbyrussell/oh-my-zsh lib/git
     #zgen load robbyrussell/oh-my-zsh lib/completion

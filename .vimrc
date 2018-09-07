@@ -591,7 +591,7 @@ map <silent> [Tag]p :tabprevious<CR>
 "" NERDTree
 nnoremap <silent> <C-e> :NERDTreeToggle<cr>
 let g:NERDTreeShowHidden=1
-let NERDTreeIgnore = ['node_modules','.git', ".DS_Store"]
+let NERDTreeIgnore = ['node_modules$','\.git$', "\.DS_Store$"]
 let g:NERDTreeChDirMode = 2
 let g:NERDTreeWinSize = 45
 let g:nerdtree_tabs_open_on_console_startup = 1
