@@ -1,14 +1,24 @@
--- reload
+--[[ 
+    References:
+    * http://www.hammerspoon.org/docs/hs.hotkey.html#new
+    * http://www.hammerspoon.org/docs/hs.eventtap.html#new
+    * http://rochefort.hatenablog.com/entry/2017/03/06/070000
+]]
+
+--[[ 
+    Reloading
+]]
 hs.hotkey.bind({"cmd", "alt"}, "R", function()
   hs.reload()
 end)
 hs.alert.show("config reloaded.")
 
--- ## F3を使う方法に変更。->しない。
+--[[ 
+    Switch kana and eisu
+]]
 local kana = false
 local function handleGlobalKeyEvent(e)
   local keyCode = e:getKeyCode()
-  -- hs.alert.show(keyCode)
   local keyUp = (e:getType() == hs.eventtap.event.types.keyUp)
   local result = false
   if keyCode == 104 then
@@ -27,6 +37,9 @@ end
 eventtap = hs.eventtap.new({hs.eventtap.event.types.keyDown, hs.eventtap.event.types.keyUp}, handleGlobalKeyEvent)
 eventtap:start()
 
+--[[
+    Mapping functions
+]]
 local function keyCode(key, modifiers)
    modifiers = modifiers or {}
    return function()
@@ -51,12 +64,10 @@ local function enableAllHotkeys()
    end
 end
 
--- from karabiner-elements
-
--- escape
+--[[
+    Remaps
+]]
 remapKey({'cmd'}, 30, keyCode('escape'))
-
--- move
 remapKey({'cmd'}, 'h', keyCode('up'))
 remapKey({'cmd'}, 39, keyCode('down')) -- colon
 remapKey({'cmd'}, 'j', keyCode('a', {'ctrl'}))
@@ -70,7 +81,9 @@ remapKey({'cmd', 'shift'}, 41, keyCode('E', {'shift','ctrl'})) -- semicolon
 remapKey({'cmd', 'shift'}, 'k', keyCode('left', {'shift'}))
 remapKey({'cmd', 'shift'}, 'l', keyCode('right', {'shift'}))
 
--- vim escape
+--[[
+    Vim escape w/ eisu
+]]
 local VK_ESC = 53
 local VK_LEFT_BRACKET = 30
 local VK_C = 8
@@ -101,6 +114,10 @@ keyEventtap = hs.eventtap.new({
         end
     end
 end)
+
+--[[
+    Main
+]]
 local function handleGlobalEvent(name, event, app)
     if event == hs.application.watcher.activated then
         local bundleId = string.lower(app.frontmostApplication():bundleID())
@@ -114,7 +131,7 @@ local function handleGlobalEvent(name, event, app)
         --     hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Naked profile'")
         elseif (bundleId:match("com.google.chrome")) then
             keyEventtap:stop()
-            remapKey({'option'}, 'D', keyCode('D', {'ctrl'})) -- chrome.v69対策 1 (macOS側は[場所を開く… > ctrl+C]にする)
+            remapKey({'option'}, 'D', keyCode('C', {'ctrl'})) -- chrome.v69対策 1 (macOS側は[場所を開く… > ctrl+C]にする)
             enableAllHotkeys()
         else
             keyEventtap:stop()
