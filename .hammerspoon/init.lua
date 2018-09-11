@@ -106,12 +106,16 @@ local function handleGlobalEvent(name, event, app)
         local bundleId = string.lower(app.frontmostApplication():bundleID())
         -- hs.alert.show(bundleId)
         if (bundleId:match("iterm2")) then
-            keyEventtap:start()
+            keyEventtap:stop()
             disableAllHotkeys()
-        elseif (bundleId:match("com.apple.terminal")) then
-            keyEventtap:start()
-            disableAllHotkeys()
-            hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Naked profile'")
+        -- elseif (bundleId:match("com.apple.terminal")) then
+        --     keyEventtap:start()
+        --     disableAllHotkeys()
+        --     hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Naked profile'")
+        elseif (bundleId:match("com.google.chrome")) then
+            keyEventtap:stop()
+            remapKey({'option'}, 'D', keyCode('C', {'ctrl'})) -- chrome.v69対策(macOS側は[場所を開く… > ctrl+C]にする)
+            enableAllHotkeys()
         else
             keyEventtap:stop()
             enableAllHotkeys()
