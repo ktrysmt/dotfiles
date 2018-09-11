@@ -114,10 +114,11 @@ local function handleGlobalEvent(name, event, app)
         --     hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Naked profile'")
         elseif (bundleId:match("com.google.chrome")) then
             keyEventtap:stop()
-            remapKey({'option'}, 'D', keyCode('C', {'ctrl'})) -- chrome.v69対策(macOS側は[場所を開く… > ctrl+C]にする)
+            remapKey({'option'}, 'D', keyCode('D', {'ctrl'})) -- chrome.v69対策 1 (macOS側は[場所を開く… > ctrl+C]にする)
             enableAllHotkeys()
         else
             keyEventtap:stop()
+            -- remapKey({'option'}, 'D', keyCode('D', {'option'})) -- chrome.v69対策 2
             enableAllHotkeys()
             hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Default profile'")
         end
