@@ -41,3 +41,8 @@ curl -k -L -o /usr/local/bin/BINARY http://fqdn/BINARY                          
 shasum -a 256 /path/to/file                                                                                                                                 # check sum by sha256
 shasum -a 256 blog.md | grep -c "^796d8b936bca76f3f344d105883e45fbfb755af313b66ad7c163ccca7d295a60  blog.md$"                                               # check sum by sha256 w/ grep
 shasum -a 256 blog.md | awk '{print $1}' | grep -c "796d8b936bca76f3f344d105883e45fbfb755af313b66ad7c163ccca7d295a60"                                       # check sum by sha256 w/ awk and grep
+aws iam get-role --role-name dumb-dummy-role --query "Role.RoleId" --output text                                                                            # get IAM Role ID by awscli
+dstat --top-cpu-adv                                                                                                                                         # dstat: spiked cpu w/ PID
+dstat --top-io --top-bio                                                                                                                                    # dstat: spiked cpu, blocking io
+dstat --top-cpu --top-cputime                                                                                                                               # dstat: spiked cpu
+dstat --top-io-adv --top-bio-adv                                                                                                                            # dstat: io, blocking io w/ PID

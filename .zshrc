@@ -149,6 +149,14 @@
   bindkey '^x^r' peco-select-snippet
 }
 
+: "dstat" && {
+  alias dstat-full="dstat -Tclmdrn" # full
+  alias dstat-memory="dstat -Tclm"    # memory
+  alias dstat-cpu="dstat -Tclr"    # cpu
+  alias dstat-network="dstat -Tclnd"   # network
+  alias dstat-diskio="dstat -Tcldr"   # diskI/O
+}
+
 : "peco history" && {
   function peco-select-history() {
       # historyを番号なし、逆順、最初から表示。
