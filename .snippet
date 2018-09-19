@@ -46,3 +46,4 @@ dstat --top-cpu-adv                                                             
 dstat --top-io --top-bio                                                                                                                                    # dstat: spiked cpu, blocking io
 dstat --top-cpu --top-cputime                                                                                                                               # dstat: spiked cpu
 dstat --top-io-adv --top-bio-adv                                                                                                                            # dstat: io, blocking io w/ PID
+echo {roleA,roleB,roleC} | xargs -P 1 -L 1 -n 1 -I % aws iam get-role --role-name % --query "Role.[RoleName,RoleId]" --output text                          # extract AWS RoleId and RoleName by xargs
