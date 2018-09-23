@@ -47,3 +47,8 @@ dstat --top-io --top-bio                                                        
 dstat --top-cpu --top-cputime                                                                                                                               # dstat: spiked cpu
 dstat --top-io-adv --top-bio-adv                                                                                                                            # dstat: io, blocking io w/ PID
 echo {roleA,roleB,roleC} | xargs -P 1 -L 1 -n 1 -I % aws iam get-role --role-name % --query "Role.[RoleName,RoleId]" --output text                          # extract AWS RoleId and RoleName by xargs
+echo 'abcde' | awk '{print substr($0, index($0, "b"))}'                                                                                                     # substr w/ index(str, start, end) by awk
+echo 'abcde' | awk '$0 ~ /b.*/'                                                                                                                             # match shorthand and print by awk
+echo 'abcde' | awk 'match($0, /b.*/) {print RSTART, RLENGTH}'                                                                                               # match w/ ReservedVar of RSTART/RLENGTH by awk
+echo 'abcde' | awk 'match($0, /b.*/) {print substr($0, RSTART, RLENGTH)}'                                                                                   # substr and match w/ ReservedVar of RSTART/RLENGTH by awk
+echo 'abcde' | grep -o 'b.*'                                                                                                                                # extract matched string by grep
