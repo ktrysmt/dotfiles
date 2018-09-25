@@ -68,6 +68,7 @@
 }
 
 : "alias" && {
+  alias history='fc -il 1' # for HIST_STAMPS in oh-my-zsh
   alias gdw="git diff --color-words"
   alias gdww="git diff --word-diff-regex=$'[^\x80-\xbf][\x80-\xbf]*' --word-diff=color"
   alias gh='cd $(ghq list -p | peco)'
