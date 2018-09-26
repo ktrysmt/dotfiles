@@ -52,3 +52,5 @@ echo 'abcde' | awk '$0 ~ /b.*/'                                                 
 echo 'abcde' | awk 'match($0, /b.*/) {print RSTART, RLENGTH}'                                                                                               # match w/ ReservedVar of RSTART/RLENGTH by awk
 echo 'abcde' | awk 'match($0, /b.*/) {print substr($0, RSTART, RLENGTH)}'                                                                                   # substr and match w/ ReservedVar of RSTART/RLENGTH by awk
 echo 'abcde' | grep -o 'b.*'                                                                                                                                # extract matched string by grep
+ccrypt -e filename                                                                                                                                          # 暗号化 by ccrypt
+ccrypt -c -d filename > decripted-file                                                                                                                      # 復号 by ccrypt
