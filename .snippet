@@ -54,3 +54,4 @@ echo 'abcde' | awk 'match($0, /b.*/) {print substr($0, RSTART, RLENGTH)}'       
 echo 'abcde' | grep -o 'b.*'                                                                                                                                # extract matched string by grep
 ccrypt -e filename                                                                                                                                          # 暗号化 by ccrypt
 ccrypt -c -d filename > decripted-file                                                                                                                      # 復号 by ccrypt
+TZ=UTC date '+%Y%m%dT%H%M%SZ'                                                                                                                               # Print date as UTC timestamp
