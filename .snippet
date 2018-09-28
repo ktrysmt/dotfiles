@@ -19,7 +19,7 @@ cat readme.md | awk '!/^$/'                                                     
 [ -f `which yarn` ] && echo hoge                                                                                                                            # if by bash
 if [ "" != `which yarn` ]; then echo 1; elif [ "" != `which npm` ]; then echo 2; else echo 3; fi                                                            # if-else by bash
 tree -d -L 2 -I "node_modules"                                                                                                                              # tree w/ ignoring
-ls | grep template | awk -F '.' '{print "."$2"."$3"."$4}' | xargs -I % -L 1 -P 1 mv "template"% "tmpl"%                                                     # rename
+ls | grep template | awk -F '.' '{print "."$2"."$3"."$4}' | xargs -I % -L 1 mv "template"% "tmpl"%                                                          # rename from 'template' to 'tmpl'
 lt -L 2 -a -I 'node_*|.git|.circleci'                                                                                                                       # ls w/ tree by exa w/ --level and --ignore-glob option
 eval $(aws ecr get-login --no-include-email --region ap-northeast-1)                                                                                        # docker login w/ ecr
 perl -lnae 'print $F[1]' log.txt                                                                                                                            # parse file by default "white space" delimiter
@@ -34,7 +34,7 @@ tmux swap-window -t 1                                                           
 git branch | colrm 1 2                                                                                                                                      # list branch names
 cat /dev/urandom | tr -dc "[:alnum:]" | fold -w 12 | head -n 10                                                                                             # make random password
 cat /dev/urandom | tr -dc "[:graph:]" | tr -d "1Il0O~^" | fold -w 12 | head -n 10                                                                           # make random password strongly
-fd -0 | xargs -0 -I % echo %                                                                                                                                # use null separate in xargs
+fd -0 | xargs -0 -I % echo %                                                                                                                                # use fd and null separate in xargs
 netstat -tanp                                                                                                                                               # show relationship of ip/port and process
 gss | sed -e "s/^...\(.*\)$/'\1'/" |xargs rm -f                                                                                                             # delete specific files in git by sed
 curl -k -L -o /usr/local/bin/BINARY http://fqdn/BINARY                                                                                                      # download binary from url by curl
@@ -46,7 +46,7 @@ dstat --top-cpu-adv                                                             
 dstat --top-io --top-bio                                                                                                                                    # dstat: spiked cpu, blocking io
 dstat --top-cpu --top-cputime                                                                                                                               # dstat: spiked cpu
 dstat --top-io-adv --top-bio-adv                                                                                                                            # dstat: io, blocking io w/ PID
-echo {roleA,roleB,roleC} | xargs -P 1 -L 1 -n 1 -I % aws iam get-role --role-name % --query "Role.[RoleName,RoleId]" --output text                          # extract AWS RoleId and RoleName by xargs
+echo {roleA,roleB,roleC} | xargs -L 1 -I % aws iam get-role --role-name % --query "Role.[RoleName,RoleId]" --output text                                    # extract AWS RoleId and RoleName by xargs
 echo 'abcde' | awk '{print substr($0, index($0, "b"))}'                                                                                                     # substr w/ index(str, start, end) by awk
 echo 'abcde' | awk '$0 ~ /b.*/'                                                                                                                             # match shorthand and print by awk
 echo 'abcde' | awk 'match($0, /b.*/) {print RSTART, RLENGTH}'                                                                                               # match w/ ReservedVar of RSTART/RLENGTH by awk
