@@ -98,8 +98,25 @@
 }
 
 : "k8s" && {
+  # kubectl
   if (which kubectl > /dev/null); then
-    source <(kubectl completion zsh)
+    function kubectl() {
+      if ! type __start_kubectl >/dev/null 2>&1; then
+          source <(command kubectl completion zsh)
+      fi
+
+      command kubectl "$@"
+    }
+  fi
+  # kops
+  if (which kops > /dev/null); then
+    function kops() {
+      if ! type __start_kops >/dev/null 2>&1; then
+          source <(command kops completion zsh)
+      fi
+
+      command kubectl "$@"
+    }
   fi
 }
 
@@ -247,7 +264,7 @@
 
 : "zprof" && {
   if (which zprof > /dev/null) ;then
-    zprof # | less
+    zprof | less
   fi
 }
 

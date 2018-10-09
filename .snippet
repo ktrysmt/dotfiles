@@ -55,4 +55,5 @@ echo 'abcde' | grep -o 'b.*'                                                    
 ccrypt -e filename                                                                                                                                          # 暗号化 by ccrypt
 ccrypt -c -d filename > decripted-file                                                                                                                      # 復号 by ccrypt
 TZ=UTC date '+%Y%m%dT%H%M%SZ'                                                                                                                               # Print date as UTC timestamp
-ffmpeg -i input.mov -r 30 output.gif                                                                                                                              # .mov to .gif in macOS by ffmpeg
+ffmpeg -i input.mov -r 30 output.gif                                                                                                                        # .mov to .gif in macOS by ffmpeg
+sed -e 's/\x0/\n/g' /proc/%PID%/environ                                                                                                                     # visible proc environ
