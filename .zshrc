@@ -98,26 +98,20 @@
 }
 
 : "k8s" && {
-  # kubectl
-  if (which kubectl > /dev/null); then
-    function kubectl() {
-      if ! type __start_kubectl >/dev/null 2>&1; then
-          source <(command kubectl completion zsh)
-      fi
+  local list=("kubectl" "kops" "helm")
+  for k in $list
+  do
+    if (which "$k" > /dev/null); then
+      function "$k"() {
+        local start="__start_${k}"
+        if ! type $start >/dev/null 2>&1; then
+            source <(command "$k" completion zsh)
+        fi
 
-      command kubectl "$@"
-    }
-  fi
-  # kops
-  if (which kops > /dev/null); then
-    function kops() {
-      if ! type __start_kops >/dev/null 2>&1; then
-          source <(command kops completion zsh)
-      fi
-
-      command kubectl "$@"
-    }
-  fi
+        command "$k" "$@"
+      }
+    fi
+  done
 }
 
 : "powered_cd" && {
