@@ -59,3 +59,4 @@ sed -e 's/\x0/\n/g' /proc/%PID%/environ                                         
 tcpdump -nn -l -i eth0 port 53 | tee 53.log                                                                                                     # tcpdump w/ tee using `-l`
 netstat -p udp                                                                                                                                  # [BSD] show udp protocol
 netstat -a -n -u                                                                                                                                # [BSD] show udp and ips as static adress
+lsof -i:<PORT>                                                                                                                                  # show process by pid
