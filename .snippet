@@ -1,59 +1,61 @@
-wget -S                                                                                                                                                     # spider
-/System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -s                                                                                 # macOS WiFi
-echo | nc 8.8.8.8 53                                                                                                                                        # test network by nc
-du -d 1 -h .git/                                                                                                                                            # calc sizes in .git
-du -d 1 -h -I ".git" .                                                                                                                                      # calc sizes current exclude ".git"
-curl -I localhost                                                                                                                                           # curl only header
-cat <<EOF > text.txt                                                                                                                                        # redirect heredoc
-tcpdump -nn src host 0.0.0.0 and not port 22 and not port 3306                                                                                              # tcpdump 1
-tcpdump -nn src port 80 or src port 443                                                                                                                     # tcpdump 2
-dig -x localhost                                                                                                                                            # reverse w/ dig
-rg foo -g '!*.min.js'                                                                                                                                       # exclude w/ rg
-rg foo -g '*.min.js'                                                                                                                                        # include w/ rg
-WAIT=$(( RANDOM %= 30 )) sleep $WAIT && echo "foo"                                                                                                          # jitter
-perl -i -pe 's/foo/bar/' text.txt                                                                                                                           # overwrite replacement by PCRE
-cut -d' ' -f1,3                                                                                                                                             # cut
-history | cut -d " " -f 4-11                                                                                                                                # cut numbers of history
-find . -type f -regextype posix-egrep -regex ".*.(csv|txt)" ! -regex ".*./ruby/2.0/.*"                                                                      # find w/ regex
-cat readme.md | awk '!/^$/'                                                                                                                                 # remove empty lines by awk
-[ -f `which yarn` ] && echo hoge                                                                                                                            # if by bash
-if [ "" != `which yarn` ]; then echo 1; elif [ "" != `which npm` ]; then echo 2; else echo 3; fi                                                            # if-else by bash
-tree -d -L 2 -I "node_modules"                                                                                                                              # tree w/ ignoring
-ls | grep template | awk -F '.' '{print "."$2"."$3"."$4}' | xargs -I % -L 1 mv "template"% "tmpl"%                                                          # rename from 'template' to 'tmpl'
-lt -L 2 -a -I 'node_*|.git|.circleci'                                                                                                                       # ls w/ tree by exa w/ --level and --ignore-glob option
-eval $(aws ecr get-login --no-include-email --region ap-northeast-1)                                                                                        # docker login w/ ecr
-perl -lnae 'print $F[1]' log.txt                                                                                                                            # parse file by default "white space" delimiter
-perl -F, -lnae 'print $F[1]' log.txt                                                                                                                        # parse file by "comma" delimiter
-perl -F/,/ -lane 'print @F[1,2]' data.csv                                                                                                                   # parse csv and print multi columns by "comma" delimiter
-docker run -d ubuntu:16.04 tail -f /dev/null                                                                                                                # run docker w/ ubuntu as deamon
-for i in `seq 1 10`; do echo $i && sleep 1; done                                                                                                            # seq and sleep
-openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -nodes -subj "/C=GO/ST=Golang/L=Golang/O=Golang/OU=IT Department/CN=golang.org"  # create self signed certification
-while true; do { echo -e 'HTTP/1.1 200 OK\r\n'; } | nc -l 8000; done                                                                                        # run dummy http server in 8000
-ssh BASTION_SERVER -L 8080:DB_SERVER:3306 -N # -f (<= backgroud flag)                                                                                       # ssh forwarding (=8080=> local =22=> bastion =3306=> db)
-tmux swap-window -t 1                                                                                                                                       # swap window on tmux
-git branch | colrm 1 2                                                                                                                                      # list branch names
-cat /dev/urandom | tr -dc "[:alnum:]" | fold -w 12 | head -n 10                                                                                             # make random password
-cat /dev/urandom | tr -dc "[:graph:]" | tr -d "1Il0O~^" | fold -w 12 | head -n 10                                                                           # make random password strongly
-fd -0 | xargs -0 -I % echo %                                                                                                                                # use fd and null separate in xargs
-netstat -tanp                                                                                                                                               # show relationship of ip/port and process
-gss | sed -e "s/^...\(.*\)$/'\1'/" |xargs rm -f                                                                                                             # delete specific files in git by sed
-curl -k -L -o /usr/local/bin/BINARY http://fqdn/BINARY                                                                                                      # download binary from url by curl
-shasum -a 256 /path/to/file                                                                                                                                 # check sum by sha256
-shasum -a 256 blog.md | grep -c "^796d8b936bca76f3f344d105883e45fbfb755af313b66ad7c163ccca7d295a60  blog.md$"                                               # check sum by sha256 w/ grep
-shasum -a 256 blog.md | awk '{print $1}' | grep -c "796d8b936bca76f3f344d105883e45fbfb755af313b66ad7c163ccca7d295a60"                                       # check sum by sha256 w/ awk and grep
-aws iam get-role --role-name dumb-dummy-role --query "Role.RoleId" --output text                                                                            # get IAM Role ID by awscli
-dstat --top-cpu-adv                                                                                                                                         # dstat: spiked cpu w/ PID
-dstat --top-io --top-bio                                                                                                                                    # dstat: spiked cpu, blocking io
-dstat --top-cpu --top-cputime                                                                                                                               # dstat: spiked cpu
-dstat --top-io-adv --top-bio-adv                                                                                                                            # dstat: io, blocking io w/ PID
-echo {roleA,roleB,roleC} | xargs -L 1 -I % aws iam get-role --role-name % --query "Role.[RoleName,RoleId]" --output text                                    # extract AWS RoleId and RoleName by xargs
-echo 'abcde' | awk '{print substr($0, index($0, "b"))}'                                                                                                     # substr w/ index(str, start, end) by awk
-echo 'abcde' | awk '$0 ~ /b.*/'                                                                                                                             # match shorthand and print by awk
-echo 'abcde' | awk 'match($0, /b.*/) {print RSTART, RLENGTH}'                                                                                               # match w/ ReservedVar of RSTART/RLENGTH by awk
-echo 'abcde' | awk 'match($0, /b.*/) {print substr($0, RSTART, RLENGTH)}'                                                                                   # substr and match w/ ReservedVar of RSTART/RLENGTH by awk
-echo 'abcde' | grep -o 'b.*'                                                                                                                                # extract matched string by grep
-ccrypt -e filename                                                                                                                                          # 暗号化 by ccrypt
-ccrypt -c -d filename > decripted-file                                                                                                                      # 復号 by ccrypt
-TZ=UTC date '+%Y%m%dT%H%M%SZ'                                                                                                                               # Print date as UTC timestamp
-ffmpeg -i input.mov -r 30 output.gif                                                                                                                        # .mov to .gif in macOS by ffmpeg
-sed -e 's/\x0/\n/g' /proc/%PID%/environ                                                                                                                     # visible proc environ
+wget -S                                                                                                                                         # spider
+/System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -s                                                                     # macOS WiFi
+echo | nc 8.8.8.8 53                                                                                                                            # test network by nc
+du -d 1 -h .git/                                                                                                                                # calc sizes in .git
+du -d 1 -h -I ".git" .                                                                                                                          # calc sizes current exclude ".git"
+curl -I localhost                                                                                                                               # curl only header
+cat <<EOF > text.txt                                                                                                                            # redirect heredoc
+tcpdump -nn src host 0.0.0.0 and not port 22 and not port 3306                                                                                  # tcpdump 1
+tcpdump -nn src port 80 or src port 443                                                                                                         # tcpdump 2
+dig -x localhost                                                                                                                                # reverse w/ dig
+rg foo -g '!*.min.js'                                                                                                                           # exclude w/ rg
+rg foo -g '*.min.js'                                                                                                                            # include w/ rg
+WAIT=$(( RANDOM %= 30 )) sleep $WAIT && echo "foo"                                                                                              # jitter
+perl -i -pe 's/foo/bar/' text.txt                                                                                                               # overwrite replacement by PCRE
+cut -d' ' -f1,3                                                                                                                                 # cut
+history | cut -d " " -f 4-11                                                                                                                    # cut numbers of history
+find . -type f -regextype posix-egrep -regex ".*.(csv|txt)" ! -regex ".*./ruby/2.0/.*"                                                          # find w/ regex
+cat readme.md | awk '!/^$/'                                                                                                                     # remove empty lines by awk
+[ -f `which yarn` ] && echo hoge                                                                                                                # if by bash
+if [ "" != `which yarn` ]; then echo 1; elif [ "" != `which npm` ]; then echo 2; else echo 3; fi                                                # if-else by bash
+tree -d -L 2 -I "node_modules"                                                                                                                  # tree w/ ignoring
+ls | grep template | awk -F '.' '{print "."$2"."$3"."$4}' | xargs -I % -L 1 mv "template"% "tmpl"%                                              # rename from 'template' to 'tmpl'
+lt -L 2 -a -I 'node_*|.git|.circleci'                                                                                                           # ls w/ tree by exa w/ --level and --ignore-glob option
+eval $(aws ecr get-login --no-include-email --region ap-northeast-1)                                                                            # docker login w/ ecr
+perl -lnae 'print $F[1]' log.txt                                                                                                                # parse file by default "white space" delimiter
+perl -F, -lnae 'print $F[1]' log.txt                                                                                                            # parse file by "comma" delimiter
+perl -F/,/ -lane 'print @F[1,2]' data.csv                                                                                                       # parse csv and print multi columns by "comma" delimiter
+docker run -d ubuntu:16.04 tail -f /dev/null                                                                                                    # run docker w/ ubuntu as deamon
+for i in `seq 1 10`; do echo $i && sleep 1; done                                                                                                # seq and sleep
+openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -nodes -subj "/C=GO/ST=AAA/L=AAA/O=AAA/OU=IT Department/CN=AAA.org"  # create self signed certification
+while true; do { echo -e 'HTTP/1.1 200 OK\r\n'; } | nc -l 8000; done                                                                            # run dummy http server in 8000
+ssh BASTION_SERVER -L 8080:DB_SERVER:3306 -N # -f (<= backgroud flag)                                                                           # ssh forwarding (=8080=> local =22=> bastion =3306=> db)
+tmux swap-window -t 1                                                                                                                           # swap window on tmux
+git branch | colrm 1 2                                                                                                                          # list branch names
+cat /dev/urandom | tr -dc "[:alnum:]" | fold -w 12 | head -n 10                                                                                 # make random password
+cat /dev/urandom | tr -dc "[:graph:]" | tr -d "1Il0O~^" | fold -w 12 | head -n 10                                                               # make random password strongly
+fd -0 | xargs -0 -I % echo %                                                                                                                    # use fd and null separate in xargs
+netstat -antp                                                                                                                                   # [GNU] show relationship of ip/port and process
+gss | sed -e "s/^...\(.*\)$/'\1'/" |xargs rm -f                                                                                                 # delete specific files in git by sed
+curl -k -L -o /usr/local/bin/BINARY http://fqdn/BINARY                                                                                          # download binary from url by curl
+shasum -a 256 /path/to/file                                                                                                                     # check sum by sha256
+shasum -a 256 /path/to/file | cut -d" " -f1 | grep -c -E "^796d8b936bca76f3f344d105883e45fbfb755af313b66ad7c163ccca7d295a60$"                   # check sum by sha256 w/ cut and grep
+aws iam get-role --role-name dumb-dummy-role --query "Role.RoleId" --output text                                                                # get IAM Role ID by awscli
+dstat --top-cpu-adv                                                                                                                             # dstat: spiked cpu w/ PID
+dstat --top-io --top-bio                                                                                                                        # dstat: spiked cpu, blocking io
+dstat --top-cpu --top-cputime                                                                                                                   # dstat: spiked cpu
+dstat --top-io-adv --top-bio-adv                                                                                                                # dstat: io, blocking io w/ PID
+echo {roleA,roleB,roleC} | xargs -L 1 -I % aws iam get-role --role-name % --query "Role.[RoleName,RoleId]" --output text                        # extract AWS RoleId and RoleName by xargs
+echo 'abcde' | awk '{print substr($0, index($0, "b"))}'                                                                                         # substr w/ index(str, start, end) by awk
+echo 'abcde' | awk '$0 ~ /b.*/'                                                                                                                 # match shorthand and print by awk
+echo 'abcde' | awk 'match($0, /b.*/) {print RSTART, RLENGTH}'                                                                                   # match w/ ReservedVar of RSTART/RLENGTH by awk
+echo 'abcde' | awk 'match($0, /b.*/) {print substr($0, RSTART, RLENGTH)}'                                                                       # substr and match w/ ReservedVar of RSTART/RLENGTH by awk
+echo 'abcde' | grep -o 'b.*'                                                                                                                    # extract matched string by grep
+ccrypt -e filename                                                                                                                              # 暗号化 by ccrypt
+ccrypt -c -d filename > decripted-file                                                                                                          # 復号 by ccrypt
+TZ=UTC date '+%Y%m%dT%H%M%SZ'                                                                                                                   # Print date as UTC timestamp
+ffmpeg -i input.mov -r 30 output.gif                                                                                                            # .mov to .gif in macOS by ffmpeg
+sed -e 's/\x0/\n/g' /proc/%PID%/environ                                                                                                         # visible proc environ
+tcpdump -nn -l -i eth0 port 53 | tee 53.log                                                                                                     # tcpdump w/ tee using `-l`
+netstat -p udp                                                                                                                                  # [BSD] show udp protocol
+netstat -a -n -u                                                                                                                                # [BSD] show udp and ips as static adress
