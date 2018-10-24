@@ -196,7 +196,7 @@ augroup highlightIdegraphicSpace
 augroup END
 augroup FiletypeGroup
   autocmd!
-  au BufNewFile,BufRead *.yml.j2,*.yaml.j2 set ft=yaml
+  au BufNewFile,BufRead *.yml.j2,*.yaml.j2 set ft=ansible " ft=yaml / instead of vim-ansible-yaml
   au BufNewFile,BufRead *.conf,*.conf.j2 set ft=conf
   au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 augroup END
@@ -316,6 +316,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elzr/vim-json'
+" Plug 'lepture/vim-jinja'
 " Plug 'tpope/vim-abolish'
 " [for HTML/CSS ]
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript'] }
@@ -352,6 +353,8 @@ Plug 'racer-rust/vim-racer', { 'for': ['rust'] }
 Plug 'hashivim/vim-terraform', { 'for': ['tf', 'terraform'] }
 " [for Dockerfile]
 Plug 'docker/docker', { 'for': ['tf', 'Dockerfile'] }
+" [for ansible, j2]
+Plug 'chase/vim-ansible-yaml', { 'for': ['ansible','jinja','yaml'] }
 call plug#end()
 
 
@@ -444,7 +447,7 @@ end
 set laststatus=2
 set t_Co=256
 if !has('gui_running')
-set t_Co=256
+  set t_Co=256
 endif
 let g:lightline = {
   \'colorscheme': 'wombat',
