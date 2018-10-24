@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# k8s
+local kubectx
+if (which kubectl > /dev/null); then
+  kubectx=$(kubectl config current-context 2>/dev/null)
+fi
+
+echo "${kubectx}"

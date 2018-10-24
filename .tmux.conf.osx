@@ -52,7 +52,12 @@ set -g status-right-length 120
 set -g status-right-bg colour235
 set -g status-right \
 "#{?client_prefix,#[reverse],}"\
-"#[fg=white] ( #(${HOME}/dotfiles/bin/git-echo-username-and-email) ) "\
+"#[fg=red]["\
+"#[fg=red]#(${HOME}/dotfiles/bin/echo-kubens)"\
+"#[fg=red] | "\
+"#[fg=red]#(${HOME}/dotfiles/bin/echo-kubectx)"\
+"#[fg=red]]"\
+"#[fg=white] [#(${HOME}/dotfiles/bin/git-echo-username-and-email)] "\
 "#[fg=green][#(${HOME}/dotfiles/bin/sh-echo-current-wifi-network)]#[default] "\
 "#[fg=cyan][%Y/%m/%d(%a)%H:%M]#[default]"
 # "#[fg=yellow]#(${HOME}/dotfiles/bin/git-echo-branch-tmux-current-pane)"\
