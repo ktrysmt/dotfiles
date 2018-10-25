@@ -4,7 +4,7 @@
 local kubens
 if (which kubectl > /dev/null); then
   kubens=$(k config view --minify --output 'jsonpath={..namespace}' 2>/dev/null)
-  kubens=${kubens:-none}
+  kubens=${kubens:-<none>}
 fi
 
 echo "${kubens}"
