@@ -497,6 +497,8 @@ vmap <silent> <C-a> <Esc>:TagbarToggle<CR>
 omap <silent> <C-a>      :TagbarToggle<CR>
 imap <silent> <C-a> <Esc>:TagbarToggle<CR>
 cmap <silent> <C-a> <C-u>:TagbarToggle<CR>
+let g:tagbar_show_linenumbers = 1
+let g:tagbar_autopreview = 1
 
 "" neosnippet
 imap <C-s>     <Plug>(neosnippet_expand_or_jump)
