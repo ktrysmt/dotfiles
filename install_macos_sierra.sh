@@ -17,7 +17,7 @@ brew install kubectl kubectx kubernetes-helm caskroom/cask/minikube
 # neovim
 brew install neovim/neovim/neovim
 brew tap universal-ctags/universal-ctags
-brew install --HEAD universal-ctags
+brew install --HEAD universal-ctags --with-libyaml
 # anyenv
 git clone https://github.com/riywo/anyenv ~/.anyenv
 export PATH="$HOME/.anyenv/bin:$PATH"
