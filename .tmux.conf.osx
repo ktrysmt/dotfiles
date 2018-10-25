@@ -67,7 +67,7 @@ set -g status-right \
 # pane-status
 # --------------
 set-option -g pane-border-status bottom
-set-option -g pane-border-format " #[fg=black,bg=white] #P #[default] #(~/dotfiles/bin/tmux-pane-border '#{pane_current_path}')#[default] "
+set-option -g pane-border-format "#[bg=black] #[fg=black,bg=white] #P #[bg=black] #(~/dotfiles/bin/tmux-pane-border '#{pane_current_path}')#[bg=black] #[default]"
 set-option -g pane-border-fg colour023
 set-option -g pane-active-border-fg blue
 
