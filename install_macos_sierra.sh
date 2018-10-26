@@ -53,6 +53,7 @@ mkdir -p ~/.config/peco/
 mkdir -p ~/.hammerspoon/
 mkdir ~/.cache
 mkdir ~/.local
+mkdir ~/.ctags.d
 ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
@@ -62,6 +63,7 @@ ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
 ln -s ~/dotfiles/.tern-project ~/.tern-project
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
 ln -s ~/dotfiles/.hammerspoon/init.lua ~/.hammerspoon/init.lua
+ln -s ~/dotfiles/.ctags ~/.ctags.d/config.ctags
 cp ~/dotfiles/.switch-proxy.osx ~/.switch-proxy
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 wget -O ~/Library/Fonts/RictyDiminished-Regular.ttf https://github.com/edihbrandon/RictyDiminished/raw/master/RictyDiminished-Regular.ttf
@@ -104,7 +106,7 @@ echo "Extra applications by brew cask";
 echo "-----------------------------------------------------";
 export HOMEBREW_CASK_OPTS="--appdir=/Applications";
 brew tap caskroom/cask
-brew cask install toggl appcleaner google-japanese-ime iterm2 shiftit hyperswitch clipy docker qblocker hammerspoon visual-studio-code google-chrome google-chrome-canary
+brew cask install appcleaner google-japanese-ime iterm2 shiftit hyperswitch clipy docker qblocker hammerspoon visual-studio-code google-chrome google-chrome-canary
 brew cask install virtualbox
 brew cask install vagrant
 brew cask cleanup

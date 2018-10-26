@@ -316,6 +316,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elzr/vim-json'
+Plug 'ktrysmt/unite-outline'
 " Plug 'lepture/vim-jinja'
 " Plug 'tpope/vim-abolish'
 " [for HTML/CSS ]
@@ -486,7 +487,9 @@ let g:ale_go_gometalinter_options = '--vendored-linters --disable-all --enable=g
 
 "" ctags
 let g:auto_ctags = 0
+" set tags=.git/tags
 set tags+=.git/tags
+" set tags+=./tags,tags;$HOME
 let g:auto_ctags_directory_list = ['.git']
 let g:auto_ctags_tags_args = '--tag-relative=yes --recurse --sort=yes --append=no --format=2'
 
@@ -497,8 +500,27 @@ vmap <silent> <C-a> <Esc>:TagbarToggle<CR>
 omap <silent> <C-a>      :TagbarToggle<CR>
 imap <silent> <C-a> <Esc>:TagbarToggle<CR>
 cmap <silent> <C-a> <C-u>:TagbarToggle<CR>
-let g:tagbar_show_linenumbers = 1
-let g:tagbar_autopreview = 1
+let g:tagbar_autofocus = 1
+let g:tagbar_type_yaml = {
+    \ 'ctagstype' : 'Yaml',
+    \ 'kinds'     : [
+        \ 'h:headers:0:1',
+    \ ],
+    \ 'sort'    : 0,
+\ }
+let g:tagbar_type_markdown = {
+    \ 'ctagstype' : 'Markdown',
+    \ 'kinds'     : [
+        \ 'c:chapsters:0:1',
+        \ 's:sections',
+        \ 'S:subsections',
+        \ 't:subsubsections',
+        \ 'T:level 4 subsections:0:1',
+        \ 'u:level 5 subsections:0:1',
+        \ 'r:regex:1:0',
+    \ ],
+    \ 'sort'    : 0,
+\ }
 
 "" neosnippet
 imap <C-s>     <Plug>(neosnippet_expand_or_jump)
