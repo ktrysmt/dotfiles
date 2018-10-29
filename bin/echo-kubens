@@ -3,7 +3,7 @@
 # k8s
 local kubens
 if (which kubectl > /dev/null); then
-  kubens=$(k config view --minify --output 'jsonpath={.contexts..context..namespace}' 2>/dev/null)
+  kubens=$(kubectl config view --minify --output 'jsonpath={.contexts..context..namespace}' 2>/dev/null)
   kubens=${kubens:-<none>}
 fi
 
