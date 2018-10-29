@@ -196,7 +196,7 @@ augroup highlightIdegraphicSpace
 augroup END
 augroup FiletypeGroup
   autocmd!
-  au BufNewFile,BufRead *.yml.j2,*.yaml.j2 set ft=ansible " ft=yaml / instead of vim-ansible-yaml
+  au BufNewFile,BufRead *.yml.j2,*.yaml.j2 set ft=yaml " or, set ft=ansible by vim-ansible-yaml
   au BufNewFile,BufRead *.conf,*.conf.j2 set ft=conf
   au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 augroup END
@@ -355,7 +355,7 @@ Plug 'hashivim/vim-terraform', { 'for': ['tf', 'terraform'] }
 " [for Dockerfile]
 Plug 'docker/docker', { 'for': ['tf', 'Dockerfile'] }
 " [for ansible, j2]
-Plug 'chase/vim-ansible-yaml', { 'for': ['ansible','jinja','yaml'] }
+" Plug 'chase/vim-ansible-yaml', { 'for': ['ansible','jinja','yaml'] }
 call plug#end()
 
 
