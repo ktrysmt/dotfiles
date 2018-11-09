@@ -2,6 +2,6 @@
 --langmap=Yaml:+.yaml.j2
 --langmap=Yaml:+.yml
 --langmap=Yaml:+.yml.j2
---regex-Yaml=/^([^ ].*)/\1/h,headers/
---regex-Yaml=/^  ([^ \-].*)/: \1/h,headers/
+--regex-Yaml=/^([^# ].*)/\1/h,headers/
+--regex-Yaml=/^  ([^# \-].*)/: \1/h,headers/
 

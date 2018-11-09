@@ -60,5 +60,6 @@ tcpdump -nn -l -i eth0 port 53 | tee 53.log                                     
 netstat -p udp                                                                                                                                  # [BSD] show udp protocol
 netstat -a -n -u                                                                                                                                # [BSD] show udp and ips as static adress
 lsof -i:<PORT>                                                                                                                                  # show process by pid
-curl ifconfig.io                                                                                                                                # check my ip (1)
+curl -s http://inet-ip.info                                                                                                                     # check my ip (1)
 curl checkip.amazonaws.com                                                                                                                      # check my ip (2)
+ip -r a                                                                                                                                         # ip a (Linux only)
