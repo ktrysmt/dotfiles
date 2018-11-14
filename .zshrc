@@ -82,7 +82,8 @@
   alias lt="exa -lhT"
   alias nswitch="source ~/.switch-proxy"
   alias tsync="tmux set-window-option synchronize-panes"
-  alias batd="bat --language diff"
+  alias batd="bat -l diff"
+  alias bats="bat -l sh"
 }
 
 : "alias of kubect" && {
