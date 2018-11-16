@@ -59,7 +59,7 @@ set -g status-right \
 "#[fg=red]]"\
 "#[fg=white] [#(${HOME}/dotfiles/bin/git-echo-username-and-email)] "\
 "#[fg=green][#(${HOME}/dotfiles/bin/sh-echo-current-wifi-network)]#[default] "\
-"#[fg=cyan][%Y/%m/%d(%a)%H:%M]#[default]"
+"#[fg=cyan][%Y/%m/%d (%a) %H:%M]#[default]"
 # "#[fg=yellow]#(${HOME}/dotfiles/bin/git-echo-branch-tmux-current-pane)"\
 # set -g status-right '#[fg=white][%Y/%m/%d(%a)%H:%M]#[default]'
 
