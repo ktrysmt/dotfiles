@@ -154,7 +154,14 @@
       tac="tail -r"
     fi
     if [ $# = 0 ]; then
-      cd $(eval $tac ~/.powered_cd.log | fzf)
+      local dir=$(eval $tac ~/.powered_cd.log | fzf)
+      if [ -d "$dir" ]; then
+        cd "$dir"
+      else
+        local res=$(grep -v -E "^${dir}" ~/.powered_cd.log)
+        echo $res > ~/.powered_cd.log
+        echo "powerd_cd: deleted old path: ${dir}"
+      fi
     elif [ $# = 1 ]; then
       cd $1
     else
