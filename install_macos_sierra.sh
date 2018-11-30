@@ -9,7 +9,7 @@ echo "-----------------------------------------------------";
 brew update
 # general
 # brew install git
-brew install peco wget tmux zsh nkf tree ripgrep reattach-to-user-namespace fd fzf tig fzy exa python jq git-secrets bat
+brew install peco wget tmux zsh nkf tree ripgrep reattach-to-user-namespace fd fzf tig fzy exa python jq git-secrets bat watch
 brew install yarn --without-node
 brew install python@2
 # k8s
