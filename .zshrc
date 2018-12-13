@@ -90,7 +90,7 @@
   alias k="kubectl"
   alias kg="kubectl get"
   alias kgp="kubectl get pods"
-  alias ka="kubectl apply"
+  alias ka="kubectl apply -f"
   alias kd="kubectl describe"
   alias krm="kubectl delete"
   alias klo="kubectl logs -f"
