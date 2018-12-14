@@ -156,7 +156,9 @@
     fi
     if [ $# = 0 ]; then
       local dir=$(eval $tac ~/.powered_cd.log | fzf)
-      if [ -d "$dir" ]; then
+      if [ "$dir" = "" ]; then
+        return 1
+      elif [ -d "$dir" ]; then
         cd "$dir"
       else
         local res=$(grep -v -E "^${dir}" ~/.powered_cd.log)
