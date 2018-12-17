@@ -271,12 +271,11 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 call plug#begin()
-"" [for All]
+"" [general]
 Plug 'Shougo/unite.vim'
 if has('nvim')
-  " Plug 'ncm2/ncm2'
-  " Plug 'roxma/nvim-yarp'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 else
   Plug 'Shougo/neocomplete.vim'
 end
@@ -317,13 +316,17 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elzr/vim-json'
 Plug 'ktrysmt/unite-outline'
-" Plug 'lepture/vim-jinja'
-" Plug 'tpope/vim-abolish'
-" [for HTML/CSS ]
+" [lsp]
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'natebosch/vim-lsc'
+" [html/css]
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript'] }
-" [for PHP ]
+" [php]
 Plug 'lvht/phpcd.vim', { 'for': ['php'] }
-" [for Javascript]
+" [js]
 if has('nvim')
   Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 else
@@ -337,7 +340,7 @@ Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/html5.vim', { 'for': ['javascript', 'javascript.jsx', 'html'] }
 Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
-" [for Go]
+" [go]
 Plug 'tpope/vim-pathogen', { 'for': 'go' } " for vim-godebug
 Plug 'jodosha/vim-godebug', { 'for': 'go' }
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -346,15 +349,15 @@ if has('nvim')
   Plug 'nsf/gocode', { 'for': 'go', 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
   Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make'}
 end
-" [for Rust]
+" [rust]
 Plug 'scrooloose/syntastic', { 'for': ['rust'] }
 Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
 Plug 'racer-rust/vim-racer', { 'for': ['rust'] }
-" [for Terraform]
+" [terraform]
 Plug 'hashivim/vim-terraform', { 'for': ['tf', 'terraform'] }
-" [for Dockerfile]
+" [dockerfile]
 Plug 'docker/docker', { 'for': ['tf', 'Dockerfile'] }
-" [for ansible, j2]
+" [ansible]
 " Plug 'chase/vim-ansible-yaml', { 'for': ['ansible','jinja','yaml'] }
 call plug#end()
 
@@ -373,6 +376,20 @@ colorscheme hybrid_material
 "" unite settings
 let g:unite_enable_split_vertically = 1
 nnoremap <silent> <C-p> :Unite -create -buffer-name=yankround yankround<Return>
+
+"" lsp
+let g:lsp_async_completion = 1
+if executable('golsp')
+  augroup LspGo
+    au!
+    autocmd User lsp_setup call lsp#register_server({
+        \ 'name': 'go-lang',
+        \ 'cmd': {server_info->['golsp', '-mode', 'stdio']},
+        \ 'whitelist': ['go'],
+        \ })
+    autocmd FileType go setlocal omnifunc=lsp#complete
+  augroup END
+endif
 
 "" fzf.vim
 if has('nvim')

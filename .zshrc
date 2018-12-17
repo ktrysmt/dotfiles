@@ -5,17 +5,8 @@
 
     zgen oh-my-zsh
     zgen oh-my-zsh plugins/git
-    # zgen oh-my-zsh plugins/gitfast
 
-    # zgen load git/git contrib/completion/git-completion.zsh
-
-    #zgen load robbyrussell/oh-my-zsh lib/git
-    #zgen load robbyrussell/oh-my-zsh lib/completion
-    #zgen load robbyrussell/oh-my-zsh lib/compfix
-    #zgen load robbyrussell/oh-my-zsh lib/directories
-    #zgen load robbyrussell/oh-my-zsh lib/history
-    #zgen load robbyrussell/oh-my-zsh lib/theme-and-appearance
-    #zgen load zsh-users/zsh-history-substring-search
+    #zgen oh-my-zsh plugins/gitfast
 
     zgen load aws/aws-cli bin/aws_zsh_completer.sh
     zgen load zsh-users/zsh-syntax-highlighting
@@ -24,7 +15,16 @@
     zgen load lukechilds/zsh-better-npm-completion
     zgen load docker/cli contrib/completion/zsh/_docker
     zgen load docker/compose contrib/completion/zsh/_docker-compose
-    # zgen load zchee/zsh-completions src/go/go-zsh-completions.plugin.zsh
+
+    #zgen load git/git contrib/completion/git-completion.zsh
+    #zgen load robbyrussell/oh-my-zsh lib/git
+    #zgen load robbyrussell/oh-my-zsh lib/completion
+    #zgen load robbyrussell/oh-my-zsh lib/compfix
+    #zgen load robbyrussell/oh-my-zsh lib/directories
+    #zgen load robbyrussell/oh-my-zsh lib/history
+    #zgen load robbyrussell/oh-my-zsh lib/theme-and-appearance
+    #zgen load zsh-users/zsh-history-substring-search
+    #zgen load zchee/zsh-completions src/go/go-zsh-completions.plugin.zsh
 
     zgen save
   fi
