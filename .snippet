@@ -66,3 +66,7 @@ curl checkip.amazonaws.com                                                      
 ip -r a                                                                                                                                         # ip a (Linux only)
 echo $PATH | /usr/bin/sed 's/:/\'$'\n/g'                                                                                                        # print path
 patch -p0 < diff.patch                                                                                                                          # apply patch at same dir
+netstat -l                                                                                                                                      # port check 1 / リッスンポートを一覧表示する
+ss -lntu                                                                                                                                        # port check 2 / リッスンポートを一覧表示する
+sudo nmap -n -PN -sT -sU -p- localhost                                                                                                          # port check 3 / リッスンポートを一覧表示する
+sudo lsof -i                                                                                                                                    # port check 4 / 使われているネットワークファルを一覧表示
