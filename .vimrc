@@ -48,23 +48,20 @@ set matchtime=1
 set wrap
 set wildmode=longest:full,full
 set ignorecase
-" set completeopt-=preview
 set completeopt=noinsert,menuone,noselect
 set wildmenu
 set history=5000
 set guifont=Cica:h15
 filetype plugin indent on
-set list " 不可視文字の表示1
-"set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:% " 不可視文字の表示2
-set listchars=tab:^-,trail:-,extends:»,precedes:«,nbsp:% " 不可視文字の表示2
-autocmd BufWritePre * :%s/\s\+$//ge " 行末の空白を除去
-" nvim用 terminal shell
+set list
+set listchars=tab:^-,trail:-,extends:»,precedes:«,nbsp:%
 if has('nvim')
   set inccommand=split
   tnoremap <silent> <ESC> <C-\><C-n>
   set sh=zsh
 end
-"" clipboard
+
+"" Clipboard
 if has('win32') || has('win64') || has('mac')
   set clipboard=unnamed
 else
@@ -154,10 +151,7 @@ nnoremap <silent> <C-x>ck :<C-u>call <SID>change_case("ck")<CR>
 nnoremap <silent> <C-x>kc :<C-u>call <SID>change_case("kc")<CR>
 nnoremap <silent> <C-x>ks :<C-u>call <SID>change_case("ks")<CR>
 
-" mod_func snakeCaseDayoNe!
-" modFff
-" mod-bbb
-
+"" change case (snake,camel,kebab)
 function! s:change_case(v1, ...)
   let t = a:v1
   let p = getpos(".")
@@ -180,12 +174,12 @@ function! s:change_case(v1, ...)
     let s = substitute(expand("<cWORD>"), "-", "_", "g")
     execute ":normal diW"
   endif
-  " echo  t .":". s
   execute ":normal i" . s
   call setpos(".", p)
 endfunction
 
 "" autocmd
+autocmd BufWritePre * :%s/\s\+$//ge
 autocmd VimEnter * nested if @% != '' | :NERDTreeFind | wincmd p | endif
 autocmd InsertLeave * set nopaste
 autocmd QuickFixCmdPost *grep* cwindow
@@ -260,7 +254,6 @@ let g:terminal_color_background="#1b2b34" "background
 let g:terminal_color_foreground="#c1c6cf" "foreground
 
 
-
 "---------------------------
 "" Vim-Plug
 "---------------------------
@@ -315,7 +308,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elzr/vim-json'
-Plug 'ktrysmt/unite-outline'
 " [lsp]
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
