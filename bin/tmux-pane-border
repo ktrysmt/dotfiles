@@ -10,7 +10,7 @@ if [ "$git_branch" != "" ]; then
     state="#[bg=red,fg=black] x #[fg=default]" ;
   elif [[ $(echo $g_status | grep -c -E '^( M|AM|MM|AD| D|\?\?) ') > 0 ]]; then
     state="#[bg=yellow,fg=black] * #[fg=default]" ;
-  elif [[ $(echo $g_status | grep -c -E "^(M|A|D)  ") > 0 ]]; then
+  elif [[ $(echo $g_status | grep -c -E "^(M|A|D|R)  ") > 0 ]]; then
     state="#[bg=colour013,fg=black] + #[default]" ;
   else
     state="#[bg=green,fg=black] o #[default]" ;
