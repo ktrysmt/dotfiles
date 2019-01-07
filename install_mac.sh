@@ -114,6 +114,8 @@ brew cask cleanup
 
 #brew cask install flux alfred itsycal keybase
 
+#or use 'https://s3.amazonaws.com/LACRM_blog/createGcApp.dmg'
+
 echo "-----------------------------------------------------";
 echo "Rested tasks"
 echo "-----------------------------------------------------";
