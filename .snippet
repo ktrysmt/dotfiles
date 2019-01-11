@@ -70,3 +70,7 @@ netstat -l                                                                      
 ss -lntu                                                                                                                                        # port check 2 / リッスンポートを一覧表示する
 sudo nmap -n -PN -sT -sU -p- localhost                                                                                                          # port check 3 / リッスンポートを一覧表示する
 sudo lsof -i                                                                                                                                    # port check 4 / 使われているネットワークファルを一覧表示
+tar zcvf backup.tar.gz filepath1 filepath2                                                                                                      # tar compress gzip
+tar zxvf backup.tar.gz                                                                                                                          # tar decompress gzip
+tar jcf backup.tar.bz2 filepath1 filepath2                                                                                                      # tar compress bzip2
+tar jxf backup.tar.bz2                                                                                                                          # tar decompress bzip2
