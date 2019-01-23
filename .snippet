@@ -75,3 +75,5 @@ tar zxvf backup.tar.gz                                                          
 tar jcf backup.tar.bz2 filepath1 filepath2                                                                                                      # tar compress bzip2
 tar jxf backup.tar.bz2                                                                                                                          # tar decompress bzip2
 openssl s_client -connect www.example.com:443 -tlsextdebug                                                                                      # debug openssl
+openssl rand 107324 > test.txt                                                                                                                  # fill the file by random binaries (openssl / pseudo random)
+dd if=/dev/urandom of=test.bin bs=1m count=1                                                                                                    # fill the file by random binaries (dd / real random)
