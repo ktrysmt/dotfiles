@@ -23,15 +23,15 @@ git clone https://github.com/riywo/anyenv ~/.anyenv
 export PATH="$HOME/.anyenv/bin:$PATH"
 eval "$(anyenv init -)"
 exec $SHELL -l
-# rbenv and ndenv
+# rbenv and nodenv
 mkdir -p $(anyenv root)/plugins
 git clone https://github.com/znz/anyenv-update.git $(anyenv root)/plugins/anyenv-update
-anyenv install ndenv
+anyenv install nodenv
 anyenv install rbenv
 anyenv install goenv
-ndenv install v10.6.0
-ndenv rehash
-ndenv global v10.6.0
+nodenv install v10.15.1
+nodenv rehash
+nodenv global v10.15.1
 # export GOENV_ROOT="$HOME/.goenv"
 # export PATH="$GOENV_ROOT/bin:$PATH"
 # eval "$(goenv init -)"
