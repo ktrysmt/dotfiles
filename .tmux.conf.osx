@@ -17,7 +17,10 @@ bind C-s run "tmux last-pane || tmux last-window || tmux new-window"
 #set-window-option -g monitor-activity on
 bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
 bind-key -T copy-mode-vi v send-keys -X begin-selection
+bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
 bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
+bind-key -T copy-mode Enter send-keys -X copy-pipe-and-cancel "pbcopy"
+bind-key -T copy-mode y send-keys -X copy-pipe-and-cancel "pbcopy"
 # OLD: bind-key -T copy-mode-vi Enter send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
 bind 'C' new-window -c "#{pane_current_path}";
 bind '%' split-window -h -c "#{pane_current_path}";
@@ -127,20 +130,20 @@ set -g pane-border-bg black
 # --------------
 # TPM
 # --------------
-# List of plugins
-set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'tmux-plugins/tmux-sensible'
-set -g @plugin 'tmux-plugins/tmux-resurrect'
-set -g @plugin 'tmux-plugins/tmux-continuum'
-
-set -g @resurrect-save 'S'
-set -g @resurrect-restore 'U'
-set -g @continuum-restore 'on'
-
-# Other examples:
-# set -g @plugin 'github_username/plugin_name'
-# set -g @plugin 'git@github.com/user/plugin'
-# set -g @plugin 'git@bitbucket.com/user/plugin'
-
-# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-run -b '~/.tmux/plugins/tpm/tpm'
+##   # List of plugins
+##   set -g @plugin 'tmux-plugins/tpm'
+##   set -g @plugin 'tmux-plugins/tmux-sensible'
+##   set -g @plugin 'tmux-plugins/tmux-resurrect'
+##   set -g @plugin 'tmux-plugins/tmux-continuum'
+##
+##   set -g @resurrect-save 'S'
+##   set -g @resurrect-restore 'U'
+##   set -g @continuum-restore 'on'
+##
+##   # Other examples:
+##   # set -g @plugin 'github_username/plugin_name'
+##   # set -g @plugin 'git@github.com/user/plugin'
+##   # set -g @plugin 'git@bitbucket.com/user/plugin'
+##
+##   # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+##   run -b '~/.tmux/plugins/tpm/tpm'
