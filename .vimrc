@@ -490,6 +490,7 @@ let g:ale_linters = {
   \ 'css': ['stylelint'],
   \ 'go' : ['gometalinter'],
   \ 'ruby' : ['rubocop','ruby'],
+  \ 'yaml' : [''],
 \}
 let g:ale_linter_aliases = {'jsx': 'css'}
 let g:ale_go_gometalinter_options = '--vendored-linters --disable-all --enable=gotype --enable=vet --enable=golint -t'
