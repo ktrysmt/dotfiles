@@ -49,6 +49,7 @@ echo "-----------------------------------------------------";
 cd ~/
 git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 git clone https://github.com/ktrysmt/dotfiles  ~/dotfiles
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 mkdir -p ~/.config/peco/
 mkdir -p ~/.hammerspoon/
 mkdir ~/.cache

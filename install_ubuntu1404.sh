@@ -1,5 +1,5 @@
 #!/bin/bash
-set -o pipefail 
+set -o pipefail
 set -vxeu
 
 echo "-----------------------------------------------------";
@@ -82,6 +82,7 @@ echo " Setup my env";
 echo "-----------------------------------------------------";
 git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 git clone https://github.com/ktrysmt/dotfiles  ~/dotfiles
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 mkdir -p ~/.config/peco/
 mkdir ~/.cache
 mkdir ~/.local

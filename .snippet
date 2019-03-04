@@ -78,3 +78,4 @@ openssl s_client -connect www.example.com:443 -tlsextdebug                      
 openssl rand 107324 > test.txt                                                                                                                  # fill the file by random binaries (openssl / pseudo random)
 dd if=/dev/urandom of=test.bin bs=1m count=1                                                                                                    # fill the file by random binaries (dd / real random)
 fd chrome | fzy | xargs vim                                                                                                                     # fd and fzy
+awk 'END{print NR}' filename                                                                                                                    # count file lines by awk (`wc -l` is count of \r\n )
