@@ -135,6 +135,7 @@ nnoremap <silent> <Leader>gm :Gmerge<CR>
 nnoremap <silent> <Leader>gs :Gstatus<CR>
 nnoremap <silent> <Leader>gl :Glog<CR>
 nnoremap <silent> <Leader>gb :Gblame<CR>
+nnoremap <Leader>gca :Gcommit -a -m "
 nnoremap <Leader>gps :Dispatch! git push origin<cr>
 nnoremap <Leader>gpl :Dispatch! git pull origin<cr>
 nnoremap <silent> <Leader>t :new \| :terminal<CR>
