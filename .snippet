@@ -15,6 +15,7 @@ perl -i -pe 's/foo/bar/' text.txt                                               
 cut -d' ' -f1,3                                                                                                                                 # cut
 history | cut -d " " -f 4-11                                                                                                                    # cut numbers of history
 find . -type f -regextype posix-egrep -regex ".*.(csv|txt)" ! -regex ".*./ruby/2.0/.*"                                                          # find w/ regex
+find . -type f | grep -e "\.txt$"                                                                                                               # find w/ egrep
 cat readme.md | awk '!/^$/'                                                                                                                     # remove empty lines by awk
 [ -f `which yarn` ] && echo hoge                                                                                                                # if by bash
 if [ "" != `which yarn` ]; then echo 1; elif [ "" != `which npm` ]; then echo 2; else echo 3; fi                                                # if-else by bash

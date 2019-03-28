@@ -53,8 +53,9 @@ set wildmenu
 set history=5000
 set guifont=Cica:h15
 filetype plugin indent on
+" 不可視文字を可視化する場合は以下をアンコメント
 set list
-set listchars=tab:^-,trail:-,extends:»,precedes:«,nbsp:%
+" set listchars=tab:^-,trail:-,extends:»,precedes:«,nbsp:%
 if has('nvim')
   set inccommand=split
   tnoremap <silent> <ESC> <C-\><C-n>
