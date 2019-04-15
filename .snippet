@@ -1,4 +1,4 @@
-wget -S                                                                                                                                         # spider
+e(grep -v -E '\s*#' .cache/x.yaml | grep -v '^$') | (grep -v -E '\s*#' dist/$2/bundle.yaml | grep -v '^$' | diff -b /dev/fd/3 - >./prediff 2>&1) 3<&0; then get -S                                                                                                                                         # spider
 /System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -s                                                                     # macOS WiFi
 echo | nc 8.8.8.8 53                                                                                                                            # test network by nc
 du -d 1 -h .git/                                                                                                                                # calc sizes in .git
@@ -81,3 +81,8 @@ dd if=/dev/urandom of=test.bin bs=1m count=1                                    
 fd chrome | fzy | xargs vim                                                                                                                     # fd and fzy
 awk 'END{print NR}' filename                                                                                                                    # count file lines by awk (`wc -l` is count of \r\n )
 date +%s                                                                                                                                        # get unix timestamp
+echo -e "\033[32m green \033[00m , \033[31m red \033[00m , \033[36m cyan \033[00m , \033[33m yellow \033[00m"                                   # color code
+diff -ybBw                                                                                                                                      # useful diff
+diff <(grep -v -E '^\s*#' a.txt | grep -v '^$') <(grep -v -E '^\s*#' b.txt | grep -v '^$')                                                      # diff ignoring comment out and white space
+(grep -v -E '\s*#' a.txt | grep -v '^$') | (grep -v -E '\s*#' b.txt | grep -v '^$' | diff -b /dev/fd/3 - >./prediff 2>&1) 3<&0                  # diff ignoring comment out and white space by POSIX
+aws ec2 describe-instances --filter "Name=instance-state-name,Values=running" --query 'Reservations[].Instances[].{InstanceId:InstanceId,PublicIpAddress:PublicIpAddress,Tags:Tags[?Key==`Name`].Value|[0]}' --output text # custom describe-instances

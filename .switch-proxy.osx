@@ -14,9 +14,12 @@ function set_proxy() {
   git config --global http.proxy $proxy
   git config --global https.proxy $proxy
 
-  npm config set proxy "http://"$proxy"/"
-  npm config set https-proxy "http://"$proxy"/"
-  npm config set registry "http://registry.npmjs.org/"
+  echo "https-proxy=http://${proxy}/" >> ~/.npmrc
+  echo "registry=http://registry.npmjs.org/" >> ~/.npmrc
+  echo "proxy=http://${proxy}/" >> ~/.npmrc
+
+  export no_proxy="localhost, 192.168.0.0/16"
+  export NO_PROXY="$no_proxy"
 }
 
 function unset_proxy() {
@@ -32,8 +35,10 @@ function unset_proxy() {
   git config --global --unset http.proxy
   git config --global --unset https.proxy
 
-  npm config set proxy null
-  npm config set https-proxy null
+  echo "" > ~/.npmrc
+
+  unset no_proxy
+  unset NO_PROXY
 }
 
 if [ "`networksetup -getcurrentlocation`" = "$switch_trigger" ]; then

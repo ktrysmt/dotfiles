@@ -474,9 +474,6 @@ let g:lightline = {
   \  'ale': 'ALEStatus'
   \},
 \}
-" function! ALEStatus()
-"   return ALEGetStatusLine()
-" endfunction
 
 "" ale
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
