@@ -87,3 +87,4 @@ diff <(grep -v -E '^\s*#' a.txt | grep -v '^$') <(grep -v -E '^\s*#' b.txt | gre
 (grep -v -E '\s*#' a.txt | grep -v '^$') | (grep -v -E '\s*#' b.txt | grep -v '^$' | diff -b /dev/fd/3 - >./prediff 2>&1) 3<&0                  # diff ignoring comment out and white space by POSIX
 aws ec2 describe-instances --filter "Name=instance-state-name,Values=running" --query 'Reservations[].Instances[].{InstanceId:InstanceId,PublicIpAddress:PublicIpAddress,Tags:Tags[?Key==`Name`].Value|[0]}' --output text # custom describe-instances
 aws ec2 describe-instances | jq -r '.Reservations[] | .Instances[] | select(.State.Name == "running") | [ .InstanceId, (.Tags[] | select(.Key == "Name")).Value ] | @csv' # custom describe-instances w/ jq
+strace -c -e write,open,read,close -T -tt ./binary                                                                                              # strace / -c / -e / -T / -tt
