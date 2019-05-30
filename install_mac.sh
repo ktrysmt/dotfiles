@@ -9,7 +9,7 @@ echo "-----------------------------------------------------";
 brew update
 
 # brew
-brew install peco wget tmux zsh nkf tree ripgrep fd fzf tig fzy exa python jq git-secrets bat watch
+brew install peco wget tmux zsh nkf tree ripgrep fd fzf tig fzy exa python jq git-secrets bat watch dep ghq
 brew install python@2
 
 # k8s
@@ -98,8 +98,6 @@ ln -sf $(which nvim) /usr/local/bin/vim
 echo "-----------------------------------------------------";
 echo "Setup Other";
 echo "-----------------------------------------------------";
-go get github.com/motemen/ghq
-go get github.com/golang/dep/...
 go get -u golang.org/x/tools/cmd/gopls
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 npm i -g npm-check-updates neovim

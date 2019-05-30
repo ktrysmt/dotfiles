@@ -20,7 +20,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/i
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 # brew
-brew install peco wget zsh ripgrep fd fzf tig fzy exa python jq bat git-secrets
+brew install peco wget zsh ripgrep fd fzf tig fzy exa python jq bat git-secrets ghq dep
 
 # brew neovim
 brew install neovim/neovim/neovim
@@ -91,8 +91,6 @@ ln -sf $(which nvim) /usr/local/bin/vim
 echo "-----------------------------------------------------";
 echo "Setup Other";
 echo "-----------------------------------------------------";
-go get github.com/motemen/ghq
-go get github.com/golang/dep/...
 go get -u golang.org/x/tools/cmd/gopls
 nvim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 npm i -g npm-check-updates neovim
