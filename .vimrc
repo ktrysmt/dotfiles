@@ -574,6 +574,10 @@ let g:go_bin_path = expand(globpath($GOPATH, "bin"))
 let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_autosave = 1
+if executable('gopls')
+  let g:go_def_mode='gopls'
+  let g:go_info_mode='gopls'
+endif
 " let g:go_fmt_command = "gofmt"
 let g:go_fmt_command = "goimports"
 " let g:go_fmt_options = "-s"
