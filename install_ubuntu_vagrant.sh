@@ -3,46 +3,48 @@ set -o pipefail
 set -vxeu
 
 echo "-----------------------------------------------------";
+echo "for Vagrant";
+echo "-----------------------------------------------------";
+if [ `who am i | awk '{print $1}'` = "vagrant" ]; then \
+  PASSWORD="vagrant";
+  sudo chown -R vagrant:vagrant /usr/local;
+fi;
+
+echo "-----------------------------------------------------";
 echo "Install homebrew and libraries"
 echo "-----------------------------------------------------";
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew update
+# linuxbrew
+sudo apt-get -qq -y update
+sudo apt-get -qq -y install build-essential curl file git
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
-# brew 
-brew install peco wget tmux zsh nkf tree ripgrep fd fzf tig fzy exa python jq git-secrets bat watch
-brew install yarn --without-node
-brew install python@2
+# brew
+brew install peco wget zsh ripgrep fd fzf tig fzy exa python jq bat git-secrets
 
-# k8s
-brew install kubectl kubectx kubernetes-helm caskroom/cask/minikube
-
-# neovim
+# brew neovim
 brew install neovim/neovim/neovim
-brew tap universal-ctags/universal-ctags
-brew install --HEAD universal-ctags --with-libyaml
 
 # anyenv
 git clone https://github.com/riywo/anyenv ~/.anyenv
 export PATH="$HOME/.anyenv/bin:$PATH"
 eval "$(anyenv init -)"
+anyenv install --force-init
 exec $SHELL -l
 
-# rbenv and nodenv
+# goenv nodenv
 mkdir -p $(anyenv root)/plugins
 git clone https://github.com/znz/anyenv-update.git $(anyenv root)/plugins/anyenv-update
-anyenv install nodenv
-anyenv install rbenv
 anyenv install goenv
-nodenv install v10.15.1
-nodenv rehash
-nodenv global v10.15.1
-goenv install 1.10.3
+eval "$(anyenv init -)"
+goenv install 1.12.5
 goenv rehash
-goenv global 1.10.3
-
-# rust
-curl https://sh.rustup.rs -sSf | sh -s -- -y
-source $HOME/.cargo/env
+goenv global 1.12.5
+anyenv install nodenv
+eval "$(anyenv init -)"
+nodenv install 12.3.1
+nodenv rehash
+nodenv global 12.3.1
 
 echo "-----------------------------------------------------";
 echo "Setup my env"
@@ -50,28 +52,18 @@ echo "-----------------------------------------------------";
 # general
 cd ~/
 git clone https://github.com/tarjoilija/zgen.git ~/.zgen
-git clone https://github.com/ktrysmt/dotfiles  ~/dotfiles
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+#git clone https://github.com/ktrysmt/dotfiles  ~/dotfiles
 mkdir -p ~/.config/peco/
-mkdir -p ~/.hammerspoon/
 mkdir ~/.cache
 mkdir ~/.local
-mkdir ~/.ctags.d
 ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
-ln -s ~/dotfiles/.zshrc ~/.zshrc
+ln -s ~/dotfiles/.zshrc ~/.zshrc.vagrant
 ln -s ~/dotfiles/.vimrc ~/.vimrc
 ln -s ~/dotfiles/.tigrc ~/.tigrc
-ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
 ln -s ~/dotfiles/.tern-project ~/.tern-project
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
-ln -s ~/dotfiles/.hammerspoon/init.lua ~/.hammerspoon/init.lua
-ln -s ~/dotfiles/.ctags ~/.ctags.d/config.ctags
-cp ~/dotfiles/.switch-proxy.osx ~/.switch-proxy
 cp ~/dotfiles/.gitconfig ~/.gitconfig
-wget -O ~/Library/Fonts/RictyDiminished-Regular.ttf https://github.com/edihbrandon/RictyDiminished/raw/master/RictyDiminished-Regular.ttf
-wget -O ~/dotfiles/.hammerspoon/hyperex.lua https://raw.githubusercontent.com/hetima/hammerspoon-hyperex/master/hyperex.lua
-ln -s ~/dotfiles/.hammerspoon/hyperex.lua ~/.hammerspoon/hyperex.lua
 # git secrets
 git secrets --register-aws --global
 git secrets --install ~/.git-templates/git-secrets
@@ -102,26 +94,11 @@ echo "-----------------------------------------------------";
 go get github.com/motemen/ghq
 go get github.com/golang/dep/...
 go get golang.org/x/tools/cmd/golsp
-vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
-yarn global add npm-check-updates neovim
-
-echo "-----------------------------------------------------";
-echo "Extra applications by brew cask";
-echo "-----------------------------------------------------";
-export HOMEBREW_CASK_OPTS="--appdir=/Applications";
-brew tap caskroom/cask
-brew cask install appcleaner google-japanese-ime iterm2 shiftit hyperswitch clipy docker qblocker hammerspoon visual-studio-code google-chrome google-chrome-canary
-brew cask install virtualbox
-brew cask install vagrant
-brew cask cleanup
-
-#brew cask install flux alfred itsycal keybase
-
-#or use 'https://s3.amazonaws.com/LACRM_blog/createGcApp.dmg'
+nvim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
+npm i -g npm-check-updates neovim
 
 echo "-----------------------------------------------------";
 echo "Rested tasks"
 echo "-----------------------------------------------------";
 sudo sh -c "echo $(which zsh) >> /etc/shells";
 chsh -s $(which zsh)
-
