@@ -8,9 +8,8 @@ echo "-----------------------------------------------------";
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 
-# brew 
+# brew
 brew install peco wget tmux zsh nkf tree ripgrep fd fzf tig fzy exa python jq git-secrets bat watch
-brew install yarn --without-node
 brew install python@2
 
 # k8s
@@ -101,9 +100,9 @@ echo "Setup Other";
 echo "-----------------------------------------------------";
 go get github.com/motemen/ghq
 go get github.com/golang/dep/...
-go get golang.org/x/tools/cmd/golsp
+go get -u golang.org/x/tools/cmd/gopls
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
-yarn global add npm-check-updates neovim
+npm i -g npm-check-updates neovim
 
 echo "-----------------------------------------------------";
 echo "Extra applications by brew cask";

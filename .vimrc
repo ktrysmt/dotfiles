@@ -373,12 +373,12 @@ nnoremap <silent> <C-p> :Unite -create -buffer-name=yankround yankround<Return>
 
 "" lsp
 let g:lsp_async_completion = 1
-if executable('golsp')
+if executable('gopls')
   augroup LspGo
     au!
     autocmd User lsp_setup call lsp#register_server({
         \ 'name': 'go-lang',
-        \ 'cmd': {server_info->['golsp', '-mode', 'stdio']},
+        \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
         \ 'whitelist': ['go'],
         \ })
     autocmd FileType go setlocal omnifunc=lsp#complete

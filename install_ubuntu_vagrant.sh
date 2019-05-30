@@ -93,7 +93,7 @@ echo "Setup Other";
 echo "-----------------------------------------------------";
 go get github.com/motemen/ghq
 go get github.com/golang/dep/...
-go get golang.org/x/tools/cmd/golsp
+go get -u golang.org/x/tools/cmd/gopls
 nvim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 npm i -g npm-check-updates neovim
 
