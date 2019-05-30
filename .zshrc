@@ -47,8 +47,6 @@
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
   # goenv
-  export GOENV_ROOT="$HOME/.goenv"
-  export PATH="$GOENV_ROOT/bin:$PATH"
   eval "$(goenv init -)"
   # rust
   [ -f ~/.cargo/env ] && source ~/.cargo/env

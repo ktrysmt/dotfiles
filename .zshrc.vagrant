@@ -1,3 +1,7 @@
+: "init" && {
+  eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+}
+
 : "zgen" && {
   source "${HOME}/.zgen/zgen.zsh"
   if ! zgen saved; then
@@ -5,6 +9,7 @@
 
     zgen oh-my-zsh
     zgen oh-my-zsh plugins/git
+    #zgen load robbyrussell/oh-my-zsh plugins/git
 
     #zgen oh-my-zsh plugins/gitfast
 
