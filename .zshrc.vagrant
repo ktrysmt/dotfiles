@@ -11,7 +11,7 @@
     zgen load aws/aws-cli bin/aws_zsh_completer.sh
     zgen load zsh-users/zsh-syntax-highlighting
     zgen load zsh-users/zsh-completions
-    zgen load Tarrasch/zsh-autoenv
+    # zgen load Tarrasch/zsh-autoenv
     zgen load lukechilds/zsh-better-npm-completion
     zgen load docker/cli contrib/completion/zsh/_docker
     zgen load docker/compose contrib/completion/zsh/_docker-compose
@@ -75,52 +75,6 @@
   alias tsync="tmux set-window-option synchronize-panes"
   alias batd="bat -l diff"
   alias bats="bat -l sh"
-}
-
-: "alias of kubect" && {
-  alias k="kubectl"
-  alias kg="kubectl get"
-  alias kgp="kubectl get pods"
-  alias ka="kubectl apply -f"
-  alias kd="kubectl describe"
-  alias krm="kubectl delete"
-  alias klo="kubectl logs -f"
-  alias kex="kubectl exec -i -t"
-  alias kns="kubens"
-  alias kctx="kubectx"
-}
-
-: "k8s" && {
-
-  # kubectl
-  if (which kubectl > /dev/null); then
-    function kubectl() {
-      if ! type __start_kubectl >/dev/null 2>&1; then
-          source <(command kubectl completion zsh)
-      fi
-      command kubectl "$@"
-    }
-  fi
-
-  # kops
-  if (which kops > /dev/null); then
-    function kops() {
-      if ! type __start_kops >/dev/null 2>&1; then
-          source <(command kops completion zsh)
-      fi
-      command kops "$@"
-    }
-  fi
-
-  # helm
-  if (which helm > /dev/null); then
-    function helm() {
-      if ! type __start_helm >/dev/null 2>&1; then
-          source <(command helm completion zsh)
-      fi
-      command helm "$@"
-    }
-  fi
 }
 
 
@@ -256,14 +210,6 @@
   # }
   # zle     -N   fzf-history-widget
   # bindkey '^R' fzf-history-widget
-}
-
-: "tmux refresh" && {
-  function precmd() {
-    if [ ! -z $TMUX ]; then
-      tmux refresh-client -S
-    fi
-  }
 }
 
 : "Switch ENV by OSTYPE" && {
