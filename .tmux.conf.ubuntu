@@ -14,9 +14,8 @@ bind -r K resize-pane -U 10
 bind -r L resize-pane -R 10
 # monitor
 bind C-s run "tmux last-pane || tmux last-window || tmux new-window"
-#set-window-option -g monitor-activity on
-bind-key -T copy-mode-vi Enter send -X copy-pipe-and-cancel "cat | xsel -i --clipboard"
 bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+bind-key -T copy-mode-vi v send-keys -X begin-selection
 bind 'C' new-window -c "#{pane_current_path}";
 bind '%' split-window -h -c "#{pane_current_path}";
 bind '"' split-window -v -c "#{pane_current_path}";
@@ -30,7 +29,6 @@ bind l select-pane -R
 # general
 # ---------
 set -sg escape-time 0
-#set-window-option -g mode-keys vi
 set -g status-interval 30
 set -g base-index 1
 set -g pane-base-index 1
@@ -49,22 +47,20 @@ set -g status-bg colour235
 set -g status-left '[#[fg=cyan,bold]#(whoami)#[default]] '
 set -g status-left-length 30
 set -g status-right-length 120
-set -g status-right-bg colour235
+# set -g status-right-bg colour235
 set -g status-right \
 "#{?client_prefix,#[reverse],}"\
-"#[fg=white] ( #(${HOME}/dotfiles/bin/git-echo-username-and-email) ) "\
-"#[fg=cyan][%Y/%m/%d(%a)%H:%M]#[default]"
-# "#[fg=green][#(${HOME}/dotfiles/bin/sh-echo-current-wifi-network)]#[default] "\
-# "#[fg=yellow]#(${HOME}/dotfiles/bin/git-echo-branch-tmux-current-pane)"\
-# set -g status-right '#[fg=white][%Y/%m/%d(%a)%H:%M]#[default]'
+"#[fg=white] [#(${HOME}/dotfiles/bin/git-echo-username-and-email)] "\
+"#[fg=cyan][%Y/%m/%d (%a) %H:%M]#[default]"
 
 # --------------
 # pane-status
 # --------------
-set-option -g pane-border-status top
-set-option -g pane-border-format " #[fg=black,bg=blue] #P #[default] #(~/dotfiles/bin/tmux-pane-border '#{pane_current_path}')#[default] "
-set-option -g pane-border-fg colour023
-set-option -g pane-active-border-fg blue
+# set-option -g pane-border-status bottom
+# set-option -g pane-border-format "#[bg=black] #[fg=black,bg=white] #P #[bg=black] #(~/dotfiles/bin/tmux-pane-border '#{pane_current_path}')#[bg=black] #[default]"
+set-option -g pane-border-format ""
+# set-option -g pane-border-fg colour023
+# set-option -g pane-active-border-fg blue
 
 # コピーモードのキーバインドをviライクにする
 setw -g mode-keys vi
@@ -74,8 +70,8 @@ setw -g automatic-rename off
 # --------------
 # window
 # --------------
-setw -g window-status-current-fg black
-setw -g window-status-current-bg white
+# setw -g window-status-current-fg black
+# setw -g window-status-current-bg white
 # set-window-option -g allow-rename off
 # set-window-option -g window-status-format " #I: #(basename $PWD) "
 # set-window-option -g window-status-current-format "#[fg=colour255,bg=colour27,bold] #I: #(${HOME}/dotfiles/bin/sh-echo-current-dir) #[default]"
@@ -88,12 +84,12 @@ setw -g window-status-current-bg white
 # pane
 # --------------
 # pane-active-border
-set -g pane-active-border-fg white
-set -g pane-active-border-bg black
-# set -g pane-active-border-bg white
-set -g pane-border-fg white
-set -g pane-border-bg black
-# set -g pane-border-bg white
+# set -g pane-active-border-fg white
+# set -g pane-active-border-bg black
+# set -g pane-active-border-fg black
+# set -g pane-active-border-bg cyan
+# set -g pane-border-fg white
+# set -g pane-border-bg black
 
 # --------------
 # mouse
@@ -117,3 +113,24 @@ set -g pane-border-bg black
 # --------------
 # setw -g utf8 on
 
+# --------------
+# TPM
+# --------------
+##   # List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+
+set -g @resurrect-save 'S'
+set -g @resurrect-restore 'U'
+
+# set -g @plugin 'tmux-plugins/tmux-continuum'
+# set -g @continuum-restore 'on'
+
+# Other examples:
+# set -g @plugin 'github_username/plugin_name'
+# set -g @plugin 'git@github.com/user/plugin'
+# set -g @plugin 'git@bitbucket.com/user/plugin'
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run -b '~/.tmux/plugins/tpm/tpm'
