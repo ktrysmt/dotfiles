@@ -486,6 +486,7 @@ let g:ale_fixers = {
   \ 'jsx': ['eslint'],
   \ 'css': ['stylelint'],
   \ 'ruby': ['rubocop'],
+  \ 'rust': ['rustfmt'],
 \}
 let g:ale_fix_on_save = 1
 let g:ale_linters = {
@@ -494,6 +495,7 @@ let g:ale_linters = {
   \ 'go' : ['gometalinter'],
   \ 'ruby' : ['rubocop','ruby'],
   \ 'yaml' : [''],
+  \ 'rust' : ['rustc'],
 \}
 let g:ale_linter_aliases = {'jsx': 'css'}
 let g:ale_go_gometalinter_options = '--vendored-linters --disable-all --enable=gotype --enable=vet --enable=golint -t'
@@ -659,10 +661,10 @@ let g:user_emmet_install_global = 0
 autocmd FileType html,css,scss,javascript EmmetInstall
 
 "" rust
-let g:rustfmt_autosave = 1
+let g:rustfmt_autosave = 0
 let g:racer_cmd = '$HOME/.cargo/bin/racer'
 let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
-let $RUST_SRC_PATH = '$HOME/.cargo/src'
+" let $RUST_SRC_PATH = '$HOME/.cargo/src'
 
 "" easy-align
 vmap <Enter> <Plug>(EasyAlign)
