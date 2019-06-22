@@ -1,7 +1,9 @@
 "---------------------------
 "" General
 "---------------------------
-"" set env
+"" set envs
+let $GO111MODULE = "on"
+"" set parameters
 set encoding=utf8
 scriptencoding utf-8
 if !has('gui_running')
@@ -143,6 +145,8 @@ nnoremap <silent> <Leader>t :new \| :terminal<CR>
 nnoremap <silent> <Leader>T :tabnew \| :terminal<CR>
 nnoremap <silent> <Leader>vt :vne \| :terminal<CR>
 nnoremap <Leader>n :ALENextWrap<CR>
+nnoremap <Leader>got :GoToggleBreakpoint<CR>
+nnoremap <Leader>god :GoDebug<CR>
 map <C-]> :tab <CR>:exec("tjump ".expand("<cword>"))<CR>
 map <leader><C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
@@ -575,12 +579,12 @@ let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_autosave = 1
 if executable('gopls')
-  let g:go_def_mode='gopls'
+  let g:go_def_mode='godef'
   let g:go_info_mode='gopls'
 endif
-" let g:go_fmt_command = "gofmt"
-let g:go_fmt_command = "goimports"
-" let g:go_fmt_options = "-s"
+let g:go_fmt_command = "gofmt"
+" let g:go_fmt_command = "goimports"
+let g:go_fmt_options = "-s"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
