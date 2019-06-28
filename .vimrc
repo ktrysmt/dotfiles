@@ -665,6 +665,8 @@ let g:rustfmt_autosave = 0
 let g:racer_cmd = '$HOME/.cargo/bin/racer'
 let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
 " let $RUST_SRC_PATH = '$HOME/.cargo/src'
+let g:racer_experimental_completer = 1
+let g:racer_insert_paren = 1
 
 "" easy-align
 vmap <Enter> <Plug>(EasyAlign)
