@@ -208,6 +208,8 @@ autocmd MyAutoCmd BufWritePost *
       \  unlet! b:ftdetect |
       \  filetype detect |
       \ endif
+let g:quickrun_config = {} " rustc -> cargo run
+autocmd BufNewFile,BufRead *.rs  let g:quickrun_config.rust = {'exec' : 'cargo run'}
 
 "" Toggle window zoom
 function! s:toggle_window_zoom() abort
