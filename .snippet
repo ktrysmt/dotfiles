@@ -91,3 +91,6 @@ aws ec2 describe-instances | jq -r '.Reservations[] | .Instances[] | select(.Sta
 strace -c -e write,open,read,close -T -tt ./binary                                                                                              # strace / -c / -e / -T / -tt
 git archive HEAD | docker build -                                                                                                               # build with same case between gitignore and dockerignore
 git show $REVISION:$FILENAME                                                                                                                    # How to get just one file from another branch
+nc -u $HOSTNAME $PORT                                                                                                                           # check udp
+nc -s $SRC_IP -p $SRC_PORT $DEST_HOSTNAME $DEST_PORT                                                                                            # check udp by specific ip and port
+nc -lu 10000                                                                                                                                    # launch udp server by port:10000
