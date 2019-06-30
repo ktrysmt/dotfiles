@@ -377,6 +377,14 @@ colorscheme hybrid_material
 let g:unite_enable_split_vertically = 1
 nnoremap <silent> <C-p> :Unite -create -buffer-name=yankround yankround<Return>
 
+"" tabnine
+if has('nvim')
+  call deoplete#custom#var('tabnine', {
+        \ 'line_limit': 1000,
+        \ 'max_num_results': 4,
+        \ })
+endif
+
 "" lsp
 let g:lsp_async_completion = 1
 if executable('gopls')
