@@ -90,3 +90,4 @@ aws ec2 describe-instances --filter "Name=instance-state-name,Values=running" --
 aws ec2 describe-instances | jq -r '.Reservations[] | .Instances[] | select(.State.Name == "running") | [ .InstanceId, (.Tags[] | select(.Key == "Name")).Value ] | @csv' # custom describe-instances w/ jq
 strace -c -e write,open,read,close -T -tt ./binary                                                                                              # strace / -c / -e / -T / -tt
 git archive HEAD | docker build -                                                                                                               # build with same case between gitignore and dockerignore
+git show $REVISION:$FILENAME                                                                                                                    # How to get just one file from another branch
