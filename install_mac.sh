@@ -9,8 +9,9 @@ echo "-----------------------------------------------------";
 brew update
 
 # brew
-brew install peco wget tmux zsh nkf tree ripgrep fd fzf tig fzy exa python jq git-secrets bat watch dep ghq
+brew install peco wget tmux zsh nkf tree ripgrep fd fzf tig fzy exa python jq git-secrets bat watch dep ghq git
 brew install python@2
+exec $SHELL -l
 
 # k8s
 brew install kubectl kubectx kubernetes-helm caskroom/cask/minikube

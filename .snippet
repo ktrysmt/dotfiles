@@ -94,3 +94,4 @@ git show $REVISION:$FILENAME                                                    
 nc -u $HOSTNAME $PORT                                                                                                                           # check udp
 nc -s $SRC_IP -p $SRC_PORT $DEST_HOSTNAME $DEST_PORT                                                                                            # check udp by specific ip and port
 nc -lu 10000                                                                                                                                    # launch udp server by port:10000
+strace -p $PORT; readlink /proc/$PORT/fd/$FD; netstat -ane | grep $SOCKET;                                                                       # analyze network I/O blocking
