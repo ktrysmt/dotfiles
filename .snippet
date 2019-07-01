@@ -77,8 +77,8 @@ tar jcf backup.tar.bz2 filepath1 filepath2                                      
 tar jxf backup.tar.bz2                                                                                                                          # tar decompress bzip2
 openssl s_client -connect www.example.com:443 -tlsextdebug                                                                                      # debug openssl
 openssl rand 107324 > test.txt                                                                                                                  # fill the file by random binaries (openssl / pseudo random)
-dd if=/dev/urandom of=test.bin bs=1m count=1                                                                                                    # fill the file by random binaries (dd / real random)                                                                                                                                       # fill the file by zero
-dd if=/dev/zero of=test.bin bs=1m
+dd if=/dev/urandom of=test.bin bs=1m count=1                                                                                                    # fill the file by random binaries (dd / real random)
+dd if=/dev/zero of=test.bin bs=1m                                                                                                               # fill the file by zero
 fd chrome | fzy | xargs vim                                                                                                                     # fd and fzy
 awk 'END{print NR}' filename                                                                                                                    # count file lines by awk (`wc -l` is count of \r\n )
 date +%s                                                                                                                                        # get unix timestamp
@@ -90,3 +90,10 @@ aws ec2 describe-instances --filter "Name=instance-state-name,Values=running" --
 aws ec2 describe-instances | jq -r '.Reservations[] | .Instances[] | select(.State.Name == "running") | [ .InstanceId, (.Tags[] | select(.Key == "Name")).Value ] | @csv' # custom describe-instances w/ jq
 strace -c -e write,open,read,close -T -tt ./binary                                                                                              # strace / -c / -e / -T / -tt
 git archive HEAD | docker build -                                                                                                               # build with same case between gitignore and dockerignore
+git show $REVISION:$FILENAME                                                                                                                    # How to get just one file from another branch
+nc -u $HOSTNAME $PORT                                                                                                                           # check udp
+nc -s $SRC_IP -p $SRC_PORT $DEST_HOSTNAME $DEST_PORT                                                                                            # check udp by specific ip and port
+nc -lu 10000                                                                                                                                    # launch udp server by port:10000
+strace -p $PORT; readlink /proc/$PORT/fd/$FD; netstat -ane | grep $SOCKET;                                                                      # analyze network I/O blocking
+go build -i                                                                                                                                     # dependency caching at go build
+go build -x                                                                                                                                     # debugging at go build

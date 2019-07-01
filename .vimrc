@@ -208,6 +208,8 @@ autocmd MyAutoCmd BufWritePost *
       \  unlet! b:ftdetect |
       \  filetype detect |
       \ endif
+let g:quickrun_config = {} " rustc -> cargo run
+autocmd BufNewFile,BufRead *.rs  let g:quickrun_config.rust = {'exec' : 'cargo run'}
 
 "" Toggle window zoom
 function! s:toggle_window_zoom() abort
@@ -374,6 +376,14 @@ colorscheme hybrid_material
 "" unite settings
 let g:unite_enable_split_vertically = 1
 nnoremap <silent> <C-p> :Unite -create -buffer-name=yankround yankround<Return>
+
+"" tabnine
+if has('nvim')
+  call deoplete#custom#var('tabnine', {
+        \ 'line_limit': 1000,
+        \ 'max_num_results': 4,
+        \ })
+endif
 
 "" lsp
 let g:lsp_async_completion = 1
@@ -668,6 +678,8 @@ let g:rustfmt_autosave = 0
 let g:racer_cmd = '$HOME/.cargo/bin/racer'
 let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
 " let $RUST_SRC_PATH = '$HOME/.cargo/src'
+let g:racer_experimental_completer = 1
+let g:racer_insert_paren = 1
 
 "" easy-align
 vmap <Enter> <Plug>(EasyAlign)
