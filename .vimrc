@@ -594,9 +594,12 @@ if executable('gopls')
   let g:go_def_mode='godef'
   let g:go_info_mode='gopls'
 endif
-let g:go_fmt_command = "gofmt"
+" let g:go_fmt_command = "gofmt"
 " let g:go_fmt_command = "goimports"
-let g:go_fmt_options = "-s"
+" let g:go_fmt_options = "-s"
+let g:go_fmt_options = {
+  \ 'gofmt': '-s',
+  \ }
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
