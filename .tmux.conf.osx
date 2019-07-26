@@ -31,7 +31,7 @@ bind j select-pane -D
 bind k select-pane -U
 bind l select-pane -R
 # unzen pane
-bind-key Z run "tmux last-pane && tmux resize-pane -Z"
+bind-key a run "tmux last-pane && tmux resize-pane -Z"
 
 # ---------
 # general
