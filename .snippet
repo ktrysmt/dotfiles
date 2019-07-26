@@ -97,3 +97,6 @@ nc -lu 10000                                                                    
 strace -p $PORT; readlink /proc/$PORT/fd/$FD; netstat -ane | grep $SOCKET;                                                                      # analyze network I/O blocking
 go build -i                                                                                                                                     # dependency caching at go build
 go build -x                                                                                                                                     # debugging at go build
+mpstat -P ALL 1                                                                                                                                 # view multi cpu stat
+pidstat 1                                                                                                                                       # view cpu stat per process
+iostat -xz 1                                                                                                                                    # view I/O performance per block device
