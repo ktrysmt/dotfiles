@@ -2,7 +2,7 @@
 "" General
 "---------------------------
 "" set envs
-let $GO111MODULE = "on"
+let $GO111MODULE = "auto"
 "" set parameters
 set encoding=utf8
 scriptencoding utf-8
@@ -387,6 +387,7 @@ endif
 
 "" lsp
 let g:lsp_async_completion = 1
+let g:lsp_diagnostics_enabled = 0
 if executable('gopls')
   augroup LspGo
     au!
