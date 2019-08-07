@@ -6,8 +6,6 @@
     zgen oh-my-zsh
     zgen oh-my-zsh plugins/git
 
-    #zgen oh-my-zsh plugins/gitfast
-
     zgen load aws/aws-cli bin/aws_zsh_completer.sh
     zgen load zsh-users/zsh-syntax-highlighting
     zgen load zsh-users/zsh-completions
@@ -16,22 +14,12 @@
     zgen load docker/cli contrib/completion/zsh/_docker
     zgen load docker/compose contrib/completion/zsh/_docker-compose
 
-    #zgen load git/git contrib/completion/git-completion.zsh
-    #zgen load robbyrussell/oh-my-zsh lib/git
-    #zgen load robbyrussell/oh-my-zsh lib/completion
-    #zgen load robbyrussell/oh-my-zsh lib/compfix
-    #zgen load robbyrussell/oh-my-zsh lib/directories
-    #zgen load robbyrussell/oh-my-zsh lib/history
-    #zgen load robbyrussell/oh-my-zsh lib/theme-and-appearance
-    #zgen load zsh-users/zsh-history-substring-search
-    #zgen load zchee/zsh-completions src/go/go-zsh-completions.plugin.zsh
-
     zgen save
   fi
+  #autoload -Uz compinit && compinit -i
 }
 
-: "set env" && {
-  # general
+: "env" && {
   # export PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
   export PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
   export HIST_STAMPS="yyyy/mm/dd"
@@ -42,11 +30,11 @@
   export PATH=$PATH:/usr/local/go/bin
   export PATH=$HOME/go/bin:$PATH
   export PATH=$HOME/project/bin:$PATH
-  export GO111MODULE="auto"
   export GOPATH=$HOME/go:$HOME/project
   # anyenv and node
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
+  export PATH=$PATH:./node_modules/.bin
   # rust
   [ -f ~/.cargo/env ] && source ~/.cargo/env
   # fzf
@@ -62,6 +50,7 @@
   export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
   export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
   export PATH=$HOME/.rbenv/shims:$PATH
+
 }
 
 : "alias" && {
@@ -81,9 +70,7 @@
   alias tsync="tmux set-window-option synchronize-panes"
   alias batd="bat -l diff"
   alias bats="bat -l sh"
-}
-
-: "alias of kubect" && {
+  # k8s
   alias k="kubectl"
   alias kg="kubectl get"
   alias kgp="kubectl get pods"
@@ -96,7 +83,7 @@
   alias kctx="kubectx"
 }
 
-: "k8s" && {
+: "completions for k8s" && {
 
   # kubectl
   if (which kubectl > /dev/null); then

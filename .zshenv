@@ -1,6 +1,7 @@
+# general
 setopt +o nomatch
-export PATH=$PATH:./node_modules/.bin
 export TERM="screen-256color"
-export GO111MODULE="on"
+export GO111MODULE="auto"
 
+# debug
 # zmodload zsh/zprof && zprof
