@@ -1,6 +1,8 @@
 "---------------------------
 "" General
 "---------------------------
+syntax on
+set background=dark
 set encoding=utf8
 set sh=zsh
 set secure
@@ -173,16 +175,6 @@ autocmd VimEnter * nested if @% != '' | :NERDTreeFind | wincmd p | endif
 autocmd InsertLeave * set nopaste
 autocmd QuickFixCmdPost *grep* cwindow
 autocmd Filetype json setl conceallevel=0
-""""""""""""""""""""""
-" autocmd MyAutoCmd BufWritePost *
-"       \ if &filetype ==# '' && exists('b:ftdetect') |
-"       \  unlet! b:ftdetect |
-"       \  filetype detect |
-"       \ endif
-" augroup MyAutoCmd
-"   autocmd! *
-" augroup END
-""""""""""""""""""""""
 " cnahge from rustc to cargo run when quickrun
 let g:quickrun_config = {}
 autocmd BufNewFile,BufRead *.rs  let g:quickrun_config.rust = {'exec' : 'cargo run'}
@@ -212,7 +204,9 @@ command! Ev tabnew | edit $MYVIMRC
 command! Edv edit $HOME/dotfiles/.vimrc
 cabbr w!! w !sudo tee > /dev/null %
 
-" terminal colors
+"" terminal colors
+autocmd ColorScheme * hi LineNr ctermfg=239
+autocmd ColorScheme * hi Normal ctermbg=none
 if !has('gui_running')
       \ && exists('&termguicolors')
       \ && $COLORTERM ==# 'truecolor'
@@ -252,7 +246,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 call plug#begin()
 "" [general]
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'cohama/lexima.vim'
 Plug 'scrooloose/nerdtree'
@@ -265,7 +259,6 @@ Plug 'tpope/vim-dispatch'
 Plug 'itchyny/lightline.vim'
 Plug 'soramugi/auto-ctags.vim'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-Plug 'szw/vim-tags'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'lambdalisue/vim-unified-diff'
@@ -295,11 +288,8 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript'] }
 " [php]
 Plug 'lvht/phpcd.vim', { 'for': ['php'] }
 " [js]
-if has('nvim')
-  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-else
-  Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
-end
+" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
 Plug 'styled-components/vim-styled-components', { 'branch': 'main', 'for': ['javascript', 'javascript.jsx', 'css'] }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
@@ -325,11 +315,7 @@ call plug#end()
 "---------------------------
 "" Plugin configuration
 "---------------------------
-"" custom theme
-syntax on
-set background=dark
-autocmd ColorScheme * hi LineNr ctermfg=239
-autocmd ColorScheme * hi Normal ctermbg=none
+"" hybrid material theme
 colorscheme hybrid_material
 
 "" unite w/ yankround
@@ -362,15 +348,15 @@ if executable('gopls')
 endif
 
 "" completion
-" deoplete
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#enable_at_startup = 1
-inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
-inoremap <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function() abort
-  return deoplete#close_popup() . "\<CR>"
-endfunction
+" " deoplete
+" let g:deoplete#enable_smart_case = 1
+" let g:deoplete#enable_at_startup = 1
+" inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+" inoremap <CR> <C-r>=<SID>my_cr_function()<CR>
+" function! s:my_cr_function() abort
+"   return deoplete#close_popup() . "\<CR>"
+" endfunction
 
 "" lightline
 set laststatus=2
@@ -405,21 +391,20 @@ let g:ale_fix_on_save = 1
 let g:ale_linters = {
   \ 'jsx': ['eslint', 'stylelint'],
   \ 'css': ['stylelint'],
-  \ 'go' : ['gometalinter'],
+  \ 'go' : ['gopls'],
   \ 'ruby' : ['rubocop','ruby'],
   \ 'yaml' : [''],
   \ 'rust' : ['rls'],
 \}
 let g:ale_linter_aliases = {'jsx': 'css'}
 let g:ale_go_gometalinter_options = '--vendored-linters --disable-all --enable=gotype --enable=vet --enable=golint -t'
+let g:ale_go_bingo_executable = 'gopls'
 
-"" ctags
+"" auto-ctags / ctags
 let g:auto_ctags = 0
-" set tags=.git/tags
-set tags+=.git/tags
-" set tags+=./tags,tags;$HOME
 let g:auto_ctags_directory_list = ['.git']
 let g:auto_ctags_tags_args = '--tag-relative=yes --recurse --sort=yes --append=no --format=2'
+let g:auto_ctags_filetype_mode = 1
 
 "" tagbar
 let g:tagbar_width = 60
@@ -489,17 +474,12 @@ let g:go_bin_path = expand(globpath($GOPATH, "bin"))
 let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_autosave = 1
-if executable('gopls')
-  " let g:go_def_mode='godef'
-  let g:go_def_mode='gopls'
-  let g:go_info_mode='gopls'
-endif
+let g:go_fmt_command = "goimports"
+let g:go_fmt_options = "-s"
 " let g:go_fmt_command = "gofmt"
-" let g:go_fmt_command = "goimports"
-" let g:go_fmt_options = "-s"
-let g:go_fmt_options = {
-  \ 'gofmt': '-s',
-  \ }
+" let g:go_fmt_options = {
+"   \ 'gofmt': '-s',
+"   \ }
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
