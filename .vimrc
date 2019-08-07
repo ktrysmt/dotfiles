@@ -265,7 +265,6 @@ Plug 'lambdalisue/vim-unified-diff'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'tmhedberg/matchit'
 Plug 'vimtaku/hl_matchit.vim'
-Plug 'osyo-manga/vim-over'
 Plug 'w0rp/ale'
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-operator-user'
@@ -287,27 +286,13 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript'] }
 " [php]
 Plug 'lvht/phpcd.vim', { 'for': ['php'] }
-" [js]
-" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx', 'html'], 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'yarn' }
-Plug 'styled-components/vim-styled-components', { 'branch': 'main', 'for': ['javascript', 'javascript.jsx', 'css'] }
-Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'hail2u/vim-css3-syntax', { 'for': ['javascript', 'javascript.jsx', 'css'] }
-Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/html5.vim', { 'for': ['javascript', 'javascript.jsx', 'html'] }
-Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " [go]
 Plug 'tpope/vim-pathogen', { 'for': 'go' } " for vim-godebug
 Plug 'jodosha/vim-godebug', { 'for': 'go' }
-Plug 'fatih/vim-go', { 'for': 'go' }
 " [terraform]
 Plug 'hashivim/vim-terraform', { 'for': ['tf', 'terraform'] }
 " [dockerfile]
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['tf', 'Dockerfile'] }
-" [ansible]
-" Plug 'chase/vim-ansible-yaml', { 'for': ['ansible','jinja','yaml'] }
 call plug#end()
 
 
@@ -332,20 +317,20 @@ nmap # <Plug>(anzu-sharp-with-echo)
 " statusline
 set statusline=%{anzu#search_status()}
 
-"" lsp
-if executable('gopls')
-  let g:lsp_async_completion = 1
-  let g:lsp_diagnostics_enabled = 0
-  augroup LspGo
-    au!
-    autocmd User lsp_setup call lsp#register_server({
-        \ 'name': 'go-lang',
-        \ 'cmd': {server_info->['gopls']},
-        \ 'whitelist': ['go'],
-        \ })
-    autocmd FileType go setlocal omnifunc=lsp#complete
-  augroup END
-endif
+"" lsp w/ gopls
+" if executable('gopls')
+"   let g:lsp_async_completion = 1
+"   let g:lsp_diagnostics_enabled = 0
+"   augroup LspGo
+"     au!
+"     autocmd User lsp_setup call lsp#register_server({
+"         \ 'name': 'go-lang',
+"         \ 'cmd': {server_info->['gopls']},
+"         \ 'whitelist': ['go'],
+"         \ })
+"     autocmd FileType go setlocal omnifunc=lsp#complete
+"   augroup END
+" endif
 
 "" completion
 " " deoplete
@@ -381,24 +366,17 @@ let g:lightline = {
 "" ale
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_fixers = {
-  \ 'javascript': ['eslint','prettier'],
-  \ 'jsx': ['eslint'],
-  \ 'css': ['stylelint'],
+	\ 'go'   : ['goimports'],
   \ 'ruby': ['rubocop'],
   \ 'rust': ['rustfmt'],
 \}
 let g:ale_fix_on_save = 1
 let g:ale_linters = {
-  \ 'jsx': ['eslint', 'stylelint'],
-  \ 'css': ['stylelint'],
-  \ 'go' : ['gopls'],
   \ 'ruby' : ['rubocop','ruby'],
   \ 'yaml' : [''],
+	\ 'go'   : ['golangci-lint'],
   \ 'rust' : ['rls'],
 \}
-let g:ale_linter_aliases = {'jsx': 'css'}
-let g:ale_go_gometalinter_options = '--vendored-linters --disable-all --enable=gotype --enable=vet --enable=golint -t'
-let g:ale_go_bingo_executable = 'gopls'
 
 "" auto-ctags / ctags
 let g:auto_ctags = 0
@@ -469,27 +447,6 @@ let g:hl_matchit_enable_on_vim_startup = 1
 let g:hl_matchit_hl_groupname = 'Title'
 let g:hl_matchit_allow_ft = 'vim\|ruby\|sh\|php\|javascript\|go\|rust'
 
-"" vim-go
-let g:go_bin_path = expand(globpath($GOPATH, "bin"))
-let g:go_play_open_browser = 0
-let g:go_fmt_fail_silently = 1
-let g:go_fmt_autosave = 1
-let g:go_fmt_command = "goimports"
-let g:go_fmt_options = "-s"
-" let g:go_fmt_command = "gofmt"
-" let g:go_fmt_options = {
-"   \ 'gofmt': '-s',
-"   \ }
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_interfaces = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_disable_autoinstall = 0
-let g:go_gocode_unimported_packages = 1
-command! GoDebugStart : "dummy :GoDebugTest of vim-go
-
 "" tab control
 function! s:SID_PREFIX()
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
@@ -534,8 +491,7 @@ let NERDTreeIgnore = ['node_modules$','\.git$', "\.DS_Store$"]
 let g:NERDTreeChDirMode = 2
 let g:NERDTreeWinSize = 45
 let g:nerdtree_tabs_open_on_console_startup = 1
-
-"" highlight in NERDTree
+" highlight in NERDTree
 function! IsNERDTreeOpen()
   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 endfunction
@@ -571,20 +527,4 @@ endif
 "" terraform
 let g:terraform_fmt_on_save = 1
 
-"" javascript syntax
-let g:used_javascript_libs = 'react'
 
-"-------------------------
-"" Set os env
-"-------------------------
-if has("mac")
-" mac用の設定
-elseif has("unix")
-" unix固有の設定
-elseif has("win64")
-" 64bit_windows固有の設定
-elseif has("win32unix")
-" Cygwin固有の設定
-elseif has("win32")
-" 32bit_windows固有の設定
-endif

@@ -43,12 +43,10 @@
   export PATH=$HOME/go/bin:$PATH
   export PATH=$HOME/project/bin:$PATH
   export GO111MODULE="auto"
+  export GOPATH=$HOME/go:$HOME/project
   # anyenv and node
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
-  # goenv
-  eval "$(goenv init -)"
-  export GOPATH=$HOME/go:$HOME/project
   # rust
   [ -f ~/.cargo/env ] && source ~/.cargo/env
   # fzf

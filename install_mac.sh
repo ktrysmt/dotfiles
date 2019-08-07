@@ -32,13 +32,9 @@ mkdir -p $(anyenv root)/plugins
 git clone https://github.com/znz/anyenv-update.git $(anyenv root)/plugins/anyenv-update
 anyenv install nodenv
 anyenv install rbenv
-anyenv install goenv
 nodenv install v10.15.1
 nodenv rehash
 nodenv global v10.15.1
-goenv install 1.10.3
-goenv rehash
-goenv global 1.10.3
 
 # rust
 curl https://sh.rustup.rs -sSf | sh -s -- -y
@@ -99,6 +95,7 @@ ln -sf $(which nvim) /usr/local/bin/vim
 echo "-----------------------------------------------------";
 echo "Setup Other";
 echo "-----------------------------------------------------";
+go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
 go get -u golang.org/x/tools/gopls@latest
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 npm i -g npm-check-updates neovim

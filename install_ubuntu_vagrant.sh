@@ -16,7 +16,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/i
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 # brew
-brew install git peco wget zsh ripgrep fd fzf tig fzy exa python jq bat git-secrets ghq dep goenv tmux
+brew install git peco wget zsh ripgrep fd fzf tig fzy exa python jq bat git-secrets ghq dep tmux
 exec $SHELL -l
 
 # brew neovim
