@@ -17,7 +17,7 @@ hs.alert.show("config reloaded.")
     Switch kana and eisu
 ]]
 local kana = false
-local function handleGlobalKeyEvent(e)
+local function switchEisuKanaByOne(e)
   local keyCode = e:getKeyCode()
   local keyUp = (e:getType() == hs.eventtap.event.types.keyUp)
   local result = false
@@ -34,7 +34,7 @@ local function handleGlobalKeyEvent(e)
   end
   return result
 end
-eventtap = hs.eventtap.new({hs.eventtap.event.types.keyDown, hs.eventtap.event.types.keyUp}, handleGlobalKeyEvent)
+eventtap = hs.eventtap.new({hs.eventtap.event.types.keyDown, hs.eventtap.event.types.keyUp}, switchEisuKanaByOne)
 eventtap:start()
 
 --[[
@@ -82,40 +82,6 @@ remapKey({'cmd', 'shift'}, 'k', keyCode('left', {'shift'}))
 remapKey({'cmd', 'shift'}, 'l', keyCode('right', {'shift'}))
 
 --[[
-    Vim escape w/ eisu
-]]
-local VK_ESC = 53
-local VK_LEFT_BRACKET = 30
-local VK_C = 8
-local function switchToUs()
-  hs.eventtap.keyStroke({}, 102)
-end
-function flagsMatches(flags, modifiers)
-    local set = {}
-    for _, i in ipairs(modifiers) do set[string.lower(i)] = true end
-    for _, j in ipairs({'fn', 'cmd', 'ctrl', 'alt', 'shift'}) do
-        if set[j] ~= flags[j] then return false end
-    end
-    return true
-end
-keyEventtap = hs.eventtap.new({
-    hs.eventtap.event.types.keyDown
-}, function(event)
-    local keyCode = event:getKeyCode()
-    local flags = event:getFlags()
-
-    if keyCode == VK_ESC then
-        switchToUs()
-    end
-
-    if keyCode == VK_LEFT_BRACKET or keyCode == VK_C then
-        if flagsMatches(flags, {'ctrl'}) then
-            switchToUs()
-        end
-    end
-end)
-
---[[
     Main
 ]]
 local function handleGlobalEvent(name, event, app)
@@ -123,20 +89,16 @@ local function handleGlobalEvent(name, event, app)
         local bundleId = string.lower(app.frontmostApplication():bundleID())
         -- hs.alert.show(bundleId)
         if (bundleId:match("iterm2")) then
-            keyEventtap:stop()
             disableAllHotkeys()
             hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Naked profile'")
         -- elseif (bundleId:match("com.apple.terminal")) then
-        --     keyEventtap:start()
         --     disableAllHotkeys()
         --     hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Naked profile'")
         elseif (bundleId:match("com.google.chrome")) then
-            keyEventtap:stop()
             remapKey({'option'}, 'D', keyCode('C', {'ctrl'})) -- chrome.v69対策 1 (macOS側は[場所を開く… > ctrl+C]にする)
             enableAllHotkeys()
+            hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Default profile'")
         else
-            keyEventtap:stop()
-            -- remapKey({'option'}, 'D', keyCode('D', {'option'})) -- chrome.v69対策 2
             enableAllHotkeys()
             hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Default profile'")
         end
