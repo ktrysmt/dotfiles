@@ -47,17 +47,7 @@ set list
 " 不可視文字を可視化する場合は以下をアンコメント
 " set listchars=tab:^-,trail:-,extends:»,precedes:«,nbsp:%
 filetype plugin indent on
-
 scriptencoding utf-8
-if !has('gui_running')
-      \ && exists('&termguicolors')
-      \ && $COLORTERM ==# 'truecolor'
-  if !has('nvim')
-    let &t_8f = "\e[38;2;%lu;%lu;%lum"
-    let &t_8b = "\e[48;2;%lu;%lu;%lum"
-  endif
-  set termguicolors
-endif
 
 "" Clipboard
 if has('mac')
@@ -182,6 +172,21 @@ autocmd BufWritePre * :%s/\s\+$//ge
 autocmd VimEnter * nested if @% != '' | :NERDTreeFind | wincmd p | endif
 autocmd InsertLeave * set nopaste
 autocmd QuickFixCmdPost *grep* cwindow
+autocmd Filetype json setl conceallevel=0
+""""""""""""""""""""""
+" autocmd MyAutoCmd BufWritePost *
+"       \ if &filetype ==# '' && exists('b:ftdetect') |
+"       \  unlet! b:ftdetect |
+"       \  filetype detect |
+"       \ endif
+" augroup MyAutoCmd
+"   autocmd! *
+" augroup END
+""""""""""""""""""""""
+" cnahge from rustc to cargo run when quickrun
+let g:quickrun_config = {}
+autocmd BufNewFile,BufRead *.rs  let g:quickrun_config.rust = {'exec' : 'cargo run'}
+"" augroup
 augroup highlightIdegraphicSpace
   autocmd!
   autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=DarkGreen guibg=DarkGreen
@@ -189,24 +194,13 @@ augroup highlightIdegraphicSpace
 augroup END
 augroup FiletypeGroup
   autocmd!
-  au BufNewFile,BufRead *.yml.j2,*.yaml.j2 set ft=yaml " or, set ft=ansible by vim-ansible-yaml
+  au BufNewFile,BufRead *.yml.j2,*.yaml.j2 set ft=yaml " or, set ft=ansible by vim-ansible-yaml plugin
   au BufNewFile,BufRead *.conf,*.conf.j2 set ft=conf
-  au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 augroup END
-augroup MyAutoCmd
-  autocmd! *
-augroup END
-autocmd MyAutoCmd BufWritePost *
-      \ if &filetype ==# '' && exists('b:ftdetect') |
-      \  unlet! b:ftdetect |
-      \  filetype detect |
-      \ endif
-let g:quickrun_config = {} " rustc -> cargo run
-autocmd BufNewFile,BufRead *.rs  let g:quickrun_config.rust = {'exec' : 'cargo run'}
 
 "" custom commands
 command! -nargs=* -complete=file Rg :tabnew | :silent grep --sort-files <args>
-command! -nargs=* -complete=file Rgg :tabnew | :silent grep <args>
+command! -nargs=* -complete=file RgfastUnsort :tabnew | :silent grep <args>
 command! -bang -nargs=* Ripgrep
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
@@ -219,6 +213,15 @@ command! Edv edit $HOME/dotfiles/.vimrc
 cabbr w!! w !sudo tee > /dev/null %
 
 " terminal colors
+if !has('gui_running')
+      \ && exists('&termguicolors')
+      \ && $COLORTERM ==# 'truecolor'
+  if !has('nvim')
+    let &t_8f = "\e[38;2;%lu;%lu;%lum"
+    let &t_8b = "\e[48;2;%lu;%lu;%lum"
+  endif
+  set termguicolors
+endif
 let g:terminal_color_0  = "#1b2b34" "black
 let g:terminal_color_1  = "#ed5f67" "red
 let g:terminal_color_2  = "#9ac895" "green
@@ -238,7 +241,6 @@ let g:terminal_color_15 = "#d9dfea" "bright white
 let g:terminal_color_background="#1b2b34" "background
 let g:terminal_color_foreground="#c1c6cf" "foreground
 
-
 "---------------------------
 "" Vim-Plug
 "---------------------------
@@ -253,7 +255,7 @@ call plug#begin()
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'kristijanhusak/vim-hybrid-material'
-Plug 'Townk/vim-autoclose'
+Plug 'cohama/lexima.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -283,9 +285,9 @@ Plug 'thinca/vim-qfreplace'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug '/usr/local/opt/fzf' " installed fzf via brew
 Plug 'junegunn/fzf.vim'
-Plug 'elzr/vim-json'
+Plug 'thinca/vim-quickrun'
 " [lsp]
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/async.vim'
@@ -313,19 +315,13 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascri
 Plug 'tpope/vim-pathogen', { 'for': 'go' } " for vim-godebug
 Plug 'jodosha/vim-godebug', { 'for': 'go' }
 Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'thinca/vim-quickrun'
-if has('nvim')
-  Plug 'nsf/gocode', { 'for': 'go', 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
-  Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make'}
-end
 " [rust]
-Plug 'scrooloose/syntastic', { 'for': ['rust'] }
 Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
 Plug 'racer-rust/vim-racer', { 'for': ['rust'] }
 " [terraform]
 Plug 'hashivim/vim-terraform', { 'for': ['tf', 'terraform'] }
 " [dockerfile]
-Plug 'docker/docker', { 'for': ['tf', 'Dockerfile'] }
+Plug 'ekalinin/Dockerfile.vim', { 'for': ['tf', 'Dockerfile'] }
 " [ansible]
 " Plug 'chase/vim-ansible-yaml', { 'for': ['ansible','jinja','yaml'] }
 call plug#end()
@@ -346,18 +342,10 @@ colorscheme hybrid_material
 let g:unite_enable_split_vertically = 1
 nnoremap <C-p> :Unite -create -buffer-name=yankround yankround<Return>
 
-"" tabnine
-if has('nvim')
-  call deoplete#custom#var('tabnine', {
-        \ 'line_limit': 1000,
-        \ 'max_num_results': 4,
-        \ })
-endif
-
 "" lsp
 if executable('gopls')
-  " let g:lsp_async_completion = 1
-  " let g:lsp_diagnostics_enabled = 0
+  let g:lsp_async_completion = 1
+  let g:lsp_diagnostics_enabled = 0
   augroup LspGo
     au!
     autocmd User lsp_setup call lsp#register_server({
@@ -369,66 +357,16 @@ if executable('gopls')
   augroup END
 endif
 
-"" fzf.vim
-if has('nvim')
-  function! s:fzf_statusline()
-    " Override statusline as you like
-    highlight fzf1 ctermfg=161 ctermbg=251
-    highlight fzf2 ctermfg=23 ctermbg=251
-    highlight fzf3 ctermfg=237 ctermbg=251
-    setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-  endfunction
-  autocmd! User FzfStatusLine call <SID>fzf_statusline()
-  command! -bang Windows call fzf#vim#windows({'options': ['--query', '!NERD ']}, <bang>0)
-endif
-
-"" vim-table-mode
-let g:table_mode_corner='|'
-
-"" vim-json
-let g:vim_json_syntax_conceal = 0
-
 "" completion
-if has('nvim')
-  " deoplete
-  let g:deoplete#enable_smart_case = 1
-  let g:deoplete#enable_at_startup = 1
-  inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-  inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
-  inoremap <CR> <C-r>=<SID>my_cr_function()<CR>
-  function! s:my_cr_function() abort
-    return deoplete#close_popup() . "\<CR>"
-  endfunction
-  " deoplete-go
-  let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-  let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-  let g:deoplete#sources#go#use_cache = 1
-  let g:deoplete#sources#go#json_directory = $HOME.'/.local/data/deoplete-go'
-  let g:deoplete#sources#go#align_class = 1
-  let g:deoplete#sources#go#package_dot = 1
-else
-  " use neoccomplete
-  let g:acp_enableAtStartup = 0
-  let g:neocomplete#enable_at_startup = 1
-  let g:neocomplete#enable_smart_case = 1
-  let g:neocomplete#sources#syntax#min_keyword_length = 3
-  let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-  let g:neocomplete#sources#dictionary#dictionaries = {
-        \ 'default' : '',
-        \ 'vimshell' : $HOME.'/.vimshell_hist',
-        \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-  if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-  endif
-  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-  inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-  inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType * setlocal completeopt-=preview
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-end
+" deoplete
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+inoremap <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function() abort
+  return deoplete#close_popup() . "\<CR>"
+endfunction
 
 "" lightline
 set laststatus=2
@@ -635,7 +573,6 @@ autocmd FileType html,css,scss,javascript EmmetInstall
 let g:rustfmt_autosave = 0
 let g:racer_cmd = '$HOME/.cargo/bin/racer'
 let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
-" let $RUST_SRC_PATH = '$HOME/.cargo/src'
 let g:racer_experimental_completer = 1
 let g:racer_insert_paren = 1
 
