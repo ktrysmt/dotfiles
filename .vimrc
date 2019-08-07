@@ -246,7 +246,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 call plug#begin()
 "" [general]
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'cohama/lexima.vim'
 Plug 'scrooloose/nerdtree'
