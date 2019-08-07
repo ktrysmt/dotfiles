@@ -95,8 +95,8 @@ ln -sf $(which nvim) /usr/local/bin/vim
 echo "-----------------------------------------------------";
 echo "Setup Other";
 echo "-----------------------------------------------------";
-go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
-go get -u golang.org/x/tools/gopls@latest
+go get github.com/golangci/golangci-lint/cmd/golangci-lint
+go get golang.org/x/tools/gopls@latest
 vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
 npm i -g npm-check-updates neovim
 

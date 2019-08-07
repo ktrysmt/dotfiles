@@ -376,6 +376,7 @@ let g:ale_linters = {
 	\ 'go'   : ['golangci-lint'],
   \ 'rust' : ['rls'],
 \}
+let g:ale_go_golangci_lint_options = '--fast --enable-all -D errcheck'
 
 "" auto-ctags / ctags
 let g:auto_ctags = 0
