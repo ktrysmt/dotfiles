@@ -252,17 +252,14 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 call plug#begin()
 "" [general]
-Plug 'Shougo/unite.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'cohama/lexima.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'junegunn/vim-easy-align'
+Plug 'Shougo/unite.vim'
 Plug 'LeafCage/yankround.vim'
-Plug 'haya14busa/incsearch.vim'
-Plug 'haya14busa/vim-asterisk'
 Plug 'osyo-manga/vim-anzu'
 Plug 'tpope/vim-dispatch'
 Plug 'itchyny/lightline.vim'
@@ -315,9 +312,6 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascri
 Plug 'tpope/vim-pathogen', { 'for': 'go' } " for vim-godebug
 Plug 'jodosha/vim-godebug', { 'for': 'go' }
 Plug 'fatih/vim-go', { 'for': 'go' }
-" [rust]
-Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
-Plug 'racer-rust/vim-racer', { 'for': ['rust'] }
 " [terraform]
 Plug 'hashivim/vim-terraform', { 'for': ['tf', 'terraform'] }
 " [dockerfile]
@@ -338,9 +332,19 @@ autocmd ColorScheme * hi LineNr ctermfg=239
 autocmd ColorScheme * hi Normal ctermbg=none
 colorscheme hybrid_material
 
-"" unite settings
+"" unite w/ yankround
 let g:unite_enable_split_vertically = 1
 nnoremap <C-p> :Unite -create -buffer-name=yankround yankround<Return>
+let g:yankround_max_history = 80
+
+"" vim-anzu
+" mapping
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
+" statusline
+set statusline=%{anzu#search_status()}
 
 "" lsp
 if executable('gopls')
@@ -404,7 +408,7 @@ let g:ale_linters = {
   \ 'go' : ['gometalinter'],
   \ 'ruby' : ['rubocop','ruby'],
   \ 'yaml' : [''],
-  \ 'rust' : ['rustc'],
+  \ 'rust' : ['rls'],
 \}
 let g:ale_linter_aliases = {'jsx': 'css'}
 let g:ale_go_gometalinter_options = '--vendored-linters --disable-all --enable=gotype --enable=vet --enable=golint -t'
@@ -569,17 +573,6 @@ let g:user_emmet_mode='in'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,scss,javascript EmmetInstall
 
-"" rust
-let g:rustfmt_autosave = 0
-let g:racer_cmd = '$HOME/.cargo/bin/racer'
-let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
-let g:racer_experimental_completer = 1
-let g:racer_insert_paren = 1
-
-"" easy-align
-vmap <Enter> <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-
 "" operetor-user
 map sa <Plug>(operator-surround-append)
 map sd <Plug>(operator-surround-delete)
@@ -600,23 +593,6 @@ let g:terraform_fmt_on_save = 1
 
 "" javascript syntax
 let g:used_javascript_libs = 'react'
-
-"" incsearch,asterisk,anzu
-map g/ <Plug>(incsearch-forward)
-map ? <Plug>(incsearch-backward)
-map / <Plug>(incsearch-stay)
-let g:incsearch#magic = '\v'
-let g:incsearch#auto_nohlsearch = 1
-map n <Plug>(incsearch-nohl-n)
-map N <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-nmap n <Plug>(anzu-n-with-echo)
-nmap N <Plug>(anzu-N-with-echo)
-map * <Plug>(incsearch-nohl0)<Plug>(asterisk-z*)
-map g* <Plug>(incsearch-nohl0)<Plug>(asterisk-gz*)
-map # <Plug>(incsearch-nohl0)<Plug>(asterisk-z#)
-map g# <Plug>(incsearch-nohl0)<Plug>(asterisk-gz#)
 
 "-------------------------
 "" Set os env
