@@ -1,11 +1,11 @@
---[[ 
+--[[
     References:
     * http://www.hammerspoon.org/docs/hs.hotkey.html#new
     * http://www.hammerspoon.org/docs/hs.eventtap.html#new
     * http://rochefort.hatenablog.com/entry/2017/03/06/070000
 ]]
 
---[[ 
+--[[
     Reloading
 ]]
 hs.hotkey.bind({"cmd", "alt"}, "R", function()
@@ -13,7 +13,7 @@ hs.hotkey.bind({"cmd", "alt"}, "R", function()
 end)
 hs.alert.show("config reloaded.")
 
---[[ 
+--[[
     Switch kana and eisu
 ]]
 local kana = false
@@ -125,6 +125,7 @@ local function handleGlobalEvent(name, event, app)
         if (bundleId:match("iterm2")) then
             keyEventtap:stop()
             disableAllHotkeys()
+            hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Naked profile'")
         -- elseif (bundleId:match("com.apple.terminal")) then
         --     keyEventtap:start()
         --     disableAllHotkeys()
