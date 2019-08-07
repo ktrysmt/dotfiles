@@ -1,20 +1,8 @@
 "---------------------------
 "" General
 "---------------------------
-"" set envs
-let $GO111MODULE = "auto"
-"" set parameters
 set encoding=utf8
-scriptencoding utf-8
-if !has('gui_running')
-      \ && exists('&termguicolors')
-      \ && $COLORTERM ==# 'truecolor'
-  if !has('nvim')
-    let &t_8f = "\e[38;2;%lu;%lu;%lum"
-    let &t_8b = "\e[48;2;%lu;%lu;%lum"
-  endif
-  set termguicolors
-endif
+set sh=zsh
 set secure
 set fileencodings=utf-8,euc-jp,sjis,iso-2022-jp,
 set fileformats=unix,dos,mac
@@ -54,27 +42,33 @@ set completeopt=noinsert,menuone,noselect
 set wildmenu
 set history=5000
 set guifont=Cica:h15
-filetype plugin indent on
-" 不可視文字を可視化する場合は以下をアンコメント
+set inccommand=split
 set list
+" 不可視文字を可視化する場合は以下をアンコメント
 " set listchars=tab:^-,trail:-,extends:»,precedes:«,nbsp:%
-if has('nvim')
-  set inccommand=split
-  tnoremap <silent> <ESC> <C-\><C-n>
-  set sh=zsh
-end
+filetype plugin indent on
+
+scriptencoding utf-8
+if !has('gui_running')
+      \ && exists('&termguicolors')
+      \ && $COLORTERM ==# 'truecolor'
+  if !has('nvim')
+    let &t_8f = "\e[38;2;%lu;%lu;%lum"
+    let &t_8b = "\e[48;2;%lu;%lu;%lum"
+  endif
+  set termguicolors
+endif
 
 "" Clipboard
-if has('win32') || has('win64') || has('mac')
+if has('mac')
   set clipboard=unnamed
 else
   set clipboard=unnamed,unnamedplus
 endif
 
 "" Resolve PATH
-let s:is_windows = has('win32') || has('win64')
 function! s:configure_path(name, pathlist) abort
-  let path_separator = s:is_windows ? ';' : ':'
+  let path_separator = ':'
   let pathlist = split(expand(a:name), path_separator)
   for path in map(filter(a:pathlist, '!empty(v:val)'), 'expand(v:val)')
     if isdirectory(path) && index(pathlist, path) == -1
@@ -102,60 +96,59 @@ function! s:pick_executable(pathspecs) abort
   endfor
   return ''
 endfunction
-if has('nvim')
-  let g:python_host_prog = s:pick_executable([
-        \ '/usr/local/bin/python2',
-        \ '/home/linuxbrew/.linuxbrew/bin/python2',
-        \ '/usr/bin/python2',
-        \ '/bin/python2',
-        \])
-  let g:python3_host_prog = s:pick_executable([
-        \ '/usr/local/bin/python3',
-        \ '/home/linuxbrew/.linuxbrew/bin/python3',
-        \ '/usr/bin/python3',
-        \ '/bin/python3',
-        \])
-endif
+let g:python_host_prog = s:pick_executable([
+      \ '/usr/local/bin/python2',
+      \ '/home/linuxbrew/.linuxbrew/bin/python2',
+      \ '/usr/bin/python2',
+      \ '/bin/python2',
+      \])
+let g:python3_host_prog = s:pick_executable([
+      \ '/usr/local/bin/python3',
+      \ '/home/linuxbrew/.linuxbrew/bin/python3',
+      \ '/usr/bin/python3',
+      \ '/bin/python3',
+      \])
 
 "" leader mapping
 let mapleader = "\<Space>"
+tnoremap <ESC> <C-\><C-n>
 nnoremap cn *Ncgn
 nnoremap cN *NcgN
 nnoremap <Leader>%s  :%s/\v
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 map <C-g> :echo expand('%:p')<Return>
-nnoremap <silent> <Leader>co :copen<cr>
-nnoremap <silent> <Leader>cl :cclose<cr>
-nnoremap <silent> <expr> <Leader>a (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Ag\<cr>"
-nnoremap <silent> <expr> <Leader>x (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Commands\<cr>"
-nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
-nnoremap <silent> <expr> <Leader>d (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":GFiles?\<cr>"
-nnoremap <silent> <expr> <Leader>b (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Buffers\<cr>"
-nnoremap <silent> <expr> <Leader>h (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":History:\<cr>"
-nnoremap <silent> <expr> <Leader>r (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Ripgrep\<cr>"
-nnoremap <silent> <expr> <Leader>w (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Windows\<cr>"
-nnoremap <silent> <Leader>gm :Gmerge<CR>
-nnoremap <silent> <Leader>gs :Gstatus<CR>
-nnoremap <silent> <Leader>gl :Glog<CR>
-nnoremap <silent> <Leader>gb :Gblame<CR>
+nnoremap <Leader>co :copen<cr>
+nnoremap <Leader>cl :cclose<cr>
+nnoremap <expr> <Leader>a (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Ag\<cr>"
+nnoremap <expr> <Leader>x (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Commands\<cr>"
+nnoremap <expr> <Leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+nnoremap <expr> <Leader>d (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":GFiles?\<cr>"
+nnoremap <expr> <Leader>b (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Buffers\<cr>"
+nnoremap <expr> <Leader>h (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":History:\<cr>"
+nnoremap <expr> <Leader>r (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Ripgrep\<cr>"
+nnoremap <expr> <Leader>w (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Windows\<cr>"
+nnoremap <Leader>gm :Gmerge<CR>
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gl :Glog<CR>
+nnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gca :Gcommit -a -m "
 nnoremap <Leader>gps :Dispatch! git push origin<cr>
 nnoremap <Leader>gpl :Dispatch! git pull origin<cr>
-nnoremap <silent> <Leader>t :new \| :terminal<CR>
-nnoremap <silent> <Leader>T :tabnew \| :terminal<CR>
-nnoremap <silent> <Leader>vt :vne \| :terminal<CR>
+nnoremap <Leader>t :new \| :terminal<CR>
+nnoremap <Leader>T :tabnew \| :terminal<CR>
+nnoremap <Leader>vt :vne \| :terminal<CR>
 nnoremap <Leader>n :ALENextWrap<CR>
 nnoremap <Leader>got :GoToggleBreakpoint<CR>
 nnoremap <Leader>god :GoDebug<CR>
 map <C-]> :tab <CR>:exec("tjump ".expand("<cword>"))<CR>
 map <leader><C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
-nnoremap <silent> <C-x>sc :<C-u>call <SID>change_case("sc")<CR>
-nnoremap <silent> <C-x>sk :<C-u>call <SID>change_case("sk")<CR>
-nnoremap <silent> <C-x>cs :<C-u>call <SID>change_case("cs")<CR>
-nnoremap <silent> <C-x>ck :<C-u>call <SID>change_case("ck")<CR>
-nnoremap <silent> <C-x>kc :<C-u>call <SID>change_case("kc")<CR>
-nnoremap <silent> <C-x>ks :<C-u>call <SID>change_case("ks")<CR>
+nnoremap <C-x>sc :<C-u>call <SID>change_case("sc")<CR>
+nnoremap <C-x>sk :<C-u>call <SID>change_case("sk")<CR>
+nnoremap <C-x>cs :<C-u>call <SID>change_case("cs")<CR>
+nnoremap <C-x>ck :<C-u>call <SID>change_case("ck")<CR>
+nnoremap <C-x>kc :<C-u>call <SID>change_case("kc")<CR>
+nnoremap <C-x>ks :<C-u>call <SID>change_case("ks")<CR>
 
 "" change case (snake,camel,kebab)
 function! s:change_case(v1, ...)
@@ -211,22 +204,6 @@ autocmd MyAutoCmd BufWritePost *
 let g:quickrun_config = {} " rustc -> cargo run
 autocmd BufNewFile,BufRead *.rs  let g:quickrun_config.rust = {'exec' : 'cargo run'}
 
-"" Toggle window zoom
-function! s:toggle_window_zoom() abort
-    if exists('t:zoom_winrestcmd')
-        execute t:zoom_winrestcmd
-        unlet t:zoom_winrestcmd
-    else
-        let t:zoom_winrestcmd = winrestcmd()
-        resize
-        vertical resize
-    endif
-endfunction
-nnoremap <silent> <Plug>(my-zoom-window)
-      \ :<C-u>call <SID>toggle_window_zoom()<CR>
-nmap <C-w>z <Plug>(my-zoom-window)
-nmap <C-w><C-z> <Plug>(my-zoom-window)
-
 "" custom commands
 command! -nargs=* -complete=file Rg :tabnew | :silent grep --sort-files <args>
 command! -nargs=* -complete=file Rgg :tabnew | :silent grep <args>
@@ -274,14 +251,7 @@ endif
 call plug#begin()
 "" [general]
 Plug 'Shougo/unite.vim'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  " Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' } " Completion by ML
-else
-  Plug 'Shougo/neocomplete.vim'
-end
-Plug 'haya14busa/vim-edgemotion'
-Plug 'janko-m/vim-test'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'Townk/vim-autoclose'
 Plug 'scrooloose/nerdtree'
@@ -374,7 +344,7 @@ colorscheme hybrid_material
 
 "" unite settings
 let g:unite_enable_split_vertically = 1
-nnoremap <silent> <C-p> :Unite -create -buffer-name=yankround yankround<Return>
+nnoremap <C-p> :Unite -create -buffer-name=yankround yankround<Return>
 
 "" tabnine
 if has('nvim')
@@ -385,14 +355,14 @@ if has('nvim')
 endif
 
 "" lsp
-let g:lsp_async_completion = 1
-let g:lsp_diagnostics_enabled = 0
 if executable('gopls')
+  " let g:lsp_async_completion = 1
+  " let g:lsp_diagnostics_enabled = 0
   augroup LspGo
     au!
     autocmd User lsp_setup call lsp#register_server({
         \ 'name': 'go-lang',
-        \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
+        \ 'cmd': {server_info->['gopls']},
         \ 'whitelist': ['go'],
         \ })
     autocmd FileType go setlocal omnifunc=lsp#complete
@@ -415,15 +385,6 @@ endif
 "" vim-table-mode
 let g:table_mode_corner='|'
 
-
-"" vim-test
-let g:test#preserve_screen = 1
-let test#strategy = {
-  \ 'nearest': 'neovim',
-  \ 'file':    'dispatch',
-  \ 'suite':   'basic',
-\}
-
 "" vim-json
 let g:vim_json_syntax_conceal = 0
 
@@ -434,7 +395,7 @@ if has('nvim')
   let g:deoplete#enable_at_startup = 1
   inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
   inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
-  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+  inoremap <CR> <C-r>=<SID>my_cr_function()<CR>
   function! s:my_cr_function() abort
     return deoplete#close_popup() . "\<CR>"
   endfunction
@@ -520,11 +481,11 @@ let g:auto_ctags_tags_args = '--tag-relative=yes --recurse --sort=yes --append=n
 
 "" tagbar
 let g:tagbar_width = 60
-nmap <silent> <C-a>      :TagbarToggle<CR>
-vmap <silent> <C-a> <Esc>:TagbarToggle<CR>
-omap <silent> <C-a>      :TagbarToggle<CR>
-imap <silent> <C-a> <Esc>:TagbarToggle<CR>
-cmap <silent> <C-a> <C-u>:TagbarToggle<CR>
+nmap <C-a>      :TagbarToggle<CR>
+vmap <C-a> <Esc>:TagbarToggle<CR>
+omap <C-a>      :TagbarToggle<CR>
+imap <C-a> <Esc>:TagbarToggle<CR>
+cmap <C-a> <C-u>:TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_type_yaml = {
     \ 'ctagstype' : 'Yaml',
@@ -576,10 +537,6 @@ let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
 let g:EasyMotion_leader_key=";"
 let g:EasyMotion_grouping=1
 
-"" edgemotion
-map <C-j> <Plug>(edgemotion-j)
-map <C-k> <Plug>(edgemotion-k)
-
 "" for hl_matchit
 let g:hl_matchit_enable_on_vim_startup = 1
 let g:hl_matchit_hl_groupname = 'Title'
@@ -591,7 +548,8 @@ let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_autosave = 1
 if executable('gopls')
-  let g:go_def_mode='godef'
+  " let g:go_def_mode='godef'
+  let g:go_def_mode='gopls'
   let g:go_info_mode='gopls'
 endif
 " let g:go_fmt_command = "gofmt"
@@ -608,7 +566,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_disable_autoinstall = 0
 let g:go_gocode_unimported_packages = 1
-command! GoDebugStart : "dummy for :GoDebugTest at vim-go
+command! GoDebugStart : "dummy :GoDebugTest of vim-go
 
 "" tab control
 function! s:SID_PREFIX()
@@ -639,16 +597,16 @@ nnoremap    [Tag]   <Nop>
 nmap    t [Tag]
 " Tab jump
 for n in range(1, 9)
-  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
+  execute 'nnoremap [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
 " Tab map
-map <silent> [Tag]c :tablast <bar> tabnew<CR>
-map <silent> [Tag]x :tabclose<CR>
-map <silent> [Tag]n :tabnext<CR>
-map <silent> [Tag]p :tabprevious<CR>
+map [Tag]c :tablast <bar> tabnew<CR>
+map [Tag]x :tabclose<CR>
+map [Tag]n :tabnext<CR>
+map [Tag]p :tabprevious<CR>
 
 "" NERDTree
-nnoremap <silent> <C-e> :NERDTreeToggle<cr>
+nnoremap <C-e> :NERDTreeToggle<cr>
 let g:NERDTreeShowHidden=1
 let NERDTreeIgnore = ['node_modules$','\.git$', "\.DS_Store$"]
 let g:NERDTreeChDirMode = 2
@@ -686,9 +644,9 @@ vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 "" operetor-user
-map <silent> sa <Plug>(operator-surround-append)
-map <silent> sd <Plug>(operator-surround-delete)
-map <silent> sr <Plug>(operator-surround-replace)
+map sa <Plug>(operator-surround-append)
+map sd <Plug>(operator-surround-delete)
+map sr <Plug>(operator-surround-replace)
 map y <Plug>(operator-stay-cursor-yank)
 
 "" vp doesn't replace paste buffer

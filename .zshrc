@@ -43,6 +43,7 @@
   export PATH=$HOME/go/bin:$PATH
   export PATH=$HOME/project/bin:$PATH
   export GOPATH=$HOME/go:$HOME/project
+  export GO111MODULE="auto"
   # anyenv and node
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
