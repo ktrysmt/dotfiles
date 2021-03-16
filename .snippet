@@ -160,4 +160,5 @@ while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud
 ruby -rjson -ryaml -e 'print YAML.load(STDIN.read).to_json' | jq .                                                                              # yaml2json (1)
 yq r deployment.yaml -j -P > deployment.json | jq .                                                                                             # yaml2json (2)
 ruby -rjson -ryaml -e 'print JSON.parse(STDIN.read).to_yaml' < sample.json > sample.yaml                                                        # json2yaml
+echo "/Place/='http://www.google.com'" | xargs -d'\n' echo                                                                                      # skip escape: output: /Place/='http://www.google.com'
 
