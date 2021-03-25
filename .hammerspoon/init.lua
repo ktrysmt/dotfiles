@@ -87,21 +87,17 @@ remapKey({'cmd', 'shift'}, 'l', keyCode('right', {'shift'}))
 local function handleGlobalEvent(name, event, app)
     if event == hs.application.watcher.activated then
         local bundleId = string.lower(app:bundleID())
+
+        -- ! debug !
         -- hs.alert.show(bundleId)
+
         if (bundleId:match("iterm2")) then
             disableAllHotkeys()
-            -- hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Naked profile'")
-        -- elseif (bundleId:match("com.apple.terminal")) then
-        --     disableAllHotkeys()
-        --     hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Naked profile'")
-        elseif (bundleId:match("com.google.chrome")) then
+        elseif ((bundleId:match("com.google.chrome.beta")) or bundleId:match("com.google.chrome")) or (bundleId:match("org.chromium.chromium"))  then
             remapKey({'option'}, 'D', keyCode('C', {'ctrl'})) -- chrome.v69対策 1 (macOS側は[場所を開く… > ctrl+C]にする)
             enableAllHotkeys()
-            -- hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Default profile'")
         else
-        -- hs.alert.show(bundleId)
             enableAllHotkeys()
-            -- hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'Default profile'")
         end
     end
 end
