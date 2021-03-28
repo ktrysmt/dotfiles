@@ -19,6 +19,8 @@ let g:lsp_highlights_enabled = 0
 let g:lsp_textprop_enabled = 0
 let g:lsp_document_highlight_enabled = 0
 
+let g:lsp_settings_filetype_go = ['gopls', 'golangci-lint-langserver']
+
 augroup VimLspSetting
   autocmd!
   autocmd FileType go,rust,python,ruby,c,cpp nmap gd <Plug>(lsp-definition)
