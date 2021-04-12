@@ -99,6 +99,7 @@
   alias history='fc -il 1' # for HIST_STAMPS in oh-my-zsh
   alias gh='cd $(ghq list -p | peco)'
   alias rg='rg -S --hidden'
+  alias rgn='rg -S --hidden --no-heading'
   alias l="exa -lha"
   alias ll=l
   alias lt="exa -lhTa --ignore-glob '.git|node_modules'"
