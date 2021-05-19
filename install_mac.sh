@@ -115,9 +115,11 @@ curl -fsSL https://github.com/rust-analyzer/rust-analyzer/releases/latest/downlo
 
 # sub tools
 go get github.com/go-delve/delve/cmd/dlv
-vim +":PlugInstall" +":setfiletype go" +":GoInstallBinaries" +qa
+vim +":PlugInstall" +qa
+vim +":setfiletype go" +":GoInstallBinaries" +qa
 vim +":setfiletype go" +":LspInstallServer gopls" +":LspInstallServer golangci-lint-langserver" +qa
 vim +":setfiletype rust" +":LspInstallServer rust-analyzer" +qa
+vim +":setfiletype python" +":LspInstallServer pyls-all" +qa
 npm i -g npm-check-updates neovim
 
 # brew cask
