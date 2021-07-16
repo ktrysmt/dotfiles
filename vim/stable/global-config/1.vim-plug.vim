@@ -67,7 +67,7 @@ Plug 'thomasfaingnaert/vim-lsp-snippets'
 Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 
 " [html/css]
-Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript'] }
+Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript', 'typescript'] }
 
 " [go]
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -80,6 +80,9 @@ Plug 'ekalinin/Dockerfile.vim', { 'for': ['tf', 'Dockerfile'] }
 
 " [c/cpp]
 Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
+
+" [typescript]
+Plug 'w0rp/ale', { 'for': ['javascript','typescript'] }
 
 call plug#end()
 
