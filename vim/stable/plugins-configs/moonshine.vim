@@ -1,0 +1,1 @@
+colorscheme moonshine_lowcontrast

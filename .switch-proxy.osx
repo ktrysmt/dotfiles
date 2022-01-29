@@ -1,0 +1,50 @@
+proxy=http://proxy.example.com:4444/
+switch_trigger=workspace
+
+function set_proxy() {
+  export http_proxy=$proxy
+  export HTTP_PROXY=$proxy
+  export ftp_proxy=$proxy
+  export FTP_PROXY=$proxy
+  export all_proxy=$proxy
+  export ALL_PROXY=$proxy
+  export https_proxy=$proxy
+  export HTTPS_PROXY=$proxy
+
+  git config --global http.proxy $proxy
+  git config --global https.proxy $proxy
+
+  # echo "" > ~/.npmrc
+  # echo "https-proxy=${proxy}/" >> ~/.npmrc
+  # echo "registry=http://registry.npmjs.org/" >> ~/.npmrc
+  # echo "proxy=${proxy}/" >> ~/.npmrc
+
+  export no_proxy="localhost, 192.168.0.0/16"
+  export NO_PROXY="$no_proxy"
+}
+
+function unset_proxy() {
+  unset http_proxy
+  unset HTTP_PROXY
+  unset ftp_proxy
+  unset FTP_PROXY
+  unset all_proxy
+  unset ALL_PROXY
+  unset https_proxy
+  unset HTTPS_PROXY
+
+  git config --global --unset http.proxy
+  git config --global --unset https.proxy
+
+  # echo "" > ~/.npmrc
+
+  unset no_proxy
+  unset NO_PROXY
+}
+
+if [ "`networksetup -getcurrentlocation`" = "$switch_trigger" ]; then
+  echo "Switch to proxy for office network"
+  set_proxy
+else
+  unset_proxy
+fi

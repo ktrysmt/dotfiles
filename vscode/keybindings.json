@@ -1,0 +1,113 @@
+// 既定値を上書きするには、このファイル内にキー バインドを挿入します
+[
+    {
+        "key": "ctrl+shift+a",
+        "command": "cursorHomeSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+cmd+left",
+        "command": "-cursorHomeSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+e",
+        "command": "cursorEndSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+cmd+right",
+        "command": "-cursorEndSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+end",
+        "command": "-cursorEndSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "f3",
+        "command": "-editor.action.nextMatchFindAction",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+k v",
+        "command": "-markdown.showPreviewToSide",
+        "when": "editorLangId == 'markdown'"
+    },
+    {
+      "key": "ctrl+tab",
+      "command": "-workbench.action.openNextRecentlyUsedEditorInGroup"
+    },
+    {
+      "key": "ctrl+shift+tab",
+      "command": "-workbench.action.openPreviousRecentlyUsedEditorInGroup"
+    },
+    {
+      "key": "shift+alt+right",
+      "command": "workbench.action.quickOpenNavigateNextInEditorPicker",
+      "when": "inEditorsPicker && inQuickOpen"
+    },
+    {
+      "key": "ctrl+tab",
+      "command": "-workbench.action.quickOpenNavigateNextInEditorPicker",
+      "when": "inEditorsPicker && inQuickOpen"
+    },
+    {
+      "key": "ctrl+tab",
+      "command": "workbench.action.nextEditor"
+    },
+    {
+      "key": "alt+cmd+right",
+      "command": "-workbench.action.nextEditor"
+    },
+    {
+      "key": "shift+cmd+]",
+      "command": "-workbench.action.nextEditor"
+    },
+    {
+      "key": "alt+cmd+left",
+      "command": "workbench.action.quickOpenNavigatePreviousInEditorPicker",
+      "when": "inEditorsPicker && inQuickOpen"
+    },
+    {
+      "key": "ctrl+shift+tab",
+      "command": "-workbench.action.quickOpenNavigatePreviousInEditorPicker",
+      "when": "inEditorsPicker && inQuickOpen"
+    },
+    {
+      "key": "ctrl+shift+tab",
+      "command": "workbench.action.previousEditor"
+    },
+    {
+      "key": "alt+cmd+left",
+      "command": "-workbench.action.previousEditor"
+    },
+    {
+      "key": "shift+cmd+[",
+      "command": "-workbench.action.previousEditor"
+    },
+    {
+      "key": "shift+cmd+v",
+      "command": "-markdown.showPreview",
+      "when": "editorLangId == 'markdown'"
+    },
+    {
+      "key": "shift+cmd+v",
+      "command": "markdown.showPreviewToSide",
+      "when": "editorLangId == 'markdown'"
+    },
+    {
+      "key": "shift+alt+v",
+      "command": "markdown.showPreview",
+      "when": "editorLangId == 'markdown'"
+    },
+    {
+      "key": "ctrl+shift+z",
+      "command": "workbench.action.toggleZenMode"
+    },
+    {
+      "key": "cmd+k z",
+      "command": "-workbench.action.toggleZenMode"
+    }
+  ]

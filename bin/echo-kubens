@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# k8s
+local kubens
+if (which kubectl > /dev/null); then
+  kubens=$(kubectl config view --minify --output 'jsonpath={.contexts..context..namespace}' 2>/dev/null)
+  kubens=${kubens:-<none>}
+fi
+
+echo "${kubens}"

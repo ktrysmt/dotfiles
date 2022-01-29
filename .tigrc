@@ -1,0 +1,11 @@
+bind generic g move-first-line
+bind generic G move-last-line
+bind main G move-last-line
+bind main R !git rebase -i %(commit)
+bind diff R !git rebase -i %(commit)
+set main-view = id:width=6 date author:email commit-title:graph=yes,refs=yes
+set diff-context = 6
+set split-view-width = 70%
+set line-graphics = utf-8
+
+
