@@ -11,3 +11,4 @@
 *://python5.com/*
 *://qa.codeflow.site/*
 *://www.pinterest.jp/*
+*://techacademy.jp/*
