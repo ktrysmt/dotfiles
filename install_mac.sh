@@ -91,6 +91,8 @@ mkdir -p ~/.config/nvim/
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 pip3 install neovim
 ln -sf $(which nvim) /usr/local/bin/vim
+python2 -m pip install --user --upgrade pynvim
+python3 -m pip install --user --upgrade pynvim
 
 # python
 pip3 install 'python-language-server[yapf]'
