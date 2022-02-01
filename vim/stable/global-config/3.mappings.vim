@@ -3,6 +3,8 @@ let mapleader = "\<Space>"
 
 map <Leader>p "0p
 
+nmap / /\v
+
 tnoremap <ESC> <C-\><C-n>
 nnoremap cn *Ncgn
 nnoremap cN *NcgN
