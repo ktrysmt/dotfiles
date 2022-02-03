@@ -52,6 +52,14 @@
     {
       "pattern": "https?://*.slack.com/*",
       "passKeys": ""
+    },
+    {
+      "pattern": "https?://github.dev/*",
+      "passKeys": ""
+    },
+    {
+      "pattern": "https?://asciiflow.com/*",
+      "passKeys": ""
     }
   ],
   "filterLinkHints": false,
