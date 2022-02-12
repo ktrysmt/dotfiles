@@ -22,6 +22,9 @@
   diff = delta
   show = delta
 
+[alias]
+  delta = !git diff | delta
+
 [delta]
   # features = line-numbers decorations
   features = side-by-side line-numbers decorations
