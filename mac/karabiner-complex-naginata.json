@@ -2,7 +2,7 @@
   "title": "Japanese NAGINATA STYLE (v14)",
   "rules": [
     {
-      "description": "Japanese NAGINATA STYLE (v14) Horizontal Build 1644736892 ",
+      "description": "Japanese NAGINATA STYLE (v14) Horizontal Build 1644741216 ",
       "manipulators": [
         {
           "type": "basic",
@@ -7388,7 +7388,7 @@
           "from": {
             "simultaneous": [
               {
-                "key_code": "w"
+                "key_code": "r"
               },
               {
                 "key_code": "spacebar"
@@ -7720,7 +7720,7 @@
           "from": {
             "simultaneous": [
               {
-                "key_code": "r"
+                "key_code": "w"
               },
               {
                 "key_code": "spacebar"
@@ -8870,7 +8870,7 @@
         {
           "type": "basic",
           "from": {
-            "key_code": "w"
+            "key_code": "r"
           },
           "to": [
             {
@@ -9142,7 +9142,7 @@
         {
           "type": "basic",
           "from": {
-            "key_code": "r"
+            "key_code": "w"
           },
           "to": [
             {
