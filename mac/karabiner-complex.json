@@ -10,7 +10,7 @@
           "to": [ { "key_code": "left_command" } ],
           "conditions": [{
             "type": "frontmost_application_unless",
-            "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^com\\.apple\\.finder$"]
+            "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$"]
           }]
         },
         {
