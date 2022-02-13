@@ -142,11 +142,23 @@ cp -Rp /System/Library/CoreServices/ScreenSaverEngine.app /Applications/lock.app
 # lima
 limactl start
 
-# the final task
-sudo bash -c "echo $(which zsh) >> /etc/shells";
-echo $PASSWORD | chsh -s $(which zsh)
+# Automator...
+#
+# Automator.app > New > Application > "シェルスクリプトを実行" > /bin/bash > Paste it > Save to ~/Documents/bin/
+# ------------
+#
+# # automator
+# current=`'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --show-current-profile-name`
+# if [ $current = "Default" ]; then
+#     prof="Nagi"
+# else
+#     prof="Default"
+# fi
+# '/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile $prof
 
 # others...
 # ------------
+# sudo bash -c "echo $(which zsh) >> /etc/shells";
+# echo $PASSWORD | chsh -s $(which zsh)
 # cica font: https://github.com/miiton/Cica/releases
 # mouse: defaults write "Apple Global Domain" com.apple.mouse.scaling 11
