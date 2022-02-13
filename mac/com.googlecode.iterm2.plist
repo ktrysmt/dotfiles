@@ -32,6 +32,10 @@
 	<true/>
 	<key>NeverWarnAboutPossibleOverrides_selection</key>
 	<integer>0</integer>
+	<key>NeverWarnAboutShortLivedSessions_5BB6F111-154B-49F6-BEE1-EA6A9E27F938</key>
+	<true/>
+	<key>NeverWarnAboutShortLivedSessions_5BB6F111-154B-49F6-BEE1-EA6A9E27F938_selection</key>
+	<integer>0</integer>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
