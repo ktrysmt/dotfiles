@@ -132,9 +132,9 @@ brew --cask install virtualbox
 brew --cask install vagrant
 brew install --cask michaelvillar-timer
 brew --cask install karabiner-elements
-ln -sf ~/dotfiles/mac/karabiner.json ~/.config/karabiner.json
+ln -sf ~/dotfiles/mac/karabiner.json ~/.config/karabiner/karabiner.json
 ln -sf ~/dotfiles/mac/karabiner-complex.json ~/.config/karabiner/assets/complex_modifications/karabiner-complex.json
-ln -sf ~/dotfiles/mac/karabiner-complex-naginata.json ~/.config/karabiner/assets/complex_modifications
+ln -sf ~/dotfiles/mac/karabiner-complex-naginata.json ~/.config/karabiner/assets/complex_modifications/karabiner-complex-naginata.json
 
 # the other
 cp -Rp /System/Library/CoreServices/ScreenSaverEngine.app /Applications/lock.app
