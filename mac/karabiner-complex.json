@@ -232,7 +232,7 @@
           "to": [ { "key_code": "l", "modifiers":  "left_command" }  ],
           "conditions": [{
             "type": "frontmost_application_if",
-            "bundle_identifiers": ["^org\\.chromium\\.Chromium$", "^com\\.google\\.Chrome$"]
+            "bundle_identifiers": ["^org\\.chromium\\.Chromium$", "^com\\.google\\.Chrome$", "^org\\.mozilla\\.firefox$"]
           }]
         },
         {
@@ -241,7 +241,7 @@
           "to": [ { "key_code": "i", "modifiers":  ["left_command", "left_option"] }  ],
           "conditions": [{
             "type": "frontmost_application_if",
-            "bundle_identifiers": ["^org\\.chromium\\.Chromium$", "^com\\.google\\.Chrome$"]
+            "bundle_identifiers": ["^org\\.chromium\\.Chromium$", "^com\\.google\\.Chrome$", "^org\\.mozilla\\.firefox$"]
           }]
         },
         {
@@ -250,7 +250,7 @@
           "to": [ { "key_code": "escape" } ],
           "conditions": [{
             "type": "frontmost_application_if",
-            "bundle_identifiers": ["^org\\.chromium\\.Chromium$", "^com\\.google\\.Chrome$"]
+            "bundle_identifiers": ["^org\\.chromium\\.Chromium$", "^com\\.google\\.Chrome$", "^org\\.mozilla\\.firefox$"]
           }]
         },
         {
@@ -259,7 +259,7 @@
           "to": [ { "key_code": "tab", "modifiers":  "left_control" }  ],
           "conditions": [{
             "type": "frontmost_application_if",
-            "bundle_identifiers": ["^org\\.chromium\\.Chromium$", "^com\\.google\\.Chrome$"]
+            "bundle_identifiers": ["^org\\.chromium\\.Chromium$", "^com\\.google\\.Chrome$", "^org\\.mozilla\\.firefox$"]
           }]
         }
       ]
