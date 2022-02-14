@@ -48,7 +48,6 @@ Plug 'ncm2/float-preview.nvim'
 Plug 'junegunn/vim-easy-align'
 Plug 'jreybert/vimagit'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'vim-scripts/VOoM'
 
 " [fzf]
 Plug 'junegunn/fzf'
