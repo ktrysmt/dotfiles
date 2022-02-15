@@ -41,24 +41,11 @@ set showtabline=2
 set clipboard=unnamed
 set list
 
-" set splitright " vsplit で右に開くオプション
-
-" search
 set hlsearch
 set incsearch
 
-" compleopt
-set completeopt-=preview,noselect,noinsert
-set completeopt=menuone
-" set completeopt=noinsert,menuone,noselect,preview " use +preview when nvim 0.4 released
-
-" completion window / floating window
 set ph=30
-" set termguicolors " should use a theme supporting trueColor...
-" set pumblend=10
 
-" 不可視文字を可視化する場合は以下をアンコメント
-" set listchars=tab:^-,trail:-,extends:»,precedes:«,nbsp:%
 filetype plugin indent on
 
 syntax on

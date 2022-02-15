@@ -47,7 +47,6 @@ Plug 'chase/vim-ansible-yaml'
 Plug 'ncm2/float-preview.nvim'
 Plug 'junegunn/vim-easy-align'
 Plug 'jreybert/vimagit'
-Plug 'AndrewRadev/splitjoin.vim'
 
 " [fzf]
 Plug 'junegunn/fzf'
@@ -63,10 +62,9 @@ Plug 'mattn/vim-lsp-settings'
 Plug 'wellle/tmux-complete.vim'
 
 " [snip]
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'thomasfaingnaert/vim-lsp-snippets'
-Plug 'thomasfaingnaert/vim-lsp-ultisnips'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+Plug 'rafamadriz/friendly-snippets'
 
 " [html/css]
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css', 'javascript', 'typescript', 'typescriptreact'] }
