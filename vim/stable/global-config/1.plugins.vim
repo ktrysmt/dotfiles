@@ -10,6 +10,8 @@ if empty(glob('~/.config/nvim/autoload/jetpack.vim'))
   augroup END
 endif
 
+let g:jetpack#optimization=2
+
 call jetpack#begin()
 
 " [colorscheme]
