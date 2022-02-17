@@ -1,6 +1,13 @@
-if empty(glob('~/.local/share/nvim/site/autoload/jetpack.vim'))
-  silent execute '!curl -fLo ~/.local/share/nvim/site/autoload/jetpack.vim --create-dirs  https://raw.githubusercontent.com/tani/vim-jetpack/master/autoload/jetpack.vim'
-  autocmd VimEnter * JetpackSync | source $MYVIMRC
+if empty(glob('~/.config/nvim/autoload/jetpack.vim'))
+  silent execute '!curl -fLo ~/.config/nvim/autoload/jetpack.vim --create-dirs  https://raw.githubusercontent.com/tani/vim-jetpack/master/autoload/jetpack.vim'
+  function! s:initialize_jetpack() abort
+    execute ":JetpackSync"
+    execute ":qa"
+  endfunction
+  augroup PluginSetting
+    autocmd!
+    autocmd VimEnter * call s:initialize_jetpack()
+  augroup END
 endif
 
 call jetpack#begin()
