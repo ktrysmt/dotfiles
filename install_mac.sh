@@ -85,8 +85,8 @@ export PATH=$HOME/go/bin:$HOME/project/bin:$PATH
 export GOPATH=$HOME/go:$HOME/project
 
 # nvim
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl -fLo ~/.local/share/nvim/site/autoload/jetpack.vim --create-dirs https://raw.githubusercontent.com/tani/vim-jetpack/master/autoload/jetpack.vim
+
 mkdir -p ~/.config/nvim/
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 pip3 install neovim
@@ -118,7 +118,7 @@ source $HOME/.cargo/env
 
 # sub tools
 go install github.com/go-delve/delve/cmd/dlv@latest
-vim +":PlugInstall" +qa
+vim +":JetpackSync" +qa
 vim +":setfiletype go" +":GoInstallBinaries" +qa
 vim +":setfiletype rust" +":LspInstallServer rust-analyzer" +qa
 vim +":setfiletype python" +":LspInstallServer pyls-all" +qa
