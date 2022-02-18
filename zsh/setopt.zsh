@@ -1,5 +1,4 @@
 # operation
-setopt interactivecomments
 setopt AUTO_MENU
 setopt AUTO_CD
 setopt AUTO_NAME_DIRS

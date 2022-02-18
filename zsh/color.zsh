@@ -4,3 +4,4 @@ export PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$reset_color%}%(?.%{$fg
 setopt promptsubst
 autoload -U colors
 colors
+

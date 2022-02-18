@@ -46,14 +46,10 @@ remote = "https://github.com/aws/aws-cli/blob/v2/bin/aws_zsh_completer.sh"
 
 [plugins.dotfiles-source]
 local = "~/dotfiles/zsh"
-use = ["color.zsh"]
+use = ["{color,sync}.zsh"]
 apply = ["source"]
 
 [plugins.dotfiles-defer]
 local = "~/dotfiles/zsh"
-use = ["{!color,*}.zsh"]
+use = ["{!color,!sync,*}.zsh"]
 
-# For example:
-#
-# [plugins.base16]
-# github = "chriskempson/base16-shell"

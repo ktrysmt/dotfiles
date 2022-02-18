@@ -1,0 +1,2 @@
+setopt autocd
+setopt interactivecomments

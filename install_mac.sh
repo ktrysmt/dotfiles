@@ -23,6 +23,7 @@ brew install \
   fd \
   procs \
   fzf \
+  sheldon \
   tig \
   fzy \
   peco \
@@ -50,11 +51,14 @@ $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
 exec $SHELL -l
 
 # symlink
-cd ~/
-mkdir ~/.zinit
 
-git clone https://github.com/zdharma-continuum/zinit ~/.zinit/bin
+cd ~/
+
+# mkdir ~/.zinit
+# git clone https://github.com/zdharma-continuum/zinit ~/.zinit/bin
+
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+mkdir -p ~/.sheldon/
 mkdir -p ~/.config/peco/
 mkdir -p ~/.local/bin/
 mkdir ~/.cache
@@ -66,6 +70,7 @@ ln -s ~/dotfiles/.vimrc ~/.vimrc
 ln -s ~/dotfiles/.tigrc ~/.tigrc
 ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
+ln -s ~/dotfiles/zsh/sheldon.plugins.toml ~/.sheldon/plugins.toml
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
 # cp ~/dotfiles/.switch-proxy.osx ~/.switch-proxy
