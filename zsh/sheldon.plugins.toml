@@ -14,12 +14,12 @@ shell = "zsh"
 
 apply = ["defer"]
 
-[templates]
-defer = { value = 'zsh-defer source "{{ file }}"', each = true }
-
 [plugins.zsh-defer]
 github = "romkatv/zsh-defer"
 apply = ["source"]
+
+[templates]
+defer = { value = 'zsh-defer source "{{ file }}"', each = true }
 
 [plugins.compinit]
 inline = 'autoload -Uz compinit && zsh-defer compinit'

@@ -6,4 +6,3 @@ function peco-select-snippet() {
   zle reset-prompt
 }
 zle -N peco-select-snippet
-bindkey '^X^M' peco-select-snippet
