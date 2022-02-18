@@ -1,14 +1,9 @@
+# cd, comment
 setopt AUTO_CD
 setopt interactivecomments
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# color
+export PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
+setopt promptsubst
 
-function peco-select-snippet() {
-  emulate -L zsh
-  BUFFER=$(cat ~/.snippet | peco)
-  CURSOR=$#BUFFER
-  zle -Rc
-  zle reset-prompt
-}
-zle -N peco-select-snippet
-bindkey '^X^M' peco-select-snippet
+

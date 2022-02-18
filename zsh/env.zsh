@@ -17,7 +17,6 @@ export PATH="/usr/local/opt/llvm/bin:$PATH" # clangd, clangd-format
 
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
-[ -f ~/.cargo/env ] && source ~/.cargo/env
 
 # fzf
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!{node_modules/*,vendor/*,.git/*}"'
@@ -30,4 +29,15 @@ export FZF_COMPLETION_TRIGGER=','
 export DOCKER_BUILDKIT=1
 export KREW_NO_UPGRADE_CHECK=1
 export PATH="$PATH:${KREW_ROOT:-$HOME/.krew}/bin"
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.cargo/env ] && source ~/.cargo/env
+
+# color
+export PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
+
+setopt promptsubst
+autoload -U colors
+colors
 
