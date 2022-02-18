@@ -23,6 +23,7 @@ apply = ["source"]
 
 [plugins.compinit]
 inline = 'autoload -Uz compinit && zsh-defer compinit'
+# apply = ["source"]
 
 [plugins.zsh-syntax-highlighting]
 github = "zsh-users/zsh-syntax-highlighting"
@@ -30,7 +31,7 @@ github = "zsh-users/zsh-syntax-highlighting"
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
 
-[plugins.ohmyzsh]
+[plugins.ohmyzsh-lib]
 github = "ohmyzsh/ohmyzsh"
 dir = "lib"
 use = ["{completion,key-bindings,directories}.zsh"]
@@ -42,7 +43,7 @@ github = "asdf-vm/asdf"
 github = "lukechilds/zsh-better-npm-completion"
 
 [plugins.aws_zsh_completer]
-remote = "https://github.com/aws/aws-cli/blob/v2/bin/aws_zsh_completer.sh"
+remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
 
 [plugins.dotfiles-source]
 local = "~/dotfiles/zsh"
@@ -53,3 +54,5 @@ apply = ["source"]
 local = "~/dotfiles/zsh"
 use = ["{!color,!sync,*}.zsh"]
 
+# [plugins.fzf]
+# github = "junegunn/fzf"

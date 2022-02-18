@@ -52,7 +52,7 @@ Jetpack 'junegunn/vim-easy-align'
 Jetpack 'jreybert/vimagit'
 
 " [fzf]
-Jetpack 'junegunn/fzf'
+" Jetpack 'junegunn/fzf'
 Jetpack 'junegunn/fzf.vim'
 
 " [async/lsp]

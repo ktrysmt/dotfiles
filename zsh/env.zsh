@@ -25,7 +25,6 @@ export FZF_DEFAULT_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%} --select-1 -
 export FZF_CTRL_T_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_T_OPTS='--select-1 --exit-0 --preview "bat --color=always --style=header,grid --line-range :100 {}"'
 export FZF_COMPLETION_TRIGGER=','
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # k8s/docker
 export DOCKER_BUILDKIT=1
