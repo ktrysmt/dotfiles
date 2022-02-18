@@ -23,7 +23,6 @@ apply = ["source"]
 
 [plugins.compinit]
 inline = 'autoload -Uz compinit && zsh-defer compinit'
-# apply = ["source"]
 
 [plugins.zsh-syntax-highlighting]
 github = "zsh-users/zsh-syntax-highlighting"
@@ -54,5 +53,3 @@ apply = ["source"]
 local = "~/dotfiles/zsh"
 use = ["{!color,!sync,*}.zsh"]
 
-# [plugins.fzf]
-# github = "junegunn/fzf"
