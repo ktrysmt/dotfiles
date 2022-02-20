@@ -41,6 +41,8 @@ set showtabline=2
 set clipboard=unnamed
 set list
 
+set diffopt=internal,filler,algorithm:histogram,indent-heuristic
+
 set hlsearch
 set incsearch
 
