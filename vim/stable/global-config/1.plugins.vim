@@ -50,9 +50,10 @@ Jetpack 'chase/vim-ansible-yaml'
 Jetpack 'ncm2/float-preview.nvim'
 Jetpack 'junegunn/vim-easy-align'
 Jetpack 'jreybert/vimagit'
+Jetpack 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " [fzf]
-Jetpack 'junegunn/fzf'
+Jetpack 'junegunn/fzf', { 'do': {-> fzf#install()} }
 Jetpack 'junegunn/fzf.vim'
 
 " [async/lsp]
