@@ -30,7 +30,7 @@ ts_config.setup {
     "lua",
   },
   highlight = {
-    enable = true,
+    enable = false,
     use_languagetree = true,
   }
 }
