@@ -29,9 +29,7 @@ Jetpack 'hrsh7th/cmp-cmdline'
 Jetpack 'hrsh7th/nvim-cmp'
 Jetpack 'hrsh7th/cmp-vsnip'
 " [other]
-Jetpack 'lambdalisue/fern-git-status.vim'
 Jetpack 'nvim-lualine/lualine.nvim'
-Jetpack 'kyazdani42/nvim-web-devicons'
 call jetpack#end()
 
 runtime! vim/plugins/experimental/*/*.vim

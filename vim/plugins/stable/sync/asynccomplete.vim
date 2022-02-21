@@ -1,8 +1,10 @@
+" ---
+" asyncomplete
+" ---
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
 
-"
 " It is forked from https://github.com/prabirshrestha/asyncomplete-neosnippet.vim
 function! s:my_neosnippet_completor(opt, ctx) abort
   let l:snips = values(neosnippet#helpers#get_completion_snippets())
@@ -32,9 +34,7 @@ augroup AsyncCompleteSetting
         \ })
 augroup END
 
-"
 " prabirshrestha/asyncomplete-buffer.vim
-"
 call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
     \ 'name': 'buffer',
     \ 'whitelist': ['*'],
@@ -45,3 +45,19 @@ call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options
     \  },
     \ }))
 
+
+" ---
+" tmuxcomplete
+" ---
+let g:tmuxcomplete#asyncomplete_source_options = {
+      \ 'name':      'tmuxcomplete',
+      \ 'whitelist': ['*'],
+      \ 'config': {
+      \     'splitmode':      'words',
+      \     'filter_prefix':   1,
+      \     'show_incomplete': 1,
+      \     'sort_candidates': 0,
+      \     'scrollback':      0,
+      \     'truncate':        0
+      \     }
+      \ }
