@@ -71,6 +71,7 @@ ln -s ~/dotfiles/.tigrc ~/.tigrc
 ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
 ln -s ~/dotfiles/zsh/sheldon.plugins.toml ~/.sheldon/plugins.toml
+ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
 # cp ~/dotfiles/.switch-proxy.osx ~/.switch-proxy
@@ -82,6 +83,7 @@ git secrets --register-aws --global
 git secrets --install ~/.git-templates/git-secrets
 git config --global init.templatedir '~/.git-templates/git-secrets'
 git config --global credential.helper osxkeychain
+git config --global core.excludesfile ~/.gitignore_global
 
 # go
 mkdir -p ~/project/bin
