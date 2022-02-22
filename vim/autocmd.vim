@@ -15,7 +15,7 @@ augroup END
 augroup HighlightIdegraphicSpaceSetting
   autocmd!
   autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=DarkGreen guibg=DarkGreen
-  autocmd VimEnter,WinEnter * match IdeographicSpace /　/
+  autocmd WinEnter * match IdeographicSpace /　/
 augroup END
 
 augroup GeneralColorSchemeSetting
