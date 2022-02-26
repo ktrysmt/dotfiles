@@ -80,6 +80,7 @@ Jetpack 'ekalinin/Dockerfile.vim', { 'for': [ 'tf', 'Dockerfile'] }
 Jetpack 'rhysd/vim-clang-format', { 'for': [ 'c', 'cpp'] }
 
 " [typescript]
+Jetpack 'w0rp/ale', { 'for': ['javascript', 'typescript', 'typescriptreact'] }
 Jetpack 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescriptreact'] }
 Jetpack 'peitalin/vim-jsx-typescript', { 'for': ['typescript', 'typescriptreact'] }
 Jetpack 'eliba2/vim-node-inspect', { 'for': ['javascript', 'typescript', 'typescriptreact'] }
