@@ -46,7 +46,11 @@ set history=5000
 set guifont=Cica:h15
 set inccommand=split
 set showtabline=2
-set clipboard=unnamed
+if has('win32') || has('win64') || has('mac')
+  set clipboard=unnamed
+else
+  set clipboard=unnamedplus
+endif
 set list
 
 set diffopt=internal,filler,algorithm:histogram,indent-heuristic
