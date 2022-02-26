@@ -62,7 +62,7 @@ syntax off
 
 set cursorline
 
-set completeopt=menu,menuone,noselect
+set completeopt=menuone,noinsert
 
 " -----
 " netrw
