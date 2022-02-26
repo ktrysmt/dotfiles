@@ -23,15 +23,8 @@ let g:lsp_document_highlight_enabled = 0
 let g:lsp_settings_filetype_go = ['gopls', 'golangci-lint-langserver']
 let g:lsp_settings_filetype_typescript = ['typescript-language-server']
 
-function! s:on_lsp_buffer_enabled() abort
-  setlocal omnifunc=lsp#complete
-endfunction
-
 augroup VimLspSetting
   autocmd!
-
-  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-
   autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nmap gd <Plug>(lsp-definition)
   autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nmap gv :rightbelow vertical LspDefinition<CR>
   autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nmap <silent> <Leader>n :LspNextDiagnostic<CR>
@@ -46,3 +39,5 @@ augroup END
 
 let g:lsp_log_verbose = 0
 let g:lsp_log_file = ""
+
+setlocal omnifunc=lsp#complete
