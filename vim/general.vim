@@ -58,7 +58,7 @@ set ph=30
 
 filetype plugin indent on
 
-syntax off
+" syntax off
 
 set cursorline
 
