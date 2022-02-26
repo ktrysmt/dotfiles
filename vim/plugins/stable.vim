@@ -18,7 +18,7 @@ call jetpack#begin()
 Jetpack 'KKPMW/moonshine-vim'
 Jetpack 'RRethy/vim-illuminate'
 Jetpack 'itchyny/lightline.vim'
-Jetpack 'nvim-treesitter/nvim-treesitter', { 'do' : ':TSUpdate'}
+" Jetpack 'nvim-treesitter/nvim-treesitter', { 'do' : ':TSUpdate'}
 
 " [filer]
 Jetpack 'lambdalisue/fern.vim'
@@ -67,19 +67,18 @@ Jetpack 'mattn/vim-lsp-settings'
 Jetpack 'wellle/tmux-complete.vim'
 
 " [html/css]
-Jetpack 'mattn/emmet-vim', { 'for': [ 'html', 'css', 'javascript', 'typescript', 'typescriptreact'], 'do': ':runtime vim/stable/lazyload/others.vim' }
+Jetpack 'mattn/emmet-vim', { 'for': [ 'html', 'css', 'javascript', 'typescript', 'typescriptreact'] }
 
 " [terraform]
-Jetpack 'hashivim/vim-terraform', { 'for': [ 'tf', 'terraform'], 'do': ':runtime vim/stable/lazyload/others.vim' }
+Jetpack 'hashivim/vim-terraform', { 'for': [ 'tf', 'terraform'] }
 
 " [dockerfile]
 Jetpack 'ekalinin/Dockerfile.vim', { 'for': [ 'tf', 'Dockerfile'] }
 
 " [c/cpp]
-Jetpack 'rhysd/vim-clang-format', { 'for': [ 'c', 'cpp'] , 'do': ':runtime vim/stable/lazyload/others.vim' }
+Jetpack 'rhysd/vim-clang-format', { 'for': [ 'c', 'cpp'] }
 
 " [typescript]
-Jetpack 'w0rp/ale', { 'for': ['javascript', 'typescript', 'typescriptreact'], 'do': ':runtime vim/stable/lazyload/others.vim' }
 Jetpack 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescriptreact'] }
 Jetpack 'peitalin/vim-jsx-typescript', { 'for': ['typescript', 'typescriptreact'] }
 Jetpack 'eliba2/vim-node-inspect', { 'for': ['javascript', 'typescript', 'typescriptreact'] }
