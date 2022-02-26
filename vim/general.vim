@@ -9,6 +9,8 @@ set sh=zsh
 set lazyredraw
 set ttyfast
 
+set shortmess+=I
+
 set secure
 set fileencodings=utf-8,euc-jp,sjis,iso-2022-jp,
 set fileformats=unix,dos,mac

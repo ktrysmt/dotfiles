@@ -67,23 +67,23 @@ Jetpack 'mattn/vim-lsp-settings'
 Jetpack 'wellle/tmux-complete.vim'
 
 " [html/css]
-Jetpack 'mattn/emmet-vim', { 'for': [ 'html', 'css', 'javascript', 'typescript', 'typescriptreact'], 'do': ':runtime vim/stable/async/others.vim' }
+Jetpack 'mattn/emmet-vim', { 'for': [ 'html', 'css', 'javascript', 'typescript', 'typescriptreact'], 'do': ':runtime vim/stable/lazyload/others.vim' }
 
 " [terraform]
-Jetpack 'hashivim/vim-terraform', { 'for': [ 'tf', 'terraform'], 'do': ':runtime vim/stable/async/others.vim' }
+Jetpack 'hashivim/vim-terraform', { 'for': [ 'tf', 'terraform'], 'do': ':runtime vim/stable/lazyload/others.vim' }
 
 " [dockerfile]
 Jetpack 'ekalinin/Dockerfile.vim', { 'for': [ 'tf', 'Dockerfile'] }
 
 " [c/cpp]
-Jetpack 'rhysd/vim-clang-format', { 'for': [ 'c', 'cpp'] , 'do': ':runtime vim/stable/async/others.vim' }
+Jetpack 'rhysd/vim-clang-format', { 'for': [ 'c', 'cpp'] , 'do': ':runtime vim/stable/lazyload/others.vim' }
 
 " [typescript]
-Jetpack 'w0rp/ale', { 'for': ['javascript', 'typescript', 'typescriptreact'], 'do': ':runtime vim/stable/async/others.vim' }
+Jetpack 'w0rp/ale', { 'for': ['javascript', 'typescript', 'typescriptreact'], 'do': ':runtime vim/stable/lazyload/others.vim' }
 Jetpack 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescriptreact'] }
 Jetpack 'peitalin/vim-jsx-typescript', { 'for': ['typescript', 'typescriptreact'] }
 Jetpack 'eliba2/vim-node-inspect', { 'for': ['javascript', 'typescript', 'typescriptreact'] }
 
 call jetpack#end()
 
-runtime! vim/plugins/stable/sync/*.vim
+runtime! vim/plugins/stable/*.vim
