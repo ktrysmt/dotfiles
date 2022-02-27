@@ -14,6 +14,10 @@ if empty(glob('~/.config/nvim/autoload/jetpack.vim'))
 endif
 let g:jetpack#optimization=2
 call jetpack#begin()
+" [appearance]
+Jetpack 'KKPMW/moonshine-vim'
+Jetpack 'nvim-lualine/lualine.nvim'
+Jetpack 'nvim-treesitter/nvim-treesitter', { 'do' : ':TSUpdate'}
 " [snip]
 Jetpack 'hrsh7th/vim-vsnip'
 Jetpack 'hrsh7th/vim-vsnip-integ'
@@ -27,8 +31,6 @@ Jetpack 'hrsh7th/cmp-path'
 Jetpack 'hrsh7th/cmp-cmdline'
 Jetpack 'hrsh7th/nvim-cmp'
 Jetpack 'hrsh7th/cmp-vsnip'
-" [other]
-Jetpack 'nvim-lualine/lualine.nvim'
 call jetpack#end()
 
 runtime! vim/plugins/experimental/*/*.vim
