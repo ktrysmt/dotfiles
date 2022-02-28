@@ -65,7 +65,6 @@ Jetpack 'prabirshrestha/asyncomplete-lsp.vim'
 Jetpack 'prabirshrestha/asyncomplete-buffer.vim'
 Jetpack 'mattn/vim-lsp-settings'
 Jetpack 'wellle/tmux-complete.vim'
-Jetpack 'tsuyoshicho/vim-efm-langserver-settings'
 
 " [html/css]
 Jetpack 'mattn/emmet-vim', { 'for': [ 'html', 'css', 'javascript', 'typescript', 'typescriptreact'] }
