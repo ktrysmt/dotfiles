@@ -5,15 +5,7 @@ let g:EasyMotion_keys = 'hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
 let g:EasyMotion_leader_key = ';'
 let g:EasyMotion_grouping = 1
 
-
-" ---
-" easy-align
-" ---
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+nmap ; <Plug>(easymotion-prefix)
 
 
 " ---

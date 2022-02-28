@@ -47,3 +47,9 @@ augroup ALESetting
   autocmd FileType javascript,typescript,typescriptreact nmap <silent> <Leader>ln :ALENextWrap<CR>
   autocmd FileType javascript,typescript,typescriptreact nmap <silent> <Leader>LN :ALEPreviousWrap<CR>
 augroup END
+
+
+" ---
+" t_comment
+" ---
+nmap gcc <Plug>TComment_gcc

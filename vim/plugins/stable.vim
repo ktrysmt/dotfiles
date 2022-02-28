@@ -21,23 +21,22 @@ Jetpack 'itchyny/lightline.vim'
 Jetpack 'nvim-treesitter/nvim-treesitter', { 'do' : ':TSUpdate'}
 
 " [filer]
-Jetpack 'lambdalisue/fern.vim'
+Jetpack 'lambdalisue/fern.vim', { "on": "Fern" }
 
 " [window]
 Jetpack 'airblade/vim-gitgutter'
-Jetpack 'liuchengxu/vista.vim'
-Jetpack 'LeafCage/yankround.vim'
-Jetpack 'Shougo/unite.vim'
+Jetpack 'liuchengxu/vista.vim', { "on": "Vista" }
+Jetpack 'LeafCage/yankround.vim', { "on": "Unite" }
+Jetpack 'Shougo/unite.vim', { "on": "Unite" }
 
 " [move]
 Jetpack 'osyo-manga/vim-anzu'
-Jetpack 'Lokaltog/vim-easymotion'
+Jetpack 'Lokaltog/vim-easymotion', { "on": "<Plug>(easymotion-prefix)" }
 Jetpack 'antoinemadec/FixCursorHold.nvim'
 
 " [commander]
-Jetpack 'jreybert/vimagit'
-Jetpack 'tomtom/tcomment_vim'
-Jetpack 'tpope/vim-dispatch'
+Jetpack 'jreybert/vimagit' , { "on": "Magit" }
+Jetpack 'tomtom/tcomment_vim', { "on": "<Plug>TComment_" }
 Jetpack 'thinca/vim-qfreplace'
 
 " [operator]
