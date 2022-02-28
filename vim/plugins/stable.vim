@@ -36,7 +36,7 @@ Jetpack 'antoinemadec/FixCursorHold.nvim'
 
 " [commander]
 Jetpack 'jreybert/vimagit' , { "on": "Magit" }
-Jetpack 'tomtom/tcomment_vim', { "on": "<Plug>TComment_" }
+Jetpack 'tomtom/tcomment_vim'
 Jetpack 'thinca/vim-qfreplace'
 
 " [operator]
