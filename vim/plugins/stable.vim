@@ -18,7 +18,7 @@ call jetpack#begin()
 Jetpack 'KKPMW/moonshine-vim'
 Jetpack 'RRethy/vim-illuminate'
 Jetpack 'itchyny/lightline.vim'
-" Jetpack 'nvim-treesitter/nvim-treesitter', { 'do' : ':TSUpdate'}
+Jetpack 'nvim-treesitter/nvim-treesitter', { 'do' : ':TSUpdate'}
 
 " [filer]
 Jetpack 'lambdalisue/fern.vim'
@@ -32,7 +32,6 @@ Jetpack 'Shougo/unite.vim'
 " [move]
 Jetpack 'osyo-manga/vim-anzu'
 Jetpack 'Lokaltog/vim-easymotion'
-Jetpack 'junegunn/vim-easy-align'
 Jetpack 'antoinemadec/FixCursorHold.nvim'
 
 " [commander]
