@@ -18,7 +18,7 @@ call jetpack#begin()
 Jetpack 'KKPMW/moonshine-vim'
 Jetpack 'RRethy/vim-illuminate'
 Jetpack 'itchyny/lightline.vim'
-Jetpack 'nvim-treesitter/nvim-treesitter', { 'do' : ':TSUpdate'}
+" Jetpack 'nvim-treesitter/nvim-treesitter', { 'do' : ':TSUpdate'}
 
 " [filer]
 Jetpack 'lambdalisue/fern.vim', { "on": "Fern" }
