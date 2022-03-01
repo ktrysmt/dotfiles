@@ -35,14 +35,14 @@ Jetpack 'Lokaltog/vim-easymotion', { "on": "<Plug>(easymotion-prefix)" }
 Jetpack 'antoinemadec/FixCursorHold.nvim'
 
 " [commander]
-Jetpack 'jreybert/vimagit' , { "on": "Magit" }
-Jetpack 'tpope/vim-fugitive'
+Jetpack 'jreybert/vimagit', { "on": "MagitOnly" }
+Jetpack 'tpope/vim-fugitive', { "on": "Git" }
 Jetpack 'tomtom/tcomment_vim'
 Jetpack 'thinca/vim-qfreplace'
 " Jetpack 'tpope/vim-dispatch'
 
 " [operator]
-Jetpack 'machakann/vim-sandwich', { "on": "<Plug>(sandwich-" }
+Jetpack 'machakann/vim-sandwich'
 Jetpack 'cohama/lexima.vim'
 " Jetpack 'kana/vim-operator-user'
 " Jetpack 'osyo-manga/vim-operator-stay-cursor'

@@ -1,12 +1,16 @@
 " ---
 " magit
 " ---
-" let g:magit_show_help = 0
 let g:magit_default_show_all_files = 2
-let g:magit_default_fold_level = 2
-let g:magit_default_sections = ['global_help', 'info', 'unstaged', 'staged', 'commit']
+let g:magit_default_sections = ['global_help', 'info', 'commit', 'staged', 'unstaged' ]
+let g:magit_auto_close = 1
 
-nnoremap <Leader>g :Magit<cr>
+function s:open_magit() abort
+  :vne
+  :MagitOnly
+endfunction
+
+nmap <silent> <Leader>g :<C-u>call <SID>open_magit()<cr>
 
 "---
 "dispatch
