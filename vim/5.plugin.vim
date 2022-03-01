@@ -84,4 +84,5 @@ Jetpack 'eliba2/vim-node-inspect', { 'for': ['javascript', 'typescript', 'typesc
 
 call jetpack#end()
 
-runtime! vim/plugins/stable/*.vim
+runtime! vim/plugins/*.vim
+" runtime! vim/plugins-experimental/*.vim
