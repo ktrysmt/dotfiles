@@ -21,7 +21,7 @@ Jetpack 'itchyny/lightline.vim'
 " Jetpack 'nvim-treesitter/nvim-treesitter', { 'do' : ':TSUpdate'}
 
 " [filer]
-Jetpack 'lambdalisue/fern.vim', { "on": "Fern" }
+Jetpack 'lambdalisue/fern.vim'
 
 " [window]
 Jetpack 'airblade/vim-gitgutter'
@@ -36,14 +36,17 @@ Jetpack 'antoinemadec/FixCursorHold.nvim'
 
 " [commander]
 Jetpack 'jreybert/vimagit' , { "on": "Magit" }
+Jetpack 'tpope/vim-fugitive'
 Jetpack 'tomtom/tcomment_vim'
 Jetpack 'thinca/vim-qfreplace'
+" Jetpack 'tpope/vim-dispatch'
 
 " [operator]
+Jetpack 'machakann/vim-sandwich', { "on": "<Plug>(sandwich-" }
 Jetpack 'cohama/lexima.vim'
-Jetpack 'kana/vim-operator-user'
-Jetpack 'osyo-manga/vim-operator-stay-cursor'
-Jetpack 'rhysd/vim-operator-surround'
+" Jetpack 'kana/vim-operator-user'
+" Jetpack 'osyo-manga/vim-operator-stay-cursor'
+" Jetpack 'rhysd/vim-operator-surround'
 Jetpack 'terryma/vim-expand-region'
 
 " [fzf]
@@ -85,4 +88,3 @@ Jetpack 'eliba2/vim-node-inspect', { 'for': ['javascript', 'typescript', 'typesc
 call jetpack#end()
 
 runtime! vim/plugins/*.vim
-" runtime! vim/plugins-experimental/*.vim

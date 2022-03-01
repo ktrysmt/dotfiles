@@ -66,7 +66,7 @@ endfunction
 
 function! s:toggle_fern() abort
   :silent! cd `git rev-parse --show-toplevel`
-  :Fern . -drawer -stay -toggle -width=50
+  :Fern . -reveal=% -drawer -stay -toggle -width=50
 endfunction
 
 function! s:focus_fern() abort
@@ -82,7 +82,7 @@ augroup FernSetting
   " user function / use ++nested to allow automatic file type detection and such
   autocmd!
   autocmd FileType fern call s:init_fern()
-  autocmd VimEnter * ++nested Fern . -drawer -stay -width=50
+  autocmd VimEnter * ++nested Fern . -reveal=% -drawer -stay -width=50
   autocmd FileType fern nmap <buffer> N <Plug>(anzu-N-with-echo)
   autocmd FileType fern nmap <buffer> n j <Plug>(anzu-n-with-echo)
 augroup END
