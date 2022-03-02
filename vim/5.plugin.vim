@@ -42,11 +42,10 @@ Jetpack 'thinca/vim-qfreplace'
 " Jetpack 'tpope/vim-dispatch'
 
 " [operator]
-Jetpack 'machakann/vim-sandwich'
 Jetpack 'cohama/lexima.vim'
-" Jetpack 'kana/vim-operator-user'
-" Jetpack 'osyo-manga/vim-operator-stay-cursor'
-" Jetpack 'rhysd/vim-operator-surround'
+Jetpack 'kana/vim-operator-user'
+Jetpack 'osyo-manga/vim-operator-stay-cursor'
+Jetpack 'rhysd/vim-operator-surround'
 Jetpack 'terryma/vim-expand-region'
 
 " [fzf]

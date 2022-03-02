@@ -49,7 +49,3 @@ augroup ALESetting
 augroup END
 
 
-" ---
-" t_comment
-" ---
-nmap gcc <Plug>TComment_gcc

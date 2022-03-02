@@ -105,8 +105,8 @@ set -g pane-border-style fg=colour023,fg=white,bg=black
 # --------------
 # mouse
 # --------------
-set -g mouse on
-set -g terminal-overrides 'xterm*:smcup@:rmcup@'
+# set -g mouse on
+# set -g terminal-overrides 'xterm*:smcup@:rmcup@'
 # set-window-option -g mode-mouse on
 # mode-mouse
 #bind m \

@@ -21,8 +21,11 @@ let g:expand_region_text_objects = {
 inoremap <C-f> <C-r>=lexima#insmode#leave(1, '<LT>C-G>U<LT>RIGHT>')<CR>
 
 " ---
-" sandwich
+" vim-operator-user
 " ---
-" https://github.com/machakann/vim-sandwich/wiki/Introduce-vim-surround-keymappings
-" https://zenn.dev/yano/articles/vim_plugin_top_10#vim-sandwich
+vmap sa <Plug>(operator-surround-append)
+vmap sd <Plug>(operator-surround-delete)
+vmap sr <Plug>(operator-surround-replace)
+vmap y <Plug>(operator-stay-cursor-yank)
+
 
