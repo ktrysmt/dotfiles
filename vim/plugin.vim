@@ -18,7 +18,6 @@ call jetpack#begin()
 Jetpack 'KKPMW/moonshine-vim'
 Jetpack 'RRethy/vim-illuminate'
 Jetpack 'itchyny/lightline.vim'
-" Jetpack 'nvim-treesitter/nvim-treesitter', { 'do' : ':TSUpdate'}
 
 " [filer]
 Jetpack 'lambdalisue/fern.vim'
@@ -39,7 +38,6 @@ Jetpack 'jreybert/vimagit', { "on": "MagitOnly" }
 Jetpack 'tpope/vim-fugitive', { "on": "Git" }
 Jetpack 'tomtom/tcomment_vim'
 Jetpack 'thinca/vim-qfreplace'
-" Jetpack 'tpope/vim-dispatch'
 
 " [operator]
 Jetpack 'cohama/lexima.vim'
@@ -57,7 +55,7 @@ Jetpack 'hrsh7th/vim-vsnip'
 Jetpack 'hrsh7th/vim-vsnip-integ'
 Jetpack 'rafamadriz/friendly-snippets'
 
-" [completion/lsp]
+" [lsp/completion]
 Jetpack 'prabirshrestha/vim-lsp'
 Jetpack 'prabirshrestha/async.vim'
 Jetpack 'prabirshrestha/asyncomplete.vim'
@@ -65,8 +63,12 @@ Jetpack 'prabirshrestha/asyncomplete-lsp.vim'
 Jetpack 'prabirshrestha/asyncomplete-buffer.vim'
 Jetpack 'mattn/vim-lsp-settings'
 Jetpack 'wellle/tmux-complete.vim'
-" Jetpack 'neovim/nvim-lspconfig'
-" Jetpack 'williamboman/nvim-lsp-installer'
+
+" [typescript]
+Jetpack 'w0rp/ale', { 'for': ['javascript', 'typescript', 'typescriptreact'] }
+Jetpack 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescriptreact'] }
+Jetpack 'peitalin/vim-jsx-typescript', { 'for': ['typescript', 'typescriptreact'] }
+Jetpack 'eliba2/vim-node-inspect', { 'for': ['javascript', 'typescript', 'typescriptreact'] }
 
 " [html/css]
 Jetpack 'mattn/emmet-vim', { 'for': [ 'html', 'css', 'javascript', 'typescript', 'typescriptreact'] }
@@ -79,12 +81,6 @@ Jetpack 'ekalinin/Dockerfile.vim', { 'for': [ 'tf', 'Dockerfile'] }
 
 " [c/cpp]
 Jetpack 'rhysd/vim-clang-format', { 'for': [ 'c', 'cpp'] }
-
-" [typescript]
-Jetpack 'w0rp/ale', { 'for': ['javascript', 'typescript', 'typescriptreact'] }
-Jetpack 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescriptreact'] }
-Jetpack 'peitalin/vim-jsx-typescript', { 'for': ['typescript', 'typescriptreact'] }
-Jetpack 'eliba2/vim-node-inspect', { 'for': ['javascript', 'typescript', 'typescriptreact'] }
 
 call jetpack#end()
 
