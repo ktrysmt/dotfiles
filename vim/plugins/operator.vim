@@ -26,6 +26,9 @@ inoremap <C-f> <C-r>=lexima#insmode#leave(1, '<LT>C-G>U<LT>RIGHT>')<CR>
 vmap sa <Plug>(operator-surround-append)
 vmap sd <Plug>(operator-surround-delete)
 vmap sr <Plug>(operator-surround-replace)
+
 vmap y <Plug>(operator-stay-cursor-yank)
 
+nmap <silent>sdd <Plug>(operator-surround-delete)<Plug>(textobj-anyblock-a)
+nmap <silent>srr <Plug>(operator-surround-replace)<Plug>(textobj-anyblock-a)
 

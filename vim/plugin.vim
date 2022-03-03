@@ -45,6 +45,8 @@ Jetpack 'kana/vim-operator-user'
 Jetpack 'osyo-manga/vim-operator-stay-cursor'
 Jetpack 'rhysd/vim-operator-surround'
 Jetpack 'terryma/vim-expand-region'
+Jetpack 'kana/vim-textobj-user'
+Jetpack 'rhysd/vim-textobj-anyblock'
 
 " [fzf]
 Jetpack 'junegunn/fzf'
