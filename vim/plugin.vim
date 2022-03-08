@@ -64,7 +64,6 @@ Jetpack 'prabirshrestha/asyncomplete.vim'
 Jetpack 'prabirshrestha/asyncomplete-lsp.vim'
 Jetpack 'prabirshrestha/asyncomplete-buffer.vim'
 Jetpack 'mattn/vim-lsp-settings'
-Jetpack 'wellle/tmux-complete.vim'
 
 " [typescript]
 Jetpack 'w0rp/ale', { 'for': ['javascript', 'typescript', 'typescriptreact'] }

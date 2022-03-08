@@ -32,8 +32,6 @@ set matchtime=1
 set noswapfile
 set nrformats=
 set number
-set ph=30
-set pumheight=10
 set ruler
 set secure
 set shiftwidth=2
