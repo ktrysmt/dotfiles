@@ -48,3 +48,8 @@ augroup ALESetting
   autocmd FileType javascript,typescript,typescriptreact nmap <silent> <Leader>LN :ALEPreviousWrap<CR>
 augroup END
 
+
+" ---
+" linediff
+" ---
+vnoremap <Leader>li :Linediff<cr>
