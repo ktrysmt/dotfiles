@@ -1,2 +1,2 @@
-nnoremap <Leader>gp :Dispatch! git push origin<cr>
-nnoremap <Leader>gl :Dispatch! git pull origin<cr>
+nnoremap <Leader>gps :Dispatch! git push origin<cr>
+nnoremap <Leader>gpl :Dispatch! git pull origin<cr>
