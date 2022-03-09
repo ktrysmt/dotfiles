@@ -10,7 +10,7 @@ if empty(glob('~/.config/nvim/autoload/jetpack.vim'))
   augroup END
 endif
 
-let g:jetpack#optimization=2
+let g:jetpack#optimization=1
 
 call jetpack#begin()
 
@@ -34,7 +34,6 @@ Jetpack 'Lokaltog/vim-easymotion', { "on": "<Plug>(easymotion-prefix)" }
 Jetpack 'antoinemadec/FixCursorHold.nvim'
 
 " [commander]
-Jetpack 'jreybert/vimagit', { "on": "MagitOnly" }
 Jetpack 'tpope/vim-fugitive', { "on": "Git" }
 Jetpack 'tomtom/tcomment_vim'
 Jetpack 'thinca/vim-qfreplace'
