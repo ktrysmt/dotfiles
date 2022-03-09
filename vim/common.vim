@@ -117,8 +117,6 @@ nnoremap <C-g> :echo expand('%:p')<Return>
 
 nnoremap <silent> <Leader>p "0p
 nnoremap <silent> <ESC><ESC> :nohlsearch<CR><ESC>
-nnoremap <silent> <Leader>co :copen<cr>
-nnoremap <silent> <Leader>cl :cclose<cr>
 nnoremap <silent> <Leader>t :new \| :terminal<CR><insert>
 nnoremap <silent> <Leader>T :tabnew \| :terminal<CR><insert>
 nnoremap <silent> <Leader>vt :vne \| :terminal<CR><insert>
@@ -135,3 +133,15 @@ vnoremap <c-j> <Nop>
 nnoremap <c-k> <Nop>
 inoremap <c-k> <Nop>
 vnoremap <c-k> <Nop>
+
+nnoremap <silent> <Leader>co :copen<cr>
+nnoremap <silent> <Leader>cl :cclose<cr>
+nnoremap <silent> <Leader>cc :call ToggleQuickFix()<cr>
+function! ToggleQuickFix()
+  if getqflist({'winid' : 0}).winid
+    cclose
+  else
+    copen
+  endif
+endfunction
+

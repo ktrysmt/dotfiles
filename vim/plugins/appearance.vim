@@ -1,6 +1,8 @@
 " ---
 " [colorscheme]
 " ---
+" set termguicolors
+set background=dark
 colorscheme moonshine_lowcontrast
 
 
