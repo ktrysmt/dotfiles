@@ -34,7 +34,7 @@ Jetpack 'Lokaltog/vim-easymotion', { "on": "<Plug>(easymotion-prefix)" }
 Jetpack 'antoinemadec/FixCursorHold.nvim'
 
 " [commander]
-Jetpack 'tpope/vim-fugitive', { "on": "Git" }
+Jetpack 'tpope/vim-fugitive'
 Jetpack 'tomtom/tcomment_vim'
 Jetpack 'thinca/vim-qfreplace'
 
