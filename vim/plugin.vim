@@ -37,6 +37,7 @@ Jetpack 'antoinemadec/FixCursorHold.nvim', { "on": "w0rp"  }
 Jetpack 'tpope/vim-fugitive'
 Jetpack 'tomtom/tcomment_vim'
 Jetpack 'thinca/vim-qfreplace'
+Jetpack 'tpope/vim-dispatch'
 
 " [operator]
 Jetpack 'cohama/lexima.vim'
