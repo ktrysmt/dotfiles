@@ -36,11 +36,11 @@ function! s:init_fern() abort
   nmap <buffer> y <Plug>(fern-action-yank:label)
   nmap <buffer> Y <Plug>(fern-action-yank:path)
 
-  nmap <buffer> P gg
+  nnoremap <buffer> P gg
 
-  nmap <buffer> l <Nop>
-  nmap <buffer> e <Nop>
-  nmap <buffer> E <Nop>
+  nnoremap <buffer> l <Nop>
+  nnoremap <buffer> e <Nop>
+  nnoremap <buffer> E <Nop>
 
   nmap <buffer> <Plug>(fern-my-enter-and-tcd)
         \ <Plug>(fern-action-enter)
@@ -61,7 +61,7 @@ function! s:init_fern() abort
 
   nmap <buffer> I <Plug>(fern-action-hide-toggle)
 
-  nmap <buffer> q :<C-u>quit<CR>
+  nnoremap <buffer> q :<C-u>quit<CR>
 endfunction
 
 function! s:toggle_fern() abort
@@ -75,7 +75,7 @@ function! s:focus_fern() abort
   :Fern . -reveal=% -drawer -width=50
 endfunction
 
-map <silent> <C-E> :<C-u>call <SID>toggle_fern()<CR>
+nmap <silent> <C-E> :<C-u>call <SID>toggle_fern()<CR>
 nnoremap <silent> <C-W>f :<C-u>call <SID>focus_fern()<CR>
 
 augroup FernSetting

@@ -34,7 +34,7 @@ for n in range(1, 9)
 endfor
 
 " Tab map
-nmap [Tag]c :tablast <bar> tabnew<CR>
-nmap [Tag]x :tabclose<CR>
-nmap <Tab>      gt
-nmap <S-Tab>    gT
+nnoremap [Tag]c :tablast <bar> tabnew<CR>
+nnoremap [Tag]x :tabclose<CR>
+nnoremap <Tab>      gt
+nnoremap <S-Tab>    gT

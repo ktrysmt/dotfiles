@@ -20,10 +20,10 @@ let g:lsp_settings_filetype_typescript = ['typescript-language-server']
 
 augroup VimLspSetting
   autocmd!
-  autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nmap gd <Plug>(lsp-definition)
-  autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nmap gv :rightbelow vertical LspDefinition<CR>
-  autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nmap <silent> <Leader>n :LspNextDiagnostic<CR>
-  autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nmap <silent> <Leader>N :LspPreviousDiagnostic<CR>
+  autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nnoremap <silent> gd :LspDefinition<CR>
+  autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nnoremap <silent> gv :rightbelow vertical LspDefinition<CR>
+  autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nnoremap <silent> <Leader>n :LspNextDiagnostic<CR>
+  autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nnoremap <silent> <Leader>N :LspPreviousDiagnostic<CR>
 
   if executable('node_modules/.bin/prettier') " aleでやらせる
     autocmd FileType go,rust,python,ruby,c,cpp autocmd BufWritePre <buffer> silent! LspDocumentFormatSync

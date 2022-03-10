@@ -44,8 +44,8 @@ endif
 
 augroup ALESetting
   autocmd!
-  autocmd FileType javascript,typescript,typescriptreact nmap <silent> <Leader>ln :ALENextWrap<CR>
-  autocmd FileType javascript,typescript,typescriptreact nmap <silent> <Leader>LN :ALEPreviousWrap<CR>
+  autocmd FileType javascript,typescript,typescriptreact nnoremap <silent> <Leader>ln :ALENextWrap<CR>
+  autocmd FileType javascript,typescript,typescriptreact nnoremap <silent> <Leader>LN :ALEPreviousWrap<CR>
 augroup END
 
 
