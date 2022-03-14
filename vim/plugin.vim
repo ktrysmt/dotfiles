@@ -15,12 +15,11 @@ let g:jetpack#optimization=2
 call jetpack#begin()
 
 " [appearance]
-Jetpack 'KKPMW/moonshine-vim'
 Jetpack 'RRethy/vim-illuminate'
 Jetpack 'itchyny/lightline.vim'
-Jetpack 'sainnhe/gruvbox-material'
-Jetpack 'sainnhe/everforest'
-Jetpack 'morhetz/gruvbox'
+" Jetpack 'sainnhe/gruvbox-material'
+Jetpack 'KKPMW/moonshine-vim'
+" Jetpack 'nvim-treesitter/nvim-treesitter'
 
 " [filer]
 Jetpack 'lambdalisue/fern.vim'
