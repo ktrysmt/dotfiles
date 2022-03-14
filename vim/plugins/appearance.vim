@@ -1,14 +1,14 @@
 " ---
 " [colorscheme]
 " ---
-" set termguicolors
-set background=dark
-
-" colorscheme gruvbox-material
 colorscheme moonshine_lowcontrast
 
+" set termguicolors
+" set background=dark
+"
+" let g:gruvbox_material_visual = 'green background'
+" colorscheme gruvbox-material
 " highlight Visual ctermbg=52 guibg=#5d4251
-" highlight VisualNOS ctermbg=52 guibg=#5d4251
 " highlight Visual gui=reverse
 
 
