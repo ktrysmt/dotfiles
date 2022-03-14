@@ -1,7 +1,18 @@
 " ---
 " [colorscheme]
 " ---
-colorscheme moonshine_lowcontrast
+set termguicolors
+set background=dark
+
+" colorscheme everforest
+colorscheme gruvbox-material
+" colorscheme gruvbox
+" colorscheme moonshine_lowcontrast
+
+" let g:everforest_background = 'soft'
+" highlight Visual gui=reverse
+highlight Visual ctermbg=52 guibg=#5d4251
+highlight VisualNOS ctermbg=52 guibg=#5d4251
 
 
 " ---
