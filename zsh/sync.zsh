@@ -1,8 +1,6 @@
-# cd, comment, auto
+# cd, comment
 setopt AUTO_CD
 setopt interactivecomments
-setopt AUTO_MENU
-setopt AUTO_NAME_DIRS
 
 # hist
 setopt HIST_IGNORE_ALL_DUPS
@@ -25,7 +23,3 @@ colors
 # snip
 bindkey '^X^M' peco-select-snippet
 
-# private
-if [ -e ~/.zshrc.private ]; then
-  source ~/.zshrc.private
-fi

@@ -42,3 +42,4 @@ _powered_cd() {
 # compdef _powered_cd powered_cd
 [ -e ~/.powered_cd.log ] || touch ~/.powered_cd.log
 alias c="powered_cd"
+
