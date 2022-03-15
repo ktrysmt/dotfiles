@@ -18,8 +18,8 @@ call jetpack#begin()
 Jetpack 'RRethy/vim-illuminate'
 Jetpack 'itchyny/lightline.vim'
 Jetpack 'KKPMW/moonshine-vim'
-" Jetpack 'sainnhe/gruvbox-material'
-" Jetpack 'nvim-treesitter/nvim-treesitter'
+Jetpack 'sainnhe/gruvbox-material'
+Jetpack 'nvim-treesitter/nvim-treesitter'
 
 " [filer]
 Jetpack 'lambdalisue/fern.vim'

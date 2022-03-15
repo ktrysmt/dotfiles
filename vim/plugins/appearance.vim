@@ -1,15 +1,14 @@
 " ---
 " [colorscheme]
 " ---
-colorscheme moonshine_lowcontrast
+" colorscheme moonshine_lowcontrast
 
-" set termguicolors
-" set background=dark
-"
+set termguicolors
+set background=dark
+" let g:gruvbox_material_visual = 'reverse'
 " let g:gruvbox_material_visual = 'green background'
-" colorscheme gruvbox-material
-" highlight Visual ctermbg=52 guibg=#5d4251
-" highlight Visual gui=reverse
+colorscheme gruvbox-material
+highlight Visual ctermbg=52 guibg=#5d4251
 
 
 " ---
@@ -38,38 +37,38 @@ let g:lightline = {
 " ---
 " [treesitter]
 " ---
-" lua <<EOF
-" require "nvim-treesitter.configs".setup {
-"   ensure_installed = {
-"     "dockerfile",
-"     "rust",
-"     "toml",
-"     "python",
-"     "gomod",
-"     "yaml",
-"     "graphql",
-"     "ruby",
-"     "perl",
-"     "make",
-"     "go",
-"     "svelte",
-"     "json",
-"     "vim",
-"     "cpp",
-"     "javascript",
-"     "lua",
-"     "bash",
-"     "html",
-"     "tsx",
-"     "css",
-"     "c",
-"     "typescript",
-"     "markdown",
-"     "lua",
-"   },
-"   highlight = {
-"     enable = false,
-"   }
-" }
-" EOF
-"
+lua <<EOF
+require "nvim-treesitter.configs".setup {
+  ensure_installed = {
+    "dockerfile",
+    "rust",
+    "toml",
+    "python",
+    "gomod",
+    "yaml",
+    "graphql",
+    "ruby",
+    "perl",
+    "make",
+    "go",
+    "svelte",
+    "json",
+    "vim",
+    "cpp",
+    "javascript",
+    "lua",
+    "bash",
+    "html",
+    "tsx",
+    "css",
+    "c",
+    "typescript",
+    "markdown",
+    "lua",
+  },
+  highlight = {
+    enable = true,
+  }
+}
+EOF
+
