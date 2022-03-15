@@ -5,6 +5,7 @@ colorscheme moonshine_lowcontrast
 
 " set termguicolors
 " set background=dark
+" let g:gruvbox_material_background = 'hard'
 " " let g:gruvbox_material_visual = 'reverse'
 " " let g:gruvbox_material_visual = 'green background'
 " colorscheme gruvbox-material
