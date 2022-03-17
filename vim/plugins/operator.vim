@@ -1,8 +1,10 @@
 " ---
 " vim-expand-region
 " ---
-map K <Plug>(expand_region_expand)
-map J <Plug>(expand_region_shrink)
+nmap K <Plug>(expand_region_expand)
+nmap J <Plug>(expand_region_shrink)
+vmap K <Plug>(expand_region_expand)
+vmap J <Plug>(expand_region_shrink)
 let g:expand_region_text_objects = {
       \ 'iw'  :1,
       \ 'iW'  :1,
