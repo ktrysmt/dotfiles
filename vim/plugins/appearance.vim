@@ -7,8 +7,8 @@ colorscheme moonshine_lowcontrast
 " set background=dark
 " let g:gruvbox_material_background = 'hard'
 " " let g:gruvbox_material_visual = 'green background'
+" autocmd ColorScheme * highlight Visual ctermbg=52 guibg=#5d4251
 " colorscheme gruvbox-material
-" highlight Visual ctermbg=52 guibg=#5d4251
 
 
 " ---
