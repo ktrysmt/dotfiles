@@ -68,7 +68,7 @@ Jetpack 'prabirshrestha/asyncomplete-buffer.vim'
 Jetpack 'mattn/vim-lsp-settings'
 
 " [typescript]
-Jetpack 'w0rp/ale', { 'for': ['javascript', 'typescript', 'typescriptreact'] }
+Jetpack 'dense-analysis/ale', { 'for': ['javascript', 'typescript', 'typescriptreact'] }
 Jetpack 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescriptreact'] }
 Jetpack 'peitalin/vim-jsx-typescript', { 'for': ['typescript', 'typescriptreact'] }
 Jetpack 'eliba2/vim-node-inspect', { 'for': ['javascript', 'typescript', 'typescriptreact'] }

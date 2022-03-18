@@ -14,6 +14,7 @@ let g:lsp_virtual_text_enabled = 0
 let g:lsp_highlights_enabled = 0
 let g:lsp_textprop_enabled = 0
 let g:lsp_document_highlight_enabled = 0
+let g:lsp_document_code_action_signs_enabled = 0 " to disable A>
 
 let g:lsp_settings_filetype_go = ['gopls', 'golangci-lint-langserver']
 let g:lsp_settings_filetype_typescript = ['typescript-language-server']
