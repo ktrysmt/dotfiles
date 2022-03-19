@@ -23,6 +23,7 @@ set termguicolors
 let g:Illuminate_ftblacklist = ['fern']
 augroup illuminate_augroup
     autocmd!
+    " autocmd VimEnter * highlight Visual ctermbg=52 guibg=#5d4251
     autocmd VimEnter * hi illuminatedWord guibg=#202020 gui=underline
 augroup END
 
