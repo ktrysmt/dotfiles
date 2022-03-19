@@ -20,6 +20,7 @@ Jetpack 'itchyny/lightline.vim'
 Jetpack 'KKPMW/moonshine-vim'
 Jetpack 'sainnhe/gruvbox-material'
 Jetpack 'nvim-treesitter/nvim-treesitter'
+Jetpack 'AlessandroYorba/Despacio'
 
 " [filer]
 Jetpack 'lambdalisue/fern.vim'

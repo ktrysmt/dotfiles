@@ -90,10 +90,6 @@ augroup GeneralAutocmdSetting
   " highlight
   autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=DarkGreen guibg=DarkGreen
   autocmd WinEnter * match IdeographicSpace /　/
-  " colorscheme
-  autocmd ColorScheme * hi LineNr ctermfg=239
-  autocmd ColorScheme * hi Normal ctermbg=none
-  autocmd ColorScheme * hi Todo ctermfg=230 ctermbg=none guifg=Yellow guibg=none
   " jinja
   au BufNewFile,BufRead *.yml.j2,*.yaml.j2 set ft=yaml
   au BufNewFile,BufRead *.conf,*.conf.j2 set ft=conf
