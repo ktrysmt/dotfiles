@@ -36,7 +36,8 @@ if &t_Co >= 256
   hi SpecialKey    guibg=NONE    guifg=#585858 gui=NONE
   hi Underlined    guibg=NONE    guifg=NONE    gui=UNDERLINE
 
-  hi Visual        guibg=#2e3b3b guifg=NONE    gui=NONE
+  " hi Visual        guibg=#2e3b3b guifg=NONE    gui=NONE
+  hi Visual        guibg=#304141 guifg=NONE    gui=NONE
   hi VisualNOS     guibg=NONE    guifg=NONE    gui=UNDERLINE
 
   hi IncSearch     guibg=#dfaf00 guifg=#262626 gui=NONE
@@ -49,9 +50,9 @@ if &t_Co >= 256
   hi WildMenu      guibg=#303030 guifg=#87afff gui=UNDERLINE
 
   hi DiffAdd       guibg=#32361a guifg=NONE    gui=NONE
-  hi DiffChange    guibg=#2e3b3b guifg=NONE    gui=NONE
-  hi DiffDelete    guibg=#59424b guifg=NONE    gui=NONE
-  hi DiffText      guibg=#435144 guifg=NONE    gui=NONE
+  hi DiffDelete    guibg=#4f1111 guifg=#ff875e gui=NONE
+  hi DiffChange    guibg=#1f1205 guifg=NONE    gui=NONE
+  hi DiffText      guibg=#483b24 guifg=NONE    gui=NONE
 
   hi Pmenu         guibg=#444444 guifg=#ffd787 gui=NONE
   hi PmenuSbar     guibg=#444444 guifg=NONE    gui=NONE

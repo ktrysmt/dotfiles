@@ -1,6 +1,7 @@
 let g:fern#opener = "vsplit"
 let g:fern#default_hidden = 1
 let g:fern#default_exclude = ".DS_Store"
+let g:fern#disable_drawer_hover_popup = 1
 
 
 function! s:init_fern() abort

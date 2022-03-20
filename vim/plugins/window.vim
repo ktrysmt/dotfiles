@@ -19,19 +19,24 @@ let g:vista_fzf_preview = ['right:50%']
 " ---
 " gitgutter
 " ---
-augroup HighlightGitGutter
-  autocmd!
-  autocmd Colorscheme * highlight GitGutterAdd    guifg=#009900 guibg=NONE
-  autocmd Colorscheme * highlight GitGutterChange guifg=#bbbb00 guibg=NONE
-  autocmd Colorscheme * highlight GitGutterDelete guifg=#ff2222 guibg=NONE
 
-  autocmd Colorscheme * highlight link GitGutterAddLineNr String
-  autocmd Colorscheme * highlight link GitGutterChangeLineNr String
-  autocmd Colorscheme * highlight link GitGutterDeleteLineNr String
-  autocmd Colorscheme * highlight link GitGutterChangeDeleteLineNr String
+highlight GitGutterAdd    guifg=#5bb15b guibg=#121212
+highlight GitGutterChange guifg=#c0c036 guibg=#121212
+highlight GitGutterDelete guifg=#e04a4a guibg=#121212
 
-  autocmd Colorscheme * highlight link GitGutterChangeLineNr String
-augroup END
+" augroup HighlightGitGutter
+"   autocmd!
+"   autocmd Colorscheme * highlight GitGutterAdd    guifg=#009900 guibg=NONE
+"   autocmd Colorscheme * highlight GitGutterChange guifg=#bbbb00 guibg=NONE
+"   autocmd Colorscheme * highlight GitGutterDelete guifg=#ff2222 guibg=NONE
+"
+"   " autocmd Colorscheme * highlight link GitGutterAddLineNr String
+"   " autocmd Colorscheme * highlight link GitGutterChangeLineNr String
+"   " autocmd Colorscheme * highlight link GitGutterDeleteLineNr String
+"   " autocmd Colorscheme * highlight link GitGutterChangeDeleteLineNr String
+"   "
+"   " autocmd Colorscheme * highlight link GitGutterChangeLineNr String
+" augroup END
 set signcolumn=yes:1
 
 
