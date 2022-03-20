@@ -10,10 +10,10 @@ if &t_Co >= 256
 
   set background=light
 
-  hi Normal        guibg=NONE    guifg=#ffd787 gui=NONE
+  hi Normal        guibg=NONE    guifg=#edc77b gui=NONE
 
   hi Boolean       guibg=NONE    guifg=#d7875f gui=NONE
-  hi Comment       guibg=NONE    guifg=#585858 gui=NONE
+  hi Comment       guibg=NONE    guifg=#686868 gui=NONE
   hi Constant      guibg=NONE    guifg=#d7875f gui=NONE
   hi Function      guibg=NONE    guifg=#af875f gui=NONE
   hi Identifier    guibg=NONE    guifg=#5f875f gui=NONE
@@ -33,11 +33,10 @@ if &t_Co >= 256
   hi LineNr        guibg=NONE    guifg=#626262 gui=NONE
   hi MatchParen    guibg=NONE    guifg=#87afff gui=NONE
   hi SignColumn    guibg=#121212 guifg=#6c6c6c gui=NONE
-  hi SpecialKey    guibg=NONE    guifg=#585858 gui=NONE
+  hi SpecialKey    guibg=NONE    guifg=#686868 gui=NONE
   hi Underlined    guibg=NONE    guifg=NONE    gui=UNDERLINE
 
-  " hi Visual        guibg=#2e3b3b guifg=NONE    gui=NONE
-  hi Visual        guibg=#304141 guifg=NONE    gui=NONE
+  hi Visual        guibg=#3e4f4f guifg=NONE    gui=NONE
   hi VisualNOS     guibg=NONE    guifg=NONE    gui=UNDERLINE
 
   hi IncSearch     guibg=#dfaf00 guifg=#262626 gui=NONE
@@ -76,7 +75,7 @@ if &t_Co >= 256
   hi TabLineSel    guibg=#303030 guifg=#87afff gui=NONE
   hi TabLineFill   guibg=#303030 guifg=#ffffd7 gui=NONE
 
-  hi NonText       guibg=NONE    guifg=#585858 gui=NONE
+  hi NonText       guibg=NONE    guifg=#686868 gui=NONE
 
   hi Cursor        guibg=#ffffdf guifg=NONE    gui=NONE
   hi CursorColumn  guibg=#101010 guifg=NONE    gui=NONE
