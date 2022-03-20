@@ -8,6 +8,13 @@ code --list-extensions > vscode/list-extensions
 cat vscode/list-extensions | xargs -I % code --install-extension %
 ```
 
+## apply markdown preview enhanced
+
+1. ctrl + p
+2. input `Markdown Preview Enhanced: Customize CSS`
+3. opened style.less
+4. paste [it](./style.less).
+
 ## keybindings
 
 copy and paste [it](./keybindings.json).
