@@ -29,3 +29,5 @@ export DOCKER_BUILDKIT=1
 export KREW_NO_UPGRADE_CHECK=1
 export PATH="$PATH:${KREW_ROOT:-$HOME/.krew}/bin"
 
+# bat
+export BAT_THEME="gruvbox-dark"
