@@ -19,11 +19,9 @@ let g:vista_fzf_preview = ['right:50%']
 " ---
 " gitgutter
 " ---
-
 highlight GitGutterAdd    guifg=#5bb15b guibg=#121212
 highlight GitGutterChange guifg=#c0c036 guibg=#121212
 highlight GitGutterDelete guifg=#e04a4a guibg=#121212
-
 " augroup HighlightGitGutter
 "   autocmd!
 "   autocmd Colorscheme * highlight GitGutterAdd    guifg=#009900 guibg=NONE

@@ -17,6 +17,7 @@ set termguicolors
 " let g:despacio_Pitch = 1
 " colorscheme despacio
 
+
 " ---
 " [illuminate]
 " ---
