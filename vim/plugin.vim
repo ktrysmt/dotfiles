@@ -34,7 +34,7 @@ Jetpack 'Shougo/unite.vim', { "on": "Unite" }
 " [move]
 Jetpack 'osyo-manga/vim-anzu'
 Jetpack 'Lokaltog/vim-easymotion', { "on": "<Plug>(easymotion-prefix)" }
-Jetpack 'antoinemadec/FixCursorHold.nvim', { "on": "w0rp"  }
+Jetpack 'antoinemadec/FixCursorHold.nvim'
 
 " [commander]
 Jetpack 'tpope/vim-fugitive'

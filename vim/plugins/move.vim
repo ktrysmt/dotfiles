@@ -11,7 +11,7 @@ nmap ; <Plug>(easymotion-prefix)
 " ---
 " fixcursorhold
 " ---
-let g:cursorhold_updatetime = 200
+let g:cursorhold_updatetime = 100
 
 
 " ---
