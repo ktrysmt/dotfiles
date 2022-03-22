@@ -66,7 +66,6 @@ require "nvim-treesitter.configs".setup {
     "cpp",
     "javascript",
     "lua",
-    "bash",
     "html",
     "tsx",
     "css",
