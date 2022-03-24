@@ -12,7 +12,7 @@ set ambiwidth=double
 set backspace=start,eol,indent
 set bs=2
 set cindent
-set completeopt=menuone,noinsert
+set completeopt=menuone,noselect,noinsert
 set cursorline
 set diffopt=internal,filler,algorithm:histogram,indent-heuristic
 set display=lastline
