@@ -8,6 +8,8 @@ let g:colors_name = 'pinecone'
 
 if &t_Co >= 256
 
+  set termguicolors
+
   set background=light
 
   hi Normal        guibg=NONE    guifg=#edc77b gui=NONE
@@ -16,18 +18,21 @@ if &t_Co >= 256
   hi Comment       guibg=NONE    guifg=#686868 gui=NONE
   hi Constant      guibg=NONE    guifg=#d7875f gui=NONE
   hi Function      guibg=NONE    guifg=#af875f gui=NONE
-  hi Identifier    guibg=NONE    guifg=#5f875f gui=NONE
-  hi PreProc       guibg=NONE    guifg=#875f5f gui=NONE
-  hi Special       guibg=NONE    guifg=#5f875f gui=NONE
-  hi Statement     guibg=NONE    guifg=#d78700 gui=NONE
-  hi String        guibg=NONE    guifg=#afaf5f gui=NONE
+  " hi Identifier    guibg=NONE    guifg=#5f875f gui=NONE
+  hi Identifier    guibg=NONE    guifg=#6a8050 gui=NONE
+  hi PreProc       guibg=NONE    guifg=#996762 gui=NONE
+  " hi Special       guibg=NONE    guifg=#5f875f gui=NONE
+  hi Special       guibg=NONE    guifg=#6a8050 gui=NONE
+  " hi Statement     guibg=NONE    guifg=#d78700 gui=NONE
+  hi Statement     guibg=NONE    guifg=#cf8406 gui=NONE
+  hi String        guibg=NONE    guifg=#aeae5e gui=NONE
   hi Title         guibg=NONE    guifg=#87afaf gui=NONE
   hi Type          guibg=NONE    guifg=#af875f gui=NONE
 
   hi ColorColumn   guibg=#303030 guifg=NONE    gui=NONE
   hi Conceal       guibg=NONE    guifg=#8a8a8a gui=NONE
   hi CursorLineNr  guibg=NONE    guifg=#ffaf00 gui=NONE
-  hi Directory     guibg=NONE    guifg=#afaf5f gui=NONE
+  hi Directory     guibg=NONE    guifg=#aeae5e gui=NONE
   hi FoldColumn    guibg=NONE    guifg=#af0000 gui=NONE
   hi Folded        guibg=NONE    guifg=#af0000 gui=NONE
   hi LineNr        guibg=NONE    guifg=#626262 gui=NONE
@@ -36,7 +41,7 @@ if &t_Co >= 256
   hi SpecialKey    guibg=NONE    guifg=#686868 gui=NONE
   hi Underlined    guibg=NONE    guifg=NONE    gui=UNDERLINE
 
-  hi Visual        guibg=#3e4f4f guifg=NONE    gui=NONE
+  hi Visual        guibg=#324040 guifg=NONE    gui=NONE
   hi VisualNOS     guibg=NONE    guifg=NONE    gui=UNDERLINE
 
   hi IncSearch     guibg=#dfaf00 guifg=#262626 gui=NONE
@@ -68,7 +73,8 @@ if &t_Co >= 256
   hi Ignore        guibg=NONE    guifg=NONE    gui=NONE
   hi MoreMsg       guibg=NONE    guifg=#87afff gui=NONE
   hi Question      guibg=NONE    guifg=#87afff gui=NONE
-  hi Todo          guibg=#ffffd7 guifg=#080808 gui=NONE
+  " hi Todo          guibg=#ffffd7 guifg=#080808 gui=NONE
+  hi Todo          guibg=#36362b guifg=NONE    gui=NONE
   hi WarningMsg    guibg=NONE    guifg=#ff875e gui=NONE
 
   hi TabLine       guibg=#303030 guifg=#626262 gui=NONE

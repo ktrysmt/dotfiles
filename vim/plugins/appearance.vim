@@ -1,7 +1,7 @@
 " ---
 " [colorscheme]
 " ---
-set termguicolors
+" set termguicolors
 
 " colorscheme moonshine_lowcontrast
 
