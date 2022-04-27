@@ -25,6 +25,7 @@ Jetpack 'AlessandroYorba/Despacio'
 
 " [filer]
 Jetpack 'lambdalisue/fern.vim'
+Jetpack 'LumaKernel/fern-mapping-fzf.vim'
 
 " [window]
 Jetpack 'airblade/vim-gitgutter'

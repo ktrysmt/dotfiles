@@ -89,3 +89,14 @@ augroup FernSetting
 augroup END
 
 
+
+function! Fern_mapping_fzf_customize_option(spec)
+    let a:spec.options .= ' --multi'
+    " Note that fzf#vim#with_preview comes from fzf.vim
+    if exists('*fzf#vim#with_preview')
+        return fzf#vim#with_preview(a:spec)
+    else
+        return a:spec
+    endif
+endfunction
+
