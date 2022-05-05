@@ -164,6 +164,13 @@ function! ToggleQuickFix()
   endif
 endfunction
 
+nmap <C-w>> <C-w>><SID>ws
+nmap <C-w>< <C-w><<SID>ws
+nnoremap <script> <SID>ws> <C-w>><SID>ws
+nnoremap <script> <SID>ws< <C-w><<SID>ws
+nmap <SID>ws <Nop>
+
+
 
 " -----
 "" tab control
