@@ -133,7 +133,7 @@ npm i -g npm-check-updates neovim
 # brew cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications";
 brew tap caskroom/cask
-brew --cask install appcleaner kindle hiddenbar google-japanese-ime iterm2 rectangle alt-tab clipy visual-studio-code google-chrome minikube mos macgesture itsycal
+brew --cask install appcleaner kindle google-japanese-ime iterm2 rectangle alt-tab clipy visual-studio-code google-chrome minikube mos macgesture itsycal
 brew --cask install virtualbox
 brew --cask install vagrant
 brew install --cask michaelvillar-timer
