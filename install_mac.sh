@@ -44,19 +44,19 @@ brew install \
   rust-analyzer \
   llvm \
   gopls \
+  neovim \
+  asdf \
   golangci-lint
-brew install /usr/local/Homebrew/Library/Taps/neovim/homebrew-neovim/Formula/neovim@0.4.4.rb
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
 exec $SHELL -l
 
+# asdf
+asdf plugin add nodejs
+asdf install nodejs latest
+
 # symlink
-
 cd ~/
-
-# mkdir ~/.zinit
-# git clone https://github.com/zdharma-continuum/zinit ~/.zinit/bin
-
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 mkdir -p ~/.sheldon/
 mkdir -p ~/.config/peco/

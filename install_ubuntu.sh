@@ -17,41 +17,46 @@ eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 # brew
 brew install \
   peco \
+  zsh \
   nkf \
   tree \
   ripgrep \
   fd \
   procs \
   fzf \
+  sheldon \
   tig \
   fzy \
   exa \
-  python \
+  python3 \
   jq \
   git-secrets \
+  nodejs \
   bat \
   ghq \
   diff-so-fancy \
+  git-delta \
   coreutils \
-  llvm \
-  neovim \
-  ctags
+  neovim
+brew install llvm
+brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+$(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
 exec $SHELL -l
 
 # symlinks
 cd ~/
-mkdir ~/.zinit
-git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+mkdir -p ~/.sheldon/
 mkdir -p ~/.config/peco/
+mkdir -p ~/.local/bin/
 mkdir ~/.cache
-mkdir ~/.local
 mkdir ~/.docker
 ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
-ln -s ~/dotfiles/.zshrc ~/.zshrc
-ln -s ~/dotfiles/.vimrc ~/.vimrc
+ln -s ~/dotfiles/.zshrc.ubuntu ~/.zshrc
 ln -s ~/dotfiles/.tigrc ~/.tigrc
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
+ln -s ~/dotfiles/zsh/sheldon.plugins.toml ~/.sheldon/plugins.toml
+ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
 
@@ -62,13 +67,15 @@ git config --global init.templatedir '~/.git-templates/git-secrets'
 git config --global credential.helper store
 
 # nvim
-vim +":PlugInstall" +qa
 mkdir -p ~/.config/nvim/
-ln -s ~/.vimrc ~/.config/nvim/init.vim
+curl -fLo ~/.config/nvim/autoload/jetpack.vim --create-dirs https://raw.githubusercontent.com/tani/vim-jetpack/master/autoload/jetpack.vim
+ln -s ~/dotfiles/.vimrc ~/.config/nvim/init.vim
 pip3 install neovim
-sudo ln -sf $(which nvim) $(which vim)
-pip3 install 'python-language-server[yapf]'
-pip3 install ipdb # python debugger
+ln -sf $(which nvim) /usr/local/bin/vim
+python2 -m pip install --user --upgrade pynvim
+python3 -m pip install --user --upgrade pynvim
+vim +":JetpackSync" +qa
+vim +":TSUpdate" +qa
 
 # the final task
 sudo bash -c "echo $(which zsh) >> /etc/shells";

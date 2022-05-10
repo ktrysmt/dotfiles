@@ -29,20 +29,20 @@ Jetpack 'LumaKernel/fern-mapping-fzf.vim'
 
 " [window]
 Jetpack 'airblade/vim-gitgutter'
-Jetpack 'liuchengxu/vista.vim', { "on": "Vista" }
-Jetpack 'LeafCage/yankround.vim', { "on": "Unite" }
-Jetpack 'Shougo/unite.vim', { "on": "Unite" }
+call jetpack#add('liuchengxu/vista.vim', { "on": "Vista" })
+call jetpack#add('LeafCage/yankround.vim', { "on": "Unite" })
+call jetpack#add('Shougo/unite.vim', { "on": "Unite" })
 
 " [move]
 Jetpack 'osyo-manga/vim-anzu'
-Jetpack 'Lokaltog/vim-easymotion', { "on": "<Plug>(easymotion-prefix)" }
+call jetpack#add('Lokaltog/vim-easymotion', { "on": "<Plug>(easymotion-prefix)" })
 Jetpack 'antoinemadec/FixCursorHold.nvim'
 
 " [commander]
 Jetpack 'tpope/vim-fugitive'
 Jetpack 'tomtom/tcomment_vim'
 Jetpack 'thinca/vim-qfreplace'
-Jetpack 'AndrewRadev/linediff.vim', { "on": "Linediff" }
+call jetpack#add('AndrewRadev/linediff.vim', { "on": "Linediff" })
 
 " [operator]
 Jetpack 'cohama/lexima.vim'

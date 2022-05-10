@@ -56,8 +56,9 @@ alias kctx="kubectx"
 
 # other
 alias py="/usr/local/bin/python3.9"
-alias vi="vim"
-alias vimf='vim $(fzf)'
+alias vi="nvim"
+alias vim="nvim"
+alias vimf='nvim $(fzf)'
 alias vimdiff='nvim -d'
 alias typora='open -a typora'
 alias rs='evcxr'
