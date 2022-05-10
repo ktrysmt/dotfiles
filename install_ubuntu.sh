@@ -5,9 +5,16 @@ set -e
 
 read -p "password? > " PASSWORD
 
-# linuxbrew
+# base
 sudo apt-get -qq -y update
-sudo apt-get -qq -y install build-essential curl file git zsh wget
+sudo apt-get -qq -y zsh
+sudo bash -c "echo $(which zsh) >> /etc/shells";
+echo $PASSWORD | chsh -s $(which zsh)
+export SHELL=/usr/bin/zsh
+exec $SHELL -l
+
+# linuxbrew
+sudo apt-get -qq -y install build-essential curl file git wget
 export CI=true
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
@@ -22,19 +29,22 @@ brew install \
   tree \
   ripgrep \
   fd \
-  procs \
+  procs
+brew install \
   fzf \
   sheldon \
   tig \
   fzy \
   exa \
-  python3 \
+  python3
+brew install \
   jq \
   git-secrets \
   nodejs \
   bat \
   ghq \
-  diff-so-fancy \
+  diff-so-fancy
+brew install \
   git-delta \
   coreutils \
   neovim
@@ -77,6 +87,3 @@ python3 -m pip install --user --upgrade pynvim
 vim +":JetpackSync" +qa
 vim +":TSUpdate" +qa
 
-# the final task
-sudo bash -c "echo $(which zsh) >> /etc/shells";
-echo $PASSWORD | chsh -s $(which zsh)
