@@ -7,13 +7,6 @@ let g:EasyMotion_grouping = 1
 
 nmap ; <Plug>(easymotion-prefix)
 
-
-" ---
-" fixcursorhold
-" ---
-let g:cursorhold_updatetime = 100
-
-
 " ---
 " anzu
 " ---

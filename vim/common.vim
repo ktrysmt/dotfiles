@@ -170,6 +170,10 @@ nnoremap <script> <SID>ws> <C-w>><SID>ws
 nnoremap <script> <SID>ws< <C-w><<SID>ws
 nmap <SID>ws <Nop>
 
+" cursorhold
+vnoremap y mcy`c
+
+
 
 
 " -----
