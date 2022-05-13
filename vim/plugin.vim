@@ -70,22 +70,22 @@ Jetpack 'prabirshrestha/asyncomplete-buffer.vim'
 Jetpack 'mattn/vim-lsp-settings'
 
 " [typescript]
-Jetpack 'dense-analysis/ale', { 'for': ['javascript', 'typescript', 'typescriptreact'] }
-Jetpack 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescriptreact'] }
-Jetpack 'peitalin/vim-jsx-typescript', { 'for': ['typescript', 'typescriptreact'] }
-Jetpack 'eliba2/vim-node-inspect', { 'for': ['javascript', 'typescript', 'typescriptreact'] }
+call jetpack#add('dense-analysis/ale', { 'for': ['javascript', 'typescript', 'typescriptreact'] })
+call jetpack#add('leafgarland/typescript-vim', { 'for': ['typescript', 'typescriptreact'] })
+call jetpack#add('peitalin/vim-jsx-typescript', { 'for': ['typescript', 'typescriptreact'] })
+call jetpack#add('eliba2/vim-node-inspect', { 'for': ['javascript', 'typescript', 'typescriptreact'] })
 
 " [html/css]
-Jetpack 'mattn/emmet-vim', { 'for': [ 'html', 'css', 'javascript', 'typescript', 'typescriptreact'] }
+call jetpack#add('mattn/emmet-vim', { 'for': [ 'html', 'css', 'javascript', 'typescript', 'typescriptreact'] })
 
 " [terraform]
-Jetpack 'hashivim/vim-terraform', { 'for': [ 'tf', 'terraform'] }
+call jetpack#add('hashivim/vim-terraform', { 'for': [ 'tf', 'terraform'] })
 
 " [dockerfile]
-Jetpack 'ekalinin/Dockerfile.vim', { 'for': [ 'tf', 'Dockerfile'] }
+call jetpack#add('ekalinin/Dockerfile.vim', { 'for': [ 'tf', 'Dockerfile'] })
 
 " [c/cpp]
-Jetpack 'rhysd/vim-clang-format', { 'for': [ 'c', 'cpp'] }
+call jetpack#add('rhysd/vim-clang-format', { 'for': [ 'c', 'cpp'] })
 
 call jetpack#end()
 
