@@ -175,3 +175,5 @@ tcpdump -tttt -l -i eth0 -A -n -s 0 dst port 3306 | grep -iE "select|update|dele
 EXITCODE=$(set +e ; command ; echo $?)                                                                                                                                                                                     # use exitcode of some-command after
 echo 'abcde' | awk 'match($0, /b.*/) {print substr($0, RSTART, RLENGTH)}'                                                                                                                                                  # match and substr with awk
 echo 'abcde' | grep -o 'b.*'                                                                                                                                                                                               # match and substr with grep
+scp -o ProxyCommand='ssh -i ~/.ssh/bastion.pem -W %h:%p username@global-ip' username@private-ip:~/path/to/file ./                                                                                                          # scp via bastion
+
