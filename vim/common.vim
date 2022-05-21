@@ -145,6 +145,10 @@ inoremap <C-f> <Right>
 inoremap <C-b> <Left>
 inoremap <C-c> <ESC>
 
+" switch buffer
+nnoremap <C-j> :bprev<CR>
+nnoremap <C-k> :bnext<CR>
+
 " use it later...
 nnoremap <c-j> <Nop>
 inoremap <c-j> <Nop>

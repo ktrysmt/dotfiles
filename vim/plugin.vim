@@ -30,6 +30,7 @@ Jetpack 'LumaKernel/fern-mapping-fzf.vim'
 
 " [window]
 Jetpack 'airblade/vim-gitgutter'
+Jetpack 'mbbill/undotree'
 call jetpack#add('liuchengxu/vista.vim', { "on": "Vista" })
 call jetpack#add('LeafCage/yankround.vim', { "on": "Unite" })
 call jetpack#add('Shougo/unite.vim', { "on": "Unite" })
