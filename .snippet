@@ -175,4 +175,4 @@ EXITCODE=$(set +e ; command ; echo $?)                                          
 echo 'abcde' | awk 'match($0, /b.*/) {print substr($0, RSTART, RLENGTH)}'                                                                                                                                                  # match and substr with awk
 echo 'abcde' | grep -o 'b.*'                                                                                                                                                                                               # match and substr with grep
 scp -o ProxyCommand='ssh -i ~/.ssh/bastion.pem -W %h:%p username@global-ip' username@private-ip:~/path/to/file ./                                                                                                          # scp via bastion
-
+echo '甲は乙に' | tr 甲乙 乙甲                                                                                                                                                                                             # replace by tr
