@@ -16,60 +16,60 @@ let g:jetpack#copy_method = 'symlink'
 call jetpack#begin()
 
 " [appearance]
-Jetpack 'RRethy/vim-illuminate'
-Jetpack 'itchyny/lightline.vim'
-Jetpack 'KKPMW/moonshine-vim'
-Jetpack 'ktrysmt/pinecone-vim'
-Jetpack 'sainnhe/gruvbox-material'
-" Jetpack 'nvim-treesitter/nvim-treesitter'
-Jetpack 'AlessandroYorba/Despacio'
+call jetpack#add('RRethy/vim-illuminate')
+call jetpack#add('itchyny/lightline.vim')
+call jetpack#add('KKPMW/moonshine-vim')
+call jetpack#add('ktrysmt/pinecone-vim')
+call jetpack#add('sainnhe/gruvbox-material')
+call jetpack#add('nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'})
+call jetpack#add('AlessandroYorba/Despacio')
 
 " [filer]
-Jetpack 'lambdalisue/fern.vim'
-Jetpack 'LumaKernel/fern-mapping-fzf.vim'
+call jetpack#add('lambdalisue/fern.vim')
+call jetpack#add('LumaKernel/fern-mapping-fzf.vim')
 
 " [window]
-Jetpack 'airblade/vim-gitgutter'
-Jetpack 'mbbill/undotree'
+call jetpack#add('airblade/vim-gitgutter')
+call jetpack#add('mbbill/undotree')
 call jetpack#add('liuchengxu/vista.vim', { "on": "Vista" })
 call jetpack#add('LeafCage/yankround.vim', { "on": "Unite" })
 call jetpack#add('Shougo/unite.vim', { "on": "Unite" })
 
 " [move]
-Jetpack 'osyo-manga/vim-anzu'
+call jetpack#add('osyo-manga/vim-anzu')
 call jetpack#add('Lokaltog/vim-easymotion', { "on": "<Plug>(easymotion-prefix)" })
 
 " [commander]
-Jetpack 'tpope/vim-fugitive'
-Jetpack 'tomtom/tcomment_vim'
-Jetpack 'thinca/vim-qfreplace'
+call jetpack#add('tpope/vim-fugitive')
+call jetpack#add('tomtom/tcomment_vim')
+call jetpack#add('thinca/vim-qfreplace')
 call jetpack#add('AndrewRadev/linediff.vim', { "on": "Linediff" })
 
 " [operator]
-Jetpack 'cohama/lexima.vim'
-Jetpack 'kana/vim-operator-user'
-Jetpack 'osyo-manga/vim-operator-stay-cursor'
-Jetpack 'rhysd/vim-operator-surround'
-Jetpack 'terryma/vim-expand-region'
-Jetpack 'kana/vim-textobj-user'
-Jetpack 'rhysd/vim-textobj-anyblock'
+call jetpack#add('cohama/lexima.vim')
+call jetpack#add('kana/vim-operator-user')
+call jetpack#add('osyo-manga/vim-operator-stay-cursor')
+call jetpack#add('rhysd/vim-operator-surround')
+call jetpack#add('terryma/vim-expand-region')
+call jetpack#add('kana/vim-textobj-user')
+call jetpack#add('rhysd/vim-textobj-anyblock')
 
 " [fzf]
-Jetpack 'junegunn/fzf'
-Jetpack 'junegunn/fzf.vim'
+call jetpack#add('junegunn/fzf')
+call jetpack#add('junegunn/fzf.vim')
 
 " [snip]
-Jetpack 'hrsh7th/vim-vsnip'
-Jetpack 'hrsh7th/vim-vsnip-integ'
-Jetpack 'rafamadriz/friendly-snippets'
+call jetpack#add('hrsh7th/vim-vsnip')
+call jetpack#add('hrsh7th/vim-vsnip-integ')
+call jetpack#add('rafamadriz/friendly-snippets')
 
 " [lsp/completion]
-Jetpack 'prabirshrestha/vim-lsp'
-Jetpack 'prabirshrestha/async.vim'
-Jetpack 'prabirshrestha/asyncomplete.vim'
-Jetpack 'prabirshrestha/asyncomplete-lsp.vim'
-Jetpack 'prabirshrestha/asyncomplete-buffer.vim'
-Jetpack 'mattn/vim-lsp-settings'
+call jetpack#add('prabirshrestha/vim-lsp')
+call jetpack#add('prabirshrestha/async.vim')
+call jetpack#add('prabirshrestha/asyncomplete.vim')
+call jetpack#add('prabirshrestha/asyncomplete-lsp.vim')
+call jetpack#add('prabirshrestha/asyncomplete-buffer.vim')
+call jetpack#add('mattn/vim-lsp-settings')
 
 " [typescript]
 call jetpack#add('dense-analysis/ale', { 'for': ['javascript', 'typescript', 'typescriptreact'] })

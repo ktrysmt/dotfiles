@@ -135,6 +135,7 @@ nnoremap cN *NcgN
 nnoremap <C-g> :echo expand('%:p')<Return>
 
 nnoremap <silent> <Leader>p "0p
+vnoremap <silent> <Leader>p "0p
 nnoremap <silent> <ESC><ESC> :nohlsearch<CR><ESC>
 nnoremap <silent> <Leader>t :new \| :terminal<CR><insert>
 nnoremap <silent> <Leader>T :tabnew \| :terminal<CR><insert>
