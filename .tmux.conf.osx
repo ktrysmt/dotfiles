@@ -28,7 +28,7 @@ bind '"' split-window -v -c "#{pane_current_path}";
 # move pane
 bind h select-pane -L
 bind j select-pane -D
-bind k select-pane -U
+bind k select-pane -
 bind l select-pane -R
 # unzen pane
 bind-key a run "tmux last-pane && tmux resize-pane -Z"
