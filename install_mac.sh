@@ -75,8 +75,8 @@ ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
 # cp ~/dotfiles/.switch-proxy.osx ~/.switch-proxy
-mkdir -p ~/.ipython/profile_default/
-echo "c.InteractiveShell.colors = 'Linux'" > ~/.ipython/profile_default/ipython_config.py
+# mkdir -p ~/.ipython/profile_default/
+# echo "c.InteractiveShell.colors = 'Linux'" > ~/.ipython/profile_default/ipython_config.py
 
 # git config
 git secrets --register-aws --global
@@ -97,7 +97,6 @@ curl -fLo ~/.config/nvim/autoload/jetpack.vim --create-dirs https://raw.githubus
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 pip3 install neovim
 ln -sf $(which nvim) /usr/local/bin/vim
-python2 -m pip install --user --upgrade pynvim
 python3 -m pip install --user --upgrade pynvim
 
 # python

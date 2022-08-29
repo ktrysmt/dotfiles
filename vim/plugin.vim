@@ -2,7 +2,6 @@ if empty(glob('~/.config/nvim/autoload/jetpack.vim'))
   silent execute '!curl -fLo ~/.config/nvim/autoload/jetpack.vim --create-dirs  https://raw.githubusercontent.com/tani/vim-jetpack/master/autoload/jetpack.vim'
   function! s:initialize_jetpack() abort
     execute ":JetpackSync"
-    execute ":qa"
   endfunction
   augroup PluginSetting
     autocmd!
