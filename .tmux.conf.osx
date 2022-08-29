@@ -1,0 +1,149 @@
+# --------------
+# bind
+# --------------
+# prefix
+unbind C-b
+set -g prefix C-s
+# reloading command
+unbind r
+bind C-r source-file ~/.tmux.conf \; display-message "reloaded"
+# resize pane
+bind -r H resize-pane -L 10
+bind -r J resize-pane -D 10
+bind -r K resize-pane -U 10
+bind -r L resize-pane -R 10
+# monitor
+bind C-s run "tmux last-pane || tmux last-window || tmux new-window"
+
+#set-window-option -g monitor-activity on
+setw -g mode-keys vi
+bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+bind-key -T copy-mode-vi v send-keys -X begin-selection
+bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
+
+bind 'C' new-window -c "#{pane_current_path}";
+bind '%' split-window -h -c "#{pane_current_path}";
+bind '"' split-window -v -c "#{pane_current_path}";
+# move pane
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+# unzen pane
+bind-key a run "tmux last-pane && tmux resize-pane -Z"
+
+# ---------
+# general
+# ---------
+set -sg escape-time 0
+set -g status-interval 30
+set -g base-index 1
+set -g pane-base-index 1
+set-option -g renumber-windows on;
+set-option -g history-limit 10000000
+
+# set -g terminal-overrides 'xterm*:smcup@:rmcup@'
+# set-option -g terminal-overrides "xterm-color:khome=\033[1~"
+# set-option -g default-terminal "screen-256color"
+
+set-option -g default-terminal screen-256color
+set-option -ga terminal-overrides ',xterm-256color:Tc'
+
+# --------------
+# status
+# --------------
+set -g status-position top
+set -g status-style fg=white,bg=colour235
+set -g status-left '[#[fg=cyan,bold]#(whoami)#[default]] '
+set -g status-left-length 30
+set -g status-right-length 120
+set -g status-right-style bg=colour235
+set -g status-right \
+"#{?client_prefix,#[reverse],}"\
+"#[fg=red]["\
+"#[fg=red]#(${HOME}/dotfiles/bin/echo-kubens)"\
+"#[fg=red] | "\
+"#[fg=red]#(${HOME}/dotfiles/bin/echo-kubectx)"\
+"#[fg=red]]"\
+"#[fg=white] [#(${HOME}/dotfiles/bin/git-echo-username-and-email)] "\
+"#[fg=green][#(${HOME}/dotfiles/bin/sh-echo-current-wifi-network)]#[default] "\
+"#[fg=cyan][%Y/%m/%d (%a) %H:%M]#[default]"
+# "#[fg=yellow]#(${HOME}/dotfiles/bin/git-echo-branch-tmux-current-pane)"\
+# set -g status-right '#[fg=white][%Y/%m/%d(%a)%H:%M]#[default]'
+
+# --------------
+# pane-status
+# --------------
+set-option -g pane-border-status bottom
+set-option -g pane-border-format "#[bg=black] #[fg=black,bg=white] #P #[bg=black] #(~/dotfiles/bin/tmux-pane-border '#{pane_current_path}')#[bg=black] #[default]"
+
+# --------------
+# window
+# --------------
+set -g automatic-rename on
+set -g window-status-format         '#I:#{?#{m:#W,zsh},#(basename #{pane_current_path}),#W}#F'
+set -g window-status-current-format '#I:#{?#{m:#W,zsh},#(basename #{pane_current_path}),#W}#F'
+set -g window-status-current-style fg=black,bg=white
+# set-window-option -g allow-rename off
+# set-window-option -g window-status-format " #I: #(basename $PWD) "
+# set-window-option -g window-status-current-format "#[fg=colour255,bg=colour27,bold] #I: #(${HOME}/dotfiles/bin/sh-echo-current-dir) #[default]"
+# set -g visual-activity on
+# setw -g monitor-activity on
+# set -g visual-silence on
+# setw -g monitor-silence 30
+
+# --------------
+# pane
+# --------------
+# pane-active-border
+# set -g pane-active-border-fg white
+# set -g pane-active-border-bg black
+set -g pane-active-border-style fg=blue,fg=black,bg=cyan
+set -g pane-border-style fg=colour023,fg=white,bg=black
+
+# --------------
+# mouse
+# --------------
+# set -g mouse on
+# set -g terminal-overrides 'xterm*:smcup@:rmcup@'
+# set-window-option -g mode-mouse on
+# mode-mouse
+#bind m \
+#  set -g mode-mouse on \; \
+#  display "Mouse: ON"
+#bind M \
+#  set -g mode-mouse off \; \
+#  display "Mouse: OFF"
+
+# --------------
+# 256色ターミナル
+# --------------
+# set -g default-terminal screen
+
+# --------------
+# UTF8 Support
+# --------------
+# setw -g utf8 on
+
+# --------------
+# TPM
+# --------------
+##   # List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+
+set -g @resurrect-save 'S'
+set -g @resurrect-restore 'U'
+
+# set -g @plugin 'tmux-plugins/tmux-continuum'
+# set -g @continuum-restore 'on'
+
+# Other examples:
+# set -g @plugin 'github_username/plugin_name'
+# set -g @plugin 'git@github.com/user/plugin'
+# set -g @plugin 'git@bitbucket.com/user/plugin'
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run -b '~/.tmux/plugins/tpm/tpm'

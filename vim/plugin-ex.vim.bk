@@ -1,0 +1,100 @@
+" -----
+" Jetpack
+" -----
+if empty(glob('~/.config/nvim/autoload/jetpack.vim'))
+  silent execute '!curl -fLo ~/.config/nvim/autoload/jetpack.vim --create-dirs  https://raw.githubusercontent.com/tani/vim-jetpack/master/autoload/jetpack.vim'
+  function! s:initialize_jetpack() abort
+    execute ":JetpackSync"
+    execute ":qa"
+  endfunction
+  augroup PluginSetting
+    autocmd!
+    autocmd VimEnter * call s:initialize_jetpack()
+  augroup END
+endif
+let g:jetpack#optimization=2
+call jetpack#begin()
+" [appearance]
+Jetpack 'KKPMW/moonshine-vim'
+" Jetpack 'nvim-lualine/lualine.nvim'
+" Jetpack 'nvim-treesitter/nvim-treesitter', { 'do' : ':TSUpdate'}
+" [snip]
+Jetpack 'hrsh7th/vim-vsnip'
+Jetpack 'hrsh7th/vim-vsnip-integ'
+Jetpack 'rafamadriz/friendly-snippets'
+" [move]
+Jetpack 'osyo-manga/vim-anzu'
+Jetpack 'Lokaltog/vim-easymotion', { "on": "<Plug>(easymotion-prefix)" }
+Jetpack 'antoinemadec/FixCursorHold.nvim'
+" [filer]
+Jetpack 'lambdalisue/fern.vim'
+" [fzf]
+Jetpack 'junegunn/fzf'
+Jetpack 'junegunn/fzf.vim'
+" [lsp]
+Jetpack 'neovim/nvim-lspconfig'
+Jetpack 'williamboman/nvim-lsp-installer'
+" [completion]
+Jetpack 'hrsh7th/cmp-nvim-lsp'
+Jetpack 'hrsh7th/cmp-buffer'
+Jetpack 'hrsh7th/cmp-path'
+Jetpack 'hrsh7th/cmp-cmdline'
+Jetpack 'hrsh7th/nvim-cmp'
+Jetpack 'hrsh7th/cmp-vsnip'
+call jetpack#end()
+
+runtime vim/plugins/fzf.vim
+runtime vim/plugins/filer.vim
+runtime vim/plugins/move.vim
+runtime vim/plugins/appearance.vim
+runtime vim/plugins/operator.vim
+runtime vim/plugins/commander.vim
+
+lua << EOF
+local on_attach = function(client, bufnr)
+local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+
+-- Mappings.
+local opts = { noremap=true, silent=true }
+buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+
+-- Set autocommands conditional on server_capabilities
+if client.resolved_capabilities.document_highlight then
+  require('lspconfig').util.nvim_multiline_command [[
+  :hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
+  :hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
+  :hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
+  augroup lsp_document_highlight
+    autocmd!
+    autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+    autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+  augroup END
+  ]]
+  end
+end
+
+local servers = { 'eslint', 'rust_analyzer', 'tsserver', 'gopls' }
+for _, lsp in pairs(servers) do
+  require('lspconfig')[lsp].setup {
+    on_attach = on_attach,
+    flags = {
+      -- This will be the default in neovim 0.7+
+      debounce_text_changes = 150,
+    }
+  }
+end
+EOF
