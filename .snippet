@@ -182,4 +182,4 @@ aws ec2 describe-instances --filters Name=instance-state-name,Values=running --q
 aws ec2 describe-instances --query 'Reservations[].Instances[?((Tags[?Key==`Name`].Value|[0]==`app`) || (Tags[?Key==`Env`].Value|[0]==`production`))][] | [][InstanceId]' --output                                         # multi expression by jmespath
 ssh-add ~/.ssh/target.pem; ssh -A -o ProxyCommand='ssh -i ~/.ssh/bastion.pem -W %h:%p ec2-user@<bastion-global-ip>' ec2-user@<target-private-ip> w                                                                         # direct throw the bastion
 echo 1 2 3 4 5 | xargs -n2                                                                                                                                                                                                 # xargs with multi arg
-
+TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` && curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/                      # higher level metadata in ec2
