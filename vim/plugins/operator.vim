@@ -21,6 +21,7 @@ let g:expand_region_text_objects = {
 " ---
 " https://qiita.com/yami_beta/items/26995a5c382bd83ac38f
 inoremap <C-f> <C-r>=lexima#insmode#leave(1, '<LT>C-G>U<LT>RIGHT>')<CR>
+set backspace=indent,eol,start
 
 
 " ---
