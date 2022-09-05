@@ -3,21 +3,23 @@
 " -----
 let g:lsp_async_completion = 1
 
+" log
+let g:lsp_log_verbose = 0
+let g:lsp_log_file = ""
+
 " lint
 let g:lsp_signs_enabled = 1
 let g:lsp_diagnostics_enabled = 1
 let g:lsp_diagnostics_echo_cursor = 1
 let g:lsp_diagnostics_signs_enabled = 1
 
+" UI
 let g:lsp_diagnostics_virtual_text_enabled = 0
 let g:lsp_virtual_text_enabled = 0
 let g:lsp_highlights_enabled = 0
 let g:lsp_textprop_enabled = 0
 let g:lsp_document_highlight_enabled = 0
 let g:lsp_document_code_action_signs_enabled = 0 " to disable A>
-
-let g:lsp_settings_filetype_go = ['gopls', 'golangci-lint-langserver']
-let g:lsp_settings_filetype_typescript = ['typescript-language-server']
 
 augroup VimLspSetting
   autocmd!
@@ -31,11 +33,8 @@ augroup VimLspSetting
   else
     autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact autocmd BufWritePre <buffer> silent! LspDocumentFormatSync
   endif
-
 augroup END
 
-let g:lsp_log_verbose = 0
-let g:lsp_log_file = ""
 
 setlocal omnifunc=lsp#complete
 
@@ -48,7 +47,6 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 let g:asyncomplete_auto_completeopt = 0
 
-
 " prabirshrestha/asyncomplete-buffer.vim
 call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
     \ 'name': 'buffer',
@@ -60,20 +58,88 @@ call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options
     \  },
     \ }))
 
+" ---
+" LSP Settings
+" ---
+" rust
 if executable('rust-analyzer')
-  au User lsp_setup call lsp#register_server({
-        \   'name': 'Rust Language Server',
-        \   'cmd': {server_info->['rust-analyzer']},
-        \   'whitelist': ['rust'],
-        \   'initialization_options': {
-        \     'cargo': {
-        \       'buildScripts': {
-        \         'enable': v:true,
-        \       },
-        \     },
-        \     'procMacro': {
-        \       'enable': v:true,
-        \     },
-        \   },
-        \ })
+  augroup VimLsp_RustAnalyzer
+    au!
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'Rust Language Server',
+      \ 'cmd': {server_info->['rust-analyzer']},
+      \ 'whitelist': ['rust'],
+      \ 'initialization_options': {
+      \   'cargo': {
+      \     'buildScripts': {
+      \       'enable': v:true,
+      \     },
+      \   },
+      \   'procMacro': {
+      \     'enable': v:true,
+      \   },
+      \  },
+      \ })
+augroup END
 endif
+
+" go
+if executable('gopls')
+  augroup VimLsp_Gopls
+    au!
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'gopls',
+      \ 'cmd': {server_info->['gopls']},
+      \ 'whitelist': ['go'],
+      \ })
+  augroup END
+endif
+if executable('golangci-lint')
+  augroup VimLsp_GolangciLintLangserver
+    au!
+    autocmd User lsp_setup call lsp#register_server({
+      \ 'name': 'golangci-lint-langserver',
+      \ 'cmd': {server_info->['golangci-lint-langserver']},
+      \ 'initialization_options': {'command': ['golangci-lint', 'run', '--enable-all', '--disable', 'lll', '--out-format', 'json', '--issues-exit-code=1']},
+      \ 'whitelist': ['go'],
+      \ })
+  augroup END
+endif
+
+" ts
+if executable('typescript-language-server')
+  augroup VimLsp_TypescriptLauguageServer
+    au!
+    autocmd User lsp_setup call lsp#register_server({
+      \ 'name': 'typescript-language-server',
+      \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+      \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+      \ 'whitelist': ['typescript'],
+      \ })
+  augroup END
+endif
+
+" py
+if executable('pylsp')
+  augroup VimLsp_PythonLspServer
+    au!
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'pylsp',
+      \ 'cmd': {server_info->['pylsp']},
+      \ 'whitelist': ['python'],
+      \ })
+  augroup END
+endif
+
+" c/c++
+if executable('clangd')
+  augroup VimLsp_Clangd
+    au!
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'clangd',
+      \ 'cmd': {server_info->['clangd', '-background-index']},
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+      \ })
+  augroup END
+endif
+"

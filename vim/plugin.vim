@@ -68,7 +68,6 @@ call jetpack#add('prabirshrestha/async.vim')
 call jetpack#add('prabirshrestha/asyncomplete.vim')
 call jetpack#add('prabirshrestha/asyncomplete-lsp.vim')
 call jetpack#add('prabirshrestha/asyncomplete-buffer.vim')
-call jetpack#add('mattn/vim-lsp-settings')
 
 " [typescript]
 call jetpack#add('dense-analysis/ale', { 'for': ['javascript', 'typescript', 'typescriptreact'] })
