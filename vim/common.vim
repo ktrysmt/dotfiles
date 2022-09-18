@@ -40,7 +40,6 @@ set cursorline
 set diffopt=internal,filler,algorithm:histogram,indent-heuristic
 set display=lastline
 set expandtab
-set guifont=Cica:h15
 set guioptions-=T
 set hidden
 set history=4096

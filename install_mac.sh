@@ -143,23 +143,27 @@ ln -sf ~/dotfiles/mac/karabiner-complex-naginata.json ~/.config/karabiner/assets
 # lock
 cp -Rp /System/Library/CoreServices/ScreenSaverEngine.app /Applications/lock.app
 
+# ------------
 # mouse
 # ------------
 # defaults write "Apple Global Domain" com.apple.mouse.scaling 16.0
 
+# ------------
 # others
 # ------------
 # sudo bash -c "echo $(which zsh) >> /etc/shells";
 # echo $PASSWORD | chsh -s $(which zsh)
 
+# ------------
 # downloads
 # ---------------
-# cica:   https://github.com/miiton/Cica/releases
-# chrome: https://www.google.com/intl/ja_jp/chrome/
-# ime:    https://www.google.co.jp/ime/
+# cica:    https://github.com/miiton/Cica/releases
+# chrome:  https://www.google.com/intl/ja_jp/chrome/
+# ime:     https://www.google.co.jp/ime/
+# hackgen: brew tap homebrew/cask-fonts && brew install font-hackgen
 
-# Automator...
-#
+# ------------
+# naginata
 # Automator.app > New > Application > "シェルスクリプトを実行" > /bin/bash > Paste it > Save to ~/Documents/bin/
 # ------------
 # # automator
