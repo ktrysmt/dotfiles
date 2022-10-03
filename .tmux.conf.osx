@@ -57,20 +57,15 @@ set -g status-position top
 set -g status-style fg=white,bg=colour235
 set -g status-left '[#[fg=cyan,bold]#(whoami)#[default]] '
 set -g status-left-length 30
-set -g status-right-length 120
+set -g status-right-length 220
 set -g status-right-style bg=colour235
 set -g status-right \
 "#{?client_prefix,#[reverse],}"\
-"#[fg=red]["\
-"#[fg=red]#(${HOME}/dotfiles/bin/echo-kubens)"\
-"#[fg=red] | "\
-"#[fg=red]#(${HOME}/dotfiles/bin/echo-kubectx)"\
-"#[fg=red]]"\
-"#[fg=white] [#(${HOME}/dotfiles/bin/git-echo-username-and-email)] "\
-"#[fg=green][#(${HOME}/dotfiles/bin/sh-echo-current-wifi-network)]#[default] "\
-"#[fg=cyan][%Y/%m/%d (%a) %H:%M]#[default]"
-# "#[fg=yellow]#(${HOME}/dotfiles/bin/git-echo-branch-tmux-current-pane)"\
-# set -g status-right '#[fg=white][%Y/%m/%d(%a)%H:%M]#[default]'
+"#[fg=green][#(${HOME}/dotfiles/bin/echo-kubens)] | #(${HOME}/dotfiles/bin/echo-kubectx)] "\
+"#[fg=white][%Y/%m/%d (%a) %H:%M]"\
+"#[default]"
+#"#[fg=white] [#(${HOME}/dotfiles/bin/git-echo-username-and-email)] "\
+#"#[fg=green][#(${HOME}/dotfiles/bin/sh-echo-current-wifi-network)]#[default] "\
 
 # --------------
 # pane-status
