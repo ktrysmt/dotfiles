@@ -49,34 +49,34 @@ let g:lightline = {
 " [treesitter]
 " ---
  lua <<EOF
-require "nvim-treesitter.configs".setup {
-  ensure_installed = {
-    "dockerfile",
-    "toml",
-    "python",
-    "gomod",
-    "yaml",
-    "graphql",
-    "ruby",
-    "perl",
-    "make",
-    "go",
-    "svelte",
-    "json",
-    "vim",
-    "cpp",
-    "javascript",
-    "lua",
-    "html",
-    "tsx",
-    "css",
-    "c",
-    "markdown",
-    "lua",
-  },
-  highlight = {
-    enable = true,
-  }
-}
-EOF
-
+-- require "nvim-treesitter.configs".setup {
+--   ensure_installed = {
+--     "dockerfile",
+--     "toml",
+--     "python",
+--     "gomod",
+--     "yaml",
+--     "graphql",
+--     "ruby",
+--     "perl",
+--     "make",
+--     "go",
+--     "svelte",
+--     "json",
+--     "vim",
+--     "cpp",
+--     "javascript",
+--     "lua",
+--     "html",
+--     "tsx",
+--     "css",
+--     "c",
+--     "markdown",
+--     "lua",
+--   },
+--   highlight = {
+--     enable = true,
+--   }
+-- }
+-- EOF
+--
