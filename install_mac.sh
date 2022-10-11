@@ -157,7 +157,8 @@ cp -Rp /System/Library/CoreServices/ScreenSaverEngine.app /Applications/lock.app
 # ------------
 # spotlight
 # ------------
-# touch /Applications/Xcode.app; # and un-check `spotlight > developer`
+# touch /Applications/Xcode.app; # and un-check `spotlight > developer`.
+# rm /Applications/Xcode.app;    # then remove it.
 
 # ------------
 # downloads
