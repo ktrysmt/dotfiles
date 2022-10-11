@@ -155,6 +155,11 @@ cp -Rp /System/Library/CoreServices/ScreenSaverEngine.app /Applications/lock.app
 # echo $PASSWORD | chsh -s $(which zsh)
 
 # ------------
+# spotlight
+# ------------
+# touch /Applications/Xcode.app; # and un-check `spotlight > developer`
+
+# ------------
 # downloads
 # ---------------
 # cica:    https://github.com/miiton/Cica/releases
