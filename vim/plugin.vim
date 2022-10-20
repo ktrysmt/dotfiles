@@ -13,8 +13,6 @@ let g:jetpack#optimization = 1
 let g:jetpack#copy_method = 'symlink'
 
 call jetpack#begin()
-call jetpack#add('tani/vim-jetpack', {'opt': 1}) "bootstrap
-
 " [appearance]
 call jetpack#add('RRethy/vim-illuminate')
 call jetpack#add('itchyny/lightline.vim')
@@ -23,6 +21,7 @@ call jetpack#add('ktrysmt/pinecone-vim')
 call jetpack#add('sainnhe/gruvbox-material')
 " call jetpack#add('nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'})
 call jetpack#add('AlessandroYorba/Despacio')
+call jetpack#add('folke/noice.nvim')
 
 " [filer]
 call jetpack#add('lambdalisue/fern.vim')
