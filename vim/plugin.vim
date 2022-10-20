@@ -21,7 +21,6 @@ call jetpack#add('ktrysmt/pinecone-vim')
 call jetpack#add('sainnhe/gruvbox-material')
 " call jetpack#add('nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'})
 call jetpack#add('AlessandroYorba/Despacio')
-call jetpack#add('folke/noice.nvim')
 
 " [filer]
 call jetpack#add('lambdalisue/fern.vim')
