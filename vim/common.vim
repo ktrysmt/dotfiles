@@ -103,17 +103,26 @@ cabbr w!! w !sudo tee > /dev/null %
 " autocmd
 " -----
 augroup GeneralAutocmdSetting
-  " common
   autocmd!
   autocmd BufWritePre * :%s/\s\+$//ge
   autocmd InsertLeave * set nopaste
   autocmd QuickFixCmdPost *grep* cwindow
+augroup END
+
+augroup JsonAutocmdSetting
+  autocmd!
   autocmd Filetype json setl conceallevel=0
-  " highlight
+augroup END
+
+augroup HighlightAutocmdSetting
+  autocmd!
   autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=DarkGreen guibg=DarkGreen
   autocmd WinEnter * match IdeographicSpace /　/
-  " jinja
-  autocmd BufNewFile,BufRead *.jinja2,*.j2,*.jinja set ft=jinja
+augroup END
+
+augroup JinjaAutocmdSetting
+  autocmd!
+  autocmd BufNewFile,BufRead *.j2 setfiletype yaml.ansible
 augroup END
 
 

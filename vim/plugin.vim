@@ -78,16 +78,16 @@ call jetpack#add('eliba2/vim-node-inspect', { 'for': ['javascript', 'typescript'
 call jetpack#add('mattn/emmet-vim', { 'for': [ 'html', 'css', 'javascript', 'typescript', 'typescriptreact'] })
 
 " [terraform]
-call jetpack#add('hashivim/vim-terraform', { 'for': [ 'tf', 'terraform'] })
+call jetpack#add('hashivim/vim-terraform', { 'for': ['terraform'] })
 
 " [dockerfile]
-call jetpack#add('ekalinin/Dockerfile.vim', { 'for': [ 'tf', 'Dockerfile'] })
+call jetpack#add('ekalinin/Dockerfile.vim', { 'for': ['Dockerfile'] })
 
 " [jinja]
-call jetpack#add('Glench/Vim-Jinja2-Syntax', { 'for': [ 'jinja' ]})
+call jetpack#add('pearofducks/ansible-vim', { 'for': ['jinja2'] })
 
 " [c/cpp]
-call jetpack#add('rhysd/vim-clang-format', { 'for': [ 'c', 'cpp'] })
+call jetpack#add('rhysd/vim-clang-format', { 'for': ['c', 'cpp'] })
 
 call jetpack#end()
 

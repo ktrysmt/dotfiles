@@ -45,6 +45,7 @@ let g:lightline = {
   \},
 \}
 
+
 " ---
 " [treesitter]
 " ---
