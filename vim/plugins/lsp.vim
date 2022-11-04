@@ -50,7 +50,7 @@ let g:asyncomplete_auto_completeopt = 0
 " prabirshrestha/asyncomplete-buffer.vim
 call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
     \ 'name': 'buffer',
-    \ 'whitelist': ['*'],
+    \ 'allowlist': ['*'],
     \ 'blacklist': ['go'],
     \ 'completor': function('asyncomplete#sources#buffer#completor'),
     \ 'config': {
@@ -68,7 +68,7 @@ if executable('rust-analyzer')
     au User lsp_setup call lsp#register_server({
       \ 'name': 'Rust Language Server',
       \ 'cmd': {server_info->['rust-analyzer']},
-      \ 'whitelist': ['rust'],
+      \ 'allowlist': ['rust'],
       \ 'initialization_options': {
       \   'cargo': {
       \     'buildScripts': {
@@ -90,7 +90,7 @@ if executable('gopls')
     au User lsp_setup call lsp#register_server({
       \ 'name': 'gopls',
       \ 'cmd': {server_info->['gopls']},
-      \ 'whitelist': ['go'],
+      \ 'allowlist': ['go'],
       \ })
   augroup END
 endif
@@ -101,7 +101,7 @@ if executable('golangci-lint')
       \ 'name': 'golangci-lint-langserver',
       \ 'cmd': {server_info->['golangci-lint-langserver']},
       \ 'initialization_options': {'command': ['golangci-lint', 'run', '--enable-all', '--disable', 'lll', '--out-format', 'json', '--issues-exit-code=1']},
-      \ 'whitelist': ['go'],
+      \ 'allowlist': ['go'],
       \ })
   augroup END
 endif
@@ -114,7 +114,7 @@ if executable('typescript-language-server')
       \ 'name': 'typescript-language-server',
       \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
       \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-      \ 'whitelist': ['typescript'],
+      \ 'allowlist': ['typescript'],
       \ })
   augroup END
 endif
@@ -126,7 +126,7 @@ if executable('pylsp')
     au User lsp_setup call lsp#register_server({
       \ 'name': 'pylsp',
       \ 'cmd': {server_info->['pylsp']},
-      \ 'whitelist': ['python'],
+      \ 'allowlist': ['python'],
       \ })
   augroup END
 endif
@@ -138,8 +138,19 @@ if executable('clangd')
     au User lsp_setup call lsp#register_server({
       \ 'name': 'clangd',
       \ 'cmd': {server_info->['clangd', '-background-index']},
-      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+      \ 'allowlist': ['c', 'cpp', 'objc', 'objcpp'],
       \ })
   augroup END
 endif
-"
+
+" ruby
+if executable('solargraph')
+  augroup VimLsp_Solargraph
+    au!
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'solargraph',
+      \ 'cmd': {server_info->['solargraph', 'stdio']},
+      \ 'allowlist': ['ruby'],
+      \ })
+  augroup END
+endif
