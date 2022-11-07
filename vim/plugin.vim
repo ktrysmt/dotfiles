@@ -25,6 +25,7 @@ call jetpack#add('AlessandroYorba/Despacio')
 " [filer]
 call jetpack#add('lambdalisue/fern.vim')
 call jetpack#add('LumaKernel/fern-mapping-fzf.vim')
+call jetpack#add('lambdalisue/fern-git-status.vim')
 
 " [window]
 call jetpack#add('airblade/vim-gitgutter')
