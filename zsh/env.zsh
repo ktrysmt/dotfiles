@@ -1,9 +1,9 @@
 # zsh
-export HIST_STAMPS="yyyy/mm/dd"
 export EDITOR='vim'
+export HIST_STAMPS="yyyy/mm/dd"
 export HISTFILE=${HOME}/.zsh_history
-export HISTSIZE=40000
-export SAVEHIST=40000
+export HISTSIZE=500000
+export SAVEHIST=500000
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # go

@@ -3,13 +3,16 @@ setopt AUTO_CD
 setopt interactivecomments
 
 # hist
+setopt EXTENDED_HISTORY
+setopt HIST_ALLOW_CLOBBER
+setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_NO_STORE
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_VERIFY
+setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
-setopt HIST_ALLOW_CLOBBER
-setopt EXTENDED_HISTORY
+setopt appendhistory
 
 # color
 export PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
