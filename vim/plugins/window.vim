@@ -1,7 +1,7 @@
 " ---
 " vista
 " ---
-nnoremap <C-q> :Vista!!<CR>
+nmap <silent> <C-q> :Vista<CR>
 let g:vista_default_executive = 'ctags'
 let g:vista_executive_for = {
   \ 'python': 'vim_lsp',
