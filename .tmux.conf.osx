@@ -91,30 +91,15 @@ set -g window-status-current-style fg=black,bg=white
 # --------------
 # pane
 # --------------
-# pane-active-border
-# set -g pane-active-border-fg white
-# set -g pane-active-border-bg black
 set -g pane-active-border-style fg=blue,fg=black,bg=cyan
 set -g pane-border-style fg=colour023,fg=white,bg=black
 
 # --------------
 # mouse
 # --------------
-# set -g mouse on
-# set -g terminal-overrides 'xterm*:smcup@:rmcup@'
-# set-window-option -g mode-mouse on
-# mode-mouse
-#bind m \
-#  set -g mode-mouse on \; \
-#  display "Mouse: ON"
-#bind M \
-#  set -g mode-mouse off \; \
-#  display "Mouse: OFF"
-
-# --------------
-# 256色ターミナル
-# --------------
-# set -g default-terminal screen
+set -g mouse on
+bind-key -T edit-mode-vi WheelUpPane send-keys -X scroll-up
+bind-key -T edit-mode-vi WheelDownPane send-keys -X scroll-down
 
 # --------------
 # UTF8 Support
@@ -124,7 +109,6 @@ set -g pane-border-style fg=colour023,fg=white,bg=black
 # --------------
 # TPM
 # --------------
-##   # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
