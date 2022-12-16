@@ -3,7 +3,8 @@
 " ---
 set termguicolors
 
-colorscheme pinecone
+" colorscheme pinecone
+colorscheme gruvbit
 " colorscheme moonshine_lowcontrast
 
 " set background=dark

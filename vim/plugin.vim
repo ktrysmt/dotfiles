@@ -17,10 +17,11 @@ call jetpack#begin()
 call jetpack#add('RRethy/vim-illuminate')
 call jetpack#add('itchyny/lightline.vim')
 call jetpack#add('KKPMW/moonshine-vim')
-call jetpack#add('ktrysmt/pinecone-vim')
-call jetpack#add('sainnhe/gruvbox-material')
-" call jetpack#add('nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'})
 call jetpack#add('AlessandroYorba/Despacio')
+
+" [theme]
+call jetpack#add('ktrysmt/pinecone-vim')
+call jetpack#add('habamax/vim-gruvbit')
 
 " [filer]
 call jetpack#add('lambdalisue/fern.vim')
