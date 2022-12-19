@@ -93,7 +93,7 @@ export GOPATH=$HOME/go:$HOME/project
 
 # nvim
 mkdir -p ~/.config/nvim/
-curl -fLo ~/.config/nvim/autoload/jetpack.vim --create-dirs https://raw.githubusercontent.com/tani/vim-jetpack/master/autoload/jetpack.vim
+curl -fLo ~/.config/nvim/autoload/jetpack.vim --create-dirs https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 pip3 install neovim
 ln -sf $(which nvim) /usr/local/bin/vim
