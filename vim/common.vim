@@ -31,6 +31,7 @@ scriptencoding utf-8
 
 set sh=zsh
 
+set noshowmode
 set ambiwidth=double
 set backspace=start,eol,indent
 set bs=2
