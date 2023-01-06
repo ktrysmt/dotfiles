@@ -20,8 +20,16 @@
 	<false/>
 	<key>HideScrollbar</key>
 	<true/>
+	<key>Hotkey</key>
+	<true/>
+	<key>HotkeyChar</key>
+	<integer>32</integer>
+	<key>HotkeyCode</key>
+	<integer>49</integer>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
+	<key>HotkeyModifiers</key>
+	<integer>131330</integer>
 	<key>LeftCommand</key>
 	<integer>7</integer>
 	<key>LeftOption</key>
