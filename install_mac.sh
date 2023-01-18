@@ -131,11 +131,9 @@ npm i -g npm-check-updates neovim
 # brew cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications";
 brew tap caskroom/cask
-brew --cask install appcleaner kindle iterm2 rectangle alt-tab clipy visual-studio-code minikube mos macgesture itsycal raycast
-brew --cask install virtualbox mark-text
+brew --cask install appcleaner kindle iterm2 rectangle alt-tab clipy visual-studio-code minikube mos macgesture virtualbox karabiner-elements
+brew --cask install itsycal raycast michaelvillar-timer
 brew --cask install vagrant
-brew install --cask michaelvillar-timer
-brew --cask install karabiner-elements
 ln -sf ~/dotfiles/mac/karabiner.json ~/.config/karabiner/karabiner.json
 ln -sf ~/dotfiles/mac/karabiner-complex.json ~/.config/karabiner/assets/complex_modifications/karabiner-complex.json
 ln -sf ~/dotfiles/mac/karabiner-complex-naginata.json ~/.config/karabiner/assets/complex_modifications/karabiner-complex-naginata.json

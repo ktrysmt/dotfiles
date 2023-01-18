@@ -1,4 +1,6 @@
 set runtimepath+=~/dotfiles/
 
-runtime! vim/*.vim
+runtime! vim/common.vim
+runtime! vim/plugin.vim
+runtime! vim/plugins/*.vim
 
