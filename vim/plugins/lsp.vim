@@ -43,20 +43,21 @@ setlocal omnifunc=lsp#complete
 " ---
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
-
 let g:asyncomplete_auto_completeopt = 0
 
-" prabirshrestha/asyncomplete-buffer.vim
+" ---
+" asyncomplete-buffer
+" ---
 call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-    \ 'name': 'buffer',
-    \ 'allowlist': ['*'],
-    \ 'blacklist': ['go'],
-    \ 'completor': function('asyncomplete#sources#buffer#completor'),
-    \ 'config': {
-    \    'max_buffer_size': -1,
-    \  },
-    \ }))
+   \ 'name': 'buffer',
+   \ 'allowlist': ['*'],
+   \ 'blocklist': ['go'],
+   \ 'completor': function('asyncomplete#sources#buffer#completor'),
+   \ 'config': {
+   \    'max_buffer_size': 5000000,
+   \  },
+   \ }))
+let g:asyncomplete_log_file = expand('~/.cache/vim/asyncomplete.log')
 
 " ---
 " LSP Settings
