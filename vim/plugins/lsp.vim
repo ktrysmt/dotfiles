@@ -95,7 +95,7 @@ if executable('gopls')
       \ })
   augroup END
 endif
-if executable('golangci-lint')
+if executable('golangci-lint-langserver')
   augroup VimLsp_GolangciLintLangserver
     au!
     autocmd User lsp_setup call lsp#register_server({

@@ -7,3 +7,4 @@ export BAT_THEME=gruvbox-dark
 
 # debug
 # zmodload zsh/zprof && zprof
+. "$HOME/.cargo/env"

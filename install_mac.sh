@@ -3,11 +3,9 @@
 set -o pipefail
 set -e
 
-read -p "password? > " PASSWORD
-
 # brew
-export CI=true
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 brew install \
   curl \
   openssl \
@@ -38,6 +36,7 @@ brew install \
   git-delta \
   kind \
   kubectl \
+  minikube \
   kubectx \
   kubernetes-helm \
   coreutils \
@@ -49,16 +48,16 @@ brew install \
   golangci-lint
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
-exec $SHELL -l
 
 # asdf
 asdf plugin add nodejs
 asdf install nodejs latest
+asdf global nodejs latest
 
 # symlink
 cd ~/
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-mkdir -p ~/.sheldon/
+mkdir -p ~/.config/sheldon/
 mkdir -p ~/.config/peco/
 mkdir -p ~/.local/bin/
 mkdir ~/.cache
@@ -70,7 +69,7 @@ ln -s ~/dotfiles/.vimrc ~/.vimrc
 ln -s ~/dotfiles/.tigrc ~/.tigrc
 ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
-ln -s ~/dotfiles/zsh/sheldon.plugins.toml ~/.sheldon/plugins.toml
+ln -s ~/dotfiles/zsh/sheldon.plugins.toml ~/.config/sheldon/plugins.toml
 ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
@@ -96,7 +95,7 @@ mkdir -p ~/.config/nvim/
 curl -fLo ~/.config/nvim/autoload/jetpack.vim --create-dirs https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 pip3 install neovim
-ln -sf $(which nvim) /usr/local/bin/vim
+sudo ln -sf $(which nvim) /usr/local/bin/vim
 python3 -m pip install --user --upgrade pynvim
 
 # python
@@ -123,17 +122,20 @@ source $HOME/.cargo/env
 
 # sub tools
 go install github.com/go-delve/delve/cmd/dlv@latest
-vim +":JetpackSync" +":setfiletype go" +":GoInstallBinaries" +qa
+vim +":JetpackSync" +":JetpackSync"
+vim +":setfiletype go" +":GoInstallBinaries" +qa
 vim +":setfiletype rust" +":LspInstallServer rust-analyzer" +qa
 vim +":setfiletype python" +":LspInstallServer pyls-all" +qa
 npm i -g npm-check-updates neovim
 
 # brew cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications";
-brew tap caskroom/cask
-brew --cask install appcleaner kindle iterm2 rectangle alt-tab clipy visual-studio-code minikube mos macgesture virtualbox karabiner-elements
-brew --cask install itsycal raycast michaelvillar-timer
-brew --cask install vagrant
+brew tap homebrew/cask
+brew install --cask appcleaner kindle iterm2 rectangle alt-tab clipy visual-studio-code mos macgesture
+brew install --cask karabiner-elements
+brew install --cask itsycal raycast michaelvillar-timer
+brew install --cask virtualbox vagrant
+mkdir -p ~/.config/karabiner/assets/complex_modifications
 ln -sf ~/dotfiles/mac/karabiner.json ~/.config/karabiner/karabiner.json
 ln -sf ~/dotfiles/mac/karabiner-complex.json ~/.config/karabiner/assets/complex_modifications/karabiner-complex.json
 ln -sf ~/dotfiles/mac/karabiner-complex-naginata.json ~/.config/karabiner/assets/complex_modifications/karabiner-complex-naginata.json
