@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 cd `tmux display-message -p -F "#{pane_current_path}"`
 user_name=`git config --get user.name`

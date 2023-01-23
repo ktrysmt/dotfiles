@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 dir_name=`tmux display-message -p -F "#{pane_current_path}"`
 

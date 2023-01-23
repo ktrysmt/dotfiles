@@ -1,4 +1,4 @@
-#!/usr/local/bin/zsh
+#!/bin/bash
 
 git_branch="$(cd $1 && git status 2>/dev/null | awk 'NR==1 {print $3}')"
 # flag=0
@@ -26,6 +26,8 @@ else
   # flag=1
   git_info=""
 fi
+
+echo "hoge"
 
 directory="#[underscore]#[bg=black,fg=cyan]$1#[default]"
 
