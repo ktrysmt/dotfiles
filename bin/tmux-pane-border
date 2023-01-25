@@ -24,7 +24,7 @@ if [[ "$git_branch" != "" ]]; then
   fi
 
 else
-  git_info="XXX"
+  git_info=""
 fi
 
 directory="#[underscore]#[bg=black,fg=cyan]$current_path#[default]"
