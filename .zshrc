@@ -1,4 +1,2 @@
-if [ -f /opt/homebrew/bin/brew ]; then
-  export PATH=/opt/homebrew/bin:$PATH
-fi
+export PATH=/opt/homebrew/bin:$PATH
 eval "$(sheldon source)"
