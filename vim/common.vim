@@ -200,6 +200,13 @@ vnoremap y mcy`c
 " nnoremap tt dd
 " nnoremap T D
 
+" nnoremap <silent> <Leader><C-g> :call CopyPath()<cr>
+" function! CopyPath()
+"   let words = split(getcwd(),"/")
+"   let index = len(words) - 1
+"   let path = words[index] ."/". expand('%')
+"   call system("echo" , path, "|pbcopy")
+" endfunction
 
 
 
