@@ -76,9 +76,9 @@ set wrap
 filetype plugin indent on
 
 if has('win32') || has('win64') || has('mac')
-  set clipboard=unnamed
+  set clipboard+=unnamed
 else
-  set clipboard=unnamedplus
+  set clipboard+=unnamedplus
 endif
 
 
@@ -200,12 +200,12 @@ vnoremap y mcy`c
 " nnoremap tt dd
 " nnoremap T D
 
-" nnoremap <silent> <Leader><C-g> :call CopyPath()<cr>
+" nnoremap <C-g><C-g> :call CopyPath()<cr>
 " function! CopyPath()
 "   let words = split(getcwd(),"/")
 "   let index = len(words) - 1
 "   let path = words[index] ."/". expand('%')
-"   call system("echo" , path, "|pbcopy")
+"   let @" = path
 " endfunction
 
 
