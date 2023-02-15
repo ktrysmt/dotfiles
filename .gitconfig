@@ -18,13 +18,13 @@
 [url "https://"]
   insteadOf = git://
 
-[pager]
-  diff = delta
-  show = delta
+# [pager]
+#   diff = delta
+#   show = delta
 
-# [alias]
-#   delta = !git diff | delta
-#   delta = !git diff | delta
+[alias]
+  delta = !git diff | delta
+  delta = !git diff | delta
 
 [delta]
   # features = line-numbers decorations
