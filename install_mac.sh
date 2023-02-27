@@ -146,9 +146,11 @@ ln -sf ~/dotfiles/mac/karabiner-complex-naginata.json ~/.config/karabiner/assets
 cp -Rp /System/Library/CoreServices/ScreenSaverEngine.app /Applications/lock.app
 
 # ------------
-# mouse
+# mac
 # ------------
 # defaults write "Apple Global Domain" com.apple.mouse.scaling 16.0
+# defaults write com.apple.finder AppleShowAllFiles TRUE && killall Finder
+
 
 # ------------
 # others
