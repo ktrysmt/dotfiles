@@ -21,6 +21,7 @@ bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
 bind-key -T copy-mode-vi v send-keys -X begin-selection
 bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
 bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
 
 bind 'C' new-window -c "#{pane_current_path}";
 bind '%' split-window -h -c "#{pane_current_path}";
