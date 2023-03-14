@@ -81,6 +81,8 @@ else
   set clipboard+=unnamedplus
 endif
 
+" cursorhold
+set nostartofline
 
 " -----
 " vimgrep
@@ -144,6 +146,7 @@ nnoremap <C-g> :echo expand('%:p')<Return>
 
 nnoremap <silent> <Leader>p "0p
 vnoremap <silent> <Leader>p "0p
+
 nnoremap <silent> <ESC><ESC> :nohlsearch<CR><ESC>
 nnoremap <silent> <Leader>t :new \| :terminal<CR><insert>
 nnoremap <silent> <Leader>T :tabnew \| :terminal<CR><insert>
@@ -183,8 +186,6 @@ nnoremap <script> <SID>ws> <C-w>><SID>ws
 nnoremap <script> <SID>ws< <C-w><<SID>ws
 nmap <SID>ws <Nop>
 
-" cursorhold
-vnoremap y mcy`c
 
 " devide delete and cut
 " vnoremap d "_d
