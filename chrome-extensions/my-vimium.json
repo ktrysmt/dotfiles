@@ -1,5 +1,5 @@
 {
-  "settingsVersion": "1.67",
+  "settingsVersion": "1.67.4",
   "exclusionRules": [
     {
       "pattern": "https?://mail.google.com/*",
@@ -65,7 +65,7 @@
   "filterLinkHints": false,
   "waitForEnterForFilteredHints": true,
   "hideHud": false,
-  "keyMappings": "# Insert your preferred key mappings here.\nmap <a-r> closeTabsOnRight\nmap <a-l> closeTabsOnLeft\nmap <a-o> closeOtherTabs\nunmap <c-y>\nmap gr closeTabsOnRight\nmap gl closeTabsOnLeft\nmap go closeOtherTabs\nmap gf LinkHints.activateModeWithQueue\nunmap <a-p>\nmap gp togglePinTab\nmap gb visitPreviousTab",
+  "keyMappings": "# Insert your preferred key mappings here.\nmap <a-r> closeTabsOnRight\nmap <a-l> closeTabsOnLeft\nmap <a-o> closeOtherTabs\nunmap <c-y>\nmap gr closeTabsOnRight\nmap gl closeTabsOnLeft\nmap go closeOtherTabs\nmap gf LinkHints.activateModeWithQueue\nunmap <a-p>\nmap gp togglePinTab\nmap gb visitPreviousTab\nmap k scrollUp count=3\nmap j scrollDown count=3",
   "linkHintCharacters": "sadfjklewcmpgh",
   "linkHintNumbers": "0123456789",
   "newTabUrl": "about:newtab",
