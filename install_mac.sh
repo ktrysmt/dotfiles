@@ -45,6 +45,7 @@ brew install \
   gopls \
   neovim \
   asdf \
+  raycast \
   golangci-lint
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
@@ -176,7 +177,7 @@ cp -Rp /System/Library/CoreServices/ScreenSaverEngine.app /Applications/lock.app
 # naginata
 # Automator.app > New > Application > "シェルスクリプトを実行" > /bin/bash > Paste it > Save to ~/Documents/bin/
 # ------------
-# # automator
+# * automator
 # current=`'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --show-current-profile-name`
 # if [ $current = "Default" ]; then
 #     prof="Nagi"
@@ -184,3 +185,13 @@ cp -Rp /System/Library/CoreServices/ScreenSaverEngine.app /Applications/lock.app
 #     prof="Default"
 # fi
 # '/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile $prof
+
+# ------------
+# raycast
+# ------------
+# * firefox
+# open raycast > extension > + > Create Script Command
+# 1. input title "firefox-global-hotkey"
+# 2. click "Create Script"
+# 3. cd ~/Library/Application\ Support/Raycast/commands
+# 4. echo "#!/bin/bash\n open -a 'Firefox'" > firefox-global-hotkey.sh
