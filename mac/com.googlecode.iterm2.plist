@@ -1358,6 +1358,12 @@
 			<string>/Users/kotaro_yoshimatsu</string>
 		</dict>
 	</array>
+	<key>OnlyWhenMoreTabs</key>
+	<true/>
+	<key>OpenArrangementAtStartup</key>
+	<false/>
+	<key>OpenNoWindowsAtStartup</key>
+	<false/>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>0</integer>
 	<key>PMPrintingExpandedStateForPrint2</key>
@@ -1400,6 +1406,8 @@
 	<true/>
 	<key>RightCommand</key>
 	<integer>8</integer>
+	<key>SmartPlacement</key>
+	<true/>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>SwitchTabModifier</key>
