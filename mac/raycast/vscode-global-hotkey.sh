@@ -2,10 +2,11 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title firefox hotkey
+# @raycast.title vscode global hotkey
 # @raycast.mode silent
 
 # Optional parameters:
 # @raycast.icon 🤖
 
-open -a "Firefox"
+open -a "Visual Studio Code"
+
