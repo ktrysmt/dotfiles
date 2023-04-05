@@ -31,8 +31,8 @@ call jetpack#add('LumaKernel/fern-mapping-fzf.vim')
 call jetpack#add('airblade/vim-gitgutter')
 call jetpack#add('mbbill/undotree')
 call jetpack#add('liuchengxu/vista.vim', { "on": "Vista" })
-call jetpack#add('LeafCage/yankround.vim', { "on": "Unite" })
-call jetpack#add('Shougo/unite.vim', { "on": "Unite" })
+call jetpack#add('yazgoo/yank-history')
+
 
 " [move]
 call jetpack#add('osyo-manga/vim-anzu')

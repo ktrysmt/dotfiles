@@ -36,3 +36,8 @@ vmap sr <Plug>(operator-surround-replace)
 nmap <silent>sdd <Plug>(operator-surround-delete)<Plug>(textobj-anyblock-a)
 nmap <silent>srr <Plug>(operator-surround-replace)<Plug>(textobj-anyblock-a)
 
+" ---
+" yank history
+" ---
+nmap <silent><space>y :YankHistoryRgPaste<CR>
+
