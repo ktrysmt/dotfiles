@@ -9,6 +9,8 @@ if [[ "$git_branch" != "" ]]; then
   g_status="$(cd $current_path && git status -s 2>/dev/null | sort -r)";
   if [[ $(echo $g_status | grep -c -E '^(UU|AA) ') > 0 ]]; then
     state="#[bg=red,fg=black] x #[fg=default]" ;
+  elif [[ $(echo $g_status | grep -c -E "^(\?\?) ") > 0 ]]; then
+    state="#[bg=red,fg=black] ? #[default]" ;
   elif [[ $(echo $g_status | grep -c -E '^( M|AM|MM|AD| D|\?\?) ') > 0 ]]; then
     state="#[bg=yellow,fg=black] * #[fg=default]" ;
   elif [[ $(echo $g_status | grep -c -E "^(M|A|D|R)  ") > 0 ]]; then
