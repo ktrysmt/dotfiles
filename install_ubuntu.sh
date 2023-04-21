@@ -6,12 +6,13 @@ set -e
 read -p "password? > " PASSWORD
 
 # base
-sudo apt-get -qq -y update
-sudo apt-get -qq -y zsh
+sudo apt-get install -qq -y update
+sudo apt-get install -qq -y zsh
 sudo bash -c "echo $(which zsh) >> /etc/shells";
 echo $PASSWORD | chsh -s $(which zsh)
 export SHELL=/usr/bin/zsh
 exec $SHELL -l
+setopt interactivecomments
 
 # linuxbrew
 sudo apt-get -qq -y install build-essential curl file git wget
@@ -58,8 +59,10 @@ cd ~/
 mkdir -p ~/.sheldon/
 mkdir -p ~/.config/peco/
 mkdir -p ~/.local/bin/
-mkdir ~/.cache
-mkdir ~/.docker
+mkdir ~/.docker/
+mkdir -p ~/.config/nvim/
+mkdir -p ~/.cache/vim/
+ln -s ~/dotfiles/.vimrc ~/.config/nvim/init.vim
 ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc.ubuntu ~/.zshrc
@@ -79,7 +82,6 @@ git config --global credential.helper store
 # nvim
 mkdir -p ~/.config/nvim/
 curl -fLo ~/.config/nvim/autoload/jetpack.vim --create-dirs https://raw.githubusercontent.com/tani/vim-jetpack/master/autoload/jetpack.vim
-ln -s ~/dotfiles/.vimrc ~/.config/nvim/init.vim
 pip3 install neovim
 ln -sf $(which nvim) /usr/local/bin/vim
 python2 -m pip install --user --upgrade pynvim

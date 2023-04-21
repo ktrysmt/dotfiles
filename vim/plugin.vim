@@ -13,6 +13,8 @@ let g:jetpack#optimization = 1
 let g:jetpack#copy_method = 'symlink'
 
 call jetpack#begin()
+
+call jetpack#add("tani/vim-jetpack")
 " [appearance]
 call jetpack#add('RRethy/vim-illuminate')
 call jetpack#add('itchyny/lightline.vim')
