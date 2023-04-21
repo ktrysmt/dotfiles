@@ -1,6 +1,6 @@
 # general
 alias history='fc -il 1' # for HIST_STAMPS in oh-my-zsh
-alias gh='cd $(ghq list -p | peco)'
+alias ghl='cd $(ghq list -p | peco)'
 alias rg='rg -S'
 alias rgn='rg -S --hidden --no-heading'
 alias l="exa -lha"
