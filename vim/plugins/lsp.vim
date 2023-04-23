@@ -24,7 +24,7 @@ let g:lsp_document_code_action_signs_enabled = 0 " to disable A>
 augroup VimLspSetting
   autocmd!
   autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nnoremap <silent> gd :LspDefinition<CR>
-  autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nnoremap <silent> gv :call OpenDefinitionInSplit()<CR>
+  autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nnoremap <silent> gv :rightbelow vert LspDefinition<CR>
   autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nnoremap <silent> <Leader>n :LspNextDiagnostic<CR>
   autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nnoremap <silent> <Leader>N :LspPreviousDiagnostic<CR>
   autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nnoremap <silent> gh :LspHover<CR>
@@ -35,17 +35,6 @@ augroup VimLspSetting
     autocmd FileType go,rust,python,ruby,typescript,typescriptreact autocmd BufWritePre <buffer> silent! LspDocumentFormatSync
   endif
 augroup END
-
-function! OpenDefinitionInSplit()
-  execute 'wincmd v'
-  execute 'wincmd w'
-  execute 'sleep 50m | vert res 1 | LspDefinition'
-  " execute 'sleep 50m'
-  " execute 'LspDefinition'
-  execute 'sleep 400m | wincmd ='
-  execute "normal! zz"
-endfunction
-command! LspDefinitionInSplit call OpenDefinitionInSplit()
 
 setlocal omnifunc=lsp#complete
 
