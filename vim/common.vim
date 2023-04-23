@@ -172,6 +172,13 @@ nnoremap <c-k> <Nop>
 inoremap <c-k> <Nop>
 vnoremap <c-k> <Nop>
 
+" disable select mode...
+nnoremap gh <Nop>
+nnoremap gH <Nop>
+nnoremap g<C-h> <Nop>
+nnoremap gV <Nop>
+
+" quick fix
 nnoremap <silent> <Leader>co :copen<cr>
 nnoremap <silent> <Leader>cl :cclose<cr>
 nnoremap <silent> <Leader>cc :call ToggleQuickFix()<cr>
