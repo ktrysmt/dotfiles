@@ -29,9 +29,9 @@ augroup VimLspSetting
   autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact nnoremap <silent> <Leader>N :LspPreviousDiagnostic<CR>
 
   if executable('node_modules/.bin/prettier') " aleでやらせる
-    autocmd FileType go,rust,python,ruby,c,cpp autocmd BufWritePre <buffer> silent! LspDocumentFormatSync
+    autocmd FileType go,rust,python,ruby autocmd BufWritePre <buffer> silent! LspDocumentFormatSync
   else
-    autocmd FileType go,rust,python,ruby,c,cpp,typescript,typescriptreact autocmd BufWritePre <buffer> silent! LspDocumentFormatSync
+    autocmd FileType go,rust,python,ruby,typescript,typescriptreact autocmd BufWritePre <buffer> silent! LspDocumentFormatSync
   endif
 augroup END
 

@@ -73,6 +73,8 @@ set wildmenu
 set wildmode=longest:full,full
 set wrap
 
+set splitbelow # create pane at bottom by :new
+
 filetype plugin indent on
 
 if has('win32') || has('win64') || has('mac')
