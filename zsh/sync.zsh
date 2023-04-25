@@ -15,7 +15,12 @@ setopt SHARE_HISTORY
 setopt appendhistory
 
 # color
-export PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
+if [[ "$AWS_VAULT" != "" ]]; then
+  aws_is="$fg[black]($AWS_VAULT) "
+else
+  aws_is=""
+fi
+export PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c '$aws_is'%{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
 setopt promptsubst
 autoload -U colors
 colors
