@@ -73,6 +73,7 @@ set wildmenu
 set wildmode=longest:full,full
 set wrap
 
+
 " create pane at bottom by :new
 set splitbelow
 
@@ -113,6 +114,8 @@ augroup GeneralAutocmdSetting
   autocmd BufWritePre * :%s/\s\+$//ge
   autocmd InsertLeave * set nopaste
   autocmd QuickFixCmdPost *grep* cwindow
+  autocmd TermOpen * setlocal norelativenumber
+  autocmd TermOpen * setlocal nonumber
 augroup END
 
 augroup JsonAutocmdSetting
@@ -131,13 +134,24 @@ augroup JinjaAutocmdSetting
   autocmd BufNewFile,BufRead *.j2 setfiletype yaml.ansible
 augroup END
 
-
 " -----
 " mappings
 " -----
 let mapleader = "\<Space>"
 
 tnoremap <ESC> <C-\><C-n>
+
+tnoremap <C-W>w       <cmd>wincmd w<cr>
+tnoremap <C-W>k       <cmd>wincmd k<cr>
+tnoremap <C-W>j       <cmd>wincmd j<cr>
+tnoremap <C-W>h       <cmd>wincmd h<cr>
+tnoremap <C-W>l       <cmd>wincmd l<cr>
+
+tnoremap <C-W>W       <cmd>wincmd W<cr>
+tnoremap <C-W>K       <cmd>wincmd K<cr>
+tnoremap <C-W>J       <cmd>wincmd J<cr>
+tnoremap <C-W>H       <cmd>wincmd H<cr>
+tnoremap <C-W>L       <cmd>wincmd L<cr>
 
 nnoremap / /\v
 nnoremap j gj
@@ -171,6 +185,7 @@ vnoremap <c-j> <Nop>
 nnoremap <c-k> <Nop>
 inoremap <c-k> <Nop>
 vnoremap <c-k> <Nop>
+
 
 " disable select mode...
 nnoremap gh <Nop>
