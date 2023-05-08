@@ -54,6 +54,7 @@ call jetpack#add('rhysd/vim-operator-surround')
 call jetpack#add('terryma/vim-expand-region')
 call jetpack#add('kana/vim-textobj-user')
 call jetpack#add('rhysd/vim-textobj-anyblock')
+call jetpack#add('nicwest/vim-camelsnek')
 
 " [fzf]
 call jetpack#add('junegunn/fzf')
