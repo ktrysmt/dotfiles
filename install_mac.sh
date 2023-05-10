@@ -79,6 +79,11 @@ cp ~/dotfiles/.docker/config.json ~/.docker/config.json
 # mkdir -p ~/.ipython/profile_default/
 # echo "c.InteractiveShell.colors = 'Linux'" > ~/.ipython/profile_default/ipython_config.py
 
+mkdir ~/.ssh
+touch ~/.ssh/config
+echo "ServerAliveInterval 15" >> ~/.ssh/config
+echo "ServerAliveCountMax 10" >> ~/.ssh/config
+
 # git config
 git secrets --register-aws --global
 git secrets --install ~/.git-templates/git-secrets
