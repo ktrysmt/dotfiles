@@ -1,6 +1,8 @@
 import sys
 import os
 import datetime
+import fnmatch
+import time
 
 import pyauto
 from keyhac import *
@@ -18,6 +20,16 @@ def configure(keymap):
 
     # Theme
     keymap.setTheme("black")
+
+    # Common func
+    def to_local_path(s):
+        if os.path.exists(s):
+            return s
+        return None
+    def execute_path(s, arg=None):
+        if s:
+            if s.startswith("http") or to_local_path(s):
+                keymap.ShellExecuteCommand(None, s, arg, None)()
 
     # --------------------------------------------------------------------
 
@@ -59,6 +71,17 @@ def configure(keymap):
         keymap_global[ "LAlt-Left" ] = "LWin-Left"
         keymap_global[ "LAlt-Right" ] = "LWin-Right"
         
+        #keymap_global[ "LAlt-A" ] = "LWin-1"
+        #keymap_global[ "LAlt-G" ] = "LWin-2"
+        #keymap_global[ "LAlt-F" ] = "LWin-4"
+        #keymap_global[ "LAlt-E" ] = "LWin-4"
+        #def alt_return():
+        #    keymap.InputKeyCommand("LWin-Z")()
+        #    time.sleep(1)
+        #    keymap.InputKeyCommand("6")()
+        #    time.sleep(0.5)
+        #    keymap.InputKeyCommand("2")()
+        #keymap_global[ "LAlt-Return" ] = alt_return
         
         keymap_global[ "LCtrl-Alt-R" ] = keymap.command_ReloadConfig
 
@@ -75,7 +98,66 @@ def configure(keymap):
     #===========================================    
     # Global app hot key
     # https://zenn.dev/awtnb/books/adf6c5162a9f08/viewer/1728cd
-	
+    # ウィンドウを探す
+    def find_window(exe_name, class_name=None):
+        found = [None]
+        def _callback(wnd, arg):
+            if not wnd.isVisible() : return True
+            if not fnmatch.fnmatch(wnd.getProcessName(), exe_name) : return True
+            if class_name and not fnmatch.fnmatch(wnd.getClassName(), class_name) : return True
+            found[0] = wnd.getLastActivePopup()
+            return False
+        pyauto.Window.enum(_callback, None)
+        return found[0]
+    # 最大10回アクティブ化にトライする
+    def activate_window(wnd):
+        if wnd.isMinimized():
+            wnd.restore()
+        trial = 0
+        while trial < 10:
+            trial += 1
+            try:
+                wnd.setForeground()
+                if pyauto.Window.getForeground() == wnd:
+                    wnd.setForeground(True)
+                    return True
+            except:
+                return False
+        return False
+    # クロージャ生成
+    def pseudo_cuteExec(exe_name, class_name, exe_path):
+        def _executer():
+            found_wnd = find_window(exe_name, class_name)
+            if exe_name == "msedge.exe":
+                print(found_wnd)
+            if not found_wnd:
+                execute_path(exe_path)
+            else:
+                if found_wnd != keymap.getWindow():
+                    if activate_window(found_wnd):
+                        return None
+                send_keys("LCtrl-LAlt-Tab")
+        return _executer
+    # キー入力でウィンドウのアクティブ化
+    for key, params in {
+        "LAlt-A": (
+            "brave.exe",
+            "Chrome_WidgetWin_1",
+            r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
+        ),
+        "LAlt-F": (
+            "msedge.exe",
+            "Chrome_WidgetWin_1",
+            r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+        ),
+    }.items():
+        keymap_global[key] = pseudo_cuteExec(*params)
+
+
+
+    
+    
+    
     # USER0-F1 : Test of launching application
     if 0:
         keymap_global[ "LAlt-G" ] = keymap.ShellExecuteCommand( None, "ubuntu2204.exe", "", "" )
