@@ -9,7 +9,7 @@ hotkeys:
   copy:
     - Ctrl-Shift-C
   paste:
-    - Ctrl-Shift-V
+    - Alt-V
     - Shift-Insert
   select-all:
     - Ctrl-Shift-A
@@ -167,38 +167,43 @@ hotkeys:
 terminal:
   searchOptions: {}
   colorScheme:
-    name: Zenburn
-    foreground: '#dcdccc'
-    background: '#3f3f3f'
-    cursor: '#73635a'
+    name: ayu
+    foreground: '#e6e1cf'
+    background: '#0f1419'
+    cursor: '#f29718'
     colors:
-      - '#4d4d4d'
-      - '#705050'
-      - '#60b48a'
-      - '#f0dfaf'
-      - '#506070'
-      - '#dc8cc3'
-      - '#8cd0d3'
-      - '#dcdccc'
-      - '#709080'
-      - '#dca3a3'
-      - '#c3bf9f'
-      - '#e0cf9f'
-      - '#94bff3'
-      - '#ec93d3'
-      - '#93e0e3'
+      - '#000000'
+      - '#ff3333'
+      - '#b8cc52'
+      - '#e7c547'
+      - '#36a3d9'
+      - '#f07178'
+      - '#95e6cb'
       - '#ffffff'
-  cursor: underline
+      - '#323232'
+      - '#ff6565'
+      - '#eafe84'
+      - '#fff779'
+      - '#68d5ff'
+      - '#ffa3aa'
+      - '#c7fffd'
+      - '#ffffff'
   customColorSchemes: []
   font: Cica
   fontSize: 16
   minimumContrastRatio: 5
+  cursor: underline
+  cursorBlink: false
 ssh: {}
 configSync:
   parts: {}
 clickableLinks: {}
 accessibility: {}
-appearance: {}
+appearance:
+  theme: Follow the color scheme
+  spaciness: 0.8
+  vibrancy: true
+  opacity: 0.92
 hacks: {}
 providerBlacklist: []
 commandBlacklist: []
