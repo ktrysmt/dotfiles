@@ -51,6 +51,9 @@ brew install \
   neovim
 brew install llvm
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+
+brew install b4b4r07/tap/gomi
+
 $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
 exec $SHELL -l
 
