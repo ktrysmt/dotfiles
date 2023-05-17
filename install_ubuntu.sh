@@ -56,7 +56,9 @@ exec $SHELL -l
 
 # symlinks
 cd ~/
-mkdir -p ~/.sheldon/
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+mkdir -p ~/.config/sheldon
+ln -s ~/dotfiles/zsh/sheldon.plugins.toml ~/.config/sheldon/plugins.toml
 mkdir -p ~/.config/peco/
 mkdir -p ~/.local/bin/
 mkdir ~/.docker/
@@ -67,8 +69,8 @@ ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc.ubuntu ~/.zshrc
 ln -s ~/dotfiles/.tigrc ~/.tigrc
+ln -s ~/dotfiles/.tmux.conf.ubuntu ~/.tmux.conf
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
-ln -s ~/dotfiles/zsh/sheldon.plugins.toml ~/.sheldon/plugins.toml
 ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
