@@ -136,7 +136,6 @@ def configure(keymap):
                 if found_wnd != keymap.getWindow():
                     if activate_window(found_wnd):
                         return None
-                send_keys("LCtrl-LAlt-Tab")
         return _executer
     # キー入力でウィンドウのアクティブ化
     for key, params in {
