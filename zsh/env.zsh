@@ -16,7 +16,7 @@ export GOPATH=$HOME/go:$HOME/project
 export PATH="/usr/local/opt/llvm/bin:$PATH" # clangd, clangd-format
 
 # rust
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
 # fzf
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
