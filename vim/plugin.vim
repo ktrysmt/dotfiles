@@ -86,6 +86,7 @@ call jetpack#add('hashivim/vim-terraform', { 'for': ['terraform'] })
 
 " [dockerfile]
 call jetpack#add('ekalinin/Dockerfile.vim', { 'for': ['Dockerfile'] })
+call jetpack#add('kwhrtsk/docker-fzf-completion', { 'for': ['Dockerfile'] })
 
 " [jinja]
 call jetpack#add('pearofducks/ansible-vim', { 'for': ['jinja2'] })
