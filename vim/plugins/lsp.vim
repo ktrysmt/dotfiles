@@ -34,6 +34,8 @@ augroup VimLspSetting
   else
     autocmd FileType go,rust,python,ruby,typescript,typescriptreact autocmd BufWritePre <buffer> silent! LspDocumentFormatSync
   endif
+
+  autocmd BufWritePre *.go call execute('LspDocumentFormatSync') | call execute('LspCodeActionSync source.organizeImports')
 augroup END
 
 setlocal omnifunc=lsp#complete
