@@ -38,10 +38,10 @@ def configure(keymap):
         keymap.replaceKey( 28, "Return" )
     else:
         keymap.replaceKey( 28, "LShift" )
-    
+
     keymap.replaceKey( 29, "Back" )
     keymap.replaceKey( 242, 244 )
-    
+
     # Global keymap which affects any windows
     if 1:
         keymap_global = keymap.defineWindowKeymap()
@@ -56,21 +56,23 @@ def configure(keymap):
 
         keymap_global[ "LCtrl-OpenBracket" ] = "Esc" # ESC
 
-        keymap_global[ "LCtrl-Semicolon" ] = "End" # 行の末尾 
-        keymap_global[ "LCtrl-Shift-H" ] = "Shift-Up" # カーソル上 
-        keymap_global[ "LCtrl-Shift-Colon" ] = "Shift-Down" # カーソル下 
-        keymap_global[ "LCtrl-Shift-L" ] = "Shift-Right" # カーソル右 
-        keymap_global[ "LCtrl-Shift-K" ] = "Shift-Left" # カーソル左 
+        keymap_global[ "LCtrl-Semicolon" ] = "End" # 行の末尾
+        keymap_global[ "LCtrl-Shift-H" ] = "Shift-Up" # カーソル上
+        keymap_global[ "LCtrl-Shift-Colon" ] = "Shift-Down" # カーソル下
+        keymap_global[ "LCtrl-Shift-L" ] = "Shift-Right" # カーソル右
+        keymap_global[ "LCtrl-Shift-K" ] = "Shift-Left" # カーソル左
         keymap_global[ "LCtrl-Shift-J" ] = "Shift-Home" # 行の先頭
         keymap_global[ "LCtrl-Shift-Semicolon" ] = "Shift-End" # 行の末尾
-        
+
         keymap_global[ "LCtrl-Up" ] = "LWin-Tab"
-        
+        keymap_global[ "LCtrl-Left" ] = "LWin-LCtrl-Left"
+        keymap_global[ "LCtrl-Right" ] = "LWin-LCtrl-Right"
+
         keymap_global[ "LAlt-Up" ] = "LWin-Up"
         keymap_global[ "LAlt-Down" ] = "LWin-Down"
         keymap_global[ "LAlt-Left" ] = "LWin-Left"
         keymap_global[ "LAlt-Right" ] = "LWin-Right"
-        
+
         #keymap_global[ "LAlt-A" ] = "LWin-1"
         #keymap_global[ "LAlt-G" ] = "LWin-2"
         #keymap_global[ "LAlt-F" ] = "LWin-4"
@@ -82,7 +84,7 @@ def configure(keymap):
         #    time.sleep(0.5)
         #    keymap.InputKeyCommand("2")()
         #keymap_global[ "LAlt-Return" ] = alt_return
-        
+
         keymap_global[ "LCtrl-Alt-R" ] = keymap.command_ReloadConfig
 
         # Clipboard history related
@@ -94,8 +96,8 @@ def configure(keymap):
         keymap_global[ "U0-2" ] = keymap.command_RecordStop
         keymap_global[ "U0-3" ] = keymap.command_RecordPlay
         keymap_global[ "U0-4" ] = keymap.command_RecordClear
-    
-    #===========================================    
+
+    #===========================================
     # Global app hot key
     # https://zenn.dev/awtnb/books/adf6c5162a9f08/viewer/1728cd
     # ウィンドウを探す
@@ -154,9 +156,9 @@ def configure(keymap):
 
 
 
-    
-    
-    
+
+
+
     # USER0-F1 : Test of launching application
     if 0:
         keymap_global[ "LAlt-G" ] = keymap.ShellExecuteCommand( None, "ubuntu2204.exe", "", "" )
@@ -218,7 +220,7 @@ def configure(keymap):
                 executeFunc = keymap.ShellExecuteCommand( None, "WindowsTerminal.exe", "", "" )
                 executeFunc()
         keymap_global[ "LAlt-G" ] = command_ActivateOrExecuteTerminal
-        
+
     if 0:
         # default
         def command_ActivateOrExecuteMSEdge():
