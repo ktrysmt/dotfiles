@@ -53,3 +53,10 @@ augroup END
 " linediff
 " ---
 vnoremap <Leader>li :Linediff<cr>
+
+
+" ansible
+augroup AnsibleSetting
+  au!
+  au BufRead,BufNewFile *.j2 set filetype=yaml.ansible
+augroup END
