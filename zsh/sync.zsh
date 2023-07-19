@@ -3,16 +3,14 @@ setopt AUTO_CD
 setopt interactivecomments
 
 # hist
-setopt EXTENDED_HISTORY
-setopt HIST_ALLOW_CLOBBER
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_NO_STORE
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_VERIFY
-setopt INC_APPEND_HISTORY
-setopt SHARE_HISTORY
-setopt appendhistory
+# https://qiita.com/sho-t/items/d553dd694900cae0966d
+setopt append_history
+setopt extended_history
+setopt hist_allow_clobber
+setopt hist_ignore_all_dups
+setopt hist_no_store
+setopt hist_verify
+setopt share_history
 
 # aws
 # --------
