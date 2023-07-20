@@ -4,8 +4,8 @@ setopt interactivecomments
 
 # hist
 # https://qiita.com/sho-t/items/d553dd694900cae0966d
-setopt append_history
 setopt extended_history
+setopt append_history
 setopt hist_allow_clobber
 setopt hist_ignore_all_dups
 setopt hist_no_store
