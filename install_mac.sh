@@ -73,6 +73,7 @@ ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
 ln -s ~/dotfiles/zsh/sheldon.plugins.toml ~/.config/sheldon/plugins.toml
 ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
+cp ~/dotfiles/.ctags ~/.ctags
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
 # cp ~/dotfiles/.switch-proxy.osx ~/.switch-proxy
