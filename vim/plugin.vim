@@ -32,7 +32,7 @@ call jetpack#add('LumaKernel/fern-mapping-fzf.vim')
 " [window]
 call jetpack#add('airblade/vim-gitgutter')
 call jetpack#add('mbbill/undotree')
-call jetpack#add('liuchengxu/vista.vim', { "on": "Vista" })
+call jetpack#add('liuchengxu/vista.vim')
 call jetpack#add('yazgoo/yank-history')
 
 

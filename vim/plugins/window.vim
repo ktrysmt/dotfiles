@@ -10,6 +10,7 @@ let g:vista_executive_for = {
   \ 'typescript': 'vim_lsp',
   \ 'typescriptreact': 'vim_lsp',
   \ 'rust': 'vim_lsp',
+  \ 'yaml': 'vim_lsp',
   \ }
 let g:vista_sidebar_width = 48
 let g:vista#renderer#enable_icon = 0
