@@ -108,10 +108,13 @@ pip3 install neovim
 sudo ln -sf $(which nvim) /usr/local/bin/vim
 python3 -m pip install --user --upgrade pynvim
 
-# python
+# lsp
+npm i -g typescript typescript-language-server
 pip3 install 'python-lsp-server[all]'
 pip3 install ipdb   # python debugger
 pip3 install flake8 # python linter
+go install github.com/nametake/golangci-lint-langserver@latest
+
 
 # k8s
 (
