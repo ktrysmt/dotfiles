@@ -31,7 +31,6 @@ scriptencoding utf-8
 
 set sh=zsh
 
-set noshowmode
 set ambiwidth=double
 set backspace=start,eol,indent
 set bs=2
@@ -52,6 +51,7 @@ set laststatus=2
 set lazyredraw
 set list
 set matchtime=1
+set noshowmode
 set noswapfile
 set nrformats=
 set number

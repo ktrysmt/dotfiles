@@ -1,0 +1,14 @@
+vim.o.clipboard = 'unnamed'
+vim.o.completeopt = 'menuone,noselect,noinsert'
+vim.o.cursorline = true
+vim.o.history = 4096
+vim.o.hlsearch = true
+vim.o.incsearch = true
+vim.o.noshowmode = true
+vim.o.noswapfile = true
+vim.o.sh = 'zsh'
+vim.o.shiftwidth = 2
+vim.o.splitbelow = true
+vim.o.termguicolors = true
+vim.wo.signcolumn = 'yes'
+vim.wo.number = true
