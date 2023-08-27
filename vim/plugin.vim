@@ -9,8 +9,7 @@ if empty(glob('~/.config/nvim/autoload/jetpack.vim'))
   augroup END
 endif
 
-let g:jetpack#optimization = 1
-let g:jetpack#copy_method = 'symlink'
+let g:jetpack_copy_method='copy'
 
 call jetpack#begin()
 

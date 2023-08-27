@@ -1,21 +1,23 @@
 return {
-  'williamboman/mason.nvim',
-  cmd = {
-    "Mason",
-    "MasonInstall",
-    "MasonUninstall",
-    "MasonUninstallAll",
-    "MasonLog",
-    "MasonUpdate",
-  },
-  opts = {
-    ui = {
-      icons = {
-        package_installed = "✓",
-        package_uninstalled = "✗",
-        package_pending = "⟳",
+  {
+    'williamboman/mason.nvim',
+    cmd = {
+      "Mason",
+      "MasonInstall",
+      "MasonUninstall",
+      "MasonUninstallAll",
+      "MasonLog",
+      "MasonUpdate",
+    },
+    opts = {
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_uninstalled = "✗",
+          package_pending = "⟳",
+        },
       },
     },
-  },
-  build = ":MasonUpdate",
+    build = ":MasonUpdate",
+  }
 }
