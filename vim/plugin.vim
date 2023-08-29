@@ -22,7 +22,7 @@ call jetpack#add('AlessandroYorba/Despacio')
 
 " [theme]
 call jetpack#add('ktrysmt/pinecone-vim')
-call jetpack#add('habamax/vim-gruvbit')
+" call jetpack#add('habamax/vim-gruvbit')
 
 " [filer]
 call jetpack#add('lambdalisue/fern.vim')
