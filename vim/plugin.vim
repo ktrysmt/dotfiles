@@ -17,20 +17,19 @@ call jetpack#add("tani/vim-jetpack")
 " [appearance]
 call jetpack#add('RRethy/vim-illuminate')
 call jetpack#add('itchyny/lightline.vim')
-call jetpack#add('KKPMW/moonshine-vim')
-call jetpack#add('AlessandroYorba/Despacio')
 
 " [theme]
 call jetpack#add('ktrysmt/pinecone-vim')
 " call jetpack#add('habamax/vim-gruvbit')
+" call jetpack#add('KKPMW/moonshine-vim')
+" call jetpack#add('AlessandroYorba/Despacio')
 
 " [filer]
 call jetpack#add('lambdalisue/fern.vim')
-call jetpack#add('LumaKernel/fern-mapping-fzf.vim')
 
 " [window]
 call jetpack#add('airblade/vim-gitgutter')
-call jetpack#add('mbbill/undotree')
+call jetpack#add('mbbill/undotree', { "on": "UndotreeToggle" })
 call jetpack#add('liuchengxu/vista.vim')
 call jetpack#add('yazgoo/yank-history')
 
@@ -42,7 +41,7 @@ call jetpack#add('Lokaltog/vim-easymotion', { "on": "<Plug>(easymotion-prefix)" 
 " [commander]
 call jetpack#add('tpope/vim-fugitive')
 call jetpack#add('tomtom/tcomment_vim')
-call jetpack#add('thinca/vim-qfreplace')
+call jetpack#add('thinca/vim-qfreplace', { 'on': 'Qfreplace' })
 call jetpack#add('AndrewRadev/linediff.vim', { "on": "Linediff" })
 
 " [operator]

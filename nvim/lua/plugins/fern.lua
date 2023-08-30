@@ -18,11 +18,21 @@ return {
       vim.keymap.set('n', 't', '<Plug>(fern-action-open:tabedit)', o)
       vim.keymap.set('n', 'T', '<Plug>(fern-action-open:tabedit)<cmd>gT', o)
       vim.keymap.set('n', 'i', '<Plug>(fern-action-open:split)', o)
-      vim.keymap.set('n', 'gi', '<Plug>(fern-action-open:split)<cmd><C-w>p', o)
+      vim.keymap.set('n', 'ma', '<Plug>(fern-action-new-path)', o)
+      vim.keymap.set('n', 'mm', '<Plug>(fern-action-move)', o)
+      vim.keymap.set('n', 'mc', '<Plug>(fern-action-copy)', o)
+      vim.keymap.set('n', 'md', '<Plug>(fern-action-trash)', o)
+      vim.keymap.set('n', 'y', '<Plug>(fern-action-yank:label)', o)
+      vim.keymap.set('n', 'Y', '<Plug>(fern-action-yank:path)', o)
+
+      vim.keymap.set('n', 'l', '<Nop>')
+      vim.keymap.set('n', 'l', '<Nop>')
+      vim.keymap.set('n', 'E', '<Nop>')
+      vim.keymap.set('n', 'q', '<cmd>quit<CR>')
+      vim.keymap.set('n', 'I', '<Plug>(fern-action-hide-toggle)')
+      vim.keymap.set('n', 'r', '<Plug>(fern-action-reload)')
 
       vim.cmd([[
-        nmap <buffer> <Plug>(fern-my-leave-and-tcd) <Plug>(fern-action-leave)<Plug>(fern-wait)<Plug>(fern-action-tcd:root)
-        nmap <buffer> u <Plug>(fern-my-leave-and-tcd)
         nmap <buffer><expr>
           \ <Plug>(fern-my-expand-or-collapse)
           \ fern#smart#leaf(
@@ -33,6 +43,18 @@ return {
         nmap <buffer>
           \ <Plug>(fern-action-expand)
           \ <Plug>(fern-my-expand-or-collapse)
+
+        nmap <buffer> <Plug>(fern-my-leave-and-tcd)
+          \ <Plug>(fern-action-leave)
+          \ <Plug>(fern-wait)<Plug>
+          \ (fern-action-tcd:root)
+        nmap <buffer> u <Plug>(fern-my-leave-and-tcd)
+
+        nmap <buffer> <Plug>(fern-my-enter-and-tcd)
+          \ <Plug>(fern-action-enter)
+          \ <Plug>(fern-wait)
+          \ <Plug>(fern-action-tcd:root)
+        nmap <buffer> C <Plug>(fern-my-enter-and-tcd)
       ]])
     end
 
