@@ -31,7 +31,7 @@ call jetpack#add('lambdalisue/fern.vim')
 call jetpack#add('airblade/vim-gitgutter')
 call jetpack#add('mbbill/undotree', { "on": "UndotreeToggle" })
 call jetpack#add('liuchengxu/vista.vim')
-call jetpack#add('yazgoo/yank-history')
+call jetpack#add('yazgoo/yank-history', { "on": "YankHistoryRgPaste" })
 
 
 " [move]
