@@ -12,8 +12,8 @@ return {
     vim.g["fern_disable_startup_warnings"] = 1
 
     local function init_fern()
-      local o = { buffer = 0, remap = true }
-      vim.keymap.set('n', 's', 'gs', o)
+      local o = { buffer = true, remap = true }
+      vim.keymap.set('n', 's', '<Plug>(fern-action-open:vsplit)', o)
       vim.keymap.set('n', 'o', '<Plug>(fern-action-open-or-expand)', o)
       vim.keymap.set('n', 't', '<Plug>(fern-action-open:tabedit)', o)
       vim.keymap.set('n', 'T', '<Plug>(fern-action-open:tabedit)<cmd>gT', o)
