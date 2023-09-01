@@ -25,12 +25,12 @@ return {
       vim.keymap.set('n', 'y', '<Plug>(fern-action-yank:label)', o)
       vim.keymap.set('n', 'Y', '<Plug>(fern-action-yank:path)', o)
 
-      vim.keymap.set('n', 'l', '<Nop>')
-      vim.keymap.set('n', 'l', '<Nop>')
-      vim.keymap.set('n', 'E', '<Nop>')
-      vim.keymap.set('n', 'q', '<cmd>quit<CR>')
-      vim.keymap.set('n', 'I', '<Plug>(fern-action-hide-toggle)')
-      vim.keymap.set('n', 'r', '<Plug>(fern-action-reload)')
+      vim.keymap.set('n', 'l', '<Nop>', o)
+      vim.keymap.set('n', 'l', '<Nop>', o)
+      vim.keymap.set('n', 'E', '<Nop>', o)
+      vim.keymap.set('n', 'q', '<cmd>quit<CR>', o)
+      vim.keymap.set('n', 'I', '<Plug>(fern-action-hide-toggle)', o)
+      vim.keymap.set('n', 'r', '<Plug>(fern-action-reload)', o)
 
       vim.cmd([[
         nmap <buffer><expr>
