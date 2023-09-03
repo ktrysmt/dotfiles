@@ -31,26 +31,26 @@ scriptencoding utf-8
 
 set sh=zsh
 
-set ambiwidth=double
 set backspace=start,eol,indent
-set bs=2
-set cindent
+set smartindent
 set completeopt=menuone,noselect,noinsert
 set cursorline
 set diffopt=internal,filler,algorithm:histogram,indent-heuristic
 set display=lastline
 set expandtab
-set guioptions-=T
 set hidden
 set history=4096
 set hlsearch
-set ignorecase
 set inccommand=split
 set incsearch
 set laststatus=2
 set lazyredraw
+
 set list
+
+set showmatch
 set matchtime=1
+
 set noshowmode
 set noswapfile
 set nrformats=
@@ -60,25 +60,21 @@ set secure
 set shiftwidth=2
 set shortmess+=I
 set showcmd
-set showmatch
-set showtabline=2
-set smartcase
+set showtabline=1
+set smartcase " or ignorecase
 set softtabstop=2
 set tabstop=2
-set ttyfast
 set vb t_vb=
 set virtualedit=all
-set whichwrap=b,s,[,],<,>,~
-set wildmenu
 set wildmode=longest:full,full
 set wrap
-
+"
 
 " create pane at bottom by :new
 set splitbelow
 
-filetype plugin indent on
-
+" filetype plugin indent on
+"
 if has('win32') || has('win64') || has('mac')
   set clipboard+=unnamed
 else
@@ -86,7 +82,7 @@ else
 endif
 
 " cursorhold
-set nostartofline
+" set nostartofline
 
 " -----
 " vimgrep

@@ -29,7 +29,7 @@ call jetpack#add('lambdalisue/fern.vim')
 
 " [window]
 call jetpack#add('airblade/vim-gitgutter')
-call jetpack#add('mbbill/undotree', { "on": "UndotreeToggle" })
+call jetpack#add('mbbill/undotree', { "on": "UndotreeShow" })
 call jetpack#add('liuchengxu/vista.vim')
 call jetpack#add('yazgoo/yank-history', { "on": "YankHistoryRgPaste" })
 
