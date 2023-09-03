@@ -11,6 +11,7 @@ return {
     },
     opts = {
       ui = {
+        check_outdated_packages_on_open = true,
         icons = {
           package_installed = "✓",
           package_uninstalled = "✗",
