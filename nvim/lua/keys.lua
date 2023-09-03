@@ -72,3 +72,7 @@ vim.keymap.set('n', '<Leader>cc', function()
 end
 , { silent = true })
 
+-- tab jumping
+for i = 1, 9 do
+  vim.keymap.set('n', string.format('t%d',i), string.format('%dgt',i), { silent = true })
+end
