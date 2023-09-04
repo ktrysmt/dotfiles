@@ -1,6 +1,4 @@
 return {
-  {
-    'tpope/vim-fugitive',
-    event = { "BufReadPre", "BufNewFile" },
-  },
+  'tpope/vim-fugitive',
+  event = { "BufReadPre", "BufNewFile" },
 }
