@@ -139,7 +139,7 @@ vim +":JetpackSync" +":JetpackSync"
 vim +":setfiletype go" +":GoInstallBinaries" +qa
 vim +":setfiletype rust" +":LspInstallServer rust-analyzer" +qa
 vim +":setfiletype python" +":LspInstallServer pyls-all" +qa
-npm i -g npm-check-updates neovim
+npm i -g npm-check-updates neovim @fsouza/prettierd eslint_d
 
 # brew cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications";
