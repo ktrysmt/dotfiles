@@ -2,7 +2,7 @@ return {
   'lambdalisue/fern.vim',
   keys = {
     { "<C-e>", ":Fern . -reveal=% -drawer -toggle -width=50<CR>", silent = true},
-    { '<C-w>f', ":cd `git rev-parse --show-toplevel`<CR> :Fern . -reveal=% -drawer -width=50<CR>", noremap = true, silent = true }
+    { '<C-w>f', ":cd `git rev-parse --show-toplevel`<CR> :Fern . -reveal=% -drawer -width=50<CR>", silent = true }
   },
   config = function()
     vim.g["fern#opener"] = "vsplit"

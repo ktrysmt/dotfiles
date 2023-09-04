@@ -3,87 +3,125 @@ return {
   event = "InsertEnter",
   dependencies = {
     'L3MON4D3/LuaSnip',
-    'saadparwaiz1/cmp_luasnip',
+    -- 'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-nvim-lsp',
     'rafamadriz/friendly-snippets',
-    'onsails/lspkind.nvim',
+    -- 'onsails/lspkind.nvim',
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
+    "hrsh7th/cmp-vsnip",
+    "hrsh7th/vim-vsnip",
+    "hrsh7th/vim-vsnip-integ",
+    "rafamadriz/friendly-snippets",
   },
   config = function()
 
     local cmp = require('cmp')
 
-    local luasnip = require 'luasnip'
-    vim.keymap.set({"i", "s"}, "<Tab>", function() luasnip.jump( 1) end, {silent = true})
-    vim.keymap.set({"i", "s"}, "<S-Tab>", function() luasnip.jump(-1) end, {silent = true})
+    -- local luasnip = require 'luasnip'
+    -- vim.keymap.set({"i", "s"}, "<C-j>", function() luasnip.jump( 1) end, {silent = true})
+    -- vim.keymap.set({"i", "s"}, "<C-k>", function() luasnip.jump(-1) end, {silent = true})
+    -- local lspkind = require('lspkind')
+    -- require('luasnip.loaders.from_vscode').lazy_load()
+    -- luasnip.config.setup {}
 
-    local lspkind = require('lspkind')
-    require('luasnip.loaders.from_vscode').lazy_load()
-    luasnip.config.setup {}
+    -- wip
+    --
+    vim.keymap.set({'i', 's'}, '<C-l>', function() return vim.fn['vsnip#available'](1) == 1 and '<Plug>(vsnip-expand-or-jump)' or '<C-l>' end, { expr = true, noremap = false })
+    vim.keymap.set({'i', 's'}, '<Tab>', function() return vim.fn['vsnip#jumpable'](1) == 1 and '<Plug>(vsnip-jump-next)' or '<Tab>' end, { expr = true, noremap = false })
+    vim.keymap.set({'i', 's'}, '<S-Tab>', function() return vim.fn['vsnip#jumpable'](-1) == 1 and '<Plug>(vsnip-jump-prev)' or '<S-Tab>' end, { expr = true, noremap = false })
+
+    vim.keymap.set({"i", "s"}, "<C-e>", function() luasnip.jump( 1) end, {silent = true})
+    vim.keymap.set({"i", "s"}, "<C-k>", function() luasnip.jump(-1) end, {silent = true})
+
+    --" Expand
+    imap <expr> <C-e>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-e>'
+    smap <expr> <C-e>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-e>'
+    -- " Jump forward or backward
+    imap <expr> <C-j>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<C-j>'
+    smap <expr> <C-j>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<C-j>'
+    imap <expr> <C-k>   vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
+    smap <expr> <C-k>   vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
+    -- " If you want to use snippet for multiple filetypes, you can `g:vsnip_filetypes` for it.
+    let g:vsnip_filetypes = {}
+    let g:vsnip_filetypes.javascriptreact = ['javascript']
+    let g:vsnip_filetypes.typescriptreact = ['typescript']
+    --
+    -- wip
+
     cmp.setup({
       enabled = true,
       completion = {
-        completeopt = 'menu,menuone,noinsert',
+        completeopt = 'menuone,noselect,noinsert',
       },
+
       snippet = {
+        -- REQUIRED - you must specify a snippet engine
         expand = function(args)
-          luasnip.lsp_expand(args.body)
+          vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+          -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+          -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+          -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
         end,
       },
+
       mapping = cmp.mapping.preset.insert({
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<Tab>'] = cmp.mapping.select_next_item(),
+        ['<S-Tab>'] = cmp.mapping.select_prev_item(),
         ['<C-d>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete {},
+        -- ['<C-space>'] = cmp.mapping.complete {},
         ['<CR>'] = cmp.mapping.confirm {
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = true,
+          behavior = cmp.ConfirmBehavior.Insert,
+          select = false,
         },
       }),
+
       window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
       },
+
       sources = cmp.config.sources({
         { name = 'nvim_lsp' },
-        { name = 'luasnip' },
+        { name = 'vsnip' },
         { name = 'buffer' },
         { name = 'path' },
       }),
-      formatting = {
-        fields = { 'abbr', 'kind', 'menu' },
-        format = lspkind.cmp_format({
-          mode = 'symbol_text',
-          maxwidth = 50,
-          ellipsis_char = '...',
-          menu = ({
-            buffer = "[Buffer]",
-            nvim_lsp = "[LSP]",
-            luasnip = "[LuaSnip]",
-          }),
 
-          symbol_map = {
-            Constructor = "",
-            Field = "ﰠ",
-            Variable = "",
-            Class = "ﴯ",
-            Interface = "",
-            Module = "",
-            Property = "ﰠ",
-            Unit = "塞",
-            Value = "",
-            Enum = "",
-            Keyword = "",
-            Snippet = "",
-            EnumMember = "",
-            Struct = "פּ",
-            Event = "",
-            TypeParameter = "",
-          }
-        }),
-      },
+      -- formatting = {
+      --   fields = { 'abbr', 'kind', 'menu' },
+      --   format = lspkind.cmp_format({
+      --     mode = 'symbol_text',
+      --     maxwidth = 50,
+      --     ellipsis_char = '...',
+      --     menu = ({
+      --       buffer = "[Buffer]",
+      --       nvim_lsp = "[LSP]",
+      --       luasnip = "[LuaSnip]",
+      --     }),
+      --
+      --     symbol_map = {
+      --       Constructor = "",
+      --       Field = "ﰠ",
+      --       Variable = "",
+      --       Class = "ﴯ",
+      --       Interface = "",
+      --       Module = "",
+      --       Property = "ﰠ",
+      --       Unit = "塞",
+      --       Value = "",
+      --       Enum = "",
+      --       Keyword = "",
+      --       Snippet = "",
+      --       EnumMember = "",
+      --       Struct = "פּ",
+      --       Event = "",
+      --       TypeParameter = "",
+      --     }
+      --   }),
+      -- },
+
       experimental = {
         ghost_text = true,
       },

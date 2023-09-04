@@ -4,7 +4,6 @@ vim.o.fileformats = 'unix,dos,mac'
 
 vim.o.backspace = 'start,eol,indent'
 vim.o.clipboard = 'unnamed'
-vim.o.completeopt = 'menuone,noselect,noinsert'
 vim.o.cursorline = true
 vim.o.diffopt = 'internal,filler,algorithm:histogram,indent-heuristic'
 vim.o.display = 'lastline'
@@ -42,3 +41,5 @@ vim.o.wildmode = 'longest:full,full'
 vim.o.wrap = true
 vim.wo.number = true
 vim.wo.signcolumn = 'yes'
+
+-- vim.o.completeopt = 'menuone,noselect,noinsert'
