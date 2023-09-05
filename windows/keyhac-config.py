@@ -34,23 +34,6 @@ def configure(keymap):
         keymap.clipboard_history.maxnum = 0
         keymap.clipboard_history.enableHook(False)
 
-    # tabby
-    # https://gist.github.com/masato3/80bb29f74d8e52b9783e5a1abc96eed4
-    if 1:
-        keymap_tabby = keymap.defineWindowKeymap(exe_name="Tabby.exe", class_name="Chrome_WidgetWin_1")
-        keymap_tabby[ "LCtrl-H" ] = [ "LCtrl-H" ]
-        keymap_tabby[ "LCtrl-Colon" ] = [ "LCtrl-Colon" ]
-        keymap_tabby[ "LCtrl-L" ] = [ "LCtrl-L" ]
-        keymap_tabby[ "LCtrl-K" ] = [ "LCtrl-K" ]
-        keymap_tabby[ "LCtrl-J" ] = [ "LCtrl-J" ]
-        keymap_tabby[ "LCtrl-Semicolon" ] = [ "LCtrl-Semicolon" ]
-
-        keymap_tabby[ "LCtrl-Shift-H" ] = [ "LCtrl-Shift-H" ]
-        keymap_tabby[ "LCtrl-Shift-Colon" ] = [ "LCtrl-Shift-Colon" ]
-        keymap_tabby[ "LCtrl-Shift-L" ] = [ "LCtrl-Shift-L" ]
-        keymap_tabby[ "LCtrl-Shift-K" ] = [ "LCtrl-Shift-K" ]
-        keymap_tabby[ "LCtrl-Shift-J" ] = [ "LCtrl-Shift-J" ]
-        keymap_tabby[ "LCtrl-Shift-Semicolon" ] = [ "LCtrl-Shift-Semicolon" ]
 
     # minecraft?
     if 1:
@@ -100,6 +83,24 @@ def configure(keymap):
         #keymap_global[ "LAlt-Return" ] = alt_return
 
         keymap_global[ "LCtrl-Alt-R" ] = keymap.command_ReloadConfig
+
+    # tabby
+    # https://gist.github.com/masato3/80bb29f74d8e52b9783e5a1abc96eed4
+    if 1:
+        keymap_tabby = keymap.defineWindowKeymap(exe_name="Tabby.exe", class_name="Chrome_WidgetWin_1")
+        keymap_tabby[ "LCtrl-H" ] = [ "LCtrl-H" ]
+        keymap_tabby[ "LCtrl-Colon" ] = [ "LCtrl-Colon" ]
+        keymap_tabby[ "LCtrl-L" ] = [ "LCtrl-L" ]
+        keymap_tabby[ "LCtrl-K" ] = [ "LCtrl-K" ]
+        keymap_tabby[ "LCtrl-J" ] = [ "LCtrl-J" ]
+        keymap_tabby[ "LCtrl-Semicolon" ] = [ "LCtrl-Semicolon" ]
+
+        keymap_tabby[ "LCtrl-Shift-H" ] = [ "LCtrl-Shift-H" ]
+        keymap_tabby[ "LCtrl-Shift-Colon" ] = [ "LCtrl-Shift-Colon" ]
+        keymap_tabby[ "LCtrl-Shift-L" ] = [ "LCtrl-Shift-L" ]
+        keymap_tabby[ "LCtrl-Shift-K" ] = [ "LCtrl-Shift-K" ]
+        keymap_tabby[ "LCtrl-Shift-J" ] = [ "LCtrl-Shift-J" ]
+        keymap_tabby[ "LCtrl-Shift-Semicolon" ] = [ "LCtrl-Shift-Semicolon" ]
 
 
     # Global app hot key
