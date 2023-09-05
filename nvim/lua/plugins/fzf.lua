@@ -1,8 +1,19 @@
 return {
   "ibhagwan/fzf-lua",
-  event = { "VimEnter", "BufReadPre", "BufNewFile" },
+  keys = {
+    {'<leader>r', "<cmd>:FzfLua grep<CR><CR>", silent = true },
+    {'<leader>f', "<cmd>lua require('fzf-lua').files()<CR>", silent = true },
+    {'<leader>b', "<cmd>:FzfLua buffers<CR>", silent = true },
+    {'<leader>d', "<cmd>:FzfLua git_status<CR>", silent = true },
+    {'<leader>ch', "<cmd>:FzfLua command_history<CR>", silent = true },
+    {'<leader>sh', "<cmd>:FzfLua search_history <CR>", silent = true },
+    {'<leader>m', "<cmd>:FzfLua keymaps<CR>", silent = true },
+    {'<leader>x', "<cmd>:FzfLua commands<CR>", silent = true },
+    {'<leader>ld', "<cmd>lua require('fzf-lua').lsp_definitions()<CR>", silent = true },
+  },
   config = function()
     local fzf = require("fzf-lua")
+
     fzf.setup({
       winopts = {
         height     = 0.85,     -- window height
@@ -16,23 +27,13 @@ return {
       },
     })
 
-    vim.cmd [[
-    highlight FzfLuaNormal guibg=#383850
-    highlight FzfLuaBorder guibg=#383850
-    ]]
+    -- vim.cmd [[
+    -- highlight FzfLuaNormal guibg=#383850
+    -- highlight FzfLuaBorder guibg=#383850
+    -- ]]
 
-    vim.opt.winblend = 5
-    vim.opt.termguicolors = true
+    -- vim.opt.winblend = 5
+    -- vim.opt.termguicolors = true
 
-    local opt = { silent = true }
-    vim.keymap.set('n', '<leader>r', "<cmd>:FzfLua grep<CR><CR>", opt)
-    vim.keymap.set('n', '<leader>f', "<cmd>:FzfLua files<CR>", opt)
-    vim.keymap.set('n', '<leader>b', "<cmd>:FzfLua buffers<CR>", opt)
-    vim.keymap.set('n', '<leader>d', "<cmd>:FzfLua git_status<CR>", opt)
-    vim.keymap.set('n', '<leader>ch', "<cmd>:FzfLua command_history<CR>", opt)
-    vim.keymap.set('n', '<leader>sh', "<cmd>:FzfLua search_history <CR>", opt)
-    vim.keymap.set('n', '<leader>m', "<cmd>:FzfLua keymaps<CR>", opt)
-    vim.keymap.set('n', '<leader>x', "<cmd>:FzfLua commands<CR>", opt)
-    vim.keymap.set('n', '<leader>ld', "<cmd>lua require('fzf-lua').lsp_definitions()<CR>", opt)
   end
 }
