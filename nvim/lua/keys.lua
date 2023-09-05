@@ -17,8 +17,8 @@ vim.keymap.set('n', 'k', 'gk')
 
 -- search
 vim.keymap.set('n', '/', '/\\v')
-vim.keymap.set('n', 'cn', '*Ncgn')
-vim.keymap.set('n', 'cN', '*NcgN')
+vim.keymap.set('n', 'cn', '*N"_cgn')
+vim.keymap.set('n', 'cN', '*N"_cgN')
 vim.keymap.set('n', '<C-g>', "<cmd>echo expand('%:p')<cr>")
 
 -- paste

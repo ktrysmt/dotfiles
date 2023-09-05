@@ -152,8 +152,17 @@ tnoremap <C-W>L       <cmd>wincmd L<cr>
 nnoremap / /\v
 nnoremap j gj
 nnoremap k gk
-nnoremap cn *Ncgn
-nnoremap cN *NcgN
+
+nnoremap cn *N"_cgn
+nnoremap cN *N"_cgN
+xnoremap <expr> cn "\<ESC>/\<C-r>=<SID>search()\<CR>\<CR>N\"_cgn"
+xnoremap <expr> cN "\<ESC>/\<C-r>=<SID>search()\<CR>\<CR>N\"_cgN"
+function! s:search() abort
+  let tmp = @"
+  normal! gv""y
+  let [text, @"] = [escape(@", '\/'), tmp]
+  return '\V' .. substitute(text, "\n", '\\n', 'g')
+endfunction
 
 nnoremap <C-g> :echo expand('%:p')<Return>
 
