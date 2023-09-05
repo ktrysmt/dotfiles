@@ -1,6 +1,8 @@
 return {
   'easymotion/vim-easymotion',
-  event = { "BufReadPre", "BufNewFile" },
+  keys = {
+    { ";", "<Plug>(easymotion-prefix)", mode = 'n' },
+  },
   config = function()
     vim.keymap.set('n', ";", "<Plug>(easymotion-prefix)", { remap = true })
 

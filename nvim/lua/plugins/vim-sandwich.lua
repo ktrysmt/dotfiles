@@ -1,4 +1,11 @@
 return {
   'machakann/vim-sandwich',
-  event = { "BufReadPre", "BufNewFile" },
+  keys = {
+    { "sa", mode = "n" },
+    { "sr", mode = "n" },
+    { "sd", mode = "n" },
+    { "sa", mode = "x" },
+    { "sr", mode = "x" },
+    { "sd", mode = "x" },
+  },
 }

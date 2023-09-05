@@ -38,7 +38,6 @@ vim.api.nvim_create_autocmd({'TermOpen'}, {
   command = "setlocal nonumber"
 })
 
-  --
 local json_group = vim.api.nvim_create_augroup('json_group', { clear = true })
 vim.api.nvim_create_autocmd({'Filetype'}, {
   pattern = "json",

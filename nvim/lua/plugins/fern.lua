@@ -13,6 +13,7 @@ return {
 
     local function init_fern()
       local o = { buffer = true, remap = true }
+      local bo = { buffer = true }
       vim.keymap.set('n', 's', '<Plug>(fern-action-open:vsplit)', o)
       vim.keymap.set('n', 'o', '<Plug>(fern-action-open-or-expand)', o)
       vim.keymap.set('n', 't', '<Plug>(fern-action-open:tabedit)', o)
@@ -24,14 +25,15 @@ return {
       vim.keymap.set('n', 'md', '<Plug>(fern-action-trash)', o)
       vim.keymap.set('n', 'y', '<Plug>(fern-action-yank:label)', o)
       vim.keymap.set('n', 'Y', '<Plug>(fern-action-yank:path)', o)
-
-      vim.keymap.set('n', 'l', '<Nop>', o)
-      vim.keymap.set('n', 'l', '<Nop>', o)
-      vim.keymap.set('n', 'E', '<Nop>', o)
-      vim.keymap.set('n', 'q', '<cmd>quit<CR>', o)
       vim.keymap.set('n', 'I', '<Plug>(fern-action-hide-toggle)', o)
       vim.keymap.set('n', 'r', '<Plug>(fern-action-reload)', o)
 
+      vim.keymap.set('n', 'l', '<Nop>', bo)
+      vim.keymap.set('n', 'l', '<Nop>', bo)
+      vim.keymap.set('n', 'E', '<Nop>', bo)
+      vim.keymap.set('n', 'q', '<cmd>quit<CR>', bo)
+
+      -- complex cmd
       vim.cmd([[
         nmap <buffer><expr>
           \ <Plug>(fern-my-expand-or-collapse)
@@ -56,6 +58,9 @@ return {
           \ <Plug>(fern-action-tcd:root)
         nmap <buffer> C <Plug>(fern-my-enter-and-tcd)
       ]])
+
+      -- with anzu
+      vim.keymap.set("n", "N", "<Plug>(anzu-N-with-echo)", o)
     end
 
     local fern_group = vim.api.nvim_create_augroup('fern_group', { clear = true })

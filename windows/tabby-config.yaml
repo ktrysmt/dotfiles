@@ -5,7 +5,8 @@ hotkeys:
   copy-current-path: []
   ctrl-c: []
   copy: []
-  paste: []
+  paste:
+    - Alt-V
   select-all: []
   clear: []
   zoom-in: []
@@ -128,7 +129,7 @@ terminal:
   fontSize: 16
   minimumContrastRatio: 5
   cursorBlink: false
-  cursor: beam
+  cursor: underline
   warnOnMultilinePaste: false
 ssh: {}
 configSync:
