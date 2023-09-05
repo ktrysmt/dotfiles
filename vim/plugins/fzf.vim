@@ -27,3 +27,17 @@ command! -bang -nargs=? GFiles
   \   {'options': ['--layout=reverse', '--info=inline', '--ansi', '--preview', 'echo {} | cut -f3 -d" " | xargs git --no-pager diff | BAT_THEME=Dracula bat --color=always --style=plain']},
   \   <bang>0
   \ )
+
+"  tnoremap <C-j> a
+"
+" augroup FzfSetting
+"   autocmd!
+"   autocmd FileType fzf tnoremap <buffer> <CTRL-j> <Down>
+"   autocmd FileType fzf tnoremap <buffer> <CTRL-k> <Up>
+"   " autocmd FileType fzf inoremap <buffer> <c-j> <Down>
+"   " autocmd FileType fzf inoremap <buffer> <c-k> <Up>
+"   " autocmd FileType fzf inoremap <C-j> <C-n>
+"   " autocmd FileType fzf tnoremap <C-j> <C-n>
+"   " autocmd FileType fzf tnoremap <buffer> <C-j> <C-n>
+"   " autocmd FileType fzf tnoremap <Esc> <C-c>
+" augroup END

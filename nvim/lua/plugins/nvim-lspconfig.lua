@@ -16,9 +16,15 @@ return {
 
     local nvim_lsp = require('lspconfig')
     local mason_lspconfig = require("mason-lspconfig")
+
     mason_lspconfig.setup({
       automatic_installation = true
     })
+
+    local opts = { silent=true }
+    vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 
     mason_lspconfig.setup_handlers({ function(server_name)
       local opts = {}
@@ -26,8 +32,7 @@ return {
         local bufopts = { silent = true, buffer = bufnr }
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-        vim.keymap.set('n', 'gdt', vim.lsp.buf.type_definition, bufopts)
-        vim.keymap.set('n', 'grf', vim.lsp.buf.references, bufopts)
+        vim.keymap.set('n', 'gvd', ':vsplit | lua vim.lsp.buf.definition()<CR>', bufopts)
       end
       nvim_lsp[server_name].setup(opts)
     end
