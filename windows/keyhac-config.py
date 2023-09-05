@@ -10,17 +10,6 @@ from keyhac import *
 
 def configure(keymap):
 
-    keymap.editor = r"C:\Program Files\Notepad++\notepad++.exe"
-
-    # --------------------------------------------------------------------
-    # Customizing the display
-
-    # Font
-    keymap.setFont("Cica", 14 )
-
-    # Theme
-    keymap.setTheme("black")
-
     # Common func
     def to_local_path(s):
         if os.path.exists(s):
@@ -31,32 +20,57 @@ def configure(keymap):
             if s.startswith("http") or to_local_path(s):
                 keymap.ShellExecuteCommand(None, s, arg, None)()
 
-    # --------------------------------------------------------------------
+    # common
+    if 1:
+        keymap.editor = r"C:\Program Files\Notepad++\notepad++.exe"
+        keymap.setFont("Cica", 14 )
+        keymap.setTheme("black")
 
-    # Simple key replacement
+        # enter / backspace
+        keymap.replaceKey( 29, "Back" )
+        keymap.replaceKey( 242, 244 )
+
+        # disable keyach clipboard
+        keymap.clipboard_history.maxnum = 0
+        keymap.clipboard_history.enableHook(False)
+
+    # tabby
+    # https://gist.github.com/masato3/80bb29f74d8e52b9783e5a1abc96eed4
+    if 1:
+        keymap_tabby = keymap.defineWindowKeymap(exe_name="Tabby.exe", class_name="Chrome_WidgetWin_1")
+        keymap_tabby[ "LCtrl-H" ] = [ "LCtrl-H" ]
+        keymap_tabby[ "LCtrl-Colon" ] = [ "LCtrl-Colon" ]
+        keymap_tabby[ "LCtrl-L" ] = [ "LCtrl-L" ]
+        keymap_tabby[ "LCtrl-K" ] = [ "LCtrl-K" ]
+        keymap_tabby[ "LCtrl-J" ] = [ "LCtrl-J" ]
+        keymap_tabby[ "LCtrl-Semicolon" ] = [ "LCtrl-Semicolon" ]
+
+        keymap_tabby[ "LCtrl-Shift-H" ] = [ "LCtrl-Shift-H" ]
+        keymap_tabby[ "LCtrl-Shift-Colon" ] = [ "LCtrl-Shift-Colon" ]
+        keymap_tabby[ "LCtrl-Shift-L" ] = [ "LCtrl-Shift-L" ]
+        keymap_tabby[ "LCtrl-Shift-K" ] = [ "LCtrl-Shift-K" ]
+        keymap_tabby[ "LCtrl-Shift-J" ] = [ "LCtrl-Shift-J" ]
+        keymap_tabby[ "LCtrl-Shift-Semicolon" ] = [ "LCtrl-Shift-Semicolon" ]
+
+    # minecraft?
     if 1:
         keymap.replaceKey( 28, "Return" )
     else:
         keymap.replaceKey( 28, "LShift" )
 
-    keymap.replaceKey( 29, "Back" )
-    keymap.replaceKey( 242, 244 )
-
     # Global keymap which affects any windows
     if 1:
         keymap_global = keymap.defineWindowKeymap()
+
+        keymap_global[ "LCtrl-OpenBracket" ] = "Esc" # ESC
 
         keymap_global[ "LCtrl-H" ] = "Up" # カーソル上
         keymap_global[ "LCtrl-Colon" ] = "Down" # カーソル下 
         keymap_global[ "LCtrl-L" ] = "Right" # カーソル右 
         keymap_global[ "LCtrl-K" ] = "Left" # カーソル左 
         keymap_global[ "LCtrl-J" ] = "Home" # 行の先頭
-
         keymap_global[ "LCtrl-Semicolon" ] = "End" # 行の末尾
 
-        keymap_global[ "LCtrl-OpenBracket" ] = "Esc" # ESC
-
-        keymap_global[ "LCtrl-Semicolon" ] = "End" # 行の末尾
         keymap_global[ "LCtrl-Shift-H" ] = "Shift-Up" # カーソル上
         keymap_global[ "LCtrl-Shift-Colon" ] = "Shift-Down" # カーソル下
         keymap_global[ "LCtrl-Shift-L" ] = "Shift-Right" # カーソル右
@@ -87,72 +101,68 @@ def configure(keymap):
 
         keymap_global[ "LCtrl-Alt-R" ] = keymap.command_ReloadConfig
 
-        # Clipboard history related
-        keymap_global[ "C-S-Z" ] = keymap.command_ClipboardList     # Open the clipboard history list
 
-        # Keyboard macro
-        keymap_global[ "U0-0" ] = keymap.command_RecordToggle
-        keymap_global[ "U0-1" ] = keymap.command_RecordStart
-        keymap_global[ "U0-2" ] = keymap.command_RecordStop
-        keymap_global[ "U0-3" ] = keymap.command_RecordPlay
-        keymap_global[ "U0-4" ] = keymap.command_RecordClear
-
-    #===========================================
     # Global app hot key
     # https://zenn.dev/awtnb/books/adf6c5162a9f08/viewer/1728cd
-    # ウィンドウを探す
-    def find_window(exe_name, class_name=None):
-        found = [None]
-        def _callback(wnd, arg):
-            if not wnd.isVisible() : return True
-            if not fnmatch.fnmatch(wnd.getProcessName(), exe_name) : return True
-            if class_name and not fnmatch.fnmatch(wnd.getClassName(), class_name) : return True
-            found[0] = wnd.getLastActivePopup()
-            return False
-        pyauto.Window.enum(_callback, None)
-        return found[0]
-    # 最大10回アクティブ化にトライする
-    def activate_window(wnd):
-        if wnd.isMinimized():
-            wnd.restore()
-        trial = 0
-        while trial < 10:
-            trial += 1
-            try:
-                wnd.setForeground()
-                if pyauto.Window.getForeground() == wnd:
-                    wnd.setForeground(True)
-                    return True
-            except:
+    if 1:
+        # ウィンドウを探す
+        def find_window(exe_name, class_name=None):
+            found = [None]
+            def _callback(wnd, arg):
+                if not wnd.isVisible() : return True
+                if not fnmatch.fnmatch(wnd.getProcessName(), exe_name) : return True
+                if class_name and not fnmatch.fnmatch(wnd.getClassName(), class_name) : return True
+                found[0] = wnd.getLastActivePopup()
                 return False
-        return False
-    # クロージャ生成
-    def pseudo_cuteExec(exe_name, class_name, exe_path):
-        def _executer():
-            found_wnd = find_window(exe_name, class_name)
-            if exe_name == "msedge.exe":
-                print(found_wnd)
-            if not found_wnd:
-                execute_path(exe_path)
-            else:
-                if found_wnd != keymap.getWindow():
-                    if activate_window(found_wnd):
-                        return None
-        return _executer
-    # キー入力でウィンドウのアクティブ化
-    for key, params in {
-        "LAlt-A": (
-            "brave.exe",
-            "Chrome_WidgetWin_1",
-            r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
-        ),
-        "LAlt-F": (
-            "msedge.exe",
-            "Chrome_WidgetWin_1",
-            r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-        ),
-    }.items():
-        keymap_global[key] = pseudo_cuteExec(*params)
+            pyauto.Window.enum(_callback, None)
+            return found[0]
+        # 最大10回アクティブ化にトライする
+        def activate_window(wnd):
+            if wnd.isMinimized():
+                wnd.restore()
+            trial = 0
+            while trial < 10:
+                trial += 1
+                try:
+                    wnd.setForeground()
+                    if pyauto.Window.getForeground() == wnd:
+                        wnd.setForeground(True)
+                        return True
+                except:
+                    return False
+            return False
+        # クロージャ生成
+        def pseudo_cuteExec(exe_name, class_name, exe_path):
+            def _executer():
+                found_wnd = find_window(exe_name, class_name)
+                if exe_name == "msedge.exe":
+                    print(found_wnd)
+                if not found_wnd:
+                    execute_path(exe_path)
+                else:
+                    if found_wnd != keymap.getWindow():
+                        if activate_window(found_wnd):
+                            return None
+            return _executer
+        # キー入力でウィンドウのアクティブ化
+        for key, params in {
+            "LAlt-A": (
+                "brave.exe",
+                "Chrome_WidgetWin_1",
+                r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
+            ),
+            "LAlt-F": (
+                "msedge.exe",
+                "Chrome_WidgetWin_1",
+                r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+            ),
+            "LAlt-G": (
+                "Tabby.exe",
+                "Chrome_WidgetWin_1",
+                r"C:\Program Files B\tabby\Tabby.exe"
+            ),
+        }.items():
+            keymap_global[key] = pseudo_cuteExec(*params)
 
 
 
@@ -379,7 +389,7 @@ def configure(keymap):
 
 
     # Customizing clipboard history list
-    if 1:
+    if 0:
         # Enable clipboard monitoring hook (Default:Enabled)
         keymap.clipboard_history.enableHook(True)
 
