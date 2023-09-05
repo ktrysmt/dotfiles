@@ -115,15 +115,15 @@ pip3 install ipdb   # python debugger
 pip3 install flake8 # python linter
 go install github.com/nametake/golangci-lint-langserver@latest
 
-
 # k8s
 (
-  set -x; cd "$(mktemp -d)" &&
-  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.{tar.gz,yaml}" &&
-  tar zxvf krew.tar.gz &&
-  KREW=./krew-"$(uname | tr '[:upper:]' '[:lower:]')_amd64" &&
-  "$KREW" install --manifest=krew.yaml --archive=krew.tar.gz &&
-  "$KREW" update
+  set -x
+  cd "$(mktemp -d)" \
+    && curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.{tar.gz,yaml}" \
+    && tar zxvf krew.tar.gz \
+    && KREW=./krew-"$(uname | tr '[:upper:]' '[:lower:]')_amd64" \
+    && "$KREW" install --manifest=krew.yaml --archive=krew.tar.gz \
+    && "$KREW" update
 )
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 kubectl krew install tree open-svc
@@ -142,7 +142,7 @@ vim +":setfiletype python" +":LspInstallServer pyls-all" +qa
 npm i -g npm-check-updates neovim @fsouza/prettierd eslint_d
 
 # brew cask
-export HOMEBREW_CASK_OPTS="--appdir=/Applications";
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 brew tap homebrew/cask
 brew install --cask appcleaner kindle iterm2 rectangle alt-tab clipy visual-studio-code mos macgesture flux
 brew install --cask karabiner-elements
@@ -162,7 +162,6 @@ cp -Rp /System/Library/CoreServices/ScreenSaverEngine.app /Applications/lock.app
 # ------------
 # defaults write "Apple Global Domain" com.apple.mouse.scaling 16.0
 # defaults write com.apple.finder AppleShowAllFiles TRUE && killall Finder
-
 
 # ------------
 # others

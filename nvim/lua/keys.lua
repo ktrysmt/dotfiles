@@ -16,7 +16,7 @@ vim.keymap.set('n', 'j', 'gj')
 vim.keymap.set('n', 'k', 'gk')
 
 -- search
-vim.keymap.set('n', '/', '/\v')
+vim.keymap.set('n', '/', '/\\v')
 vim.keymap.set('n', 'cn', '*Ncgn')
 vim.keymap.set('n', 'cN', '*NcgN')
 vim.keymap.set('n', '<C-g>', "<cmd>echo expand('%:p')<cr>")
