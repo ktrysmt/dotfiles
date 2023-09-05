@@ -26,11 +26,9 @@ def configure(keymap):
         keymap.setFont("Cica", 14 )
         keymap.setTheme("black")
 
-        # enter / backspace
         keymap.replaceKey( 29, "Back" )
         keymap.replaceKey( 242, 244 )
 
-        # disable keyach clipboard
         keymap.clipboard_history.maxnum = 0
         keymap.clipboard_history.enableHook(False)
 
@@ -83,6 +81,8 @@ def configure(keymap):
         #keymap_global[ "LAlt-Return" ] = alt_return
 
         keymap_global[ "LCtrl-Alt-R" ] = keymap.command_ReloadConfig
+
+
 
     # tabby
     # https://gist.github.com/masato3/80bb29f74d8e52b9783e5a1abc96eed4
@@ -164,6 +164,7 @@ def configure(keymap):
             ),
         }.items():
             keymap_global[key] = pseudo_cuteExec(*params)
+
 
 
 
