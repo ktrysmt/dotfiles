@@ -27,13 +27,14 @@ return {
       },
     })
 
-    -- vim.cmd [[
-    -- highlight FzfLuaNormal guibg=#383850
-    -- highlight FzfLuaBorder guibg=#383850
-    -- ]]
+    vim.cmd [[
+    highlight FzfLuaNormal guibg=#282840
+    highlight FzfLuaBorder guibg=#282840
+    ]]
 
-    -- vim.opt.winblend = 5
-    -- vim.opt.termguicolors = true
+    vim.o.winblend = 20
+    vim.o.pumblend = 20
+    vim.o.termguicolors=true
 
   end
 }
