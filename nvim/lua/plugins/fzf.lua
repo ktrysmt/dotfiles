@@ -6,8 +6,8 @@ return {
     fzf.setup({
       winopts = {
         height     = 0.85,     -- window height
-        width      = 0.95,     -- window width
-        row        = 0.50,     -- window row position (0=top, 1=bottom)
+        width      = 0.99,     -- window width
+        row        = 0.99,     -- window row position (0=top, 1=bottom)
         col        = 0.50,     -- window col position (0=left, 1=right)
         fullscreen = false,    -- start fullscreen?
         preview = {
