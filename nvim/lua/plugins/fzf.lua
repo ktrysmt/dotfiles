@@ -34,7 +34,6 @@ return {
 
     vim.o.winblend = 20
     vim.o.pumblend = 20
-    vim.o.termguicolors=true
 
   end
 }
