@@ -270,3 +270,9 @@ nnoremap [Tag]c :tablast <bar> tabnew<CR>
 nnoremap [Tag]x :tabclose<CR>
 nnoremap <Tab>      gt
 nnoremap <S-Tab>    gT
+
+" move line
+nnoremap <C-j> <cmd>move .+1<CR>
+nnoremap <C-k> <cmd>move .-2<CR>
+xnoremap <C-j> :move '>+1<CR>gv=gv
+xnoremap <C-k> :move '<-2<CR>gv=gv

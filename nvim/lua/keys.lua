@@ -76,3 +76,9 @@ end
 for i = 1, 9 do
   vim.keymap.set('n', string.format('t%d',i), string.format('%dgt',i), { silent = true })
 end
+
+-- move line
+vim.keymap.set("n", "<C-j>", "<cmd>move .+1<CR>")
+vim.keymap.set("x", "<C-j>", "<cmd>move '>+1<CR>gv=gv")
+vim.keymap.set("n", "<C-k>", "<cmd>move .-2<CR>")
+vim.keymap.set("x", "<C-k>", "<cmd>move '<-2<CR>gv=gv")
