@@ -31,9 +31,5 @@ return {
     highlight FzfLuaNormal guibg=#282840
     highlight FzfLuaBorder guibg=#282840
     ]]
-
-    vim.o.winblend = 20
-    vim.o.pumblend = 20
-
   end
 }

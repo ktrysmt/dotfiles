@@ -37,13 +37,16 @@ hotkeys:
   new-window: []
   profile: {}
   profile-selectors: {}
-  toggle-fullscreen: []
+  toggle-fullscreen:
+    - Ctrl-Shift-F
   close-tab: []
   reopen-tab: []
   toggle-last-tab: []
   rename-tab: []
-  next-tab: []
-  previous-tab: []
+  next-tab:
+    - Ctrl-Tab
+  previous-tab:
+    - Ctrl-Shift-Tab
   move-tab-left: []
   move-tab-right: []
   rearrange-panes: []
@@ -129,8 +132,8 @@ terminal:
   fontSize: 16
   minimumContrastRatio: 5
   cursorBlink: false
-  cursor: underline
   warnOnMultilinePaste: false
+  hideTabIndex: true
 ssh: {}
 configSync:
   parts:
@@ -141,9 +144,9 @@ clickableLinks: {}
 accessibility: {}
 appearance:
   theme: Follow the color scheme
-  spaciness: 0.8
-  vibrancy: true
-  opacity: 0.92
+  spaciness: 0.6
+  dockScreen: 2528732444
+  flexTabs: true
 hacks: {}
 providerBlacklist: []
 commandBlacklist: []
