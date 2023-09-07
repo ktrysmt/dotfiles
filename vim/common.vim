@@ -285,6 +285,3 @@ cnoremap <C-e> <End>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 
-" delete
-vnoremap x "_d
-nnoremap xx "_dd

@@ -19,4 +19,7 @@ return {
     },
   },
   build = ":MasonUpdate",
+  config = function()
+    require("mason").setup()
+  end
 }

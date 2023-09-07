@@ -1,61 +1,82 @@
 return {
-  "neovim/nvim-lspconfig",
-  event = { "VeryLazy" },
-  dependencies = {
-    {
-      "williamboman/mason-lspconfig.nvim",
-      -- cmd = { "LspInstall", "LspUninstall" },
-      -- config = function()
-      -- end,
-    },
-    {
+  {
+    "seblj/nvim-echo-diagnostics",
+    event = { "VeryLazy" },
+    config = function()
+      local echo_diagnostics = require("echo-diagnostics")
 
-    }
-  },
-  config = function()
+      echo_diagnostics.setup({
+        show_diagnostic_number = true,
+        show_diagnostic_source = true,
+      })
+      vim.o.updatetime = 300
 
-    local nvim_lsp = require('lspconfig')
-    local mason_lspconfig = require("mason-lspconfig")
-
-    mason_lspconfig.setup({
-      automatic_installation = true
-    })
-
-    local opts = { silent = true }
-    vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-
-    mason_lspconfig.setup_handlers({ function(server_name)
-      local opts = {}
-      opts.on_attach = function(_, bufnr)
-        local bufopts = { silent = true, buffer = bufnr }
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-        vim.keymap.set('n', 'gvd', ':vsplit | lua vim.lsp.buf.definition()<CR>', bufopts)
-      end
-      nvim_lsp[server_name].setup(opts)
+      local echo_diagnostics_group = vim.api.nvim_create_augroup('echo_diagnostics_group', { clear = true })
+      vim.api.nvim_create_autocmd("CursorHold", {
+        pattern = "*",
+        group = echo_diagnostics_group,
+        callback = require('echo-diagnostics').echo_line_diagnostic,
+      })
     end
-    })
+  },
+  {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      {
+        "williamboman/mason-lspconfig.nvim",
+      },
+    },
+    config = function()
 
+      local lspconfig = require('lspconfig')
+      local mason_lspconfig = require("mason-lspconfig")
 
-    require("mason").setup()
-    require("mason-lspconfig").setup()
+      mason_lspconfig.setup({
+        automatic_installation = true
+      })
 
-    require("mason-lspconfig").setup_handlers {
-        -- The first entry (without a key) will be the default handler
-        -- and will be called for each installed server that doesn't have
-        -- a dedicated handler.
-        function (server_name) -- default handler (optional)
-            require("lspconfig")[server_name].setup {}
+      mason_lspconfig.setup_handlers({
+        function(server_name)
+          lspconfig[server_name].setup({})
         end,
-        -- Next, you can provide a dedicated handler for specific servers.
-        -- For example, a handler override for the `rust_analyzer`:
-        ["rust_analyzer"] = function ()
-            require("rust-tools").setup {}
+      })
+
+      vim.diagnostic.config({ virtual_text = false, float = false })
+
+      local init_lspconfig = function(ev)
+        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+        local opts = { buffer = ev.buf }
+
+        vim.keymap.set('n', 'gn', function()
+          vim.diagnostic.goto_next({float=false})
+        end, opts)
+        vim.keymap.set('n', 'gp', function()
+          vim.cmd[[:normal k]]
+          vim.diagnostic.goto_prev({float=false})
+        end, opts)
+
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+        vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+
+        for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+          vim.api.nvim_set_hl(0, group, {})
         end
-    }
+      end
 
+      local lspconfig_group = vim.api.nvim_create_augroup('lspconfig_group', { clear = true })
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = lspconfig_group,
+        callback = init_lspconfig,
+      })
 
-  end,
+    end,
+  },
 }

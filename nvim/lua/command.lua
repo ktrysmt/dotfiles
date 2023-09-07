@@ -15,7 +15,7 @@ local general_group = vim.api.nvim_create_augroup('general_group', { clear = tru
 vim.api.nvim_create_autocmd({'BufWritePre'}, {
   pattern = "*",
   group = general_group,
-  command = ':%s/\\s\\+$//ge'
+  command = [[%s/\s\+$//ge]],
 })
 vim.api.nvim_create_autocmd({'InsertLeave'}, {
   pattern = "*",

@@ -53,6 +53,10 @@ vim.keymap.set('n', '<c-k>', '<Nop>')
 vim.keymap.set('n', '<c-k>', '<Nop>')
 vim.keymap.set('n', '<c-k>', '<Nop>')
 
+-- disable for lsp diagnostic
+vim.keymap.set('n', 'gp', '<Nop>')
+vim.keymap.set('n', 'gn', '<Nop>')
+
 -- quick fix
 vim.keymap.set('n', '<Leader>co',  '<cmd>copen<cr>', { silent = true })
 vim.keymap.set('n', '<Leader>cl',  '<cmd>cclose<cr>', { silent = true })
