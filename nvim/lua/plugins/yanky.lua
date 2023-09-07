@@ -1,27 +1,26 @@
 return  {
   "gbprod/yanky.nvim",
   event = { "VeryLazy" },
-  -- keys = {
-  --   { "<leader>y" }
-  -- },
   dependencies = {
     "stevearc/dressing.nvim",
+    "kkharji/sqlite.lua",
   },
   config = function()
-
     require("yanky").setup({
       ring = {
         history_length = 500,
+        storage = 'sqlite',
       },
       highlight = {
-        on_put = true,
-        on_yank = true,
-        timer = 50,
+        on_put = false,
+        on_yank = false,
       },
       preserve_cursor_position = {
         enabled = true,
       },
     })
+
+    vim.keymap.set("n", "<leader>y", "<cmd>YankyRingHistory<cr>", { silent = true })
 
     vim.keymap.set({"n","x"}, "y", "<Plug>(YankyYank)")
     vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
