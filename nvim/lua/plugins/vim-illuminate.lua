@@ -1,4 +1,12 @@
 return {
   'RRethy/vim-illuminate',
-  event = { "BufEnter" },
+  event = { "VeryLazy" },
+  config = function()
+    require('illuminate').configure({
+    providers = {
+        'treesitter',
+        'regex',
+    },
+  })
+  end
 }
