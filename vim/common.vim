@@ -175,6 +175,8 @@ nnoremap <silent> <Leader>T :tabnew \| :terminal<CR><insert>
 nnoremap <silent> <Leader>vt :vne \| :terminal<CR><insert>
 
 " move by byte unit on insert mode
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
 inoremap <C-c> <ESC>
@@ -276,3 +278,9 @@ nnoremap <C-j> <cmd>move .+1<CR>
 nnoremap <C-k> <cmd>move .-2<CR>
 xnoremap <C-j> :move '>+1<CR>gv=gv
 xnoremap <C-k> :move '<-2<CR>gv=gv
+
+" commandline mode
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
