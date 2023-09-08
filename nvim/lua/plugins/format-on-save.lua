@@ -46,6 +46,8 @@ return {
         go = formatters.lsp,
         vim = formatters.lsp,
         dockerfile = formatters.lsp,
+        c = formatters.lsp,
+        cpp = formatters.lsp,
 
         typescript = ts_formatter(formatters),
         typescriptreact = js_formatter(formatters),

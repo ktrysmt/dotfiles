@@ -17,8 +17,6 @@ return {
         'stylua',
         'shellcheck',
         'dockerfile-language-server',
-        'gofumpt',
-        'golines',
         'gomodifytags',
         'gotests',
         'impl',
@@ -30,6 +28,7 @@ return {
         'shfmt',
         'staticcheck',
         'vint',
+        'clangd',
       },
     })
   end
