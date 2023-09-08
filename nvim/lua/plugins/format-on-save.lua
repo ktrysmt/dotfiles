@@ -1,13 +1,24 @@
 return {
   "elentok/format-on-save.nvim" ,
-  event = { "VeryLazy" },
+  event = { "BufWritePre" },
   config = function()
+
     local format_on_save = require("format-on-save")
     local formatters = require("format-on-save.formatters")
 
     local ts_formatter = function(formatters)
       if vim.fn.executable('node_modules/.bin/prettier') > 0 then
         return formatters.prettier
+      else
+        return formatters.lsp
+      end
+    end
+
+    local js_formatter = function()
+      if vim.api.nvim_buf_get_name(0):match("^.eslintrc.*$") then
+        return formatters.eslint_d_fix
+      elseif  vim.api.nvim_buf_get_name(0):match("^(.prettierrc|.prettierrc.*|prettier.config.*)$") then
+        return formatters.prettierd
       else
         return formatters.lsp
       end
@@ -22,7 +33,6 @@ return {
         css = formatters.lsp,
         html = formatters.lsp,
         java = formatters.lsp,
-        javascript = formatters.lsp,
         json = formatters.lsp,
         lua = formatters.lsp,
         markdown = formatters.lsp,
@@ -38,18 +48,9 @@ return {
         dockerfile = formatters.lsp,
 
         typescript = ts_formatter(formatters),
-        typescriptreact = ts_formatter(formatters),
+        typescriptreact = js_formatter(formatters),
 
-        javascript = {
-          formatters.if_file_exists({
-            pattern = ".eslintrc.*",
-            formatter = formatters.eslint_d_fix,
-          }),
-          formatters.if_file_exists({
-            pattern = { ".prettierrc", ".prettierrc.*", "prettier.config.*" },
-            formatter = formatters.prettierd,
-          }),
-        },
+        javascript = js_formatter(formatters),
       },
 
       fallback_formatter = {
