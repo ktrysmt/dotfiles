@@ -23,6 +23,8 @@ return {
         fullscreen = false, -- start fullscreen?
         preview    = {
           horizontal = 'right:40%',
+          hidden = 'nohidden',
+          delay = 0,
         }
       },
     })
