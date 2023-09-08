@@ -28,7 +28,6 @@ return {
       },
     },
     config = function()
-
       local lspconfig = require('lspconfig')
       local mason_lspconfig = require("mason-lspconfig")
 
@@ -49,11 +48,11 @@ return {
         local opts = { buffer = ev.buf }
 
         vim.keymap.set('n', 'gn', function()
-          vim.diagnostic.goto_next({float=false})
+          vim.diagnostic.goto_next({ float = false })
         end, opts)
         vim.keymap.set('n', 'gp', function()
-          vim.cmd[[:normal k]]
-          vim.diagnostic.goto_prev({float=false})
+          vim.cmd [[:normal k]]
+          vim.diagnostic.goto_prev({ float = false })
         end, opts)
 
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
@@ -76,7 +75,6 @@ return {
         group = lspconfig_group,
         callback = init_lspconfig,
       })
-
     end,
   },
 }
