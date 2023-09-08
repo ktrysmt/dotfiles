@@ -1,6 +1,6 @@
 return {
   'ktrysmt/pinecone-vim',
-  event = "VimEnter",
+  event = { "VimEnter" },
   priority = 1000,
   config = function()
     vim.cmd.colorscheme "pinecone"

@@ -53,7 +53,9 @@ $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
 # asdf
 asdf plugin add nodejs
 asdf install nodejs latest
+asdf install python latest
 asdf global nodejs latest
+asdf global python latest
 
 # symlink
 cd ~/
@@ -61,13 +63,13 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 mkdir -p ~/.config/sheldon/
 mkdir -p ~/.config/peco/
 mkdir -p ~/.local/bin/
-mkdir -p ~/.config/nvim/
 mkdir -p ~/.cache/vim/
 mkdir ~/.docker
 ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
-ln -s ~/dotfiles/.vimrc ~/.config/nvim/init.vim
+# ln -s ~/dotfiles/.vimrc ~/.config/nvim/init.vim
+ln -s ~/dotfiles/nvim/ ~/.config/nvim/
 ln -s ~/dotfiles/.tigrc ~/.tigrc
 ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json

@@ -1,8 +1,7 @@
 return {
-  "elentok/format-on-save.nvim" ,
-  event = { "BufWritePre" },
+  "elentok/format-on-save.nvim",
+  event = { "VeryLazy" },
   config = function()
-
     local format_on_save = require("format-on-save")
     local formatters = require("format-on-save.formatters")
 
@@ -17,7 +16,7 @@ return {
     local js_formatter = function()
       if vim.api.nvim_buf_get_name(0):match("^.eslintrc.*$") then
         return formatters.eslint_d_fix
-      elseif  vim.api.nvim_buf_get_name(0):match("^(.prettierrc|.prettierrc.*|prettier.config.*)$") then
+      elseif vim.api.nvim_buf_get_name(0):match("^(.prettierrc|.prettierrc.*|prettier.config.*)$") then
         return formatters.prettierd
       else
         return formatters.lsp
