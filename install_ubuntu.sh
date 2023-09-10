@@ -8,7 +8,7 @@ read -p "password? > " PASSWORD
 # base
 sudo apt-get install -qq -y update
 sudo apt-get install -qq -y zsh
-sudo bash -c "echo $(which zsh) >> /etc/shells";
+sudo bash -c "echo $(which zsh) >> /etc/shells"
 echo $PASSWORD | chsh -s $(which zsh)
 export SHELL=/usr/bin/zsh
 exec $SHELL -l
@@ -24,57 +24,66 @@ eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 # brew
 brew install \
-  peco \
-  zsh \
-  nkf \
-  tree \
-  ripgrep \
+  asdf \
+  bat \
+  coreutils \
+  curl \
+  diff-so-fancy \
+  exa \
   fd \
-  procs
-brew install \
   fzf \
+  fzy \
+  ghq \
+  ghq \
+  git \
+  git-delta \
+  git-secrets \
+  jq \
+  jq \
+  llvm \
+  nkf \
+  nodejs \
+  peco \
+  procs \
+  ripgrep \
+  rust-analyzer \
   sheldon \
   tig \
-  fzy \
-  exa \
-  python3
-brew install \
-  jq \
-  git-secrets \
-  nodejs \
-  bat \
-  ghq \
-  diff-so-fancy
-brew install \
-  git-delta \
-  coreutils \
+  tree \
+  watch \
+  wget \
+  zsh \
   neovim
-brew install llvm
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
-
 brew install b4b4r07/tap/gomi
 
-$(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
 exec $SHELL -l
+$(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
+
+# asdf
+asdf plugin add nodejs
+asdf install nodejs latest
+asdf install python latest
+asdf global nodejs latest
+asdf global python latest
 
 # symlinks
 cd ~/
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-mkdir -p ~/.config/sheldon
-ln -s ~/dotfiles/zsh/sheldon.plugins.toml ~/.config/sheldon/plugins.toml
+mkdir -p ~/.config/sheldon/
 mkdir -p ~/.config/peco/
 mkdir -p ~/.local/bin/
-mkdir ~/.docker/
-mkdir -p ~/.config/nvim/
 mkdir -p ~/.cache/vim/
-ln -s ~/dotfiles/.vimrc ~/.config/nvim/init.vim
+mkdir ~/.docker
 ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc.ubuntu ~/.zshrc
 ln -s ~/dotfiles/.tigrc ~/.tigrc
 ln -s ~/dotfiles/.tmux.conf.ubuntu ~/.tmux.conf
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
+ln -s ~/dotfiles/zsh/sheldon.plugins.toml ~/.config/sheldon/plugins.toml
 ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
+cp ~/dotfiles/.ctags ~/.ctags
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
 
@@ -84,15 +93,24 @@ git secrets --install ~/.git-templates/git-secrets
 git config --global init.templatedir '~/.git-templates/git-secrets'
 git config --global credential.helper store
 
-# nvim
-mkdir -p ~/.config/nvim/
-curl -fLo ~/.config/nvim/autoload/jetpack.vim --create-dirs https://raw.githubusercontent.com/tani/vim-jetpack/master/autoload/jetpack.vim
-pip3 install neovim
-ln -sf $(which nvim) /usr/local/bin/vim
-python2 -m pip install --user --upgrade pynvim
-python3 -m pip install --user --upgrade pynvim
-vim +":JetpackSync" +qa
-vim +":TSUpdate" +qa
+# ssh
+mkdir ~/.ssh
+touch ~/.ssh/config
+echo "ServerAliveInterval 15" >> ~/.ssh/config
+echo "ServerAliveCountMax 10" >> ~/.ssh/config
+
+# editor
+sudo ln -sf $(which nvim) /usr/local/bin/vim
+python -m pip install --user --upgrade pynvim
+python -m pip install --user --upgrade neovim
+go install github.com/go-delve/delve/cmd/dlv@latest
+npm i -g npm-check-updates neovim @fsouza/prettierd eslint_d
+
+# go
+mkdir -p ~/project/bin
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$HOME/go/bin:$HOME/project/bin:$PATH
+export GOPATH=$HOME/go:$HOME/project
 
 # rust
 curl https://sh.rustup.rs -sSf | sh -s -- -y

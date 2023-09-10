@@ -68,7 +68,6 @@ mkdir ~/.docker
 ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
-# ln -s ~/dotfiles/.vimrc ~/.config/nvim/init.vim
 ln -s ~/dotfiles/nvim/ ~/.config/nvim/
 ln -s ~/dotfiles/.tigrc ~/.tigrc
 ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
@@ -78,14 +77,21 @@ ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
 cp ~/dotfiles/.ctags ~/.ctags
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
-# cp ~/dotfiles/.switch-proxy.osx ~/.switch-proxy
-# mkdir -p ~/.ipython/profile_default/
-# echo "c.InteractiveShell.colors = 'Linux'" > ~/.ipython/profile_default/ipython_config.py
 
+# cp ~/dotfiles/.switch-proxy.osx ~/.switch-proxy
+
+# ssh
 mkdir ~/.ssh
 touch ~/.ssh/config
 echo "ServerAliveInterval 15" >> ~/.ssh/config
 echo "ServerAliveCountMax 10" >> ~/.ssh/config
+
+# editor
+sudo ln -sf $(which nvim) /usr/local/bin/vim
+python -m pip install --user --upgrade pynvim
+python -m pip install --user --upgrade neovim
+go install github.com/go-delve/delve/cmd/dlv@latest
+npm i -g npm-check-updates neovim @fsouza/prettierd eslint_d
 
 # git config
 git secrets --register-aws --global
@@ -99,23 +105,6 @@ mkdir -p ~/project/bin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/go/bin:$HOME/project/bin:$PATH
 export GOPATH=$HOME/go:$HOME/project
-
-# nvim
-mkdir -p ~/.config/nvim/
-mkdir -p ~/.cache/nvim/
-mkdir -p ~/.cache/vim/
-curl -fLo ~/.config/nvim/autoload/jetpack.vim --create-dirs https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim
-ln -s ~/.vimrc ~/.config/nvim/init.vim
-pip3 install neovim
-sudo ln -sf $(which nvim) /usr/local/bin/vim
-python3 -m pip install --user --upgrade pynvim
-
-# lsp
-npm i -g typescript typescript-language-server
-pip3 install 'python-lsp-server[all]'
-pip3 install ipdb   # python debugger
-pip3 install flake8 # python linter
-go install github.com/nametake/golangci-lint-langserver@latest
 
 # k8s
 (
@@ -134,14 +123,6 @@ kubectl krew install tree open-svc
 # setting up of rust components is here: https://gist.github.com/ktrysmt/9601264b37f8e46cad1e7075850478fb
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
-
-# sub tools
-go install github.com/go-delve/delve/cmd/dlv@latest
-vim +":JetpackSync" +":JetpackSync"
-vim +":setfiletype go" +":GoInstallBinaries" +qa
-vim +":setfiletype rust" +":LspInstallServer rust-analyzer" +qa
-vim +":setfiletype python" +":LspInstallServer pyls-all" +qa
-npm i -g npm-check-updates neovim @fsouza/prettierd eslint_d
 
 # brew cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
