@@ -15,37 +15,29 @@ vim.keymap.set('t', '<C-W>L', '<cmd>wincmd L<cr>')
 vim.keymap.set('n', 'j', 'gj')
 vim.keymap.set('n', 'k', 'gk')
 
--- search
+-- search and replace
 vim.keymap.set('n', '/', '/\\v')
 vim.keymap.set('n', 'cn', '*N"_cgn')
 vim.keymap.set('n', 'cN', '*N"_cgN')
 vim.keymap.set('n', '<C-g>', "<cmd>echo expand('%:p')<cr>")
 
 -- paste
-vim.keymap.set('n', '<Leader>p',  '"0p', { silent = true })
-vim.keymap.set('v', '<Leader>p',  '"0p', { silent = true })
+vim.keymap.set('n', '<Leader>p', '"0p', { silent = true })
+vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })
 
--- in terminal mode
+-- terminal mode
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
 vim.keymap.set('n', '<ESC><ESC>', '<cmd>nohlsearch<CR><ESC>', { silent = true })
-vim.keymap.set('n', '<Leader>t ', '<cmd>new \\| :terminal<CR><insert>', { silent = true })
-vim.keymap.set('n', '<Leader>T ', '<cmd>tabnew \\| :terminal<CR><insert>', { silent = true })
-vim.keymap.set('n', '<Leader>vt', '<cmd>vne \\| :terminal<CR><insert>', { silent = true })
+vim.keymap.set('n', '<Leader>t', [[<cmd>new | :terminal<CR><insert>]], { silent = true })
+vim.keymap.set('n', '<Leader>T', [[<cmd>tabnew | :terminal<CR><insert>]], { silent = true })
+vim.keymap.set('n', '<Leader>vt', [[<cmd>vne | :terminal<CR><insert>]], { silent = true })
 
 -- move in insert mode and commandline mode
-vim.keymap.set({ 'c', 'i'}, '<C-a>', '<Home>')
-vim.keymap.set({ 'c', 'i'}, '<C-e>', '<End>')
-vim.keymap.set({ 'c', 'i'}, '<C-f>', '<Right>')
-vim.keymap.set({ 'c', 'i'}, '<C-b>', '<Left>')
+vim.keymap.set({ 'c', 'i' }, '<C-a>', '<Home>')
+vim.keymap.set({ 'c', 'i' }, '<C-e>', '<End>')
+vim.keymap.set({ 'c', 'i' }, '<C-f>', '<Right>')
+vim.keymap.set({ 'c', 'i' }, '<C-b>', '<Left>')
 vim.keymap.set('i', '<C-c>', '<ESC>')
-
--- use it later...
-vim.keymap.set('n', '<c-j>', '<Nop>')
-vim.keymap.set('i', '<c-j>', '<Nop>')
-vim.keymap.set('v', '<c-j>', '<Nop>')
-vim.keymap.set('n', '<c-k>', '<Nop>')
-vim.keymap.set('i', '<c-k>', '<Nop>')
-vim.keymap.set('v', '<c-k>', '<Nop>')
 
 -- disable select mode...
 vim.keymap.set('n', '<c-k>', '<Nop>')
@@ -58,8 +50,8 @@ vim.keymap.set('n', 'gp', '<Nop>')
 vim.keymap.set('n', 'gn', '<Nop>')
 
 -- quick fix
-vim.keymap.set('n', '<Leader>co',  '<cmd>copen<cr>', { silent = true })
-vim.keymap.set('n', '<Leader>cl',  '<cmd>cclose<cr>', { silent = true })
+vim.keymap.set('n', '<Leader>co', '<cmd>copen<cr>', { silent = true })
+vim.keymap.set('n', '<Leader>cl', '<cmd>cclose<cr>', { silent = true })
 vim.keymap.set('n', '<Leader>cc', function()
   qf_exists = false
   for _, win in pairs(vim.fn.getwininfo()) do
@@ -80,7 +72,7 @@ end
 
 -- tab jumping
 for i = 1, 9 do
-  vim.keymap.set('n', string.format('t%d',i), string.format('%dgt',i), { silent = true })
+  vim.keymap.set('n', string.format('t%d', i), string.format('%dgt', i), { silent = true })
 end
 
 -- move line
