@@ -32,12 +32,12 @@ vim.keymap.set('n', '<Leader>t', [[<cmd>new | :terminal<CR><insert>]], { silent 
 vim.keymap.set('n', '<Leader>T', [[<cmd>tabnew | :terminal<CR><insert>]], { silent = true })
 vim.keymap.set('n', '<Leader>vt', [[<cmd>vne | :terminal<CR><insert>]], { silent = true })
 
--- move in insert mode and commandline mode
+-- insert mode and commandline mode
+vim.keymap.set('i', '<C-c>', '<ESC>')
 vim.keymap.set({ 'c', 'i' }, '<C-a>', '<Home>')
 vim.keymap.set({ 'c', 'i' }, '<C-e>', '<End>')
 vim.keymap.set({ 'c', 'i' }, '<C-f>', '<Right>')
 vim.keymap.set({ 'c', 'i' }, '<C-b>', '<Left>')
-vim.keymap.set('i', '<C-c>', '<ESC>')
 
 -- disable select mode...
 vim.keymap.set('n', '<c-k>', '<Nop>')

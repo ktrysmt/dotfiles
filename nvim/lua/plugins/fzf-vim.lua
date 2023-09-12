@@ -1,6 +1,15 @@
 return {
   'junegunn/fzf.vim',
-  event = { 'VeryLazy' },
+  keys = {
+    "<Leader>x",
+    "<Leader>d",
+    "<Leader>b",
+    "<Leader>ch",
+    "<Leader>sh",
+    "<Leader>r",
+    "<Leader>w",
+    "<Leader>f",
+  },
   dependencies = {
     "junegunn/fzf",
   },
