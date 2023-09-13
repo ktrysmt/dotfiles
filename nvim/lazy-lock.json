@@ -29,6 +29,7 @@
   "nvim-echo-diagnostics": { "branch": "master", "commit": "a8f82151b1789e532253f4a6155dd2dac4653a81" },
   "nvim-lint": { "branch": "master", "commit": "73682da41b74c9c35f33b1b2dbd0cc02cc59452f" },
   "nvim-lspconfig": { "branch": "master", "commit": "d177ad277a638f262edb73c75ffe33e377b95dc5" },
+  "nvim-notify": { "branch": "master", "commit": "94859430020f5cf32a1b97ddd9e596fed9db7981" },
   "pinecone-vim": { "branch": "master", "commit": "ede1fdf787d8d310019499b3db06c65187be3d9e" },
   "sqlite.lua": { "branch": "master", "commit": "b7e28c8463254c46a8e61c52d27d6a2040492fc3" },
   "undotree": { "branch": "master", "commit": "0e11ba7325efbbb3f3bebe06213afa3e7ec75131" },

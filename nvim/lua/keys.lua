@@ -33,8 +33,6 @@ vim.keymap.set('n', '<Leader>vt', [[<cmd>vne | :terminal<CR><insert>]], { silent
 
 -- insert mode and commandline mode
 vim.keymap.set('i', '<C-c>', '<ESC>')
-vim.keymap.set('i', '<C-n>', '<Down>')
-vim.keymap.set('i', '<C-p>', '<Up>')
 vim.keymap.set({ 'c', 'i' }, '<C-a>', '<Home>')
 vim.keymap.set({ 'c', 'i' }, '<C-e>', '<End>')
 vim.keymap.set({ 'c', 'i' }, '<C-f>', '<Right>')
