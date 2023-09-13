@@ -15,6 +15,7 @@ return {
         'vim-language-server',
         'gopls',
         'marksman',
+        'typescript-language-server',
         'stylua',
         'shellcheck',
         'dockerfile-language-server',
