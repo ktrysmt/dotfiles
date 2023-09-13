@@ -14,7 +14,7 @@ return {
     event = { "VeryLazy" },
     config = function()
       require('gitsigns').setup({
-        signs = {
+        signs      = {
           add          = { text = '+' },
           change       = { text = '|' },
           delete       = { text = '_' },
@@ -23,6 +23,9 @@ return {
           untracked    = { text = '┆' },
         },
         -- sign_priority = 100
+        signcolumn = true,
+        numhl      = false,
+        linehl     = false,
       })
 
       -- highlight GitSignsAddNr guibg=#173315 guifg=#626262
@@ -31,5 +34,5 @@ return {
       highlight GitSignsAdd guifg=#528832
       ]]
     end
-  },
+  }
 }
