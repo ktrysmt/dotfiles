@@ -28,7 +28,7 @@ return {
       -- highlight GitSignsAddNr guibg=#173315 guifg=#626262
       -- set signcolumn=yes:2
       vim.cmd [[
-      highlight GitSignsAdd guifg=#528832 guibg=#071905
+      highlight GitSignsAdd guifg=#528832
       ]]
     end
   },
