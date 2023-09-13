@@ -14,6 +14,11 @@ return {
     event = { "VeryLazy" },
     config = function()
       require('gitsigns').setup()
+
+      -- highlight GitSignsAddNr guibg=#173315 guifg=#626262
+      vim.cmd [[
+      set signcolumn=yes:2
+      ]]
     end
-  }
+  },
 }

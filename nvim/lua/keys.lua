@@ -21,11 +21,10 @@ vim.keymap.set('n', 'cn', '*N"_cgn')
 vim.keymap.set('n', 'cN', '*N"_cgN')
 vim.keymap.set('n', '<C-g>', "<cmd>echo expand('%:p')<cr>")
 
--- paste
 vim.keymap.set('n', '<Leader>p', '"0p', { silent = true })
 vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })
 
--- terminal mode
+-- terminal mode...
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
 vim.keymap.set('n', '<ESC><ESC>', '<cmd>nohlsearch<CR><ESC>', { silent = true })
 vim.keymap.set('n', '<Leader>t', [[<cmd>new | :terminal<CR><insert>]], { silent = true })
@@ -34,6 +33,8 @@ vim.keymap.set('n', '<Leader>vt', [[<cmd>vne | :terminal<CR><insert>]], { silent
 
 -- insert mode and commandline mode
 vim.keymap.set('i', '<C-c>', '<ESC>')
+vim.keymap.set('i', '<C-n>', '<Down>')
+vim.keymap.set('i', '<C-p>', '<Up>')
 vim.keymap.set({ 'c', 'i' }, '<C-a>', '<Home>')
 vim.keymap.set({ 'c', 'i' }, '<C-e>', '<End>')
 vim.keymap.set({ 'c', 'i' }, '<C-f>', '<Right>')

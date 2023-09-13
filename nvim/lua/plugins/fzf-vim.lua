@@ -1,14 +1,14 @@
 return {
   'junegunn/fzf.vim',
   keys = {
-    "<Leader>x",
-    "<Leader>d",
-    "<Leader>b",
-    "<Leader>ch",
-    "<Leader>sh",
-    "<Leader>r",
-    "<Leader>w",
-    "<Leader>f",
+    { "<Leader>x",  mode = "n" },
+    { "<Leader>d",  mode = "n" },
+    { "<Leader>b",  mode = "n" },
+    { "<Leader>ch", mode = "n" },
+    { "<Leader>sh", mode = "n" },
+    { "<Leader>r",  mode = "n" },
+    { "<Leader>w",  mode = "n" },
+    { "<Leader>f",  mode = "n" },
   },
   dependencies = {
     "junegunn/fzf",
