@@ -34,7 +34,7 @@ return {
         java = formatters.lsp,
         json = formatters.lsp,
         lua = formatters.lsp,
-        markdown = formatters.lsp,
+        markdown = formatters.marksman,
         openscad = formatters.lsp,
         python = formatters.lsp,
         rust = formatters.lsp,
