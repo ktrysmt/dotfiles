@@ -37,7 +37,7 @@ bind-key a run "tmux last-pane && tmux resize-pane -Z"
 # ---------
 # general
 # ---------
-set -sg escape-time 0
+# set -sg escape-time 0
 set -g status-interval 30
 set -g base-index 1
 set -g pane-base-index 1
@@ -113,6 +113,7 @@ bind-key -T edit-mode-vi WheelDownPane send-keys -X scroll-down
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-open'
 
 set -g @resurrect-save 'S'
 set -g @resurrect-restore 'U'

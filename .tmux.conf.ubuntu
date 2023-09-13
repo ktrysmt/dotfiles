@@ -28,7 +28,7 @@ bind l select-pane -R
 # ---------
 # general
 # ---------
-set -sg escape-time 0
+# set -sg escape-time 0
 set -g status-interval 30
 set -g base-index 1
 set -g pane-base-index 1
@@ -123,6 +123,7 @@ set -g @plugin 'tmux-plugins/tmux-resurrect'
 
 set -g @resurrect-save 'S'
 set -g @resurrect-restore 'U'
+set -g @plugin 'tmux-plugins/tmux-open'
 
 # set -g @plugin 'tmux-plugins/tmux-continuum'
 # set -g @continuum-restore 'on'
