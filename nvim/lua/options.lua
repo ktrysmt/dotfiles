@@ -43,3 +43,5 @@ vim.wo.number = true
 vim.wo.signcolumn = 'yes'
 
 -- vim.o.completeopt = 'menuone,noselect,noinsert'
+
+vim.opt.fillchars:append('eob: ')
