@@ -105,10 +105,10 @@ hotkeys:
   command-selector: []
 terminal:
   searchOptions: {}
-  colorScheme:
+  colorScheme: &ref_0
     name: ayu
-    foreground: '#e6e1cf'
-    background: '#0f1419'
+    foreground: '#e9e9e9'
+    background: '#080b0e'
     cursor: '#f29718'
     colors:
       - '#000000'
@@ -127,13 +127,36 @@ terminal:
       - '#ffa3aa'
       - '#c7fffd'
       - '#ffffff'
-  customColorSchemes: []
+  customColorSchemes:
+    - name: Molokai
+      foreground: '#bbbbbb'
+      background: '#121212'
+      cursor: '#ffd3d3'
+      colors:
+        - '#121212'
+        - '#fa2573'
+        - '#98e123'
+        - '#dfd460'
+        - '#42a5f5'
+        - '#8700ff'
+        - '#80deea'
+        - '#eceff1'
+        - '#eceff1'
+        - '#f6669d'
+        - '#b1e05f'
+        - '#fff26d'
+        - '#b2ebf2'
+        - '#af87ff'
+        - '#51ceff'
+        - '#ffffff'
+    - *ref_0
   font: Cica
   fontSize: 16
   minimumContrastRatio: 5
   cursorBlink: false
   warnOnMultilinePaste: false
   hideTabIndex: true
+  altIsMeta: true
 ssh: {}
 configSync:
   parts:
@@ -146,7 +169,6 @@ appearance:
   theme: Follow the color scheme
   spaciness: 0.6
   dockScreen: 2528732444
-  flexTabs: true
 hacks: {}
 providerBlacklist: []
 commandBlacklist: []
