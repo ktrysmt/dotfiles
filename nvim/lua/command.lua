@@ -37,6 +37,11 @@ vim.api.nvim_create_autocmd({ 'TermOpen' }, {
   group = general_group,
   command = "setlocal nonumber"
 })
+vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+  pattern = "term://*",
+  group = general_group,
+  command = "startinsert"
+})
 
 local json_group = vim.api.nvim_create_augroup('json_group', { clear = true })
 vim.api.nvim_create_autocmd({ 'Filetype' }, {
