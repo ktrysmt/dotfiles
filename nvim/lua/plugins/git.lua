@@ -3,7 +3,6 @@ return {
     "akinsho/git-conflict.nvim",
     event = { "VeryLazy" },
     version = "*",
-    config = true
   },
   {
     'tpope/vim-fugitive',
@@ -27,9 +26,7 @@ return {
         numhl      = true,
         linehl     = false,
       })
-      -- highlight GitSignsAddNr guibg=#173315 guifg=#626262
-      -- highlight GitSignsAddNr guibg=#173315 guifg=#6c6c6c
-      -- highlight GitSignsAdd guifg=#528832
+
       -- set signcolumn=yes:2
       vim.cmd [[
       highlight GitSignsAddNr guibg=#173315 guifg=#6c6c6c
