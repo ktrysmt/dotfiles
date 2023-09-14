@@ -22,16 +22,19 @@ return {
           changedelete = { text = '~' },
           untracked    = { text = '┆' },
         },
-        -- sign_priority = 100
-        signcolumn = true,
-        numhl      = false,
+        -- sign_priority = 1,
+        signcolumn = false,
+        numhl      = true,
         linehl     = false,
       })
-
       -- highlight GitSignsAddNr guibg=#173315 guifg=#626262
+      -- highlight GitSignsAddNr guibg=#173315 guifg=#6c6c6c
+      -- highlight GitSignsAdd guifg=#528832
       -- set signcolumn=yes:2
       vim.cmd [[
-      highlight GitSignsAdd guifg=#528832
+      highlight GitSignsAddNr guibg=#173315 guifg=#6c6c6c
+      highlight GitSignsChangeNr guibg=#353512 guifg=#6c6c6c
+      highlight GitSignsDeleteNr guibg=#351415 guifg=#6c6c6c
       ]]
     end
   }
