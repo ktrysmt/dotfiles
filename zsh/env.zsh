@@ -6,6 +6,7 @@ export HISTSIZE=100000
 export SAVEHIST=100000
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
+# NOTE
 # go
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/go/bin:$PATH

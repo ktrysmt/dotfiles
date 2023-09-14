@@ -30,18 +30,14 @@ vim.api.nvim_create_autocmd({ 'QuickFixCmdPost' }, {
 vim.api.nvim_create_autocmd({ 'TermOpen' }, {
   pattern = "*",
   group = general_group,
-  command = "setlocal norelativenumber"
-})
-vim.api.nvim_create_autocmd({ 'TermOpen' }, {
-  pattern = "*",
-  group = general_group,
-  command = "setlocal nonumber"
+  command = "setl winhighlight=Normal:User1 | setl norelativenumber | setl nonumber"
 })
 vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   pattern = "term://*",
   group = general_group,
   command = "startinsert"
 })
+
 
 local json_group = vim.api.nvim_create_augroup('json_group', { clear = true })
 vim.api.nvim_create_autocmd({ 'Filetype' }, {
@@ -54,7 +50,7 @@ local highlight_group = vim.api.nvim_create_augroup('highlight_group', { clear =
 vim.api.nvim_create_autocmd({ 'VimEnter' }, {
   pattern = "*",
   group = highlight_group,
-  command = "highlight IdeographicSpace term=underline ctermbg=DarkGreen guibg=DarkGreen"
+  command = "hi IdeographicSpace ctermbg=DarkGreen guibg=DarkGreen | hi NormalNC guibg=#090909 | hi User1 guifg=#dddddd"
 })
 vim.api.nvim_create_autocmd({ 'VimEnter' }, {
   pattern = "*",
