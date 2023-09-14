@@ -34,7 +34,6 @@ return {
         java = formatters.lsp,
         json = formatters.lsp,
         lua = formatters.lsp,
-        markdown = formatters.marksman,
         openscad = formatters.lsp,
         python = formatters.lsp,
         rust = formatters.lsp,
@@ -52,11 +51,6 @@ return {
         typescriptreact = js_formatter(formatters),
 
         javascript = js_formatter(formatters),
-      },
-
-      fallback_formatter = {
-        formatters.remove_trailing_whitespace,
-        formatters.remove_trailing_newlines,
       },
 
       run_with_sh = false,
