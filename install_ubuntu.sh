@@ -15,7 +15,7 @@ exec $SHELL -l
 setopt interactivecomments
 
 # linuxbrew
-sudo apt-get -qq -y install build-essential curl file git wget
+sudo apt-get -qq -y install build-essential curl file git wget gcc make
 export CI=true
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
@@ -52,7 +52,6 @@ brew install \
   tree \
   watch \
   wget \
-  zsh \
   neovim
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 brew install b4b4r07/tap/gomi
@@ -62,6 +61,7 @@ $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
 
 # asdf
 asdf plugin add nodejs
+asdf plugin add python
 asdf install nodejs latest
 asdf install python latest
 asdf global nodejs latest
@@ -70,20 +70,21 @@ asdf global python latest
 # symlinks
 cd ~/
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-mkdir -p ~/.config/sheldon/
+mkdir -p ~/.config/sheldon
+ln -s ~/dotfiles/zsh/sheldon.plugins.toml ~/.config/sheldon/plugins.toml
 mkdir -p ~/.config/peco/
 mkdir -p ~/.local/bin/
+mkdir ~/.docker/
+mkdir -p ~/.config/nvim/
 mkdir -p ~/.cache/vim/
-mkdir ~/.docker
+ln -s ~/dotfiles/.vimrc ~/.config/nvim/init.vim
 ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc.ubuntu ~/.zshrc
 ln -s ~/dotfiles/.tigrc ~/.tigrc
-ln -s ~/dotfiles/.tmux.conf.ubuntu ~/.tmux.conf
+ln -s ~/dotfiles/.tmux.conf.wsl ~/.tmux.conf
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
-ln -s ~/dotfiles/zsh/sheldon.plugins.toml ~/.config/sheldon/plugins.toml
 ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
-cp ~/dotfiles/.ctags ~/.ctags
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
 
