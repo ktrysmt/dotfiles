@@ -80,9 +80,8 @@ mkdir -p ~/.cache/vim/
 ln -s ~/dotfiles/.vimrc ~/.config/nvim/init.vim
 ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
-ln -s ~/dotfiles/.zshrc.ubuntu ~/.zshrc
+ln -s ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/.tigrc ~/.tigrc
-ln -s ~/dotfiles/.tmux.conf.wsl ~/.tmux.conf
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
 ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
 cp ~/dotfiles/.gitconfig ~/.gitconfig
@@ -116,3 +115,12 @@ export GOPATH=$HOME/go:$HOME/project
 # rust
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
+
+# ==============
+# wsl or ubuntu
+# ==============
+if [[ "$(uname -r)" == *microsoft* ]]; then
+  ln -s ~/dotfiles/.tmux.conf.wsl ~/.tmux.conf
+else
+  ln -s ~/dotfiles/.tmux.conf.ubuntu ~/.tmux.conf
+fi
