@@ -14,9 +14,9 @@ return {
     'hrsh7th/cmp-nvim-lsp',
   },
   config = function()
-    vim.keymap.set({ 'i', 's' }, '<C-f>', function()
-      return vim.fn['vsnip#expandable']() == 1 and '<Plug>(vsnip-expand)'
-    end, { expr = true })
+    -- vim.keymap.set({ 'i', 's' }, '<C-e>', function()
+    --   return vim.fn['vsnip#expandable']() == 1 and '<Plug>(vsnip-expand)'
+    -- end, { expr = true })
     vim.keymap.set({ 'i', 's' }, '<C-j>', function()
       return vim.fn['vsnip#jumpable'](1) == 1 and '<Plug>(vsnip-jump-next)'
     end, { expr = true })
@@ -48,8 +48,8 @@ return {
       mapping = cmp.mapping.preset.insert({
         ['<Tab>'] = cmp.mapping.select_next_item(),
         ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<Up>'] = cmp.mapping.scroll_docs(-4),
+        ['<Down>'] = cmp.mapping.scroll_docs(4),
         ['<CR>'] = cmp.mapping.confirm {
           behavior = cmp.ConfirmBehavior.Insert,
           select = false,
