@@ -35,5 +35,12 @@ return {
       highlight GitSignsAdd guifg=#528832
       ]]
     end
+  },
+  {
+    "kdheepak/lazygit.nvim",
+    keys = {
+      { "<Leader>lg", "<cmd>LazyGit<cr>", mode = "n" },
+
+    },
   }
 }

@@ -12,6 +12,7 @@ vim.keymap.set('t', '<C-W>K', '<cmd>wincmd K<cr>')
 vim.keymap.set('t', '<C-W>J', '<cmd>wincmd J<cr>')
 vim.keymap.set('t', '<C-W>H', '<cmd>wincmd H<cr>')
 vim.keymap.set('t', '<C-W>L', '<cmd>wincmd L<cr>')
+vim.keymap.set('t', '<C-W>x', '<cmd>wincmd x<cr>')
 vim.keymap.set('n', 'j', 'gj')
 vim.keymap.set('n', 'k', 'gk')
 

@@ -34,6 +34,7 @@ return {
 
     cmp.setup({
       enabled = true,
+
       completion = {
         completeopt = 'menuone,noselect,noinsert',
       },
