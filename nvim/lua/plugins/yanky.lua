@@ -1,4 +1,4 @@
-return  {
+return {
   "gbprod/yanky.nvim",
   event = { "VeryLazy" },
   dependencies = {
@@ -22,13 +22,13 @@ return  {
 
     vim.keymap.set("n", "<leader>y", "<cmd>YankyRingHistory<cr>", { silent = true })
 
-    vim.keymap.set({"n","x"}, "y", "<Plug>(YankyYank)")
+    vim.keymap.set({ "n", "x" }, "y", "<Plug>(YankyYank)")
     vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
     vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
-    vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)")
-    vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)")
-    vim.keymap.set({"n","x"}, "gp", "<Plug>(YankyGPutAfter)")
-    vim.keymap.set({"n","x"}, "gP", "<Plug>(YankyGPutBefore)")
+    vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+    vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+    vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
+    vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
 
     require("dressing").setup({
       input = {
@@ -38,6 +38,7 @@ return  {
             ["<CR>"] = "Confirm",
           },
           i = {
+            ["<Esc>"] = "Close",
             ["<C-c>"] = "Close",
             ["<CR>"] = "Confirm",
             ["<Up>"] = "HistoryPrev",
@@ -48,13 +49,7 @@ return  {
         },
       },
       select = {
-        backend = { "fzf_lua", "builtin" },
-        fzf_lua = {
-          winopts = {
-            height = 0.5,
-            width = 0.99,
-          },
-        },
+        backend = { "builtin" },
         builtin = {
           win_options = {
             winblend = 0,
