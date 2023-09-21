@@ -1,0 +1,13 @@
+return {
+  'kana/vim-altercmd',
+  event = { "VeryLazy" },
+  config = function()
+    vim.cmd [[
+    call altercmd#load()
+    AlterCommand rg Rg
+    AlterCommand lz Lazy
+    AlterCommand qf Qfreplace
+    AlterCommand mason Mason
+    ]]
+  end
+}
