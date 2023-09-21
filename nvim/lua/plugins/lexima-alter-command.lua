@@ -7,9 +7,9 @@ return {
   config = function()
     vim.cmd [[
     LeximaAlterCommand rg Rg
-    LeximaAlterCommand l\%[azy] Lazy
-    LeximaAlterCommand q\%[freplace] Qfreplace
-    LeximaAlterCommand m\%[ason] Mason
+    LeximaAlterCommand lz Lazy
+    LeximaAlterCommand qf\%[replace] Qfreplace
+    LeximaAlterCommand ma\%[son] Mason
     ]]
   end
 }
