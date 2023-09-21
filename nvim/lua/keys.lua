@@ -38,6 +38,8 @@ vim.keymap.set({ 'c', 'i' }, '<C-a>', '<Home>')
 vim.keymap.set({ 'c', 'i' }, '<C-e>', '<End>')
 vim.keymap.set({ 'c', 'i' }, '<C-f>', '<Right>')
 vim.keymap.set({ 'c', 'i' }, '<C-b>', '<Left>')
+vim.keymap.set('c', '<C-n>', '<Down>')
+vim.keymap.set('c', '<C-p>', '<Up>')
 
 -- disable select mode...
 vim.keymap.set('n', '<c-k>', '<Nop>')
