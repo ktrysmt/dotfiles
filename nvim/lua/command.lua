@@ -38,7 +38,6 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   command = "startinsert"
 })
 
-
 local json_group = vim.api.nvim_create_augroup('json_group', { clear = true })
 vim.api.nvim_create_autocmd({ 'Filetype' }, {
   pattern = "json",
@@ -50,7 +49,7 @@ local highlight_group = vim.api.nvim_create_augroup('highlight_group', { clear =
 vim.api.nvim_create_autocmd({ 'VimEnter' }, {
   pattern = "*",
   group = highlight_group,
-  command = "hi IdeographicSpace ctermbg=DarkGreen guibg=DarkGreen | hi NormalNC guibg=#090909 | hi User1 guifg=#dddddd"
+  command = "hi IdeographicSpace ctermbg=DarkGreen guibg=DarkGreen | hi NormalNC guibg=#101010 | hi User1 guifg=#dddddd"
 })
 vim.api.nvim_create_autocmd({ 'VimEnter' }, {
   pattern = "*",

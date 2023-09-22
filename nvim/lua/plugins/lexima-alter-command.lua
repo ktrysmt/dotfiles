@@ -10,6 +10,14 @@ return {
     LeximaAlterCommand lz Lazy
     LeximaAlterCommand qf\%[replace] Qfreplace
     LeximaAlterCommand ma\%[son] Mason
+
+    LeximaAlterCommand g Git
+    LeximaAlterCommand g\%[push] "Git<space>push"
+    LeximaAlterCommand g\%[blame] "Git<space>blame"
+
+    LeximaAlterCommand gv DiffviewOpen
+    LeximaAlterCommand gvc DiffviewClose
+    LeximaAlterCommand gh DiffviewFileHistory
     ]]
   end
 }
