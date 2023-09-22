@@ -8,7 +8,7 @@ return {
     vim.keymap.set("n", "<leader>un", "<cmd>:UndotreeToggle<cr>:UndotreeFocus<cr>", opt)
 
     vim.o.undofile                    = true
-    vim.o.undodir                     = "~/.cache/nvim/undofile"
+    vim.o.undodir                     = vim.fn.expand("~/.cache/nvim/undofile")
     vim.g.undotree_DiffpanelHeight    = 30
     vim.g.undotree_SplitWidth         = 50
     vim.g.undotree_SetFocusWhenToggle = 1

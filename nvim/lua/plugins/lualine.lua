@@ -4,7 +4,9 @@ return {
   config = function()
     require('lualine').setup {
       options = {
-        theme = 'jellybeans',
+        theme = 'material',
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
         globalstatus = true,
       },
       sections = {
@@ -17,7 +19,10 @@ return {
             symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' },
           },
         },
-        lualine_c = { { 'filename', path = 1 } }
+        lualine_c = {
+          { 'filename',    path = 1 },
+          { 'searchcount', maxcount = 999, timeout = 500, color = { fg = '#efcf00' } },
+        }
       }
     }
   end

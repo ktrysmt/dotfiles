@@ -20,7 +20,7 @@ return {
       },
     })
 
-    vim.keymap.set("n", "<leader>hy", "<cmd>YankyRingHistory<cr>", { silent = true })
+    vim.keymap.set("n", "<leader>y", "<cmd>YankyRingHistory<cr>", { silent = true })
 
     vim.keymap.set({ "n", "x" }, "y", "<Plug>(YankyYank)")
     vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")

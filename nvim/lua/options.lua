@@ -2,6 +2,7 @@ vim.o.encoding = 'utf-8'
 vim.o.fileencodings = 'utf-8'
 vim.o.fileformats = 'unix,dos,mac'
 
+vim.o.ambiwith = "double"
 vim.o.backspace = 'start,eol,indent'
 vim.o.clipboard = 'unnamed'
 vim.o.cursorline = true
@@ -42,6 +43,4 @@ vim.o.wrap = true
 vim.wo.number = true
 vim.wo.signcolumn = 'yes'
 
--- vim.o.completeopt = 'menuone,noselect,noinsert'
-
-vim.opt.fillchars:append('eob: ')
+vim.opt.fillchars:append('eob: ') -- suppress ~ at EndOfBuffer.
