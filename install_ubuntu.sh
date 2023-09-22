@@ -121,6 +121,8 @@ source $HOME/.cargo/env
 # ==============
 if [[ "$(uname -r)" == *microsoft* ]]; then
   ln -s ~/dotfiles/.tmux.conf.wsl ~/.tmux.conf
+  echo "alias pbcopy='clip.exe'" >> ~/.zshrc.private
+  echo "alias pbpaste='powershell.exe Get-Clipboard'" >> ~/.zshrc.private
 else
   ln -s ~/dotfiles/.tmux.conf.ubuntu ~/.tmux.conf
 fi
