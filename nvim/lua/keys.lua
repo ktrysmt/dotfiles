@@ -10,9 +10,9 @@ vim.keymap.set('n', '<Leader>T', [[<cmd>tabnew | :terminal<CR><insert>]], { sile
 vim.keymap.set('n', '<Leader>vt', [[<cmd>vne | :terminal<CR><insert>]], { silent = true })
 
 -- search and replace
-vim.keymap.set('n', '#', '#N') -- search and highlight but stay cursor
+vim.keymap.set('n', '#', '#N')  -- search and highlight but stay cursor
 vim.keymap.set('n', '/', '/\\v')
-vim.keymap.set('n', 'x', '"_x')
+vim.keymap.set('n', 'x', '"_x') -- only n, not v
 vim.keymap.set('n', 's', '"_s')
 vim.keymap.set('n', 'cn', '*N"_cgn')
 vim.keymap.set('n', 'cN', '*N"_cgN')
@@ -92,6 +92,10 @@ for i = 1, 9 do
 end
 
 -- move line
+-- vim.keymap.set("n", "<A-j>", "<cmd>move .+1<CR>")
+-- vim.keymap.set("x", "<A-j>", "<cmd>move '>+1<CR>gv=gv")
+-- vim.keymap.set("n", "<A-k>", "<cmd>move .-2<CR>")
+-- vim.keymap.set("x", "<A-k>", "<cmd>move '<-2<CR>gv=gv")
 vim.keymap.set("n", "<A-j>", '"zdd"zp')
 vim.keymap.set("n", "<A-k>", '"zdd<Up>"zP')
 vim.keymap.set("v", "<A-j>", '"zx"zp`[V`]')
