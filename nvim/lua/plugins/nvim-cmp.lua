@@ -53,6 +53,25 @@ return {
           behavior = cmp.ConfirmBehavior.Insert,
           select = false,
         },
+        ["<C-n>"] = cmp.mapping(function()
+          if cmp.visible() then
+            cmp.select_next_item()
+            -- elseif vim.fn["vsnip#available"](1) == 1 then
+            --   feedkey("<Plug>(vsnip-expand-or-jump)", "")
+          else
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Down>', true, true, true), 'i', true)
+          end
+        end, { "i" }),
+
+        ["<C-p>"] = cmp.mapping(function()
+          if cmp.visible() then
+            cmp.select_prev_item()
+            -- elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+            --   feedkey("<Plug>(vsnip-jump-prev)", "")
+          else
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Up>', true, true, true), 'i', true)
+          end
+        end, { "i" }),
       }),
 
       window = {

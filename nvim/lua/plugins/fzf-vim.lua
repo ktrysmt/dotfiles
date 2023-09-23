@@ -1,16 +1,17 @@
 return {
   'junegunn/fzf.vim',
-  event = { "VimEnter" },
-  -- keys = {
-  --   { "<Leader>x",  mode = "n" },
-  --   { "<Leader>d",  mode = "n" },
-  --   { "<Leader>b",  mode = "n" },
-  --   { "<Leader>ch", mode = "n" },
-  --   { "<Leader>sh", mode = "n" },
-  --   { "<Leader>r",  mode = "n" },
-  --   { "<Leader>w",  mode = "n" },
-  --   { "<Leader>f",  mode = "n" },
-  -- },
+  -- event = { "BufEnter" },
+  keys = {
+    { "<Leader>x",  mode = "n" },
+    { "<Leader>d",  mode = "n" },
+    { "<Leader>b",  mode = "n" },
+    { "<Leader>hc", mode = "n" },
+    { "<Leader>hs", mode = "n" },
+    { "<Leader>r",  mode = "n" },
+    { "<Leader>w",  mode = "n" },
+    { "<Leader>f",  mode = "n" },
+    { "<Leader>m",  mode = { "n", "x", "o" } },
+  },
   dependencies = {
     "junegunn/fzf",
   },
@@ -21,10 +22,13 @@ return {
     nnoremap <expr> <Leader>b (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Buffers\<cr>"
     nnoremap <expr> <Leader>hc (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":History:\<cr>"
     nnoremap <expr> <Leader>hs (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":History/\<cr>"
-    nnoremap <expr> <Leader>hl (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Helptags\<cr>"
     nnoremap <expr> <Leader>r (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Ripgrep\<cr>"
     nnoremap <expr> <Leader>w (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Windows\<cr>"
     nnoremap <expr> <Leader>f (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+
+    nmap <leader>m <plug>(fzf-maps-n)
+    xmap <leader>m <plug>(fzf-maps-x)
+    omap <leader>m <plug>(fzf-maps-o)
 
     let g:fzf_layout = { 'down': '~40%' }
 
@@ -46,9 +50,6 @@ return {
     \   <bang>0
     \ )
 
-    nmap <leader>m <plug>(fzf-maps-n)
-    xmap <leader>m <plug>(fzf-maps-x)
-    omap <leader>m <plug>(fzf-maps-o)
     ]]
   end
 

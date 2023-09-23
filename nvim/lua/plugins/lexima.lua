@@ -8,10 +8,12 @@ return {
   },
   config = function()
     vim.cmd [[
+    inoremap <C-f> <C-r>=lexima#insmode#leave(1, '<LT>C-G>U<LT>RIGHT>')<CR>
+
     function! s:lexima_alter_command_add_rule(original, alternative) abort
       let input_space = '<C-w>' . a:alternative . '<Space>'
       let input_cr    = '<C-w>' . a:alternative . '<CR>'
-      let input_f   = '<C-w>' . a:alternative . '<Right>'
+      let input_right = '<C-w>' . a:alternative . '<Right>'
 
       let rule = {
       \ 'mode': ':',
@@ -20,7 +22,10 @@ return {
 
       call lexima#add_rule(extend(rule, { 'char': '<Space>', 'input': input_space }))
       call lexima#add_rule(extend(rule, { 'char': '<CR>',    'input': input_cr    }))
-      call lexima#add_rule(extend(rule, { 'char': '<C-f>',    'input': input_f  }))
+      call lexima#add_rule(extend(rule, { 'char': '<Right>', 'input': input_right }))
+
+
+      "  call lexima#add_rule({'char': '<C-f>', 'at': '\%#.*', 'leave': 1})
     endfunction
 
     if !exists('g:loaded_lexima_alter_command')

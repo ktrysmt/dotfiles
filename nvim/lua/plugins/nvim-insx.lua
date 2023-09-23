@@ -24,9 +24,5 @@ return {
       open_pat = esc('('),
       close_pat = esc(')')
     }))
-    require('insx').add('<BS>', require('insx.recipe.pair_spacing').decrease({
-      open_pat = esc('('),
-      close_pat = esc(')')
-    }))
   end
 }

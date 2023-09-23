@@ -1,7 +1,36 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- move
+-- normal mode
+vim.keymap.set('n', 'j', 'gj')
+vim.keymap.set('n', 'k', 'gk')
+vim.keymap.set('n', '<Esc><Esc>', '<cmd>nohlsearch<CR><Esc><C-l>', { silent = true })
+vim.keymap.set('n', '<Leader>t', [[<cmd>new | :terminal<CR><insert>]], { silent = true })
+vim.keymap.set('n', '<Leader>T', [[<cmd>tabnew | :terminal<CR><insert>]], { silent = true })
+vim.keymap.set('n', '<Leader>vt', [[<cmd>vne | :terminal<CR><insert>]], { silent = true })
+
+-- search and replace
+vim.keymap.set('n', '#', '#N') -- search and highlight but stay cursor
+vim.keymap.set('n', '/', '/\\v')
+vim.keymap.set('n', 'x', '"_x')
+vim.keymap.set('n', 's', '"_s')
+vim.keymap.set('n', 'cn', '*N"_cgn')
+vim.keymap.set('n', 'cN', '*N"_cgN')
+vim.keymap.set('n', '<C-g>', "<cmd>echo expand('%:p')<cr>")
+vim.cmd [[
+function! s:search() abort
+  let tmp = @"
+  normal! gv""y
+  let [text, @"] = [escape(@", '\/'), tmp]
+  return '\V' .. substitute(text, "\n", '\\n', 'g')
+endfunction
+xnoremap <expr> cn "\<Esc>/\<C-r>=<SID>search()\<CR>\<CR>N\"_cgn"
+]]
+vim.keymap.set('n', '<Leader>p', '"0p', { silent = true })
+vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })
+
+-- terminal mode
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 vim.keymap.set('t', '<C-W>w', '<cmd>wincmd w<cr>')
 vim.keymap.set('t', '<C-W>k', '<cmd>wincmd k<cr>')
 vim.keymap.set('t', '<C-W>j', '<cmd>wincmd j<cr>')
@@ -13,35 +42,17 @@ vim.keymap.set('t', '<C-W>J', '<cmd>wincmd J<cr>')
 vim.keymap.set('t', '<C-W>H', '<cmd>wincmd H<cr>')
 vim.keymap.set('t', '<C-W>L', '<cmd>wincmd L<cr>')
 vim.keymap.set('t', '<C-W>x', '<cmd>wincmd x<cr>')
-vim.keymap.set('n', 'j', 'gj')
-vim.keymap.set('n', 'k', 'gk')
-
--- search and replace
-vim.keymap.set('n', '/', '/\\v')
-vim.keymap.set('n', 'cn', '*N"_cgn')
-vim.keymap.set('n', 'cN', '*N"_cgN')
-vim.keymap.set('n', '<C-g>', "<cmd>echo expand('%:p')<cr>")
-
-vim.keymap.set('n', '<Leader>p', '"0p', { silent = true })
-vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })
-
--- terminal mode...
-vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
-vim.keymap.set('n', '<ESC><ESC>', '<cmd>nohlsearch<CR><ESC>', { silent = true })
-vim.keymap.set('n', '<Leader>t', [[<cmd>new | :terminal<CR><insert>]], { silent = true })
-vim.keymap.set('n', '<Leader>T', [[<cmd>tabnew | :terminal<CR><insert>]], { silent = true })
-vim.keymap.set('n', '<Leader>vt', [[<cmd>vne | :terminal<CR><insert>]], { silent = true })
 
 -- insert mode and commandline mode
-vim.keymap.set('i', '<C-c>', '<ESC>')
-vim.keymap.set('c', '<C-a>', '<Home>')
-vim.keymap.set({ 'c', 'i' }, '<C-e>', '<End>')
-vim.keymap.set({ 'c', 'i' }, '<C-f>', '<Right>')
+vim.keymap.set('i', '<C-c>', '<Esc><Right>')
+vim.keymap.set('c', '<C-e>', '<End>')
+vim.keymap.set('i', '<C-e>', '<C-g>U<End>')
+vim.keymap.set('c', '<C-f>', '<Right>', { remap = true }) -- use remapped right key by lexima
+vim.keymap.set('i', '<C-f>', '<C-g>U<Right>')
 vim.keymap.set({ 'c', 'i' }, '<C-b>', '<Left>')
 vim.keymap.set({ 'c', 'i' }, '<C-t>', '<C-o>w')
 vim.keymap.set({ 'c', 'i' }, '<C-d>', '<C-o>b')
-vim.keymap.set({ 'c' }, '<C-n>', '<Down>')
-vim.keymap.set({ 'c' }, '<C-p>', '<Up>')
+vim.keymap.set('c', '<C-a>', '<Home>')
 local last_press_time = nil
 local threshold = 300
 vim.keymap.set("i", "<C-a>", function()
@@ -54,11 +65,7 @@ vim.keymap.set("i", "<C-a>", function()
   last_press_time = current_time
 end)
 
--- disable for lsp diagnostic
-vim.keymap.set('n', 'gp', '<Nop>')
-vim.keymap.set('n', 'gn', '<Nop>')
-
--- quick fix
+-- quickfix
 vim.keymap.set('n', '<Leader>co', '<cmd>copen<cr>', { silent = true })
 vim.keymap.set('n', '<Leader>cl', '<cmd>cclose<cr>', { silent = true })
 vim.keymap.set('n', '<Leader>cc', function()
@@ -79,13 +86,13 @@ vim.keymap.set('n', '<Leader>cc', function()
 end
 , { silent = true })
 
--- tab jumping
+-- tab jump
 for i = 1, 9 do
   vim.keymap.set('n', string.format('t%d', i), string.format('%dgt', i), { silent = true })
 end
 
 -- move line
-vim.keymap.set("n", "<A-j>", "<cmd>move .+1<CR>")
-vim.keymap.set("x", "<A-j>", "<cmd>move '>+1<CR>gv=gv")
-vim.keymap.set("n", "<A-k>", "<cmd>move .-2<CR>")
-vim.keymap.set("x", "<A-k>", "<cmd>move '<-2<CR>gv=gv")
+vim.keymap.set("n", "<A-j>", '"zdd"zp')
+vim.keymap.set("n", "<A-k>", '"zdd<Up>"zP')
+vim.keymap.set("v", "<A-j>", '"zx"zp`[V`]')
+vim.keymap.set("v", "<A-k>", '"zx<Up>"zP`[V`]')
