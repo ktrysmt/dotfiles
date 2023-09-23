@@ -100,6 +100,23 @@ def configure(keymap):
         keymap_tabby["LCtrl-Shift-K"] = ["LCtrl-Shift-K"]
         keymap_tabby["LCtrl-Shift-J"] = ["LCtrl-Shift-J"]
         keymap_tabby["LCtrl-Shift-Semicolon"] = ["LCtrl-Shift-Semicolon"]
+    # wezterm
+    if 1:
+        keymap_tabby = keymap.defineWindowKeymap(
+            exe_name="wezterm-gui.exe", class_name="org.wezfurlong.wezterm")
+        keymap_tabby["LCtrl-H"] = ["LCtrl-H"]
+        keymap_tabby["LCtrl-Colon"] = ["LCtrl-Colon"]
+        keymap_tabby["LCtrl-L"] = ["LCtrl-L"]
+        keymap_tabby["LCtrl-K"] = ["LCtrl-K"]
+        keymap_tabby["LCtrl-J"] = ["LCtrl-J"]
+        keymap_tabby["LCtrl-Semicolon"] = ["LCtrl-Semicolon"]
+
+        keymap_tabby["LCtrl-Shift-H"] = ["LCtrl-Shift-H"]
+        keymap_tabby["LCtrl-Shift-Colon"] = ["LCtrl-Shift-Colon"]
+        keymap_tabby["LCtrl-Shift-L"] = ["LCtrl-Shift-L"]
+        keymap_tabby["LCtrl-Shift-K"] = ["LCtrl-Shift-K"]
+        keymap_tabby["LCtrl-Shift-J"] = ["LCtrl-Shift-J"]
+        keymap_tabby["LCtrl-Shift-Semicolon"] = ["LCtrl-Shift-Semicolon"]
 
     # Global app hot key
     # https://zenn.dev/awtnb/books/adf6c5162a9f08/viewer/1728cd
@@ -162,9 +179,12 @@ def configure(keymap):
                 r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
             ),
             "LAlt-G": (
-                "Tabby.exe",
-                "Chrome_WidgetWin_1",
-                r"C:\Program Files B\tabby\Tabby.exe"
+                "wezterm-gui.exe",
+                "org.wezfurlong.wezterm",
+                r"C:\WINDOWS\system32\cmd.exe"
+                # "Tabby.exe",
+                # "Chrome_WidgetWin_1",
+                # r"C:\Program Files B\tabby\Tabby.exe"
             ),
             "LAlt-O": (
                 "Obsidian.exe",

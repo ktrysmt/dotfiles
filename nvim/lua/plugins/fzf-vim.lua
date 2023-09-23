@@ -17,6 +17,18 @@ return {
   },
   config = function()
     vim.cmd [[
+
+    "autocmd FileType fzf inoremap <buffer> <C-k> <Up>
+    "autocmd FileType fzf tnoremap <buffer> <C-k> <Up>
+    "autocmd FileType fzf inoremap <buffer> <C-j> <Down>
+    "autocmd FileType fzf tnoremap <buffer> <C-j> <Down>
+
+    "autocmd FileType fzf tnoremap <buffer> <C-j> <C-n>
+    "autocmd FileType fzf tnoremap <buffer> <CTRL-j> <Down>
+    "autocmd FileType fzf tnoremap <buffer> <CTRL-k> <Up>
+    "autocmd FileType fzf inoremap <buffer> <CTRL-j> <Down>
+    "autocmd FileType fzf inoremap <buffer> <CTRL-k> <Up>
+
     nnoremap <expr> <Leader>x (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Commands\<cr>"
     nnoremap <expr> <Leader>d (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":GFiles?\<cr>"
     nnoremap <expr> <Leader>b (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Buffers\<cr>"
