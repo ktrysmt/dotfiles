@@ -34,12 +34,25 @@ vim.keymap.set('n', '<Leader>vt', [[<cmd>vne | :terminal<CR><insert>]], { silent
 
 -- insert mode and commandline mode
 vim.keymap.set('i', '<C-c>', '<ESC>')
-vim.keymap.set({ 'c', 'i' }, '<C-a>', '<Home>')
+vim.keymap.set('c', '<C-a>', '<Home>')
 vim.keymap.set({ 'c', 'i' }, '<C-e>', '<End>')
 vim.keymap.set({ 'c', 'i' }, '<C-f>', '<Right>')
 vim.keymap.set({ 'c', 'i' }, '<C-b>', '<Left>')
+vim.keymap.set({ 'c', 'i' }, '<C-t>', '<C-o>w')
+vim.keymap.set({ 'c', 'i' }, '<C-d>', '<C-o>b')
 vim.keymap.set('c', '<C-n>', '<Down>')
 vim.keymap.set('c', '<C-p>', '<Up>')
+local last_press_time = nil
+local threshold = 300
+vim.keymap.set("i", "<C-a>", function()
+  local current_time = vim.fn.reltimefloat(vim.fn.reltime()) * 1000
+  if last_press_time and (current_time - last_press_time < threshold) then
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<home>', true, true, true), 'n', true)
+  else
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-o>_', true, true, true), 'n', true)
+  end
+  last_press_time = current_time
+end)
 
 -- disable select mode...
 vim.keymap.set('n', '<c-k>', '<Nop>')

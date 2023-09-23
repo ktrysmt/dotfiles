@@ -9,7 +9,7 @@ return {
         show_diagnostic_number = true,
         show_diagnostic_source = true,
       })
-      vim.o.updatetime = 300
+      vim.opt.updatetime = 300
 
       local echo_diagnostics_group = vim.api.nvim_create_augroup('echo_diagnostics_group', { clear = true })
       vim.api.nvim_create_autocmd("CursorHold", {
