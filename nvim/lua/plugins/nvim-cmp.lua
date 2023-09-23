@@ -13,6 +13,7 @@ return {
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'hrsh7th/cmp-calc',
+    "ray-x/cmp-treesitter",
     {
       'tzachar/cmp-tabnine',
       build = './install.sh',
@@ -104,6 +105,7 @@ return {
         -- { name = 'tmux' },
         { name = 'nvim_lsp_signature_help' },
         { name = 'calc' },
+        { name = 'treesitter' },
         { name = 'cmp_tabnine' },
       }),
 
@@ -122,10 +124,16 @@ return {
     cmp.setup.cmdline(':', {
       mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
-        { name = 'path' }
-      }, {
-        { name = 'cmdline' }
-      })
+          { name = 'path' }
+        },
+        {
+          {
+            name = 'cmdline',
+            option = {
+              ignore_cmds = { 'Man', '!' }
+            }
+          }
+        })
     })
   end
 }
