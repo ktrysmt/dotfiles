@@ -36,4 +36,8 @@ return {
       ]]
     end
   },
+  {
+    'rhysd/conflict-marker.vim',
+    event = { "VeryLazy" },
+  }
 }
