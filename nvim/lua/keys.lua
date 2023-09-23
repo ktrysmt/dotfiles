@@ -40,8 +40,8 @@ vim.keymap.set({ 'c', 'i' }, '<C-f>', '<Right>')
 vim.keymap.set({ 'c', 'i' }, '<C-b>', '<Left>')
 vim.keymap.set({ 'c', 'i' }, '<C-t>', '<C-o>w')
 vim.keymap.set({ 'c', 'i' }, '<C-d>', '<C-o>b')
-vim.keymap.set('c', '<C-n>', '<Down>')
-vim.keymap.set('c', '<C-p>', '<Up>')
+vim.keymap.set({ 'c' }, '<C-n>', '<Down>')
+vim.keymap.set({ 'c' }, '<C-p>', '<Up>')
 local last_press_time = nil
 local threshold = 300
 vim.keymap.set("i", "<C-a>", function()
@@ -53,12 +53,6 @@ vim.keymap.set("i", "<C-a>", function()
   end
   last_press_time = current_time
 end)
-
--- disable select mode...
-vim.keymap.set('n', '<c-k>', '<Nop>')
-vim.keymap.set('n', '<c-k>', '<Nop>')
-vim.keymap.set('n', '<c-k>', '<Nop>')
-vim.keymap.set('n', '<c-k>', '<Nop>')
 
 -- disable for lsp diagnostic
 vim.keymap.set('n', 'gp', '<Nop>')
@@ -91,7 +85,7 @@ for i = 1, 9 do
 end
 
 -- move line
-vim.keymap.set("n", "<C-j>", "<cmd>move .+1<CR>")
-vim.keymap.set("x", "<C-j>", "<cmd>move '>+1<CR>gv=gv")
-vim.keymap.set("n", "<C-k>", "<cmd>move .-2<CR>")
-vim.keymap.set("x", "<C-k>", "<cmd>move '<-2<CR>gv=gv")
+vim.keymap.set("n", "<A-j>", "<cmd>move .+1<CR>")
+vim.keymap.set("x", "<A-j>", "<cmd>move '>+1<CR>gv=gv")
+vim.keymap.set("n", "<A-k>", "<cmd>move .-2<CR>")
+vim.keymap.set("x", "<A-k>", "<cmd>move '<-2<CR>gv=gv")
