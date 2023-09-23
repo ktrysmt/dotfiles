@@ -18,11 +18,5 @@ return {
         insx.with.nomatch([[\a\%#]])
       })
     )
-
-    local esc = require('insx').helper.regex.esc
-    require('insx').add('<Space>', require('insx.recipe.pair_spacing').increase({
-      open_pat = esc('('),
-      close_pat = esc(')')
-    }))
   end
 }

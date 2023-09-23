@@ -9,7 +9,7 @@ return {
     "hrsh7th/vim-vsnip",
     "hrsh7th/vim-vsnip-integ",
     "rafamadriz/friendly-snippets",
-    'andersevenrud/cmp-tmux',
+    -- 'andersevenrud/cmp-tmux',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'hrsh7th/cmp-calc',
@@ -40,8 +40,9 @@ return {
     cmp.setup({
       enabled = true,
 
-      completion = {
-        completeopt = 'menuone,noselect,noinsert',
+      preselect = require('cmp').PreselectMode.None,
+      complete = {
+        completeopt = 'menuone,noinsert,noselect'
       },
 
       snippet = {
@@ -84,6 +85,9 @@ return {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
       },
+      view = {
+        entries = { name = 'custom', selection_order = 'near_cursor' }
+      },
 
       sources = cmp.config.sources({
         { name = 'nvim_lsp' },
@@ -97,7 +101,7 @@ return {
           }
         },
         { name = 'path' },
-        { name = 'tmux' },
+        -- { name = 'tmux' },
         { name = 'nvim_lsp_signature_help' },
         { name = 'calc' },
         { name = 'cmp_tabnine' },

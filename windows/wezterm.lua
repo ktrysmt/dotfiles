@@ -26,9 +26,8 @@ return {
   underline_position = "-2px",
   scrollback_lines = 35000,
   keys = {
-    -- paste from the clipboard
-    { key = 'V', mods = 'CTRL', action = act.PasteFrom 'Clipboard' },
-    -- paste from the primary selection
-    { key = 'V', mods = 'CTRL', action = act.PasteFrom 'PrimarySelection' },
+    { key = 'v', mods = 'ALT',          action = act.PasteFrom 'Clipboard' },
+    { key = 'v', mods = 'ALT',          action = act.PasteFrom 'PrimarySelection' },
+    { key = 'f', mods = 'CTRL | SHIFT', action = act.ToggleFullScreen },
   }
 }

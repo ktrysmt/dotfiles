@@ -42,8 +42,6 @@ vim.keymap.set('t', '<C-W>J', '<cmd>wincmd J<cr>')
 vim.keymap.set('t', '<C-W>H', '<cmd>wincmd H<cr>')
 vim.keymap.set('t', '<C-W>L', '<cmd>wincmd L<cr>')
 vim.keymap.set('t', '<C-W>x', '<cmd>wincmd x<cr>')
-vim.keymap.set('t', '<C-k>', '<Up>', { buffer = true })
-vim.keymap.set('t', '<C-j>', '<Down>', { buffer = true })
 
 -- insert mode and commandline mode
 vim.keymap.set('i', '<C-c>', '<Esc>')

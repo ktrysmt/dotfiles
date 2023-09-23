@@ -5,6 +5,12 @@ set -e
 
 read -p "password? > " PASSWORD
 
+# /etc/security/limits.conf
+# -----------------------
+# * soft nofile 65536
+# * hard nofile 65536
+ulimit -n 65536
+
 # base
 sudo apt-get update -qq -y
 sudo apt-get install -qq -y zsh
@@ -123,6 +129,8 @@ if [[ "$(uname -r)" == *microsoft* ]]; then
   ln -s ~/dotfiles/.tmux.conf.wsl ~/.tmux.conf
   echo "alias pbcopy='clip.exe'" >> ~/.zshrc.private
   echo "alias pbpaste='powershell.exe Get-Clipboard'" >> ~/.zshrc.private
+  echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.zshrc.private
+  echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.zshrc.private
 else
   ln -s ~/dotfiles/.tmux.conf.ubuntu ~/.tmux.conf
 fi
