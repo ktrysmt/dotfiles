@@ -35,9 +35,6 @@ github = "ohmyzsh/ohmyzsh"
 dir = "lib"
 use = ["{completion,key-bindings,directories}.zsh"]
 
-[plugins.asdf]
-github = "asdf-vm/asdf"
-
 [plugins.zsh-better-npm-completion]
 github = "lukechilds/zsh-better-npm-completion"
 

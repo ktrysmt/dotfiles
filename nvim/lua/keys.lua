@@ -44,7 +44,7 @@ vim.keymap.set('t', '<C-W>L', '<cmd>wincmd L<cr>')
 vim.keymap.set('t', '<C-W>x', '<cmd>wincmd x<cr>')
 
 -- insert mode and commandline mode
-vim.keymap.set('i', '<C-c>', '<Esc><Right>')
+vim.keymap.set('i', '<C-c>', '<Esc>')
 vim.keymap.set('c', '<C-e>', '<End>')
 vim.keymap.set('i', '<C-e>', '<C-g>U<End>')
 vim.keymap.set('c', '<C-f>', '<Right>', { remap = true }) -- use remapped right key by lexima

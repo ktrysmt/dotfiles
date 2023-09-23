@@ -6,7 +6,7 @@ set -e
 read -p "password? > " PASSWORD
 
 # base
-sudo apt-get install -qq -y update
+sudo apt-get update -qq -y
 sudo apt-get install -qq -y zsh
 sudo bash -c "echo $(which zsh) >> /etc/shells"
 echo $PASSWORD | chsh -s $(which zsh)
@@ -29,7 +29,7 @@ brew install \
   coreutils \
   curl \
   diff-so-fancy \
-  exa \
+  eza \
   fd \
   fzf \
   fzy \

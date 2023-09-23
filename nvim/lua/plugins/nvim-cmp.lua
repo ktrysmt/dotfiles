@@ -11,6 +11,12 @@ return {
     "rafamadriz/friendly-snippets",
     'andersevenrud/cmp-tmux',
     'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-nvim-lsp-signature-help',
+    'hrsh7th/cmp-calc',
+    {
+      'tzachar/cmp-tabnine',
+      build = './install.sh',
+    },
   },
   config = function()
     -- vim.keymap.set({ 'i', 's' }, '<C-e>', function()
@@ -92,6 +98,9 @@ return {
         },
         { name = 'path' },
         { name = 'tmux' },
+        { name = 'nvim_lsp_signature_help' },
+        { name = 'calc' },
+        { name = 'cmp_tabnine' },
       }),
 
       experimental = {

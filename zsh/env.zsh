@@ -32,3 +32,4 @@ export PATH="$PATH:${KREW_ROOT:-$HOME/.krew}/bin"
 
 # bat
 # export BAT_THEME="gruvbox-dark"
+

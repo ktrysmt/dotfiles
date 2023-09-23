@@ -25,7 +25,7 @@ brew install \
   tig \
   fzy \
   peco \
-  exa \
+  eza \
   python3 \
   jq \
   git-secrets \
