@@ -1,6 +1,6 @@
 return {
   'mfussenegger/nvim-lint',
-  event = { 'BufWritePost' },
+  event = { 'BufWritePre' },
   config = function()
     local lint_group = vim.api.nvim_create_augroup('lint_group', { clear = true })
     vim.api.nvim_create_autocmd({ "FileType" }, {
@@ -9,8 +9,8 @@ return {
       callback = function()
         if vim.fn.executable('node_modules/.bin/eslint') > 0 then
           require('lint').linters_by_ft = {
-            javascript = {'eslint'},
-            typescript = {'eslint'},
+            javascript = { 'eslint' },
+            typescript = { 'eslint' },
           }
           require("lint").try_lint()
         end
