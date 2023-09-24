@@ -76,7 +76,7 @@ return {
         keymaps = {
           ['.'] = 'textsubjects-smart',
           -- [';'] = 'textsubjects-container-outer',
-          -- ['i;'] = 'textsubjects-container-inner',
+          -- ['.'] = 'textsubjects-container-inner',
         },
       },
     }
