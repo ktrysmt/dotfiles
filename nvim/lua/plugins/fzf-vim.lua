@@ -1,17 +1,20 @@
 return {
   'junegunn/fzf.vim',
-  event = { "BufEnter" },
-  -- keys = {
-  --   { "<Leader>x",  mode = "n" },
-  --   { "<Leader>d",  mode = "n" },
-  --   { "<Leader>b",  mode = "n" },
-  --   { "<Leader>hc", mode = "n" },
-  --   { "<Leader>hs", mode = "n" },
-  --   { "<Leader>r",  mode = "n" },
-  --   { "<Leader>w",  mode = "n" },
-  --   { "<Leader>f",  mode = "n" },
-  --   { "<Leader>m",  mode = { "n", "x", "o" } },
-  -- },
+  event = {
+    -- "BufEnter",
+    "VeryLazy",
+  },
+  keys = {
+    { "<Leader>x",  mode = "n" },
+    { "<Leader>d",  mode = "n" },
+    { "<Leader>b",  mode = "n" },
+    { "<Leader>hc", mode = "n" },
+    { "<Leader>hs", mode = "n" },
+    { "<Leader>r",  mode = "n" },
+    { "<Leader>w",  mode = "n" },
+    { "<Leader>f",  mode = "n" },
+    { "<Leader>m",  mode = { "n", "x", "o" } },
+  },
   dependencies = {
     "junegunn/fzf",
   },
