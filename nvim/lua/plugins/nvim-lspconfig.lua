@@ -25,6 +25,7 @@ return {
     dependencies = {
       {
         "williamboman/mason-lspconfig.nvim",
+        "weilbith/nvim-lsp-smag",
       },
     },
     config = function()

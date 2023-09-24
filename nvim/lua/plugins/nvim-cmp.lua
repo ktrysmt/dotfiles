@@ -20,9 +20,6 @@ return {
     },
   },
   config = function()
-    -- vim.keymap.set({ 'i', 's' }, '<C-e>', function()
-    --   return vim.fn['vsnip#expandable']() == 1 and '<Plug>(vsnip-expand)'
-    -- end, { expr = true })
     vim.keymap.set({ 'i', 's' }, '<C-j>', function()
       return vim.fn['vsnip#jumpable'](1) == 1 and '<Plug>(vsnip-jump-next)'
     end, { expr = true })
@@ -41,10 +38,11 @@ return {
     cmp.setup({
       enabled = true,
 
-      preselect = require('cmp').PreselectMode.None,
-      complete = {
-        completeopt = 'menuone,noinsert,noselect'
+      completion = {
+        completeopt = 'menu,menuone,noinsert'
       },
+
+      preselect = require('cmp').PreselectMode.None,
 
       snippet = {
         expand = function(args)
@@ -53,29 +51,24 @@ return {
       },
 
       mapping = cmp.mapping.preset.insert({
-        ['<Tab>'] = cmp.mapping.select_next_item(),
-        ['<S-Tab>'] = cmp.mapping.select_prev_item(),
         ['<Up>'] = cmp.mapping.scroll_docs(-4),
         ['<Down>'] = cmp.mapping.scroll_docs(4),
         ['<CR>'] = cmp.mapping.confirm {
           behavior = cmp.ConfirmBehavior.Insert,
-          select = false,
+          select = true,
         },
+        ['<Tab>'] = cmp.mapping.select_next_item(),
+        ['<S-Tab>'] = cmp.mapping.select_prev_item(),
         ["<C-n>"] = cmp.mapping(function()
           if cmp.visible() then
             cmp.select_next_item()
-            -- elseif vim.fn["vsnip#available"](1) == 1 then
-            --   feedkey("<Plug>(vsnip-expand-or-jump)", "")
           else
             vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Down>', true, true, true), 'i', true)
           end
         end, { "i" }),
-
         ["<C-p>"] = cmp.mapping(function()
           if cmp.visible() then
             cmp.select_prev_item()
-            -- elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-            --   feedkey("<Plug>(vsnip-jump-prev)", "")
           else
             vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Up>', true, true, true), 'i', true)
           end
@@ -85,9 +78,6 @@ return {
       window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
-      },
-      view = {
-        entries = { name = 'custom', selection_order = 'near_cursor' }
       },
 
       sources = cmp.config.sources({
