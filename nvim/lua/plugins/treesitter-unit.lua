@@ -1,5 +1,15 @@
 return {
   {
+    'machakann/vim-sandwich',
+    keys = {
+      { "sa", mode = { "n", "x" } },
+      { "sr", mode = { "n", "x" } },
+      { "sd", mode = { "n", "x" } },
+      { "ib", mode = { "n", "x" } }, -- auto select and be able to dot repeat
+      { "is", mode = { "n", "x" } }, -- vis", vis<, ... etc
+    }
+  },
+  {
     'kana/vim-niceblock',
     keys = {
       { "ip", mode = { "x", "o" } },
