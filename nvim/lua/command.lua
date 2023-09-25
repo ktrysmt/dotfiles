@@ -37,6 +37,11 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   group = general_group,
   command = "startinsert"
 })
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = { "*.yaml.j2", "*.yml.j2" },
+  group = general_group,
+  command = "setfiletype yaml.ansible"
+})
 
 local json_group = vim.api.nvim_create_augroup('json_group', { clear = true })
 vim.api.nvim_create_autocmd({ 'Filetype' }, {

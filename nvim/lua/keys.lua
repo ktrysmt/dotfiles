@@ -91,6 +91,11 @@ for i = 1, 9 do
   vim.keymap.set('n', string.format('t%d', i), string.format('%dgt', i), { silent = true })
 end
 
+-- window jump
+for i = 1, 9 do
+  vim.keymap.set('n', string.format('<C-w>%d', i), string.format('<C-w>%dw', i), { silent = true })
+end
+
 -- move line
 -- vim.keymap.set("n", "<A-j>", "<cmd>move .+1<CR>")
 -- vim.keymap.set("x", "<A-j>", "<cmd>move '>+1<CR>gv=gv")
