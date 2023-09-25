@@ -39,8 +39,11 @@ return {
     config = function()
       local leap = require('leap')
       leap.opts.case_sensitive = false
-      leap.opts.labels = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
-      leap.safe_labels = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
+      local l = { "1", "2", "3", "4", "5", "6", "7", "8", "9",
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+        "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" }
+      leap.opts.labels = l
+      leap.opts.safe_labels = l
       -- leap.opts.substitute_chars = { ['\r'] = '¬' }
       leap.opts.special_keys.prev_target = '<space>'
       vim.keymap.set({ 'n', 'x', 'o' }, 'f', '<Plug>(leap-forward)')
@@ -55,13 +58,16 @@ return {
   {
     'mfussenegger/nvim-treehopper',
     keys = {
-      { "m", mode = { "x", "o" } },
+      { "m", mode = { "x", "o" } }, -- input "vm\d"
     },
     dependencies = {
       "phaazon/hop.nvim"
     },
     config = function()
-      require("tsht").config.hint_keys = { "h", "j", "f", "d", "n", "v", "s", "l", "a" }
+      local l = { "1", "2", "3", "4", "5", "6", "7", "8", "9",
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+        "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" }
+      require("tsht").config.hint_keys = l
       vim.keymap.set("o", "m", ":<C-U>lua require('tsht').nodes()<CR>", { remap = true, silent = true })
       vim.keymap.set("x", "m", ":lua require('tsht').nodes()<CR>", { silent = true })
     end

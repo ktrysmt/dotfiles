@@ -1,5 +1,6 @@
 return {
   'nvim-treesitter/nvim-treesitter',
+  version = "*", -- fix to use stable
   event = "VeryLazy",
   build = ':TSUpdate',
   dependencies = {
@@ -33,16 +34,7 @@ return {
       auto_install = true,
       highlight = { enable = false },
       indent = { enable = false },
-      -- incemental_selection = {
-      --   enable = true,
-      --   keymaps = {
-      --     init_selection = '<c-space>',
-      --     node_incremental = '<c-space>',
-      --     scope_incremental = '<c-s>',
-      --     node_decremental = '<M-space>',
-      --   },
-      -- },
-      incremental_selection = {
+      incremental_selection = { -- or, you should use "vib" and dot repeat...
         enable = true,
         keymaps = {
           init_selection = "<Tab>",
