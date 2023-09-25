@@ -9,7 +9,7 @@ return {
     "hrsh7th/vim-vsnip",
     "hrsh7th/vim-vsnip-integ",
     "rafamadriz/friendly-snippets",
-    'andersevenrud/cmp-tmux',
+    -- 'andersevenrud/cmp-tmux',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'hrsh7th/cmp-calc',
@@ -92,7 +92,7 @@ return {
           }
         },
         { name = 'path' },
-        { name = 'tmux' },
+        -- { name = 'tmux' },
         { name = 'nvim_lsp_signature_help' },
         { name = 'calc' },
         { name = 'treesitter' },
