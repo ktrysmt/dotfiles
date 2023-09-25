@@ -32,7 +32,7 @@ return {
       },
       auto_install = true,
       highlight = { enable = false },
-      indent = { enable = true },
+      indent = { enable = false },
       -- incemental_selection = {
       --   enable = true,
       --   keymaps = {
