@@ -6,6 +6,7 @@ return {
     "CmdlineEnter",
     "CmdwinEnter"
   },
+
   config = function()
     vim.cmd [[
     inoremap <C-f> <C-r>=lexima#insmode#leave(1, '<LT>C-G>U<LT>RIGHT>')<CR>

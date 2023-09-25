@@ -29,9 +29,10 @@ return {
     nnoremap <expr> <Leader>w (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Windows\<cr>"
     nnoremap <expr> <Leader>f (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 
-    nmap <leader>m <plug>(fzf-maps-n)
-    xmap <leader>m <plug>(fzf-maps-x)
-    omap <leader>m <plug>(fzf-maps-o)
+    nmap <leader>mn <plug>(fzf-maps-n)
+    nmap <leader>mx <plug>(fzf-maps-x)
+    nmap <leader>mo <plug>(fzf-maps-o)
+    nmap <leader>mi <plug>(fzf-maps-i)
 
     let g:fzf_layout = { 'down': '~40%' }
 
