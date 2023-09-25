@@ -33,6 +33,8 @@ return {
       let g:loaded_lexima_alter_command = 1
     endif
 
+    LeximaAlterCommand sortu Sort<space>u
+
     LeximaAlterCommand rg Rg
     LeximaAlterCommand lz Lazy
     LeximaAlterCommand qf\%[replace] Qfreplace
