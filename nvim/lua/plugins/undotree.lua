@@ -1,6 +1,19 @@
 return {
   'mbbill/undotree',
   event = { 'VeryLazy' },
+  dependencies = {
+    {
+      'stevearc/stickybuf.nvim',
+      config = function()
+        local stickybuf_group = vim.api.nvim_create_augroup('stickybuf_group', { clear = true })
+        vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+          pattern = "undotree",
+          group = stickybuf_group,
+          command = "PinFiletype",
+        })
+      end
+    }
+  },
   config = function()
     local opt = { silent = true }
     vim.keymap.set("n", "<leader>un", "<cmd>:UndotreeToggle<cr>:UndotreeFocus<cr>", opt)

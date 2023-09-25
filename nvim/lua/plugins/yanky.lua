@@ -22,13 +22,13 @@ return {
 
     vim.keymap.set("n", "<leader>y", "<cmd>YankyRingHistory<cr>", { silent = true })
 
-    vim.keymap.set({ "n", "x" }, "y", "<Plug>(YankyYank)")
+    vim.keymap.set({ "n", "v" }, "y", "<Plug>(YankyYank)")
     vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
     vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
-    vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
-    vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-    vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
-    vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
+    vim.keymap.set({ "n", "v" }, "p", "<Plug>(YankyPutAfter)")
+    vim.keymap.set({ "n", "v" }, "P", "<Plug>(YankyPutBefore)")
+    vim.keymap.set({ "n", "v" }, "gp", "<Plug>(YankyGPutAfter)")
+    vim.keymap.set({ "n", "v" }, "gP", "<Plug>(YankyGPutBefore)")
 
     require("dressing").setup({
       input = {
