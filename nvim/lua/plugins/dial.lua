@@ -3,7 +3,7 @@ return {
   keys = {
     { "<C-a>",  mode = "n" },
     { "<C-x>",  mode = "n" },
-    { "g<C-a>", mode = "n" },
+    { "g<C-a>", mode = "n" }, -- auto increment with dot repeat or v/v-block
     { "g<C-x>", mode = "n" },
   },
   config = function()
