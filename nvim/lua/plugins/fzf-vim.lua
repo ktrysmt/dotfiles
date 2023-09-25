@@ -14,6 +14,11 @@ return {
     { "<Leader>w",  mode = "n" },
     { "<Leader>f",  mode = "n" },
     { "<Leader>m",  mode = { "n", "x", "o" } },
+    { "<c-i>fm",    mode = "i" },
+    { "<c-i>fw",    mode = "i" },
+    { "<c-i>fp",    mode = "i" },
+    { "<c-i>ff",    mode = "i" },
+    { "<c-i>fl",    mode = "i" },
   },
   dependencies = {
     "junegunn/fzf",
@@ -29,10 +34,16 @@ return {
     nnoremap <expr> <Leader>w (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Windows\<cr>"
     nnoremap <expr> <Leader>f (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 
-    nmap <leader>mn <plug>(fzf-maps-n)
-    nmap <leader>mx <plug>(fzf-maps-x)
-    nmap <leader>mo <plug>(fzf-maps-o)
-    nmap <leader>mi <plug>(fzf-maps-i)
+    nmap <leader>m <plug>(fzf-maps-n)
+    xmap <leader>m <plug>(fzf-maps-x)
+    omap <leader>m <plug>(fzf-maps-o)
+
+    imap <c-i>fm <plug>(fzf-maps-i)
+
+    imap <c-i>fw <plug>(fzf-complete-word)
+    imap <c-i>fp <plug>(fzf-complete-path)
+    imap <c-i>ff <plug>(fzf-complete-file)
+    imap <c-i>fl <plug>(fzf-complete-line)
 
     let g:fzf_layout = { 'down': '~40%' }
 
