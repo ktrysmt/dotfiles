@@ -41,11 +41,11 @@ github = "lukechilds/zsh-better-npm-completion"
 remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
 
 [plugins.dotfiles-sync]
-local = "~/dotfiles/zsh/sync"
+local = "~/dotfiles/zsh"
 use = ["sync.zsh"]
 apply = ["source"]
 
 [plugins.dotfiles-defers]
-local = "~/dotfiles/zsh/defer"
-use = ["{*}.zsh"]
+local = "~/dotfiles/zsh"
+use = ["{!sync,*}.zsh"]
 
