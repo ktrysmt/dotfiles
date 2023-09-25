@@ -39,6 +39,8 @@ return {
     config = function()
       local leap = require('leap')
       leap.opts.case_sensitive = false
+      leap.opts.labels = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
+      leap.safe_labels = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
       -- leap.opts.substitute_chars = { ['\r'] = '¬' }
       leap.opts.special_keys.prev_target = '<space>'
       vim.keymap.set({ 'n', 'x', 'o' }, 'f', '<Plug>(leap-forward)')

@@ -1,7 +1,4 @@
-export PATH=/opt/homebrew/bin:$PATH
-
-# eval "$(sheldon source)"
-
+# cache
 cache_dir=${XDG_CACHE_HOME:-$HOME/.cache}
 sheldon_cache="$cache_dir/sheldon.zsh"
 sheldon_toml="$HOME/.config/sheldon/plugins.toml"
@@ -12,4 +9,3 @@ fi
 source "$sheldon_cache"
 unset cache_dir sheldon_cache sheldon_toml
 
-#. "/home/ubuntu/.wasmedge/env"

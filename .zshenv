@@ -4,6 +4,7 @@ export TERM="screen-256color"
 export GOROOT=""
 export GO111MODULE="auto"
 export BAT_THEME=gruvbox-dark
+export PATH=/opt/homebrew/bin:$PATH
 
 # debug
 # zmodload zsh/zprof && zprof

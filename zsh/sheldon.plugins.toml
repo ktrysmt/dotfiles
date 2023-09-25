@@ -11,7 +11,6 @@
 # See the documentation for more https://github.com/rossmacarthur/sheldon#readme
 
 shell = "zsh"
-
 apply = ["defer"]
 
 [plugins.zsh-defer]
@@ -41,12 +40,12 @@ github = "lukechilds/zsh-better-npm-completion"
 [plugins.aws_zsh_completer]
 remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
 
-[plugins.dotfiles-defers]
-local = "~/dotfiles/zsh"
-use = ["{!sync,*}.zsh"]
-
 [plugins.dotfiles-sync]
-local = "~/dotfiles/zsh"
+local = "~/dotfiles/zsh/sync"
 use = ["sync.zsh"]
 apply = ["source"]
+
+[plugins.dotfiles-defers]
+local = "~/dotfiles/zsh/defer"
+use = ["{*}.zsh"]
 
