@@ -35,13 +35,7 @@ return {
       highlight = { enable = false },
       indent = { enable = false },
       incremental_selection = { -- or, you should use "vib" and dot repeat...
-        enable = true,
-        keymaps = {
-          init_selection = "<Tab>",
-          node_incremental = "<Tab>",
-          scope_incremental = "<M-Tab>",
-          node_decremental = "<S-Tab>",
-        },
+        enable = false,
       },
       textobjects = {
         select = {
