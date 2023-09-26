@@ -70,5 +70,6 @@
   "vim-vsnip": { "branch": "master", "commit": "be277461265f1e5c7db470aa479f30956597ea9e" },
   "vim-vsnip-integ": { "branch": "master", "commit": "1914e72cf3de70df7f5dde476cd299aba2440aef" },
   "vinarise.vim": { "branch": "master", "commit": "84dd647932fbd029310cca31f417c42f56d60547" },
+  "winresizer": { "branch": "master", "commit": "9bd559a03ccec98a458e60c705547119eb5350f3" },
   "yanky.nvim": { "branch": "main", "commit": "51dfc7721cfa4bb5b1baf5f365b8a39394d89eb2" }
 }
