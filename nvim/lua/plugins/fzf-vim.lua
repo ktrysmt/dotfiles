@@ -35,15 +35,9 @@ return {
     nnoremap <expr> <Leader>f (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 
     nmap <leader>m <plug>(fzf-maps-n)
+    nmap <leader>mi <plug>(fzf-maps-i)
     xmap <leader>m <plug>(fzf-maps-x)
     omap <leader>m <plug>(fzf-maps-o)
-
-    imap <c-i>fm <plug>(fzf-maps-i)
-
-    imap <c-i>fw <plug>(fzf-complete-word)
-    imap <c-i>fp <plug>(fzf-complete-path)
-    imap <c-i>ff <plug>(fzf-complete-file)
-    imap <c-i>fl <plug>(fzf-complete-line)
 
     let g:fzf_layout = { 'down': '~40%' }
 

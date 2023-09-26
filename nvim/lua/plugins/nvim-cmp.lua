@@ -57,6 +57,8 @@ return {
           behavior = cmp.ConfirmBehavior.Insert,
           select = true,
         },
+        ['<Tab>'] = cmp.mapping.select_next_item(),
+        ['<S-Tab>'] = cmp.mapping.select_prev_item(),
         ["<C-n>"] = cmp.mapping(function()
           if cmp.visible() then
             cmp.select_next_item()
