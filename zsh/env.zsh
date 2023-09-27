@@ -1,5 +1,5 @@
 # zsh
-export EDITOR='vim'
+export EDITOR='nvim'
 export HIST_STAMPS="yyyy/mm/dd"
 export HISTFILE=${HOME}/.zsh_history
 export HISTSIZE=100000
