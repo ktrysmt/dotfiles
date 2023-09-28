@@ -97,16 +97,6 @@ for i = 1, 9 do
 end
 
 -- resize window
-for i, o in pairs({ h = ">", l = "<", k = "+", j = "-" }) do
-  vim.keymap.set("n", string.format('<C-w><C-w>%s', i), string.format('<C-w>24%s', o), { silent = true })
+for i, o in pairs({ j = "<", k = ">" }) do
+  vim.keymap.set("n", string.format('<C-w><C-%s>', i), string.format('<C-w>24%s', o), { silent = true })
 end
-
--- move line
--- vim.keymap.set("n", "<A-j>", "<cmd>move .+1<CR>")
--- vim.keymap.set("x", "<A-j>", "<cmd>move '>+1<CR>gv=gv")
--- vim.keymap.set("n", "<A-k>", "<cmd>move .-2<CR>")
--- vim.keymap.set("x", "<A-k>", "<cmd>move '<-2<CR>gv=gv")
-vim.keymap.set("n", "<C-j>", '"zdd"zp')
-vim.keymap.set("n", "<C-k>", '"zdd<Up>"zP')
-vim.keymap.set("v", "<C-j>", '"zx"zp`[V`]')
-vim.keymap.set("v", "<C-k>", '"zx<Up>"zP`[V`]')

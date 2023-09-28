@@ -1,6 +1,10 @@
 return {
   'hrsh7th/nvim-cmp',
-  event = "InsertEnter",
+  event = {
+    "InsertEnter",
+    "CmdlineEnter",
+    "CmdwinEnter",
+  },
   dependencies = {
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-cmdline",
@@ -53,6 +57,7 @@ return {
       mapping = cmp.mapping.preset.insert({
         ['<Up>'] = cmp.mapping.scroll_docs(-4),
         ['<Down>'] = cmp.mapping.scroll_docs(4),
+        ['<C-f>'] = cmp.mapping(cmp.mapping.confirm(), { 'c' }),
         ['<CR>'] = cmp.mapping.confirm {
           behavior = cmp.ConfirmBehavior.Insert,
           select = true,
@@ -112,7 +117,9 @@ return {
     })
 
     cmp.setup.cmdline(':', {
-      mapping = cmp.mapping.preset.cmdline(),
+      mapping = cmp.mapping.preset.cmdline({
+        ['<C-Space>'] = cmp.mapping.confirm({ select = true })
+      }),
       sources = cmp.config.sources({
           { name = 'path' }
         },
