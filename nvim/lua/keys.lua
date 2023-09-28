@@ -96,6 +96,11 @@ for i = 1, 9 do
   vim.keymap.set('n', string.format('<C-w>%d', i), string.format('<C-w>%dw', i), { silent = true })
 end
 
+-- resize window
+for i, o in pairs({ h = ">", l = "<", k = "+", j = "-" }) do
+  vim.keymap.set("n", string.format('<C-w><C-w>%s', i), string.format('<C-w>24%s', o), { silent = true })
+end
+
 -- move line
 -- vim.keymap.set("n", "<A-j>", "<cmd>move .+1<CR>")
 -- vim.keymap.set("x", "<A-j>", "<cmd>move '>+1<CR>gv=gv")
