@@ -53,11 +53,11 @@ return {
     \ )
 
     command! -bang -nargs=? GFiles
-    \ call fzf#vim#gitfiles(
-    \   <q-args>,
-    \   {'options': ['--layout=reverse', '--info=inline', '--ansi', '--preview', 'echo {} | cut -f3 -d" " | xargs git --no-pager diff | BAT_THEME=Dracula bat --color=always --style=plain']},
-    \   <bang>0
-    \ )
+      \ call fzf#vim#gitfiles(
+      \   <q-args>,
+      \   {'options': ['--layout=reverse', '--info=inline', '--ansi', '--preview', 'echo {} | cut -f3 -d" " | xargs git --no-pager diff | BAT_THEME=Dracula bat --color=always --style=plain']},
+      \   <bang>0
+      \ )
 
     ]]
   end
