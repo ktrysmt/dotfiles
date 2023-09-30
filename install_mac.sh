@@ -127,10 +127,10 @@ source $HOME/.cargo/env
 # brew cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 brew tap homebrew/cask
-brew install --cask appcleaner kindle iterm2 rectangle alt-tab clipy visual-studio-code mos macgesture flux
+brew install --cask appcleaner kindle iterm2 rectangle alt-tab clipy visual-studio-code mos macgesture flux wezterm
 brew install --cask karabiner-elements
 brew install --cask wordservice
-brew install --cask itsycal raycast michaelvillar-timer
+brew install --cask itsycal raycast michaelvillar-timer tailscale
 brew install --cask virtualbox vagrant
 mkdir -p ~/.config/karabiner/assets/complex_modifications
 ln -sf ~/dotfiles/mac/karabiner.json ~/.config/karabiner/karabiner.json
