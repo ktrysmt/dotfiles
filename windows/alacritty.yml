@@ -1,0 +1,24 @@
+window:
+  # デカめがいいので
+  dimensions:
+    columns: 220
+    lines: 75
+  # macは角丸ウインドウなので余白をとったほうが良い
+  padding:
+    x: 3
+    y: 3
+    
+scrolling:
+  # consoleのlogを10000行まで保持
+  history: 10000
+  # スクロール量は3行
+  multiplier: 3
+
+font:
+  normal:
+    family: 'Cica'
+    style: Regular
+  size: 12.0
+  offset:
+    y: 1
+
