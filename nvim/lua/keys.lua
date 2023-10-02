@@ -100,3 +100,9 @@ end
 for i, o in pairs({ j = "<", k = ">" }) do
   vim.keymap.set("n", string.format('<C-w><C-%s>', i), string.format('<C-w>24%s', o), { silent = true })
 end
+
+-- move
+vim.keymap.set("n", "<C-j>", '"zdd"zp')
+vim.keymap.set("n", "<C-k>", '"zdd<Up>"zP')
+vim.keymap.set("v", "<C-j>", '"zx"zp`[V`]')
+vim.keymap.set("v", "<C-k>", '"zx<Up>"zP`[V`]')
