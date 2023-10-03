@@ -118,7 +118,27 @@ return {
 
     cmp.setup.cmdline(':', {
       mapping = cmp.mapping.preset.cmdline({
-        ['<C-Space>'] = cmp.mapping.confirm({ select = true })
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          else
+            fallback()
+          end
+        end, { "c" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          else
+            fallback()
+          end
+        end, { "c" }),
+        ["<C-n>"] = cmp.mapping(function(fallback)
+          fallback()
+        end, { "c" }),
+        ["<C-p>"] = cmp.mapping(function(fallback)
+          fallback()
+        end, { "c" }),
       }),
       sources = cmp.config.sources({
           { name = 'path' }
