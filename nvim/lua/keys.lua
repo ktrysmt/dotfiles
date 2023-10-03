@@ -11,7 +11,7 @@ vim.keymap.set('n', '<Leader>vt', [[<cmd>vne | :terminal<CR><insert>]], { silent
 
 -- search and replace
 -- vim.keymap.set('n', '#', '#N')  -- search and highlight but stay cursor
-vim.keymap.set('n', '/', '/\\v')
+-- vim.keymap.set('n', '/', '/\\v')
 vim.keymap.set('n', 'x', '"_x') -- only n, not v
 vim.keymap.set('n', 's', '"_s')
 vim.keymap.set('n', 'cn', '*N"_cgn')

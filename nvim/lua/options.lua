@@ -18,7 +18,6 @@ vim.opt.lazyredraw = true
 vim.opt.list = true
 vim.opt.matchtime = 1
 vim.opt.number = true
-vim.opt.number = true
 vim.opt.ruler = true
 vim.opt.secure = true
 vim.opt.sh = 'zsh'
@@ -29,7 +28,6 @@ vim.opt.showmatch = true
 vim.opt.showmode = false
 vim.opt.showtabline = 1
 vim.opt.signcolumn = 'yes'
-vim.opt.smartcase = true
 vim.opt.smartindent = true
 vim.opt.softtabstop = 2
 vim.opt.splitbelow = true
@@ -39,11 +37,17 @@ vim.opt.termguicolors = true
 vim.opt.updatetime = 300
 vim.opt.virtualedit = 'all'
 vim.opt.wildmode = 'longest:full,full'
-vim.opt.wrap = true
 vim.opt.winblend = 15
+vim.opt.wrap = true
+
+-- search
+vim.opt.magic = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
 -- fold
 vim.opt.foldopen = "all"
 vim.opt.foldclose = "all"
 
-vim.opt.fillchars:append('eob: ') -- suppress ~ at EndOfBuffer.
+-- hide EndOfBuffer
+vim.opt.fillchars:append('eob: ')
