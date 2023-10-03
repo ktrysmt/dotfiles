@@ -5,7 +5,9 @@ return {
     { family = "Cica" },
   }),
   font_size = 12,
-  color_scheme = 'GruvboxDark',
+  --color_scheme = 'Ayu Mirage',
+  --color_scheme = 'GruvboxDarkHard',
+  color_scheme = 'Gruvbox dark, pale (base16)',
   hide_tab_bar_if_only_one_tab = true,
   colors = {
     foreground = 'white',
