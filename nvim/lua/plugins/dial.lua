@@ -45,6 +45,16 @@ return {
           cyclic = true,
           preserve_case = true,
         },
+        augend.case.new {
+          types = {
+            "camelCase",
+            "snake_case",
+            "PascalCase",
+            "kebab-case",
+            "SCREAMING_SNAKE_CASE",
+          },
+          cyclic = true,
+        },
       },
     }
   end
