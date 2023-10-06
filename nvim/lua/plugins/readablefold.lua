@@ -1,4 +1,4 @@
 return {
   'lambdalisue/readablefold.vim',
-  event = { 'VeryLazy' }
+  event = { 'CmdlineEnter', 'CmdwinEnter' }
 }
