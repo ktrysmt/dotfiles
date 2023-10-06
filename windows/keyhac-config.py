@@ -100,7 +100,6 @@ def configure(keymap):
         keymap_tabby["LCtrl-Shift-K"] = ["LCtrl-Shift-K"]
         keymap_tabby["LCtrl-Shift-J"] = ["LCtrl-Shift-J"]
         keymap_tabby["LCtrl-Shift-Semicolon"] = ["LCtrl-Shift-Semicolon"]
-    # wezterm
     if 1:
         keymap_tabby = keymap.defineWindowKeymap(
             exe_name="wezterm-gui.exe", class_name="org.wezfurlong.wezterm")
@@ -182,9 +181,6 @@ def configure(keymap):
                 "wezterm-gui.exe",
                 "org.wezfurlong.wezterm",
                 r"C:\WINDOWS\system32\cmd.exe"
-                # "Tabby.exe",
-                # "Chrome_WidgetWin_1",
-                # r"C:\Program Files B\tabby\Tabby.exe"
             ),
             "LAlt-O": (
                 "Obsidian.exe",
