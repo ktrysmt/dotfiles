@@ -1,7 +1,6 @@
 {
   "CamelCaseMotion": { "branch": "master", "commit": "de439d7c06cffd0839a29045a103fe4b44b15cdc" },
   "Comment.nvim": { "branch": "master", "commit": "0236521ea582747b58869cb72f70ccfa967d2e89" },
-  "Recover.vim": { "branch": "master", "commit": "e61319bce3cd1004e5b695933296d8f267dd65a3" },
   "aerial.nvim": { "branch": "master", "commit": "551a2b679f265917990207e6d8de28018d55f437" },
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
   "cmp-calc": { "branch": "main", "commit": "ce91d14d2e7a8b3f6ad86d85e34d41c1ae6268d9" },
@@ -24,7 +23,7 @@
   "guess-indent.nvim": { "branch": "main", "commit": "b8ae749fce17aa4c267eec80a6984130b94f80b2" },
   "history-ignore.nvim": { "branch": "main", "commit": "fa873a546e739361c1b9dd6019e7504eb57d61f3" },
   "hop.nvim": { "branch": "master", "commit": "1a1eceafe54b5081eae4cb91c723abd1d450f34b" },
-  "lazy.nvim": { "branch": "main", "commit": "2b2adb9d4d6ccd469b1e82416c58ea74fe5a0e1b" },
+  "lazy.nvim": { "branch": "main", "commit": "25f6009087cc2bb85aedf4425c23f35c03e60b02" },
   "leap.nvim": { "branch": "main", "commit": "5efe985cf68fac3b6a6dfe7a75fbfaca8db2af9c" },
   "lexima.vim": { "branch": "master", "commit": "b1e1b1bde07c1efc97288c98c5912eaa644ee6e1" },
   "linediff.vim": { "branch": "main", "commit": "245d16328c47a132574e0fa4298d24a0f78b20b0" },
