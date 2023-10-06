@@ -1,7 +1,12 @@
 return {
   'mrjones2014/smart-splits.nvim',
   version = "*",
-  event = { "VeryLazy" },
+  keys = {
+    { '<A-h>', mode = "n" },
+    { '<A-j>', mode = "n" },
+    { '<A-k>', mode = "n" },
+    { '<A-l>', mode = "n" },
+  },
   config = function()
     require('smart-splits').setup({
       -- Ignored filetypes (only while resizing)
