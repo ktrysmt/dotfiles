@@ -1,6 +1,6 @@
 return {
   "elentok/format-on-save.nvim",
-  event = { "VeryLazy" },
+  event = { "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
   config = function()
     local format_on_save = require("format-on-save")
     local formatters = require("format-on-save.formatters")

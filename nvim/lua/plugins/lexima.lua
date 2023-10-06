@@ -1,12 +1,6 @@
 return {
   "cohama/lexima.vim",
-  event = {
-    -- "BufEnter",
-    "InsertEnter",
-    "CmdlineEnter",
-    "CmdwinEnter"
-  },
-
+  event = { "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
   config = function()
     vim.cmd [[
     inoremap <C-f> <C-r>=lexima#insmode#leave(1, '<LT>C-G>U<LT>RIGHT>')<CR>

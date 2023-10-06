@@ -1,9 +1,5 @@
 return {
   'junegunn/fzf.vim',
-  event = {
-    -- "BufEnter",
-    "VeryLazy",
-  },
   keys = {
     { "<Leader>x",  mode = "n" },
     { "<Leader>d",  mode = "n" },

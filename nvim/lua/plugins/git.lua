@@ -3,10 +3,13 @@ return {
     "akinsho/git-conflict.nvim",
     event = { "VeryLazy" },
     version = "*",
+    config = function()
+      require('git-conflict').setup()
+    end
   },
   {
     'tpope/vim-fugitive',
-    event = { "VeryLazy" },
+    event = { "CmdlineEnter", "CmdwinEnter" },
   },
   {
     'lewis6991/gitsigns.nvim',
@@ -36,8 +39,4 @@ return {
       ]]
     end
   },
-  {
-    'rhysd/conflict-marker.vim',
-    event = { "VeryLazy" },
-  }
 }
