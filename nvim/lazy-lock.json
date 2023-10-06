@@ -64,7 +64,7 @@
   "vim-easymotion": { "branch": "master", "commit": "b3cfab2a6302b3b39f53d9fd2cd997e1127d7878" },
   "vim-fugitive": { "branch": "master", "commit": "99db68d9b3304580bd383da7aaee05c7a954a344" },
   "vim-goaddtags": { "branch": "master", "commit": "18cfa47cbcd9a8da9d022f0cd2f9f4075a1a7ae0" },
-  "vim-illuminate": { "branch": "master", "commit": "1b5d70332a51a1de05f281069851865a2bb1e6d7" },
+  "vim-illuminate": { "branch": "master", "commit": "3bd2ab64b5d63b29e05691e624927e5ebbf0fb86" },
   "vim-niceblock": { "branch": "master", "commit": "9302f527eefc0fde8df983cbb9710ad52c4213b5" },
   "vim-qfreplace": { "branch": "master", "commit": "db1c4b0161931c9a63942f4f562a0d0f4271ac14" },
   "vim-sandwich": { "branch": "master", "commit": "c5a2cc438ce6ea2005c556dc833732aa53cae21a" },
