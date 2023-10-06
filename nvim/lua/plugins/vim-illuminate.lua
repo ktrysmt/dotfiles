@@ -3,9 +3,9 @@ return {
   event = { "VeryLazy" },
   config = function()
     require('illuminate').configure({
-    providers = {
+      providers = {
         'regex',
-    },
-  })
+      },
+    })
   end
 }

@@ -1,4 +1,5 @@
 require('options')
-require('keys')
 require('lazynvim')
-require('command')
+require('keys')
+require('au')
+-- require('command')

@@ -19,7 +19,7 @@ return {
   },
   config = function()
     local opt = { silent = true }
-    vim.keymap.set("n", "<leader>un", "<cmd>:UndotreeToggle<cr>:UndotreeFocus<cr>", opt)
+    vim.keymap.set("n", "<leader>un", "<cmd>:UndotreeToggle<cr>", opt)
 
     vim.cmd [[
       set undodir=$HOME/.cache/nvim/undofile

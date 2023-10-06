@@ -1,6 +1,3 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
 -- normal mode
 vim.keymap.set('n', 'j', 'gj')
 vim.keymap.set('n', 'k', 'gk')
@@ -17,15 +14,6 @@ vim.keymap.set('n', 's', '"_s')
 vim.keymap.set('n', 'cn', '*N"_cgn')
 vim.keymap.set('n', 'cN', '*N"_cgN')
 vim.keymap.set('n', '<C-g>', "<cmd>echo expand('%:p')<cr>")
-vim.cmd [[
-function! s:search() abort
-  let tmp = @"
-  normal! gv""y
-  let [text, @"] = [escape(@", '\/'), tmp]
-  return '\V' .. substitute(text, "\n", '\\n', 'g')
-endfunction
-xnoremap <expr> cn "\<Esc>/\<C-r>=<SID>search()\<CR>\<CR>N\"_cgn"
-]]
 vim.keymap.set('n', '<Leader>p', '"0p', { silent = true })
 vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })
 

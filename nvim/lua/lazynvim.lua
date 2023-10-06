@@ -19,6 +19,11 @@ local opts = {
     cache = {
       enabled = true,
     },
+    reset_packpath = true,
+    rtp = {
+      reset = true,
+      paths = {},
+    },
   },
   change_detection = {
     notify = false,
