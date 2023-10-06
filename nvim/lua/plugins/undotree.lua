@@ -1,6 +1,8 @@
 return {
   'mbbill/undotree',
-  event = { 'VeryLazy' },
+  keys = {
+    { "<leader>un", mode = "n" }
+  },
   dependencies = {
     {
       'stevearc/stickybuf.nvim',
