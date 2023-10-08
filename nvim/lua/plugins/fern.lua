@@ -14,6 +14,14 @@ return {
       mode = 'n'
     }
   },
+  dependencies = {
+    {
+      'stevearc/stickybuf.nvim', -- don't override buf
+      config = function()
+        require("stickybuf").setup()
+      end
+    }
+  },
   config = function()
     vim.g["fern#opener"] = "vsplit"
     vim.g["fern#default_hidden"] = 1
