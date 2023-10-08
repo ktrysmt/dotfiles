@@ -5,7 +5,7 @@ return {
   },
   dependencies = {
     {
-      'stevearc/stickybuf.nvim',
+      'stevearc/stickybuf.nvim', -- don't override buf
       config = function()
         require("stickybuf").setup()
         local stickybuf_group = vim.api.nvim_create_augroup('stickybuf_group', { clear = true })
