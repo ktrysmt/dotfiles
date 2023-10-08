@@ -1,11 +1,11 @@
 return {
   'stevearc/stickybuf.nvim',
   keys = {
-    { "<C-e>",      mode = 'n' } -- for fern
-    { "<leader>un", mode = "n" } -- for undotree
-    { "<leader>t",  mode = "n" } -- for terminal
-    { "<leader>vt", mode = "n" } -- for terminal
-    { "<leader>T",  mode = "n" } -- for terminal
+    { "<C-e>",      mode = 'n' }, -- for fern
+    { "<leader>un", mode = "n" }, -- for undotree
+    { "<leader>t",  mode = "n" }, -- for terminal
+    { "<leader>vt", mode = "n" }, -- for terminal
+    { "<leader>T",  mode = "n" }, -- for terminal
   },
   event = { "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
   config = function()
