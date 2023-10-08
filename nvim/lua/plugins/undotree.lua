@@ -22,14 +22,5 @@ return {
 
     vim.g.undotree_CustomUndotreeCmd  = 'botright vertical 30 new'
     vim.g.undotree_CustomDiffpanelCmd = 'belowright 10 new'
-
-
-    require("stickybuf").setup()
-    local stickybuf_group = vim.api.nvim_create_augroup('stickybuf_group', { clear = true })
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "undotree",
-      group = stickybuf_group,
-      command = "PinBuftype | PinBuftype",
-    })
   end
 }

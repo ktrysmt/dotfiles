@@ -7,8 +7,6 @@ vim.keymap.set('n', '<Leader>T', [[<cmd>tabnew | :terminal<CR><insert>]], { sile
 vim.keymap.set('n', '<Leader>vt', [[<cmd>vne | :terminal<CR><insert>]], { silent = true })
 
 -- search and replace
--- vim.keymap.set('n', '#', '#N')  -- search and highlight but stay cursor
--- vim.keymap.set('n', '/', '/\\v')
 vim.keymap.set('n', 'x', '"_x') -- only n, not v
 vim.keymap.set('n', 's', '"_s')
 vim.keymap.set('n', 'cn', '*N"_cgn')
@@ -18,8 +16,8 @@ vim.keymap.set('n', '<Leader>p', '"0p', { silent = true })
 vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })
 
 -- terminal mode
-vim.keymap.set('t', '<C-[><C-[>', '<C-\\><C-n>')
--- vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
+vim.keymap.set('t', '<C-[>', '<Esc>')
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 vim.keymap.set('t', '<C-W>w', '<cmd>wincmd w<cr>')
 vim.keymap.set('t', '<C-W>k', '<cmd>wincmd k<cr>')
 vim.keymap.set('t', '<C-W>j', '<cmd>wincmd j<cr>')
