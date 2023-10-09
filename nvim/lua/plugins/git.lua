@@ -1,7 +1,7 @@
 return {
   {
     "akinsho/git-conflict.nvim",
-    event = { "CursorMoved" },
+    event = { "CursorMoved", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
     version = "*",
     config = function()
       require('git-conflict').setup()
@@ -13,7 +13,7 @@ return {
   },
   {
     'lewis6991/gitsigns.nvim',
-    event = { "CursorMoved" },
+    event = { "CursorMoved", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
     config = function()
       require('gitsigns').setup({
         signs      = {

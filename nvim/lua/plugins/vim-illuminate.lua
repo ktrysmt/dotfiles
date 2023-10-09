@@ -1,6 +1,6 @@
 return {
   'RRethy/vim-illuminate',
-  event = { "CursorMoved" },
+  event = { "CursorMoved", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
   config = function()
     require('illuminate').configure({
       providers = {
