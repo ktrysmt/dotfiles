@@ -1,6 +1,6 @@
 return {
   'petertriho/nvim-scrollbar',
-  event = { "VeryLazy" },
+  event = { "CursorMoved" },
   -- keys = {
   --   { "#", mode = "n" },
   --   { "n", mode = "n" },

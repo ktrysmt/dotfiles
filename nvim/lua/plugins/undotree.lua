@@ -1,6 +1,6 @@
 return {
   'mbbill/undotree',
-  event = { "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
+  event = { "CursorMoved", "ModeChanged" },
   keys = {
     { "<leader>un", mode = "n" }
   },

@@ -1,7 +1,7 @@
 return {
   {
     "seblj/nvim-echo-diagnostics",
-    event = { "VeryLazy" },
+    event = { "CursorHold" },
     config = function()
       local echo_diagnostics = require("echo-diagnostics")
 
