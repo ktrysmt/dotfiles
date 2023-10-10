@@ -19,7 +19,6 @@ vim.g.skip_loading_mswin        = 1
 vim.g.editorconfig              = false
 
 vim.g.mapleader                 = ' '
-vim.g.maplocalleader            = ' '
 
 vim.opt.encoding                = 'utf-8'
 vim.opt.fileencodings           = 'utf-8'

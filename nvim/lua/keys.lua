@@ -1,10 +1,9 @@
 -- normal mode
 vim.keymap.set('n', 'j', 'gj')
 vim.keymap.set('n', 'k', 'gk')
+
 vim.keymap.set('n', '<Esc><Esc>', '<cmd>nohlsearch<CR><Esc><C-l>', { silent = true })
-vim.keymap.set('n', '<Leader>t', [[<cmd>new | :terminal<CR><insert>]], { silent = true })
-vim.keymap.set('n', '<Leader>T', [[<cmd>tabnew | :terminal<CR><insert>]], { silent = true })
-vim.keymap.set('n', '<Leader>vt', [[<cmd>vne | :terminal<CR><insert>]], { silent = true })
+vim.keymap.set('n', '<Leader>t', "<cmd>echo expand('%:p')<cr>")
 
 -- search and replace
 vim.keymap.set('n', 'x', '"_x') -- only n, not v

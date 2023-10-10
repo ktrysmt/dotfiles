@@ -1,25 +1,15 @@
 return {
   'stevearc/stickybuf.nvim',
   keys = {
-    { "<C-e>",      mode = 'n' }, -- for fern
-    { "<leader>un", mode = "n" }, -- for undotree
-    { "<leader>t",  mode = "n" }, -- for terminal
-    { "<leader>vt", mode = "n" }, -- for terminal
-    { "<leader>T",  mode = "n" }, -- for terminal
+    { "<leader>t",  [[<cmd>new | :terminal<CR><insert>]],    mode = "n", silent = true },
+    { "<leader>vt", [[<cmd>vne | :terminal<CR><insert>]],    mode = "n", silent = true },
+    { "<leader>T",  [[<cmd>tabnew | :terminal<CR><insert>]], mode = "n", silent = true },
   },
-  event = { "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
   config = function()
     require("stickybuf").setup()
 
     local stickybuf_group = vim.api.nvim_create_augroup('stickybuf_group', { clear = true })
-    -- undotree
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "undotree",
-      group = stickybuf_group,
-      command = "PinBuftype | PinBuftype",
-    })
-    -- terminal
-    vim.api.nvim_create_autocmd("BufNew", {
+    vim.api.nvim_create_autocmd("TermOpen", {
       pattern = "term://*",
       group = stickybuf_group,
       command = "PinBuffer!"

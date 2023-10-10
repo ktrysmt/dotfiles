@@ -15,7 +15,12 @@ return {
     }
   },
   dependencies = {
-    'stevearc/stickybuf.nvim',
+    {
+      'stevearc/stickybuf.nvim',
+      config = function()
+        require("stickybuf").setup()
+      end
+    }
   },
   config = function()
     vim.g["fern#opener"] = "vsplit"

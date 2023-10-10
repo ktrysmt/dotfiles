@@ -1,16 +1,13 @@
 return {
-  'mbbill/undotree',
+  'mbbill/undotree', --and terminal
   event = { "CursorMoved", "InsertEnter", "CmdlineEnter", "CmdwinEnter", "ModeChanged" },
   keys = {
-    { "<leader>un", mode = "n" }
+    { "<leader>un", "<cmd>:UndotreeToggle<cr>", mode = "n", silent = true }, -- for undotree
   },
   dependencies = {
-    'stevearc/stickybuf.nvim', -- don't override buf
+    'stevearc/stickybuf.nvim',
   },
   config = function()
-    local opt = { silent = true }
-    vim.keymap.set("n", "<leader>un", "<cmd>:UndotreeToggle<cr>", opt)
-
     vim.cmd [[
       set undodir=$HOME/.cache/nvim/undofile
     ]]
@@ -22,5 +19,13 @@ return {
 
     vim.g.undotree_CustomUndotreeCmd  = 'botright vertical 30 new'
     vim.g.undotree_CustomDiffpanelCmd = 'belowright 10 new'
+
+    require("stickybuf").setup()
+    local undotree_group = vim.api.nvim_create_augroup('undotree_group', { clear = true })
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "undotree",
+      group = undotree_group,
+      command = "PinBuftype | PinBuftype",
+    })
   end
 }

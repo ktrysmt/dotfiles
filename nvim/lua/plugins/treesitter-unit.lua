@@ -5,8 +5,8 @@ return {
       { "sa", mode = { "n", "x" } },
       { "sr", mode = { "n", "x" } },
       { "sd", mode = { "n", "x" } },
-      { "ib", mode = { "n", "x" } }, -- auto select and be able to dot repeat
-      { "is", mode = { "n", "x" } }, -- vis", vis<, ... etc
+      { "ib", mode = { "x" } }, -- auto select and be able to dot repeat
+      { "is", mode = { "x" } }, -- vis", vis<, ... etc
     }
   },
   {

@@ -48,7 +48,7 @@
   "nvim-treesitter-textsubjects": { "branch": "master", "commit": "48b3bf54e32f23e2299c59ff76fa3b0599565b39" },
   "nvim-ts-context-commentstring": { "branch": "main", "commit": "7241635869b7a8115893ffa67bab3907756caf4f" },
   "pinecone-vim": { "branch": "master", "commit": "fc9c90215919aed88287695584631b2f7bc29ac3" },
-  "rainbow_csv": { "branch": "master", "commit": "dc0534fefc68f06d1d2c379814a9cae162fb1987" },
+  "rainbow_csv": { "branch": "master", "commit": "6955d13a65e0161e8dad488b6045441d527d62ec" },
   "readablefold.vim": { "branch": "master", "commit": "72cfecc1cd4057245e931184d3653908dea7ef99" },
   "rust-tools.nvim": { "branch": "master", "commit": "0cc8adab23117783a0292a0c8a2fbed1005dc645" },
   "smart-splits.nvim": { "branch": "master", "commit": "a2668b59bf3f9b87d47b42e7e8d08200ff0ab3b5" },
