@@ -21,7 +21,7 @@
 	<key>HideScrollbar</key>
 	<true/>
 	<key>Hotkey</key>
-	<true/>
+	<false/>
 	<key>HotkeyChar</key>
 	<integer>103</integer>
 	<key>HotkeyCode</key>
