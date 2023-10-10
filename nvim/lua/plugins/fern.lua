@@ -15,14 +15,11 @@ return {
     }
   },
   dependencies = {
-    {
-      'stevearc/stickybuf.nvim',
-      config = function()
-        require("stickybuf").setup()
-      end
-    }
+    'stevearc/stickybuf.nvim',
   },
   config = function()
+    require("stickybuf").setup()
+
     vim.g["fern#opener"] = "vsplit"
     vim.g["fern#default_hidden"] = 1
     vim.g["fern#default_exclude"] = ".DS_Store"

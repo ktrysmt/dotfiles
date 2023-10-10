@@ -49,8 +49,8 @@ return {
     LeximaAlterCommand p\%[cre] Pcre/
     LeximaAlterCommand %p\%[cre] Pcre/
 
-    LeximaAlterCommand ti\%[gcurrent] TigOpenCurrentFile
-    LeximaAlterCommand ti\%[groot] TigOpenProjectRootDir
+    LeximaAlterCommand ti\%[gcurrent] tabnew|TigOpenCurrentFile
+    LeximaAlterCommand ti\%[groot] tabnew|TigOpenProjectRootDir
     ]]
   end
 }
