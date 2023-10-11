@@ -131,7 +131,6 @@ if [[ "$(uname -r)" == *microsoft* ]]; then
   echo "alias pbpaste='powershell.exe Get-Clipboard'" >> ~/.zshrc.private
   echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.zshrc.private
   echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.zshrc.private
-  echo 'alias rm=gomi' >> ~/.zshrc.private
 else
   ln -s ~/dotfiles/.tmux.conf.ubuntu ~/.tmux.conf
 fi
