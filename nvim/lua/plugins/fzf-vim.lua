@@ -1,5 +1,6 @@
 return {
   'junegunn/fzf.vim',
+  event = { 'TermOpen', 'CursorHold' },
   keys = {
     { "<Leader>x",  mode = "n" },
     { "<Leader>d",  mode = "n" },
@@ -18,14 +19,14 @@ return {
   },
   config = function()
     vim.cmd [[
-    " nnoremap <expr> <Leader>x (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Commands\<cr>"
-    " nnoremap <expr> <Leader>d (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":GFiles?\<cr>"
-    " nnoremap <expr> <Leader>b (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Buffers\<cr>"
-    " nnoremap <expr> <Leader>hc (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":History:\<cr>"
-    " nnoremap <expr> <Leader>hs (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":History/\<cr>"
-    " nnoremap <expr> <Leader>r (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Ripgrep\<cr>"
-    " nnoremap <expr> <Leader>w (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Windows\<cr>"
-    " nnoremap <expr> <Leader>f (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+    nnoremap <expr> <Leader>x (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Commands\<cr>"
+    nnoremap <expr> <Leader>d (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":GFiles?\<cr>"
+    nnoremap <expr> <Leader>b (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Buffers\<cr>"
+    nnoremap <expr> <Leader>hc (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":History:\<cr>"
+    nnoremap <expr> <Leader>hs (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":History/\<cr>"
+    nnoremap <expr> <Leader>r (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Ripgrep\<cr>"
+    nnoremap <expr> <Leader>w (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Windows\<cr>"
+    nnoremap <expr> <Leader>f (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 
     let g:fzf_layout = { 'down': '~40%' }
 
@@ -50,14 +51,14 @@ return {
 
     local opt = { silent = true }
 
-    vim.keymap.set("n", "<Leader>d", ":GFiles?<cr>", opt)
-    vim.keymap.set("n", "<Leader>b", ":Buffers<cr>", opt)
-    vim.keymap.set("n", "<Leader>f", ":Files<cr>", opt)
-    vim.keymap.set("n", "<Leader>hc", ":History:<cr>", opt)
-    vim.keymap.set("n", "<Leader>hs", ":History/<cr>", opt)
-    vim.keymap.set("n", "<Leader>r", ":Ripgrep<cr>", opt)
-    vim.keymap.set("n", "<Leader>w", ":Windows<cr>", opt)
-    vim.keymap.set("n", "<Leader>x", ":Commands<cr>", opt)
+    -- vim.keymap.set("n", "<Leader>d", ":GFiles?<cr>", opt)
+    -- vim.keymap.set("n", "<Leader>b", ":Buffers<cr>", opt)
+    -- vim.keymap.set("n", "<Leader>f", ":Files<cr>", opt)
+    -- vim.keymap.set("n", "<Leader>hc", ":History:<cr>", opt)
+    -- vim.keymap.set("n", "<Leader>hs", ":History/<cr>", opt)
+    -- vim.keymap.set("n", "<Leader>r", ":Ripgrep<cr>", opt)
+    -- vim.keymap.set("n", "<Leader>w", ":Windows<cr>", opt)
+    -- vim.keymap.set("n", "<Leader>x", ":Commands<cr>", opt)
 
     vim.keymap.set("n", "<Leader>m", "<plug>(fzf-maps-n)", opt)
     vim.keymap.set("i", "<Leader>mi", "<plug>(fzf-maps-i)", opt)
