@@ -51,6 +51,7 @@ return {
     local opt = { silent = true }
 
     vim.keymap.set("n", "<Leader>d", ":GFiles?<cr>", opt)
+    vim.keymap.set("n", "<Leader>b", ":Buffers<cr>", opt)
     vim.keymap.set("n", "<Leader>f", ":Files<cr>", opt)
     vim.keymap.set("n", "<Leader>hc", ":History:<cr>", opt)
     vim.keymap.set("n", "<Leader>hs", ":History/<cr>", opt)
