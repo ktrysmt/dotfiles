@@ -30,6 +30,8 @@ return {
         "terraform",
         "hcl",
         "markdown",
+        "git_rebase",
+        "gitcommit",
       },
       auto_install = true,
       highlight = { enable = false },
