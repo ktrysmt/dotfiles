@@ -1,6 +1,6 @@
 return {
   'petertriho/nvim-scrollbar',
-  event = { "CursorMoved", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
+  event = { "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
   -- keys = {
   --   { "#", mode = "n" },
   --   { "n", mode = "n" },

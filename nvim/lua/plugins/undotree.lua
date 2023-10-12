@@ -1,6 +1,6 @@
 return {
   'mbbill/undotree', --and terminal
-  event = { "CursorMoved", "InsertEnter", "CmdlineEnter", "CmdwinEnter", "ModeChanged" },
+  event = { "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
   keys = {
     { "<leader>un", "<cmd>:UndotreeToggle<cr>", mode = "n", silent = true }, -- for undotree
   },
