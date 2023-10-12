@@ -55,7 +55,6 @@
   "smart-splits.nvim": { "branch": "master", "commit": "dbf2c13bad1b75ab207639ba817a7e8a8a450042" },
   "sort.nvim": { "branch": "main", "commit": "c789da6968337d2a61104a929880b5f144e02855" },
   "sqlite.lua": { "branch": "master", "commit": "b7e28c8463254c46a8e61c52d27d6a2040492fc3" },
-  "ssr.nvim": { "branch": "main", "commit": "b2f35df231c6b090f6eb023ddf2ad0cb88d90eb4" },
   "stickybuf.nvim": { "branch": "master", "commit": "ae746b982f9c3b6880d62f221c56ec4d7bb239f6" },
   "tig-explorer.vim": { "branch": "master", "commit": "a75ee59636bc0a1659d372e3a4e8b35d167e3df5" },
   "treesitter-unit": { "branch": "main", "commit": "89968a1f8c72427691088e6d09d26a52c2ddc6f4" },
