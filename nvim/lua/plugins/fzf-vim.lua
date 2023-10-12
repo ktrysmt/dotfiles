@@ -10,8 +10,10 @@ return {
     { "<Leader>r",  mode = "n" },
     { "<Leader>w",  mode = "n" },
     { "<Leader>f",  mode = "n" },
-    { "<Leader>m",  mode = { "n", "x", "o" } },
-    { "<Leader>j",  mode = "n" },
+    { "<Leader>mr", mode = "n" },
+    { "<A-m>",      mode = "n" },
+    { "<A-i>",      mode = "i" },
+    { "<A-x>",      mode = "x" },
   },
   dependencies = {
     'pbogut/fzf-mru.vim',
@@ -60,11 +62,10 @@ return {
     -- vim.keymap.set("n", "<Leader>w", ":Windows<cr>", opt)
     -- vim.keymap.set("n", "<Leader>x", ":Commands<cr>", opt)
 
-    vim.keymap.set("n", "<Leader>m", "<plug>(fzf-maps-n)", opt)
-    vim.keymap.set("i", "<Leader>mi", "<plug>(fzf-maps-i)", opt)
-    vim.keymap.set("x", "<Leader>m", "<plug>(fzf-maps-x)", opt)
-    vim.keymap.set("o", "<Leader>m", "<plug>(fzf-maps-o)", opt)
+    vim.keymap.set("n", "<A-m>", "<plug>(fzf-maps-n)", opt)
+    vim.keymap.set("i", "<A-i>", "<plug>(fzf-maps-i)", opt)
+    vim.keymap.set("x", "<A-x>", "<plug>(fzf-maps-x)", opt)
 
-    vim.keymap.set("n", "<Leader>j", ":FZFMru<cr>", opt)
+    vim.keymap.set("n", "<Leader>mr", ":FZFMru<cr>", opt)
   end
 }
