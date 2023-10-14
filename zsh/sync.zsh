@@ -1,8 +1,6 @@
 # cd, comment
 setopt AUTO_CD
-setopt interactivecomments
-
-# hist
+setopt interactivecomments # hist
 # https://qiita.com/sho-t/items/d553dd694900cae0966d
 setopt extended_history
 setopt append_history
