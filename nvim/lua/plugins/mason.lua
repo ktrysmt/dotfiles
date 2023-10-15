@@ -48,6 +48,7 @@ return {
           'gomodifytags',
           'gotests',
           'impl',
+          'svelte-language-server',
           'lua-language-server',
           'json-to-struct',
           'misspell',

@@ -30,6 +30,8 @@ return {
         "terraform",
         "hcl",
         "markdown",
+        "svelte",
+        "css",
         "git_rebase",
         "gitcommit",
       },
