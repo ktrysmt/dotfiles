@@ -7,17 +7,18 @@ return {
 
     local ts_formatter = function(formatters)
       if vim.fn.executable('node_modules/.bin/prettier') > 0 then
-        return formatters.prettier
+        print("hoge")
+        return formatters.prettierd
       else
         return formatters.lsp
       end
     end
 
     local js_formatter = function()
-      if vim.api.nvim_buf_get_name(0):match("^.eslintrc.*$") then
-        return formatters.eslint_d_fix
-      elseif vim.api.nvim_buf_get_name(0):match("^(.prettierrc|.prettierrc.*|prettier.config.*)$") then
+      if vim.fn.executable('node_modules/.bin/prettier') > 0 or vim.api.nvim_buf_get_name(0):match("^(.prettierrc|.prettierrc.*|prettier.config.*)$") then
         return formatters.prettierd
+      elseif vim.api.nvim_buf_get_name(0):match("^.eslintrc.*$") then
+        return formatters.eslint_d_fix
       else
         return formatters.lsp
       end
@@ -47,10 +48,11 @@ return {
         c = formatters.lsp,
         cpp = formatters.lsp,
 
-        typescript = ts_formatter(formatters),
+        typescript = js_formatter(formatters),
         typescriptreact = js_formatter(formatters),
 
         javascript = js_formatter(formatters),
+        javascriptreact = js_formatter(formatters),
       },
 
       run_with_sh = false,
