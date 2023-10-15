@@ -57,7 +57,7 @@ return {
       mapping = cmp.mapping.preset.insert({
         ['<Up>'] = cmp.mapping.scroll_docs(-4),
         ['<Down>'] = cmp.mapping.scroll_docs(4),
-        ['<C-f>'] = cmp.mapping(cmp.mapping.confirm(), { 'i', 'c' }),
+        ['<C-f>'] = cmp.mapping(cmp.mapping.confirm(), { 'c' }),
         ['<CR>'] = cmp.mapping.confirm {
           behavior = cmp.ConfirmBehavior.Insert,
           select = true,
