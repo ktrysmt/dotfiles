@@ -13,6 +13,7 @@
   "dial.nvim": { "branch": "master", "commit": "019bbe9daea397c93a99adc747f8f071379fee5c" },
   "diffview.nvim": { "branch": "main", "commit": "d38c1b5266850f77f75e006bcc26213684e1e141" },
   "dressing.nvim": { "branch": "master", "commit": "1f2d1206a03bd3add8aedf6251e4534611de577f" },
+  "fern-mapping-fzf.vim": { "branch": "master", "commit": "9b124fbbb72fea3098ee4b11dbc7b45945978913" },
   "fern.vim": { "branch": "main", "commit": "e295f0df5735a042f63b05218118646809ba9d27" },
   "format-on-save.nvim": { "branch": "main", "commit": "c9fbdfcd913ee706de020463b88893a0df8aec4a" },
   "friendly-snippets": { "branch": "main", "commit": "43727c2ff84240e55d4069ec3e6158d74cb534b6" },

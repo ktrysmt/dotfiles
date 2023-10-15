@@ -16,6 +16,7 @@ return {
   },
   dependencies = {
     'stevearc/stickybuf.nvim',
+    'LumaKernel/fern-mapping-fzf.vim',
   },
   config = function()
     require("stickybuf").setup()
