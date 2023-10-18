@@ -36,7 +36,17 @@ return {
         "gitcommit",
       },
       auto_install = true,
-      highlight = { enable = false },
+      highlight = {
+        enable = false,
+        -- enable = true,
+        -- disable = function(lang, buf)
+        --   print(lang)
+        --   if lang == "svelte" or lang == "terraform" then
+        --     return false
+        --   end
+        --   return true
+        -- end
+      },
       indent = { enable = false },
       incremental_selection = { -- or, you should use "vib" and dot repeat...
         enable = false,
