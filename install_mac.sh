@@ -31,6 +31,7 @@ brew install \
   git-secrets \
   bat \
   watch \
+  gh \
   ghq \
   git \
   git-delta \

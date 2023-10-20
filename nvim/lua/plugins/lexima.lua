@@ -51,6 +51,8 @@ return {
 
     LeximaAlterCommand ti\%[gcurrent] tabnew|TigOpenCurrentFile
     LeximaAlterCommand ti\%[groot] tabnew|TigOpenProjectRootDir
+
+    LeximaAlterCommand ghb !gh<space>browse<space><space>%<cr>
     ]]
   end
 }

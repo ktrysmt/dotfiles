@@ -39,7 +39,7 @@ brew install \
   fd \
   fzf \
   fzy \
-  ghq \
+  gh \
   ghq \
   git \
   git-delta \
