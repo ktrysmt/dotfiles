@@ -46,4 +46,6 @@ local opts = {
   },
 }
 
+vim.keymap.set("n", "<Leader>lz", ":Lazy<cr>", { silent = true })
+
 require('lazy').setup('plugins', opts)
