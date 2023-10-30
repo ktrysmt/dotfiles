@@ -36,8 +36,8 @@ return {
     LeximaAlterCommand ma\%[son] Mason
 
     LeximaAlterCommand g Git
-    LeximaAlterCommand g\%[push] Git<space>push
-    LeximaAlterCommand g\%[blame] Git<space>blame
+    LeximaAlterCommand gp\%[ush] Git<space>push
+    LeximaAlterCommand gb\%[lame] Git<space>blame
 
     LeximaAlterCommand gv DiffviewOpen
     LeximaAlterCommand gvc DiffviewClose
