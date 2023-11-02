@@ -17,7 +17,7 @@
   "fern.vim": { "branch": "main", "commit": "e295f0df5735a042f63b05218118646809ba9d27" },
   "format-on-save.nvim": { "branch": "main", "commit": "4ec33645a991ca90bb377ba99087daa446163488" },
   "friendly-snippets": { "branch": "main", "commit": "43727c2ff84240e55d4069ec3e6158d74cb534b6" },
-  "fzf": { "branch": "master", "commit": "278dce9ba6f383930654b9a591f1143b0c422907" },
+  "fzf": { "branch": "master", "commit": "21ab64e96213ec99cf3f6f207690ffe710713fcc" },
   "fzf-mru.vim": { "branch": "master", "commit": "5b47c29e66d0546000b2988c4c9dca53f3134f35" },
   "fzf.vim": { "branch": "master", "commit": "1e054c1d075d87903647db9320116d360eb8b024" },
   "git-conflict.nvim": { "branch": "main", "commit": "4e0191c9a0ae05d7fbdcdc7f15cd358f56d23bfb" },
