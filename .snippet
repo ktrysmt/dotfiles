@@ -188,3 +188,5 @@ cat file.json | jq -r -c 'select(.Stdout| test("No packages marked for update"))
 git log --patch --pickaxe-all -S "hogehoge"                                                                                                                                                                                # search from git log
 git log --reverse --patch --pickaxe-all -S "hogehoge"                                                                                                                                                                      # search from git log with reverse
 git grep -w 'text' $(git rev-list --all)                                                                                                                                                                                   # grep in all hashes
+bash -c 'echo "hoge fuga" | xargs -n 1 echo "m:"'                                                                                                                                                                          # xargs -n 1
+
