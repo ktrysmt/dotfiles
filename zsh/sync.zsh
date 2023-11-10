@@ -29,6 +29,9 @@ setopt promptsubst
 autoload -U colors
 colors
 
+# general
+bindkey -e
+
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
