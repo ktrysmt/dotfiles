@@ -187,6 +187,11 @@ def configure(keymap):
                 "Chrome_WidgetWin_1",
                 r"C:\Users\yuuyu\AppData\Local\Obsidian\Obsidian.exe"
             ),
+            "LAlt-E": (
+                "Code.exe",
+                "Chrome_WidgetWin_1",
+                r"C:\Users\yuuyu\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+            ),
         }.items():
             keymap_global[key] = pseudo_cuteExec(*params)
 
