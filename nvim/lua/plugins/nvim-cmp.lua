@@ -100,7 +100,7 @@ return {
         -- { name = 'tmux' },
         { name = 'nvim_lsp_signature_help' },
         { name = 'calc' },
-        { name = 'treesitter' },
+        -- { name = 'treesitter' },
         -- { name = 'cmp_tabnine' },
       }),
 
