@@ -17,7 +17,7 @@ return {
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'hrsh7th/cmp-calc',
-    "ray-x/cmp-treesitter",
+    -- "ray-x/cmp-treesitter",
     -- {
     --   'tzachar/cmp-tabnine',
     --   build = './install.sh',
