@@ -53,6 +53,9 @@ return {
     LeximaAlterCommand ti\%[groot] tabnew|TigOpenProjectRootDir
 
     LeximaAlterCommand ghb !gh<space>browse<space><space>%<cr>
+
+    LeximaAlterCommand ww w<space>!
+    LeximaAlterCommand rr r<space>!
     ]]
   end
 }
