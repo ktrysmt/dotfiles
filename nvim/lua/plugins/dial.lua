@@ -55,12 +55,12 @@ return {
           },
           cyclic = true,
         },
-        augend.paren.new {
-          patterns = { { "'", "'" }, { '"', '"' } },
-          nested = false,
-          escape_char = [[\]],
-          cyclic = true,
-        },
+        -- augend.paren.new {
+        --   patterns = { { "'", "'" }, { '"', '"' } },
+        --   nested = false,
+        --   escape_char = [[\]],
+        --   cyclic = true,
+        -- },
       },
     }
   end
