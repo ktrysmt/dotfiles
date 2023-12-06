@@ -3,7 +3,7 @@ local act = wezterm.action
 return {
   window_decorations = "RESIZE",
   font = wezterm.font_with_fallback({
-    { family = "Cica" },
+    { family = "PleckJP" },
   }),
   font_size = 12,
   color_scheme = 'Ayu Mirage',

@@ -159,7 +159,7 @@ cp -Rp /System/Library/CoreServices/ScreenSaverEngine.app /Applications/lock.app
 # ------------
 # downloads
 # ---------------
-# cica:    https://github.com/miiton/Cica/releases
+# PleckJP  https://github.com/ryota2357/PleckJP/releases
 # chrome:  https://www.google.com/intl/ja_jp/chrome/
 # ime:     https://www.google.co.jp/ime/
 # hackgen: brew tap homebrew/cask-fonts && brew install font-hackgen
