@@ -41,7 +41,7 @@ return {
         -- enable = true,
         -- disable = function(lang, buf)
         --   print(lang)
-        --   if lang == "svelte" or lang == "terraform" then
+        --   if lang == "go" or lang == "terraform" then
         --     return false
         --   end
         --   return true
