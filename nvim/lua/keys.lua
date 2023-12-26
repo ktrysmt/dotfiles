@@ -93,7 +93,7 @@ for i, o in pairs({ j = "<", k = ">" }) do
 end
 
 -- move
-vim.keymap.set("n", "<C-j>", '"zdd"zp')
-vim.keymap.set("n", "<C-k>", '"zdd<Up>"zP')
+-- vim.keymap.set("n", "<C-j>", '"zdd"zp')
+-- vim.keymap.set("n", "<C-k>", '"zdd<Up>"zP')
 vim.keymap.set("v", "<C-j>", '"zx"zp`[V`]')
 vim.keymap.set("v", "<C-k>", '"zx<Up>"zP`[V`]')
