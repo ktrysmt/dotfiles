@@ -40,6 +40,8 @@ brew install \
   fzf \
   fzy \
   gh \
+  xh \
+  gat \
   ghq \
   git \
   git-delta \
