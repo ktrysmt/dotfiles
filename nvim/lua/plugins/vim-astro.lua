@@ -1,4 +1,4 @@
 return {
   "wuelnerdotexe/vim-astro",
-  ft = { 'astro' },
+  ft = { 'astro' }
 }
