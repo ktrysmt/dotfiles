@@ -85,11 +85,13 @@ end
 -- window jump
 for i = 1, 9 do
   vim.keymap.set('n', string.format('<C-w>%d', i), string.format('<C-w>%dw', i), { silent = true })
+  vim.keymap.set('t', string.format('<C-w>%d', i), string.format('<cmd>wincmd %dw<cr>', i), { silent = true })
 end
 
 -- resize window
 for i, o in pairs({ j = "<", k = ">" }) do
-  vim.keymap.set("n", string.format('<C-w><C-%s>', i), string.format('<C-w>24%s', o), { silent = true })
+  vim.keymap.set('n', string.format('<C-w><C-%s>', i), string.format('<C-w>24%s', o), { silent = true })
+  vim.keymap.set('t', string.format('<C-w><C-%s>', i), string.format('<cmd>wincmd 24%s<cr>', o), { silent = true })
 end
 
 -- move
