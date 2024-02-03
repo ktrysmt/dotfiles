@@ -74,6 +74,26 @@ return {
         group = lspconfig_group,
         callback = init_lspconfig,
       })
+
+      -- https://www.reddit.com/r/neovim/comments/11q17mq/comment/jc13v1o/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+      -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
+      --
+      -- lspconfig.rust_analyzer.setup {
+      --   settings = {
+      --     ['rust-analyzer'] = {
+      --       textDocument = {
+      --         inlayHint = {
+      --           typeHints = {
+      --             dynamicRegistration = false,
+      --             resolveSupport = {
+      --               properties = { "command" }
+      --             }
+      --           }
+      --         }
+      --       }
+      --     },
+      --   },
+      -- }
     end,
   },
 }
