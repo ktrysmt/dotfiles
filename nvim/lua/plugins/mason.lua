@@ -39,6 +39,7 @@ return {
           'pylsp',
           'lua-language-server',
           'vim-language-server',
+          'typos-lsp',
           'gopls',
           'typescript-language-server',
           'rust-analyzer',
