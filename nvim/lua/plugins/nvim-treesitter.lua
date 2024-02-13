@@ -31,21 +31,21 @@ return {
         "hcl",
         "markdown",
         "svelte",
+        "astro",
         "css",
         "git_rebase",
         "gitcommit",
       },
       auto_install = true,
       highlight = {
-        enable = false,
-        -- enable = true,
-        -- disable = function(lang, buf)
-        --   print(lang)
-        --   if lang == "go" or lang == "terraform" or lang == "astro" then
-        --     return false
-        --   end
-        --   return true
-        -- end
+        enable = true,
+        disable = function(lang, buf)
+          -- print(lang)
+          if lang ~= "terraform" and lang ~= "astro" then
+            -- print(lang)
+            return true
+          end
+        end
       },
       indent = { enable = false },
       incremental_selection = { -- or, you should use "vib" and dot repeat...
