@@ -1,5 +1,10 @@
 return {
   {
+    -- how to fix conflict
+    -- 1. open the conflicted file
+    -- 2. :Git mergetool
+    -- 3. :GitConflictChooseBoth or ...
+    -- 4. save and commit it
     "akinsho/git-conflict.nvim",
     event = { "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
     -- event = { "VeryLazy" },
