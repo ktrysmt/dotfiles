@@ -1,7 +1,7 @@
 return {
   {
     -- how to fix conflict
-    -- 1. open the conflicted file
+    -- 1. open the conflicted file or :G and select it
     -- 2. :Git mergetool
     -- 3. :GitConflictChooseBoth or ...
     -- 4. save and commit it
