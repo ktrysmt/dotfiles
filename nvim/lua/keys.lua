@@ -19,6 +19,11 @@ end)
 vim.keymap.set('n', '<Leader>p', '"0p', { silent = true })
 vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })
 
+-- gh
+vim.keymap.set('n', 'gb', function()
+  vim.cmd "silent !gh browse %"
+end)
+
 -- terminal mode
 vim.keymap.set('t', '<C-[>', '<Esc>')
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
