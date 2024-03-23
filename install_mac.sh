@@ -49,6 +49,7 @@ brew install \
   neovim \
   asdf \
   raycast \
+  difftastic \
   golangci-lint
 brew install ynqa/tap/jnv
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags

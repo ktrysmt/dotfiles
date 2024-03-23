@@ -60,7 +60,9 @@ brew install \
   tree \
   watch \
   wget \
+  difftastic \
   neovim
+brew install ynqa/tap/jnv
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 brew install b4b4r07/tap/gomi
 
