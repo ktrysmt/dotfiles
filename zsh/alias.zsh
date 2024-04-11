@@ -10,6 +10,7 @@ alias ltt="eza -Ta --ignore-glob '.git|node_modules'"
 alias nswitch="source ~/.switch-proxy"
 alias tsync="tmux set-window-option synchronize-panes"
 alias bat="bat -p"
+alias batn="bat --number"
 alias batd="bat -l diff"
 alias f='fzf --preview "bat --color=always --style=header,grid --line-range :100 {}"'
 alias cdg='cd $(git rev-parse --show-toplevel)'
@@ -63,9 +64,6 @@ alias vimf='nvim $(fzf)'
 alias vimdiff='nvim -d'
 alias typora='open -a typora'
 alias rs='evcxr'
-
-# docker
-alias d='lima nerdctl'
 
 # dstat
 alias dstat='dstat -tlamp'
