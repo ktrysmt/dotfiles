@@ -41,7 +41,7 @@ return {
         end,
       })
 
-      vim.diagnostic.config({ virtual_text = false, float = false })
+      vim.diagnostic.config({ virtual_text = false, float = false, severity_sort = true })
 
       local init_lspconfig = function(ev)
         vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
