@@ -85,9 +85,8 @@ ln -s ~/dotfiles/zsh/sheldon.plugins.toml ~/.config/sheldon/plugins.toml
 mkdir -p ~/.config/peco/
 mkdir -p ~/.local/bin/
 mkdir ~/.docker/
-mkdir -p ~/.config/nvim/
 mkdir -p ~/.cache/vim/
-ln -s ~/dotfiles/.vimrc ~/.config/nvim/init.vim
+ln -s ~/dotfiles/nvim ~/.config/nvim
 ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
