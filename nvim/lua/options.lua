@@ -74,3 +74,26 @@ vim.opt.foldclose               = "all"
 
 -- hide EndOfBuffer
 vim.opt.fillchars:append('eob: ')
+
+-- win32yank
+-- https://github.com/equalsraf/win32yank/releases
+-- sudo ln -s /mnt/c/Users/USERNAME/path/to/script/win32yank.exe win32yank.exe
+if vim.fn.has("wsl") == 1 then
+    if vim.fn.executable("win32yank.exe") == 0 then
+        print("wl-clipboard not found, clipboard integration won't work")
+    else
+        vim.g.clipboard = {
+            name = 'myClipboard',
+            copy = {
+                ["+"] = {'win32yank.exe', '-i'},
+                ["*"] = {'win32yank.exe', '-i'},
+            },
+            paste = {
+                ["+"] = {'win32yank.exe', '-o'},
+                ["*"] = {'win32yank.exe', '-o'},
+            },
+            cache_enabled = 1,
+        }
+    end
+end
+

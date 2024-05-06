@@ -29,13 +29,6 @@ vim.api.nvim_create_autocmd({ 'TermOpen' }, {
   group = general_group,
   command = "setl winhighlight=Normal:User1 | setl norelativenumber | setl nonumber"
 })
-if not (vim.fn.has('mac') == 1) then
-  vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
-    pattern = "*",
-    group = general_group,
-    command = 'call system("clip.exe", @")'
-  })
-end
 
 local json_group = vim.api.nvim_create_augroup('json_group', { clear = true })
 vim.api.nvim_create_autocmd({ 'Filetype' }, {
