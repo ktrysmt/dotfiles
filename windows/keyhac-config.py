@@ -116,6 +116,10 @@ def configure(keymap):
         keymap_tabby["LCtrl-Shift-K"] = ["LCtrl-Shift-K"]
         keymap_tabby["LCtrl-Shift-J"] = ["LCtrl-Shift-J"]
         keymap_tabby["LCtrl-Shift-Semicolon"] = ["LCtrl-Shift-Semicolon"]
+        def wezterm_ctrl_c():
+            keymap.getWindow().setImeStatus(0)
+            keymap.InputKeyCommand("LCtrl-C")()
+        keymap_tabby[ "LCtrl-C" ] = wezterm_ctrl_c
 
     # Global app hot key
     # https://zenn.dev/awtnb/books/adf6c5162a9f08/viewer/1728cd
