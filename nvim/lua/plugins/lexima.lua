@@ -2,8 +2,10 @@ return {
   "cohama/lexima.vim",
   event = { "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
   config = function()
+    vim.keymap.set("i", "<C-f>", "<Right>")
+
+    -- inoremap <C-f> <C-r>=lexima#insmode#leave(1, '<LT>C-G>U<LT>RIGHT>')<CR>
     vim.cmd [[
-    inoremap <C-f> <C-r>=lexima#insmode#leave(1, '<LT>C-G>U<LT>RIGHT>')<CR>
 
     function! s:lexima_alter_command_add_rule(original, alternative) abort
       let input_space = '<C-w>' . a:alternative . '<Space>'

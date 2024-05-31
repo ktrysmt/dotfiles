@@ -1,20 +1,16 @@
 return {
-  "github/copilot.vim",
-  event = { "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
+  "zbirenbaum/copilot.lua",
+  cmd = "Copilot",
+  event = "InsertEnter",
   config = function()
-    vim.keymap.set('i', '<Tab>', '<Plug>(copilot-accept-word)')
-
-    -- vim.g.copilot_filetypes = {
-    --   ["*"] = false,
-    --   ["javascript"] = true,
-    --   ["typescript"] = true,
-    --   ["lua"] = false,
-    --   ["rust"] = true,
-    --   ["c"] = true,
-    --   ["c#"] = true,
-    --   ["c++"] = true,
-    --   ["go"] = true,
-    --   ["python"] = true,
-    -- }
+    require("copilot").setup({
+      suggestion = {
+        auto_trigger = true,
+        keymap = {
+          accept = "<C-j>",
+          accept_word = "<S-C-j>",
+        }
+      }
+    })
   end,
 }
