@@ -104,3 +104,8 @@ end
 -- vim.keymap.set("n", "<C-k>", '"zdd<Up>"zP')
 vim.keymap.set("v", "<C-j>", '"zx"zp`[V`]')
 vim.keymap.set("v", "<C-k>", '"zx<Up>"zP`[V`]')
+
+-- a to 2i
+for _, quote in ipairs({'"', "'", "`"}) do
+    vim.keymap.set({"x", "o"}, "a" .. quote, "2i" .. quote)
+end
