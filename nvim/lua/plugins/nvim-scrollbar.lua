@@ -1,6 +1,7 @@
 return {
   'petertriho/nvim-scrollbar',
   event = { "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
+  -- event = { "VeryLazy" },
   -- keys = {
   --   { "#", mode = "n" },
   --   { "n", mode = "n" },
@@ -8,16 +9,16 @@ return {
   --   { "*", mode = "n" },
   --   { "/", mode = "n" },
   -- },
-  dependencies = {
-    {
-      "kevinhwang91/nvim-hlslens",
-      config = function()
-        require("scrollbar.handlers.search").setup({
-          override_lens = function() end,
-        })
-      end
-    }
-  },
+  -- dependencies = {
+  --   {
+  --     "kevinhwang91/nvim-hlslens",
+  --     config = function()
+  --       require("scrollbar.handlers.search").setup({
+  --         override_lens = function() end,
+  --       })
+  --     end
+  --   }
+  -- },
   config = function()
     require("scrollbar").setup({
       excluded_buftypes = {
@@ -36,7 +37,7 @@ return {
         cursor = true,
         diagnostic = false,
         handle = true,
-        search = true,
+        -- search = true,
       },
     })
   end
