@@ -3,34 +3,31 @@
 set -o pipefail
 set -e
 
-read -p "password? > " PASSWORD
-
 # /etc/security/limits.conf
 # -----------------------
 # * soft nofile 65536
 # * hard nofile 65536
 ulimit -n 65536
 
-# base
-sudo apt-get update -qq -y
-sudo apt-get install -qq -y zsh
-sudo bash -c "echo $(which zsh) >> /etc/shells"
-echo $PASSWORD | chsh -s $(which zsh)
-export SHELL=/usr/bin/zsh
-exec $SHELL -l
-setopt interactivecomments
+export DEBIAN_FRONTEND=noninteractive
 
-# linuxbrew
-sudo apt-get -qq -y install build-essential curl file git wget gcc make
+# prepare
+sudo -E apt-get update -qq -y
+sudo -E apt-get install -qq -y zsh
+echo "setopt interactivecomments" > ~/.zshrc
+sudo -E bash -c "echo $(which zsh) >> /etc/shells"
+sudo -E chsh -s $(which zsh)
+exec zsh
+
+# brew
+sudo -E apt-get -qq -y install build-essential curl file git wget gcc make
 export CI=true
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-
 export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
-# brew
+# brew tools
 brew install \
-  asdf \
   bat \
   coreutils \
   curl \
@@ -61,21 +58,20 @@ brew install \
   watch \
   wget \
   difftastic \
+  mise \
   neovim
 brew install ynqa/tap/jnv
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 brew install b4b4r07/tap/gomi
-
-exec $SHELL -l
 $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
 
-# asdf
-asdf plugin add nodejs
-asdf plugin add python
-asdf install nodejs latest
-asdf install python latest
-asdf global nodejs latest
-asdf global python latest
+# mise
+eval $(mise activate zsh)
+eval $(mise activate --shims)
+mise use -g python@3.11
+mise use -g nodejs
+mise use -g go
+mise use -g bun
 
 # symlinks
 cd ~/
@@ -89,7 +85,7 @@ mkdir -p ~/.cache/vim/
 ln -s ~/dotfiles/nvim ~/.config/nvim
 ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
-ln -s ~/dotfiles/.zshrc ~/.zshrc
+ln -sf ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/.tigrc ~/.tigrc
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
 ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
@@ -97,6 +93,7 @@ cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
 
 # git config
+sudo ln -s "$(which echo)" /usr/local/bin/say
 git secrets --register-aws --global
 git secrets --install ~/.git-templates/git-secrets
 git config --global init.templatedir '~/.git-templates/git-secrets'
@@ -109,7 +106,7 @@ echo "ServerAliveInterval 15" >> ~/.ssh/config
 echo "ServerAliveCountMax 10" >> ~/.ssh/config
 
 # editor
-sudo ln -sf $(which nvim) /usr/local/bin/vim
+sudo -E ln -sf $(which nvim) /usr/local/bin/vim
 python -m pip install --user --upgrade pynvim
 python -m pip install --user --upgrade neovim
 go install github.com/go-delve/delve/cmd/dlv@latest
@@ -135,7 +132,7 @@ if [[ "$(uname -r)" == *microsoft* ]]; then
   echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.zshrc.private
   echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.zshrc.private
 
-  WIN_USER=`cmd.exe /c "echo %USERNAME%"`
+  WIN_USER=$(cmd.exe /c "echo %USERNAME%")
   WIN_USER=${WIN_USER%$'\r'}
   # https://github.com/equalsraf/win32yank/releases
   ln -s /mnt/c/Users/$WIN_USER/home_scripts/win32yank.exe /usr/local/bin/win32yank.exe
