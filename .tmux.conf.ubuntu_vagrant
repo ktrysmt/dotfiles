@@ -20,12 +20,9 @@ setw -g mode-keys vi
 bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
 bind-key -T copy-mode-vi v send-keys -X begin-selection
 
-# bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel clip.exe
-# bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel clip.exe
-
-#bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "win32yank.exe -i"
-#bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "win32yank.exe -i"
-#bind p run-shell 'win32yank.exe -o | xargs -0 -I{} tmux set-buffer -- {} && tmux paste-buffer'
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xsel --input --clipboard"
+bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xsel --input --clipboard"
+bind p run-shell 'xsel --output --clipboard 2>/dev/null | xargs -0 -I{} tmux set-buffer -- {} && tmux paste-buffer'
 
 bind 'C' new-window -c "#{pane_current_path}";
 bind '%' split-window -h -c "#{pane_current_path}";
