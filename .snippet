@@ -190,3 +190,5 @@ git log --reverse --patch --pickaxe-all -S "hogehoge"                           
 git grep -w 'text' $(git rev-list --all)                                                                                                                                                                                   # grep in all hashes
 bash -c 'echo "hoge fuga" | xargs -n 1 echo "m:"'                                                                                                                                                                          # xargs -n 1
 echo "${json_datas}" | jq -r ".[]" | while read -r data; do                                                                                                                                                                # json with jq to each
+nslookup -debug hooks.slack.com 8.8.8.8                                                                                                                                                                                    # check ttl
+
