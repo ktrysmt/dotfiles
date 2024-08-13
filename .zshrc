@@ -6,7 +6,7 @@ if [[ ! -r "$sheldon_cache" || "$sheldon_toml" -nt "$sheldon_cache" ]]; then
   mkdir -p $cache_dir
   sheldon source > $sheldon_cache
   mise activate zsh > $cache_dir/mise.zsh
-  echo "zsh-defer $cache_dir/mise.zsh" >> $sheldon_cache
+  echo "source $cache_dir/mise.zsh" >> $sheldon_cache
 fi
 source "$sheldon_cache"
 unset cache_dir sheldon_cache sheldon_toml
