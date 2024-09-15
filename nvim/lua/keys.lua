@@ -18,6 +18,7 @@ vim.keymap.set('n', '<C-g>', function()
 end)
 vim.keymap.set('n', '<Leader>p', '"0p', { silent = true })
 vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })
+vim.keymap.set('n', 'gV', '`[v`]', { silent = true })
 
 -- gh
 vim.keymap.set('n', 'gb', function()
@@ -106,8 +107,8 @@ vim.keymap.set("v", "<C-j>", '"zx"zp`[V`]')
 vim.keymap.set("v", "<C-k>", '"zx<Up>"zP`[V`]')
 
 -- a to 2i
-for _, quote in ipairs({'"', "'", "`"}) do
-    vim.keymap.set({"x", "o"}, "a" .. quote, "2i" .. quote)
+for _, quote in ipairs({ '"', "'", "`" }) do
+  vim.keymap.set({ "x", "o" }, "a" .. quote, "2i" .. quote)
 end
 
 -- <C-r>+	クリップボードの中身を挿入する
@@ -119,3 +120,6 @@ end
 -- :{range}!{cmd}	{range} で示されたバッファの範囲を標準出力とし、外部コマンド {cmd} を実行した結果で指定範囲を置き換える
 -- :r !{cmd}	外部コマンド {cmd} の実行結果をバッファに挿入する
 -- :w !{cmd}	バッファの中身を外部コマンド {cmd} の標準入力に流し込んで実行する
+
+-- matchit
+vim.cmd.packadd { args = { 'matchit' }, bang = false }
