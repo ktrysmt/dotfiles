@@ -1,12 +1,15 @@
 return {
   'nvim-treesitter/nvim-treesitter',
   version = "*", -- fix to use stable
-  event = "VeryLazy",
+  event = { "BufReadPre", "BufNewFile" },
+  -- event = "VeryLazy",
+  -- event = { "CursorHold", "CursorMoved" },
   build = ':TSUpdate',
   dependencies = {
     'JoosepAlviste/nvim-ts-context-commentstring',
     'nvim-treesitter/nvim-treesitter-textobjects',
     'RRethy/nvim-treesitter-textsubjects',
+    'andymass/vim-matchup',
   },
   config = function()
     require('nvim-treesitter.configs').setup {
@@ -75,6 +78,11 @@ return {
           -- [';'] = 'textsubjects-container-outer',
           -- ['.'] = 'textsubjects-container-inner',
         },
+      },
+      matchup = {
+        enable = true,             -- mandatory, false will disable the whole extension
+        disable = { "c", "ruby" }, -- optional, list of language that will be disabled
+        -- [options]
       },
     }
 

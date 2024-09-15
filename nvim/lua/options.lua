@@ -113,3 +113,4 @@ elseif vim.fn.has("linux") == 1 then
     }
   end
 end
+vim.g.loaded_matchit = 1
