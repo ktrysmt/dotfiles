@@ -111,6 +111,10 @@ for _, quote in ipairs({ '"', "'", "`" }) do
   vim.keymap.set({ "x", "o" }, "a" .. quote, "2i" .. quote)
 end
 
+-- macro shortcut
+vim.keymap.set('n', '<Leader>q', '@q')
+
+
 -- <C-r>+	クリップボードの中身を挿入する
 -- <C-r>%	現在のバッファのファイルパスを挿入する
 -- <C-r>/	最後に検索した検索パターンを挿入する
@@ -120,6 +124,3 @@ end
 -- :{range}!{cmd}	{range} で示されたバッファの範囲を標準出力とし、外部コマンド {cmd} を実行した結果で指定範囲を置き換える
 -- :r !{cmd}	外部コマンド {cmd} の実行結果をバッファに挿入する
 -- :w !{cmd}	バッファの中身を外部コマンド {cmd} の標準入力に流し込んで実行する
-
--- matchit
-vim.cmd.packadd { args = { 'matchit' }, bang = false }
