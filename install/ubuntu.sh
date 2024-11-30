@@ -33,6 +33,7 @@ brew install \
   diff-so-fancy \
   eza \
   fd \
+  uv \
   fzf \
   fzy \
   gh \

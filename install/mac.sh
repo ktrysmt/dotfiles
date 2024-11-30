@@ -22,6 +22,7 @@ brew install \
   procs \
   fzf \
   xh \
+  uv \
   gat \
   sheldon \
   tig \
