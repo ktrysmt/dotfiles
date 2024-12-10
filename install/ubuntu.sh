@@ -16,7 +16,6 @@ sudo -E apt-get install -qq -y zsh
 echo "setopt interactivecomments" > ~/.zshrc
 sudo -E bash -c "echo $(which zsh) >> /etc/shells"
 sudo -E chsh -s $(which zsh)
-exec zsh
 
 # brew
 sudo -E apt-get -qq -y install build-essential curl file git wget gcc make
