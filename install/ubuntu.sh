@@ -91,7 +91,7 @@ cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
 
 # git config
-sudo ln -s "$(which echo)" /usr/local/bin/say
+sudo -E ln -s "$(which echo)" /usr/local/bin/say
 git secrets --register-aws --global
 git secrets --install ~/.git-templates/git-secrets
 git config --global init.templatedir '~/.git-templates/git-secrets'
