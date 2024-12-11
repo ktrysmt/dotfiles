@@ -9,10 +9,10 @@ return {
     "DiffviewRefresh",
     "DiffviewToggleFiles",
   },
-  -- keys = {
-  --   { "<Leader>gv", "<cmd>DiffviewOpen<cr>",        mode = "n" },
-  --   { "<Leader>gh", "<cmd>DiffviewFileHistory<cr>", mode = "n" },
-  -- },
+  keys = {
+    { "<Leader>gv", "<cmd>DiffviewOpen<cr>",        mode = "n" },
+    { "<Leader>gh", "<cmd>DiffviewFileHistory<cr>", mode = "n" },
+  },
   config = function()
     require("diffview").setup({
       file_history_panel = {

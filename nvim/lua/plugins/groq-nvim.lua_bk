@@ -1,0 +1,19 @@
+return {
+  'cdreetz/groq-nvim',
+  event = { "VeryLazy" },
+  dependencies = { 'nvim-lua/plenary.nvim' },
+  keys = {
+    { "<Leader>gg", ":GroqGenerate",            silent = true, mode = "n" },
+    { "<Leader>gc", ":GroqGenerateWithContext", silent = true, mode = "n" },
+    { "<Leader>ge", ":GroqEdit",                silent = true, mode = "n" },
+  },
+  config = function()
+    local api_key = os.getenv("GROQ_API_KEY")
+    if api_key then
+      require('groq-nvim').setup({
+        api_key = os.getenv("GROQ_API_KEY"),
+        model = "llama-3.3-70b-versatile"
+      })
+    end
+  end
+}
