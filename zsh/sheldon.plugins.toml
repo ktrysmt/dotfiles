@@ -45,10 +45,10 @@ remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer
 
 [plugins.dotfiles-sync]
 local = "~/dotfiles/zsh"
-use = ["sync.zsh"]
+use = ["{sync,private}.zsh"]
 apply = ["source"]
 
 [plugins.dotfiles-defers]
 local = "~/dotfiles/zsh"
-use = ["{!sync,*}.zsh"]
+use = ["{!sync,!private,*}.zsh"]
 

@@ -23,6 +23,7 @@ brew install \
   fzf \
   xh \
   uv \
+  gh \
   gat \
   sheldon \
   tig \
@@ -34,7 +35,6 @@ brew install \
   git-secrets \
   bat \
   watch \
-  gh \
   ghq \
   git \
   git-delta \

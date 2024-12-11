@@ -35,9 +35,9 @@ brew install \
   uv \
   fzf \
   fzy \
-  gh \
   xh \
   gat \
+  gh \
   ghq \
   git \
   git-delta \
