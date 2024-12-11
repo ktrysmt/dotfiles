@@ -43,7 +43,6 @@ brew install \
   git-delta \
   git-secrets \
   jq \
-  jq \
   llvm \
   nkf \
   nodejs \
@@ -110,7 +109,6 @@ python -m pip install --user --upgrade pynvim
 python -m pip install --user --upgrade neovim
 go install github.com/go-delve/delve/cmd/dlv@latest
 npm i -g npm-check-updates neovim @fsouza/prettierd eslint_d
-
 # go
 mkdir -p ~/project/bin
 export PATH=$PATH:/usr/local/go/bin
@@ -123,7 +121,7 @@ source $HOME/.cargo/env
 
 # env
 if [[ "$(uname -r)" == *microsoft* ]]; then
-  source ~/dotfiles/install/ubuntu.wsl.sh
+  source ~/dotfiles/install/ubuntu/wsl.sh
 else
-  source ~/dotfiles/install/ubuntu.vagrant.sh
+  source ~/dotfiles/install/ubuntu/vagrant.sh
 fi
