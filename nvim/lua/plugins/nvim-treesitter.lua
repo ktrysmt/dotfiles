@@ -1,6 +1,6 @@
 return {
   'nvim-treesitter/nvim-treesitter',
-  version = "*", -- fix to use stable
+  -- version = "*", -- fix to use stable
   event = { "BufReadPre", "BufNewFile" },
   -- event = "VeryLazy",
   -- event = { "CursorHold", "CursorMoved" },
