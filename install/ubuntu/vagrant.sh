@@ -17,4 +17,5 @@ fi
 export DISPLAY=":0"
 alias pbcopy='xsel --display :0 --input --clipboard'
 alias pbpaste='xsel --display :0 --output --clipboard'
+export SRC_ACCESS_TOKEN="" # login via github oauth in sourcegraph.com
 EOF

@@ -65,23 +65,23 @@ end)
 -- quickfix
 vim.keymap.set('n', '<Leader>co', '<cmd>copen<cr>', { silent = true })
 vim.keymap.set('n', '<Leader>cl', '<cmd>cclose<cr>', { silent = true })
-vim.keymap.set('n', '<Leader>cc', function()
-  qf_exists = false
-  for _, win in pairs(vim.fn.getwininfo()) do
-    if win["quickfix"] == 1 then
-      qf_exists = true
-    end
-  end
-  if qf_exists == true then
-    vim.cmd "cclose"
-    return
-  else
-    vim.cmd "copen"
-    vim.g.qf_exists = true
-    return
-  end
-end
-, { silent = true })
+-- vim.keymap.set('n', '<Leader>cc', function()
+--   qf_exists = false
+--   for _, win in pairs(vim.fn.getwininfo()) do
+--     if win["quickfix"] == 1 then
+--       qf_exists = true
+--     end
+--   end
+--   if qf_exists == true then
+--     vim.cmd "cclose"
+--     return
+--   else
+--     vim.cmd "copen"
+--     vim.g.qf_exists = true
+--     return
+--   end
+-- end
+-- , { silent = true })
 
 -- tab jump
 for i = 1, 9 do

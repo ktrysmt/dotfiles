@@ -4,10 +4,14 @@ set -o pipefail
 set -e
 
 ln -s ~/dotfiles/.tmux.conf.wsl ~/.tmux.conf
-echo "alias pbcopy='clip.exe'" >> ~/.zshrc.private
-echo "alias pbpaste='powershell.exe Get-Clipboard'" >> ~/.zshrc.private
-echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.zshrc.private
-echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.zshrc.private
+
+cat << EOF >> ~/.zshrc.private
+alias pbcopy='clip.exe'
+alias pbpaste='powershell.exe Get-Clipboard'
+export PATH=/home/linuxbrew/.linuxbrew/bin:\$PATH
+export PATH=/home/linuxbrew/.linuxbrew/sbin:\$PATH
+export SRC_ACCESS_TOKEN="" # login via github oauth in sourcegraph.com
+EOF
 
 WIN_USER=$(cmd.exe /c "echo %USERNAME%")
 WIN_USER=${WIN_USER%$'\r'}

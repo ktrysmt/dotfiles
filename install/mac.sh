@@ -98,6 +98,7 @@ python -m pip install --user --upgrade pynvim
 python -m pip install --user --upgrade neovim
 go install github.com/go-delve/delve/cmd/dlv@latest
 npm i -g npm-check-updates neovim @fsouza/prettierd eslint_d
+npm i -g @sourcegraph/cody
 
 # git config
 git secrets --register-aws --global

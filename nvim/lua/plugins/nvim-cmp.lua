@@ -99,6 +99,8 @@ return {
         { name = 'path' },
         -- { name = 'tmux' },
         { name = 'nvim_lsp_signature_help' },
+        -- { name = "cody",                   keyword_length = 2 },
+        { name = "cody" },
         { name = 'calc' },
         -- { name = 'treesitter' },
         -- { name = 'cmp_tabnine' },
