@@ -121,6 +121,8 @@ def configure(keymap):
             keymap.InputKeyCommand("LCtrl-C")()
         keymap_tabby[ "LCtrl-C" ] = wezterm_ctrl_c
 
+
+
     # Global app hot key
     # https://zenn.dev/awtnb/books/adf6c5162a9f08/viewer/1728cd
     if 1:
@@ -174,7 +176,7 @@ def configure(keymap):
             "LAlt-A": (
                 "brave.exe",
                 "Chrome_WidgetWin_1",
-                r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
+                r"C:\Users\%username%\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe"
             ),
             "LAlt-F": (
                 "msedge.exe",
@@ -189,12 +191,12 @@ def configure(keymap):
             "LAlt-O": (
                 "Obsidian.exe",
                 "Chrome_WidgetWin_1",
-                r"C:\Users\yuuyu\AppData\Local\Obsidian\Obsidian.exe"
+                r"C:\Users\%username%\AppData\Local\Obsidian\Obsidian.exe"
             ),
             "LAlt-E": (
-                "Code.exe",
+                "Cursor.exe",
                 "Chrome_WidgetWin_1",
-                r"C:\Users\yuuyu\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+                r"C:\Users\%username%\AppData\Local\Programs\cursor\Cursor.exe"
             ),
         }.items():
             keymap_global[key] = pseudo_cuteExec(*params)
