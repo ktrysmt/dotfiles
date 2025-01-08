@@ -17,5 +17,6 @@ return {
     vim.keymap.set("v", "<leader>ct", ":CodyTask ")
     vim.keymap.set("v", "<leader>ca", ":CodyAsk ")
     vim.keymap.set("v", "<leader>ce", ":CodyExplain<CR>")
+    vim.keymap.set("n", "<leader>ct", ":CodyTask ", { silent = true })
   end
 }

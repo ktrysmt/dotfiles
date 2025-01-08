@@ -10,7 +10,12 @@ return {
           accept = "<M-j>",
           accept_word = "<S-M-j>",
         }
-      }
+      },
+      filetypes = {
+        text = false,
+        markdown = false,
+        ["*"] = true,
+      },
     })
   end,
 }
