@@ -37,8 +37,8 @@ return {
           keymaps = {
             send = {
               modes = {
-                i = { "<C-m>" },
-                n = { "<C-m>" },
+                i = { "<A-n>" },
+                n = { "<A-n>" },
               },
             },
           },
@@ -49,6 +49,9 @@ return {
         agent = {
           adapter = "ollama",
         },
+        cmd = {
+          adapter = "ollama",
+        }
       },
     })
   end,
