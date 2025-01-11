@@ -5,11 +5,14 @@ return {
   config = function()
     local ollama_host = vim.fn.getenv("OLLAMA_HOST")
     local ollama_model = vim.fn.getenv("OLLAMA_MODEL")
-
-    require('llm').setup({
+    require("llm").setup({
       api_token = "api_token",
-      model = ollama_model,
-      backend = "ollama",
+      models = {
+        default = {
+          type = ollama_model
+        }
+      },
+      backend = "openai",
       url = "http://" .. (ollama_host or "localhost") .. ":11434",
       request_body = {
         parameters = {
