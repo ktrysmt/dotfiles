@@ -28,5 +28,13 @@ return {
       enable_suggestions_on_files = "*",
       disable_url_path_completion = false,
     })
+
+    -- vim.api.nvim_create_user_command("LLMComplete", function()
+    --   local result = require("llm").complete({
+    --     prompt = vim.fn.expand("<cword>"),
+    --     model = "default",
+    --   })
+    --   print(result)
+    -- end, {})
   end
 }
