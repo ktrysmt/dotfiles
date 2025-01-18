@@ -104,13 +104,13 @@
 			</timedclicks>
 			<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
 		</Middle>
-		<XLeft action="133" keys="{RIGHT}" keyaction="0" keyrepeat="0" active="false" blockmouse="true" randomisedelay="false" app="" desc="">
+		<XLeft action="133" keys="{RIGHT}" keyaction="2" keyrepeat="34" active="true" blockmouse="true" randomisedelay="false" app="" desc="">
 			<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
 			<timedclicks Description="" ReleaseOnUp="true" AbortOnMove="false" AbortOnMove2="false" AbortPixels="5" Time0="0" Enable0="true" Time1="250" Enable1="true" Time2="1000" Enable2="false" Time3="1500" Enable3="false">
 				<Press0 action="28" keys="{LEFT}" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
 					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
 				</Press0>
-				<Press1 action="28" keys="{LEFT}" keyaction="5" keyrepeat="90" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
+				<Press1 action="28" keys="{LEFT}" keyaction="5" keyrepeat="200" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
 					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
 				</Press1>
 				<Press2 action="6" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
@@ -121,13 +121,13 @@
 				</Press3>
 			</timedclicks>
 		</XLeft>
-		<XRight action="133" keys="{LEFT}" keyaction="0" keyrepeat="0" active="false" blockmouse="true" randomisedelay="false" app="" desc="">
+		<XRight action="133" keys="{LEFT}" keyaction="2" keyrepeat="34" active="true" blockmouse="true" randomisedelay="false" app="" desc="">
 			<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
 			<timedclicks Description="" ReleaseOnUp="true" AbortOnMove="false" AbortOnMove2="false" AbortPixels="5" Time0="0" Enable0="true" Time1="200" Enable1="true" Time2="1000" Enable2="false" Time3="1500" Enable3="false">
 				<Press0 action="28" keys="{RIGHT}" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
 					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
 				</Press0>
-				<Press1 action="28" keys="{RIGHT}" keyaction="5" keyrepeat="90" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
+				<Press1 action="28" keys="{RIGHT}" keyaction="5" keyrepeat="200" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
 					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
 				</Press1>
 				<Press2 action="6" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
