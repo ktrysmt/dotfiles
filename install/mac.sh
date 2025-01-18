@@ -37,6 +37,7 @@ brew install \
   watch \
   ghq \
   git \
+  pnpm \
   git-delta \
   kind \
   kubectl \

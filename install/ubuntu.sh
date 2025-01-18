@@ -48,6 +48,7 @@ brew install \
   nodejs \
   peco \
   procs \
+  pnpm \
   ripgrep \
   rust-analyzer \
   sheldon \
