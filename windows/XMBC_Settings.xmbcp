@@ -87,8 +87,8 @@
 		<Right action="40" keys="" keyaction="2" keyrepeat="34" active="true" blockmouse="true" randomisedelay="false" app="" desc="">
 			<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
 		</Right>
-		<Middle action="133" keys="{WAIT:1}{LWIN}{TAB}" keyaction="2" keyrepeat="34" active="true" blockmouse="true" randomisedelay="false" app="" desc="">
-			<timedclicks Description="" ReleaseOnUp="true" AbortOnMove="false" AbortOnMove2="false" AbortPixels="5" Time0="0" Enable0="true" Time1="350" Enable1="true" Time2="1000" Enable2="false" Time3="1500" Enable3="false">
+		<Middle action="133" keys="" keyaction="2" keyrepeat="34" active="true" blockmouse="true" randomisedelay="false" app="" desc="">
+			<timedclicks Description="" ReleaseOnUp="true" AbortOnMove="false" AbortOnMove2="false" AbortPixels="5" Time0="0" Enable0="true" Time1="450" Enable1="true" Time2="1000" Enable2="false" Time3="1500" Enable3="false">
 				<Press0 action="5" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
 					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
 				</Press0>
@@ -104,39 +104,23 @@
 			</timedclicks>
 			<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
 		</Middle>
-		<XLeft action="133" keys="{RIGHT}" keyaction="2" keyrepeat="34" active="true" blockmouse="true" randomisedelay="false" app="" desc="">
-			<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
+		<XLeft action="133" keys="" keyaction="2" keyrepeat="34" active="true" blockmouse="true" randomisedelay="false" app="" desc="">
 			<timedclicks Description="" ReleaseOnUp="true" AbortOnMove="false" AbortOnMove2="false" AbortPixels="5" Time0="0" Enable0="true" Time1="250" Enable1="true" Time2="1000" Enable2="false" Time3="1500" Enable3="false">
-				<Press0 action="28" keys="{LEFT}" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
-					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
-				</Press0>
-				<Press1 action="28" keys="{LEFT}" keyaction="5" keyrepeat="200" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
-					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
-				</Press1>
-				<Press2 action="6" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
-					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
-				</Press2>
-				<Press3 action="6" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
-					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
-				</Press3>
+				<Press0 action="28" keys="{LEFT}" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="" />
+				<Press1 action="28" keys="{LEFT}" keyaction="5" keyrepeat="200" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="" />
+				<Press2 action="6" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="" />
+				<Press3 action="6" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="" />
 			</timedclicks>
-		</XLeft>
-		<XRight action="133" keys="{LEFT}" keyaction="2" keyrepeat="34" active="true" blockmouse="true" randomisedelay="false" app="" desc="">
 			<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
+		</XLeft>
+		<XRight action="133" keys="" keyaction="2" keyrepeat="34" active="true" blockmouse="true" randomisedelay="false" app="" desc="">
 			<timedclicks Description="" ReleaseOnUp="true" AbortOnMove="false" AbortOnMove2="false" AbortPixels="5" Time0="0" Enable0="true" Time1="200" Enable1="true" Time2="1000" Enable2="false" Time3="1500" Enable3="false">
-				<Press0 action="28" keys="{RIGHT}" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
-					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
-				</Press0>
-				<Press1 action="28" keys="{RIGHT}" keyaction="5" keyrepeat="200" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
-					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
-				</Press1>
-				<Press2 action="6" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
-					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
-				</Press2>
-				<Press3 action="6" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
-					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
-				</Press3>
+				<Press0 action="28" keys="{RIGHT}" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="" />
+				<Press1 action="28" keys="{RIGHT}" keyaction="5" keyrepeat="200" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="" />
+				<Press2 action="6" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="" />
+				<Press3 action="6" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="" />
 			</timedclicks>
+			<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
 		</XRight>
 		<TiltLeft action="40" keys="" keyaction="2" keyrepeat="34" active="true" blockmouse="true" randomisedelay="false" app="" desc="">
 			<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
