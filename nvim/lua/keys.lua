@@ -114,6 +114,10 @@ end
 -- macro shortcut
 vim.keymap.set('n', '<Leader>q', '@q')
 
+-- replace a" to 2i" https://zenn.dev/vim_jp/articles/2024-06-05-vim-middle-class-features
+for _, quote in ipairs({ '"', "'", "`" }) do
+  vim.keymap.set({ "x", "o" }, "a" .. quote, "2i" .. quote)
+end
 
 -- <C-r>+	クリップボードの中身を挿入する
 -- <C-r>%	現在のバッファのファイルパスを挿入する
@@ -124,3 +128,6 @@ vim.keymap.set('n', '<Leader>q', '@q')
 -- :{range}!{cmd}	{range} で示されたバッファの範囲を標準出力とし、外部コマンド {cmd} を実行した結果で指定範囲を置き換える
 -- :r !{cmd}	外部コマンド {cmd} の実行結果をバッファに挿入する
 -- :w !{cmd}	バッファの中身を外部コマンド {cmd} の標準入力に流し込んで実行する
+
+-- Visualモードで数字の列を矩形選択→g<C-a>で連番作成
+-- func(a1,|a2,a3)のときct)でfunc(a1,)でインサートモード

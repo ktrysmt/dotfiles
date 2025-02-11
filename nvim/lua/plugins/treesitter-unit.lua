@@ -32,9 +32,8 @@ return {
   {
     'ggandor/leap.nvim',
     keys = {
-      { 'f',  mode = { "n", "x", "o" } },
-      { 'F',  mode = { "n", "x", "o" } },
-      { 'gf', mode = { "n", "x", "o" } },
+      { 'f', mode = { "n", "x", "o" } },
+      { 'F', mode = { "n", "x", "o" } },
     },
     config = function()
       local leap = require('leap')
@@ -48,8 +47,6 @@ return {
       leap.opts.special_keys.prev_target = '<space>'
       vim.keymap.set({ 'n', 'x', 'o' }, 'f', '<Plug>(leap-forward)')
       vim.keymap.set({ 'n', 'x', 'o' }, 'F', '<Plug>(leap-backward)')
-      vim.keymap.set({ 'n', 'x', 'o' }, 'gf', '<Plug>(leap-from-window)')
-      vim.keymap.set({ 'n', 'x', 'o' }, 'gF', '<Plug>(leap-cross-window)')
 
       -- vim.api.nvim_set_hl(0, 'LeapBackdrop', { fg = '#aaaaaa' })
       vim.api.nvim_set_hl(0, 'LeapLabelPrimary', { fg = 'black', bg = '#bfff19' })
