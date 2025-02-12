@@ -38,6 +38,7 @@ return {
         "css",
         "git_rebase",
         "gitcommit",
+        "gitignore",
       },
       auto_install = true,
       highlight = {
