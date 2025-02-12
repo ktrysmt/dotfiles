@@ -41,4 +41,3 @@ bindkey '^X^M' peco-select-snippet
 # pushd
 DIRSTACKSIZE=100
 setopt AUTO_PUSHD
-

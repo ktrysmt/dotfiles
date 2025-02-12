@@ -87,6 +87,7 @@ return {
 
       sources = cmp.config.sources({
         { name = "cody" },
+        -- { name = 'cmp_ai' },
         { name = 'nvim_lsp' },
         { name = 'vsnip' },
         {

@@ -1,0 +1,24 @@
+return {
+  'maxwell-bland/cmp-ai',
+  dependencies = { 'nvim-lua/plenary.nvim' },
+  event = 'InsertEnter',
+  config = function()
+    local cmp_ai = require('cmp_ai.config')
+    local ollama_host = vim.fn.getenv("OLLAMA_HOST")
+
+    cmp_ai:setup({
+      max_lines = 100,
+      provider = 'Ollama',
+      provider_options = {
+        base_url = 'http://' .. (ollama_host or "localhost") .. ':11434/api/generate',
+        -- stream = true,
+        model = 'deepseek-coder-v2',
+      },
+      notify = true,
+      notify_callback = function(msg)
+        vim.notify(msg)
+      end,
+      run_on_every_keystroke = false,
+    })
+  end,
+}
