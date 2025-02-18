@@ -1,0 +1,7 @@
+return {
+  'kiddos/gemini.nvim',
+  event = { "VeryLazy" },
+  config = function()
+    require('gemini').setup()
+  end
+}
