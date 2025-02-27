@@ -116,12 +116,11 @@ def configure(keymap):
         keymap_tabby["LCtrl-Shift-K"] = ["LCtrl-Shift-K"]
         keymap_tabby["LCtrl-Shift-J"] = ["LCtrl-Shift-J"]
         keymap_tabby["LCtrl-Shift-Semicolon"] = ["LCtrl-Shift-Semicolon"]
+
         def wezterm_ctrl_c():
             keymap.getWindow().setImeStatus(0)
             keymap.InputKeyCommand("LCtrl-C")()
-        keymap_tabby[ "LCtrl-C" ] = wezterm_ctrl_c
-
-
+        keymap_tabby["LCtrl-C"] = wezterm_ctrl_c
 
     # Global app hot key
     # https://zenn.dev/awtnb/books/adf6c5162a9f08/viewer/1728cd
@@ -163,9 +162,11 @@ def configure(keymap):
             def _executer():
                 found_wnd = find_window(exe_name, class_name)
                 if exe_name == "msedge.exe":
-                    print(found_wnd)
+                    print("###### > ", found_wnd)
                 if not found_wnd:
-                    execute_path(exe_path)
+                    print("****** > ", found_wnd)
+                    # execute_path(exe_path)
+                    shellExecute(None, exe_path, "", "")
                 else:
                     if found_wnd != keymap.getWindow():
                         if activate_window(found_wnd):
@@ -178,11 +179,11 @@ def configure(keymap):
                 "Chrome_WidgetWin_1",
                 r"C:\Users\%username%\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe"
             ),
-            "LAlt-F": (
-                "msedge.exe",
-                "Chrome_WidgetWin_1",
-                r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-            ),
+            # "LAlt-F": (
+            #     "msedge.exe",
+            #     "Chrome_WidgetWin_1",
+            #     r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+            # ),
             "LAlt-G": (
                 "wezterm-gui.exe",
                 "org.wezfurlong.wezterm",
@@ -194,9 +195,9 @@ def configure(keymap):
                 r"C:\Users\%username%\AppData\Local\Obsidian\Obsidian.exe"
             ),
             "LAlt-E": (
-                "Cursor.exe",
+                "Code.exe",
                 "Chrome_WidgetWin_1",
-                r"C:\Users\%username%\AppData\Local\Programs\cursor\Cursor.exe"
+                r"C:\Users\%username%\AppData\Local\Programs\Microsoft VS Code\Code.exe"
             ),
         }.items():
             keymap_global[key] = pseudo_cuteExec(*params)
