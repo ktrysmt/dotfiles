@@ -15,6 +15,9 @@ def configure(keymap):
         if os.path.exists(s):
             return s
         return None
+        
+    def get_username():
+        return os.environ['USERNAME']
 
     def execute_path(s, arg=None):
         if s:
@@ -116,11 +119,12 @@ def configure(keymap):
         keymap_tabby["LCtrl-Shift-K"] = ["LCtrl-Shift-K"]
         keymap_tabby["LCtrl-Shift-J"] = ["LCtrl-Shift-J"]
         keymap_tabby["LCtrl-Shift-Semicolon"] = ["LCtrl-Shift-Semicolon"]
-
         def wezterm_ctrl_c():
             keymap.getWindow().setImeStatus(0)
             keymap.InputKeyCommand("LCtrl-C")()
-        keymap_tabby["LCtrl-C"] = wezterm_ctrl_c
+        keymap_tabby[ "LCtrl-C" ] = wezterm_ctrl_c
+
+
 
     # Global app hot key
     # https://zenn.dev/awtnb/books/adf6c5162a9f08/viewer/1728cd
@@ -161,43 +165,35 @@ def configure(keymap):
         def pseudo_cuteExec(exe_name, class_name, exe_path):
             def _executer():
                 found_wnd = find_window(exe_name, class_name)
-                if exe_name == "msedge.exe":
-                    print("###### > ", found_wnd)
-                if not found_wnd:
-                    print("****** > ", found_wnd)
-                    # execute_path(exe_path)
+                if found_wnd == None:
                     shellExecute(None, exe_path, "", "")
                 else:
                     if found_wnd != keymap.getWindow():
                         if activate_window(found_wnd):
                             return None
             return _executer
+        username = get_username()
         # キー入力でウィンドウのアクティブ化
         for key, params in {
             "LAlt-A": (
                 "brave.exe",
                 "Chrome_WidgetWin_1",
-                r"C:\Users\%username%\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe"
+                r"C:\Users\%s\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe" % username
             ),
-            # "LAlt-F": (
-            #     "msedge.exe",
-            #     "Chrome_WidgetWin_1",
-            #     r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-            # ),
             "LAlt-G": (
                 "wezterm-gui.exe",
                 "org.wezfurlong.wezterm",
-                r"C:\WINDOWS\system32\cmd.exe"
+                r"C:\Program Files\WezTerm\wezterm-gui.exe"
             ),
             "LAlt-O": (
                 "Obsidian.exe",
                 "Chrome_WidgetWin_1",
-                r"C:\Users\%username%\AppData\Local\Obsidian\Obsidian.exe"
+                r"C:\Users\%s\AppData\Local\Obsidian\Obsidian.exe" % username
             ),
             "LAlt-E": (
                 "Code.exe",
                 "Chrome_WidgetWin_1",
-                r"C:\Users\%username%\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+                r"C:\Users\%s\AppData\Local\Programs\Microsoft VS Code\Code.exe" % username
             ),
         }.items():
             keymap_global[key] = pseudo_cuteExec(*params)
