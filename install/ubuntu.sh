@@ -50,7 +50,6 @@ brew install \
   procs \
   pnpm \
   ripgrep \
-  rust-analyzer \
   sheldon \
   tig \
   tree \

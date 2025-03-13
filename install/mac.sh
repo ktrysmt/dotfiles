@@ -45,7 +45,6 @@ brew install \
   kubectx \
   kubernetes-helm \
   coreutils \
-  rust-analyzer \
   llvm \
   gopls \
   neovim \

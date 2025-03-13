@@ -75,9 +75,15 @@ return {
         callback = init_lspconfig,
       })
 
+      -- https://rust-analyzer.github.io/book/other_editors.html#nvim-lsp
+      lspconfig.rust_analyzer.setup({
+        on_attach = function(client, bufnr)
+          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+        end
+      })
+
       -- https://www.reddit.com/r/neovim/comments/11q17mq/comment/jc13v1o/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
       -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
-      --
       -- lspconfig.rust_analyzer.setup {
       --   settings = {
       --     ['rust-analyzer'] = {
