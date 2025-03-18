@@ -32,9 +32,6 @@ colors
 # general
 bindkey -e
 
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # snip
 bindkey '^X^M' peco-select-snippet
 
