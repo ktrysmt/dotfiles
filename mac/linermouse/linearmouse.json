@@ -1,0 +1,73 @@
+{
+  "schemes" : [
+    {
+      "if" : {
+        "device" : {
+          "category" : "trackpad",
+          "productID" : "0x342",
+          "productName" : "Apple Internal Keyboard \/ Trackpad",
+          "vendorID" : "0x5ac"
+        }
+      },
+      "pointer" : {
+        "speed" : 0.104
+      },
+      "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1.75
+        },
+        "speed" : {
+          "vertical" : 5.18
+        },
+        "reverse" : {
+          "vertical" : false
+        }
+      }
+    },
+    {
+      "pointer" : {
+        "speed" : 0.1522,
+        "acceleration" : 6.6119
+      },
+      "if" : {
+        "device" : {
+          "vendorID" : "0x46d",
+          "productID" : "0xc534",
+          "category" : "mouse",
+          "productName" : "USB Receiver"
+        }
+      }
+    },
+    {
+      "pointer" : {
+        "speed" : 0.08,
+        "disableAcceleration" : false,
+        "acceleration" : 10
+      },
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "vendorID" : "0x1ea7",
+          "productID" : "0x64",
+          "productName" : "2.4G   Mouse "
+        }
+      }
+    },
+    {
+      "if" : {
+        "device" : {
+          "productID" : "0x5",
+          "vendorID" : "0x1bcf",
+          "productName" : "USB Optical Mouse",
+          "category" : "mouse"
+        }
+      },
+      "pointer" : {
+        "disableAcceleration" : true,
+        "speed" : 0.1114,
+        "acceleration" : 1.6184
+      }
+    }
+  ],
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0"
+}
