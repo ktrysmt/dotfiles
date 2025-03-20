@@ -35,6 +35,8 @@ bind k select-pane -U
 bind l select-pane -R
 # unzen pane
 bind-key a run "tmux last-pane && tmux resize-pane -Z"
+# setup sub vert pane
+bind-key v split-window -h -p 33
 
 # ---------
 # general
