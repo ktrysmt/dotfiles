@@ -16,6 +16,9 @@ def configure(keymap):
             return s
         return None
 
+    def delay(sec=0.05):
+        time.sleep(sec)
+
     def get_username():
         return os.environ['USERNAME']
 
@@ -187,7 +190,7 @@ def configure(keymap):
             "LAlt-O": (
                 "Obsidian.exe",
                 "Chrome_WidgetWin_1",
-                r"C:\Users\%s\AppData\Local\Obsidian\Obsidian.exe" % username
+                r"C:\Users\%s\AppData\Local\Programs\Obsidian\Obsidian.exe" % username
             ),
             "LAlt-E": (
                 "Code.exe",
