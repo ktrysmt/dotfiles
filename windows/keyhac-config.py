@@ -15,7 +15,7 @@ def configure(keymap):
         if os.path.exists(s):
             return s
         return None
-        
+
     def get_username():
         return os.environ['USERNAME']
 
@@ -66,10 +66,10 @@ def configure(keymap):
         keymap_global["LCtrl-Left"] = "LWin-LCtrl-Left"
         keymap_global["LCtrl-Right"] = "LWin-LCtrl-Right"
 
-        keymap_global["LAlt-Up"] = "LWin-Up"
-        keymap_global["LAlt-Down"] = "LWin-Down"
-        keymap_global["LAlt-Left"] = "LWin-Left"
-        keymap_global["LAlt-Right"] = "LWin-Right"
+        # keymap_global["LAlt-Up"] = "LWin-Up"
+        # keymap_global["LAlt-Down"] = "LWin-Down"
+        # keymap_global["LAlt-Left"] = "LWin-Left"
+        # keymap_global["LAlt-Right"] = "LWin-Right"
 
         # keymap_global[ "LAlt-A" ] = "LWin-1"
         # keymap_global[ "LAlt-G" ] = "LWin-2"
@@ -119,12 +119,11 @@ def configure(keymap):
         keymap_tabby["LCtrl-Shift-K"] = ["LCtrl-Shift-K"]
         keymap_tabby["LCtrl-Shift-J"] = ["LCtrl-Shift-J"]
         keymap_tabby["LCtrl-Shift-Semicolon"] = ["LCtrl-Shift-Semicolon"]
+
         def wezterm_ctrl_c():
             keymap.getWindow().setImeStatus(0)
             keymap.InputKeyCommand("LCtrl-C")()
-        keymap_tabby[ "LCtrl-C" ] = wezterm_ctrl_c
-
-
+        keymap_tabby["LCtrl-C"] = wezterm_ctrl_c
 
     # Global app hot key
     # https://zenn.dev/awtnb/books/adf6c5162a9f08/viewer/1728cd
@@ -197,6 +196,81 @@ def configure(keymap):
             ),
         }.items():
             keymap_global[key] = pseudo_cuteExec(*params)
+
+    if 1:
+        def window_maximize():
+            keymap.getTopLevelWindow().maximize()
+            return
+
+        def window_snap(snap="left", shift=False):
+            wnd = keymap.getTopLevelWindow()
+            wnd_left, wnd_top, wnd_right, wnd_bottom = wnd.getRect()
+            mntr_left, mntr_top, mntr_right, mntr_bottom = get_monitor_areas()[
+                0]
+            if shift:
+                center = int((mntr_right - mntr_left) / 3)
+            else:
+                center = int((mntr_right - mntr_left) / 2)
+            if snap == "right":
+                to_rect = (center, mntr_top, mntr_right, mntr_bottom)
+            else:
+                to_rect = (mntr_left, mntr_top, center, mntr_bottom)
+            set_wnd_rect(to_rect)
+
+        def window_left():
+            window_snap("left")
+            return
+
+        def window_right():
+            window_snap("right")
+            return
+
+        def window_shift_left():
+            window_snap("left", True)
+            return
+
+        def window_shift_right():
+            window_snap("right", True)
+            return
+
+        def window_centerize():
+            wnd = keymap.getTopLevelWindow()
+            if wnd.isMaximized():
+                return None
+            wnd_left, wnd_top, wnd_right, wnd_bottom = wnd.getRect()
+            width = wnd_right - wnd_left
+            mntr_left, mntr_top, mntr_right, mntr_bottom = get_monitor_areas()[
+                0]
+            center = (mntr_right - mntr_left) / 2
+            lx = int(center - width/2)
+            to_rect = (lx, mntr_top, lx+width, mntr_bottom)
+            set_wnd_rect(to_rect)
+
+        def get_monitor_areas():
+            monitors = pyauto.Window.getMonitorInfo()
+            main_monitor_first = sorted(
+                monitors, key=lambda x: x[2], reverse=True)
+            non_taskbar_areas = list(map(lambda x: x[1], main_monitor_first))
+            return non_taskbar_areas
+
+        def set_wnd_rect(rect):
+            wnd = keymap.getTopLevelWindow()
+            if list(wnd.getRect()) == rect:
+                wnd.maximize()
+            else:
+                if wnd.isMaximized():
+                    wnd.restore()
+                    delay()
+                wnd.setRect(rect)
+        keymap_global["LAlt-Up"] = window_maximize
+        keymap_global["LAlt-Down"] = "LWin-Down"
+        keymap_global["LAlt-Left"] = window_left
+        keymap_global["LAlt-Right"] = window_right
+        keymap_global["LAlt-Enter"] = window_centerize
+        keymap_global["LAlt-Shift-Left"] = window_shift_left
+        keymap_global["LAlt-Shift-Right"] = window_shift_right
+
+    # ----------------------------------------
 
     # USER0-F1 : Test of launching application
     if 0:
