@@ -210,12 +210,13 @@ def configure(keymap):
             wnd_left, wnd_top, wnd_right, wnd_bottom = wnd.getRect()
             mntr_left, mntr_top, mntr_right, mntr_bottom = get_monitor_areas()[
                 0]
+            bit = 15
             if shift:
-                center = int((mntr_right - mntr_left) / 3)
+                center = round((mntr_right - mntr_left) / 3)
             else:
-                center = int((mntr_right - mntr_left) / 2)
+                center = round((mntr_right - mntr_left) / 2)
             if snap == "right":
-                to_rect = (center, mntr_top, mntr_right, mntr_bottom)
+                to_rect = (center-bit, mntr_top, mntr_right, mntr_bottom)
             else:
                 to_rect = (mntr_left, mntr_top, center, mntr_bottom)
             set_wnd_rect(to_rect)
