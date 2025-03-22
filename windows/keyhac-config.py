@@ -211,14 +211,16 @@ def configure(keymap):
             mntr_left, mntr_top, mntr_right, mntr_bottom = get_monitor_areas()[
                 0]
             bit = 15
+            thin = 5
             if shift:
                 center = round((mntr_right - mntr_left) / 3)
             else:
                 center = round((mntr_right - mntr_left) / 2)
             if snap == "right":
-                to_rect = (center-bit, mntr_top, mntr_right, mntr_bottom)
+                to_rect = (center-bit, mntr_top,
+                           mntr_right+thin, mntr_bottom+thin)
             else:
-                to_rect = (mntr_left, mntr_top, center, mntr_bottom)
+                to_rect = (mntr_left-thin, mntr_top, center, mntr_bottom+thin)
             set_wnd_rect(to_rect)
 
         def window_left():
