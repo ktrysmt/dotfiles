@@ -4,6 +4,12 @@ vim.keymap.set({ 'n', 'v' }, 'k', 'gk')
 
 vim.keymap.set('n', '<Esc><Esc>', '<cmd>nohlsearch<CR><Esc><C-l>', { silent = true })
 
+-- stay in search
+vim.keymap.set('n', 'n', 'n``')
+vim.keymap.set('n', 'N', 'N``')
+vim.keymap.set('n', '/', '/\\v<CR>``')
+vim.keymap.set('n', '?', '?\\v<CR>``')
+
 -- search and replace
 vim.keymap.set('n', 'x', '"_x') -- only n, not v
 vim.keymap.set('n', 's', '"_s')
