@@ -1,0 +1,37 @@
+return {
+  'Bekaboo/dropbar.nvim',
+  event = 'VeryLazy',
+  dependencies = {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    build = 'make'
+  },
+  config = function()
+    local dropbar_api = require('dropbar.api')
+    vim.keymap.set('n', '<Leader>;', dropbar_api.pick, { desc = 'Pick symbols in winbar' })
+
+    local dropbar = require('dropbar')
+    local sources = require('dropbar.sources')
+
+    local custom_path = {
+      get_symbols = function(buff, win, cursor)
+        local symbols = sources.path.get_symbols(buff, win, cursor)
+        symbols[#symbols].name_hl = 'DropBarFileName'
+        if vim.bo[buff].modified then
+          symbols[#symbols].name = symbols[#symbols].name .. ' [+]'
+          symbols[#symbols].name_hl = 'DiffAdded'
+        end
+        return symbols
+      end,
+    }
+
+    dropbar.setup({
+      bar = {
+        sources = function(_, _)
+          return {
+            custom_path
+          }
+        end
+      }
+    })
+  end
+}
