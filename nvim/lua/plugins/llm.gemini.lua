@@ -1,6 +1,6 @@
 return {
   'kiddos/gemini.nvim',
-  event = { "VeryLazy" },
+  event = { "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
   config = function()
     local gemini_api_key = vim.fn.getenv("GEMINI_API_KEY")
     if gemini_api_key then
