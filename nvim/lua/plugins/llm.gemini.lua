@@ -9,7 +9,6 @@ return {
       },
       instruction = {
         enabled = true,
-        menu_key = '<C-o>',
         prompts = {
           {
             name = 'Code Review',
