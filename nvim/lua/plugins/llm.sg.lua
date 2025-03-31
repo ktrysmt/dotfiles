@@ -4,6 +4,7 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope.nvim",
   },
+  cond = vim.env.SRC_ACCESS_TOKEN,
   event = { "LspAttach", "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
   keys = {
     { "<leader>cc", mode = "n" },
