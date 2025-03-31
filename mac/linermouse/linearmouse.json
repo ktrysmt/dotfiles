@@ -1,73 +1,78 @@
 {
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0",
   "schemes" : [
     {
-      "if" : {
-        "device" : {
-          "category" : "trackpad",
-          "productID" : "0x342",
-          "productName" : "Apple Internal Keyboard \/ Trackpad",
-          "vendorID" : "0x5ac"
-        }
-      },
       "pointer" : {
         "speed" : 0.104
       },
       "scrolling" : {
+        "reverse" : {
+          "vertical" : false
+        },
         "acceleration" : {
           "vertical" : 1.75
         },
         "speed" : {
           "vertical" : 5.18
-        },
-        "reverse" : {
-          "vertical" : false
+        }
+      },
+      "if" : {
+        "device" : {
+          "vendorID" : "0x5ac",
+          "productID" : "0x342",
+          "productName" : "Apple Internal Keyboard \/ Trackpad",
+          "category" : "trackpad"
         }
       }
     },
     {
       "pointer" : {
-        "speed" : 0.1522,
-        "acceleration" : 6.6119
+        "acceleration" : 6.6119,
+        "speed" : 0.1522
       },
       "if" : {
         "device" : {
-          "vendorID" : "0x46d",
           "productID" : "0xc534",
-          "category" : "mouse",
-          "productName" : "USB Receiver"
+          "productName" : "USB Receiver",
+          "vendorID" : "0x46d",
+          "category" : "mouse"
         }
       }
     },
     {
-      "pointer" : {
-        "speed" : 0.08,
-        "disableAcceleration" : false,
-        "acceleration" : 10
-      },
       "if" : {
         "device" : {
-          "category" : "mouse",
           "vendorID" : "0x1ea7",
+          "productName" : "2.4G   Mouse ",
           "productID" : "0x64",
-          "productName" : "2.4G   Mouse "
-        }
-      }
-    },
-    {
-      "if" : {
-        "device" : {
-          "productID" : "0x5",
-          "vendorID" : "0x1bcf",
-          "productName" : "USB Optical Mouse",
           "category" : "mouse"
         }
       },
       "pointer" : {
+        "acceleration" : 10,
+        "disableAcceleration" : false,
+        "speed" : 0.08
+      }
+    },
+    {
+      "pointer" : {
         "disableAcceleration" : true,
-        "speed" : 0.1114,
-        "acceleration" : 1.6184
+        "acceleration" : 1.3815,
+        "speed" : 0.0689655172413792768
+      },
+      "if" : {
+        "device" : {
+          "productID" : "0x5",
+          "productName" : "USB Optical Mouse",
+          "category" : "mouse",
+          "vendorID" : "0x1bcf"
+        }
+      },
+      "scrolling" : {
+        "reverse" : {
+          "vertical" : true
+        }
       }
     }
-  ],
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0"
+  ]
 }

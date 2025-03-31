@@ -25,7 +25,7 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
-	<string>1343 698 743 448 0 0 3440 1415 </string>
+	<string>1348 725 743 448 0 0 3440 1415 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>-2230 618 620 398 -3840 -264 3840 1575 </string>
 	<key>SUEnableAutomaticChecks</key>
@@ -33,7 +33,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2025-03-19T02:38:52Z</date>
+	<date>2025-03-31T03:09:26Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
@@ -82,11 +82,11 @@
 	JoADgCqABYArgAeALIAtgC6AC6kAlAApAJYAlwAsACkAmgCbAJyAL4ANgDCAMYAQgA2A
 	MoAzgDSAFFphY3Rpb25UeXBlXXNob3J0Y3V0X2ZsYWdaZmlsdGVyVHlwZV8QFnRyaWdn
 	ZXJfb25fZXZlcnlfbWF0Y2hdc2hvcnRjdXRfY29kZV8QIipzYWZhcml8KmNocm9tZXwq
-	Y2hyb21pdW18KmZpcmVmb3hYUHJldiBUYWISAAYAAAkQMFIqZNMAHAANAA4AqgC0ADGp
+	Y2hyb21pdW18KmZpcmVmb3hYUHJldiBUYWISAAYAAAkQMFIqddMAHAANAA4AqgC0ADGp
 	AB4ArAAgAK4AIgCwALEAsgAmgAOANoAFgDeAB4A4gDmAOoALqQC1ACkAtwC4ACwAKQCa
 	AJsAvYA7gA2APIA9gBCADYAygDOAPoAUWmFjdGlvblR5cGVdc2hvcnRjdXRfZmxhZ1pm
 	aWx0ZXJUeXBlXxAWdHJpZ2dlcl9vbl9ldmVyeV9tYXRjaF1zaG9ydGN1dF9jb2RlXxAi
-	KnNhZmFyaXwqY2hyb21lfCpjaHJvbWl1bXwqZmlyZWZveFhOZXh0IFRhYhIABAAAUip1
+	KnNhZmFyaXwqY2hyb21lfCpjaHJvbWl1bXwqZmlyZWZveFhOZXh0IFRhYhIABAAAUipk
 	0wAcAA0ADgDJANIAMagAHgDLACAAzQAiAM8A0AAmgAOAQIAFgEGAB4BCgEOAC6gA0wAp
 	ANUAKwAsACkA2QDagESADYBFgA+AEIANgEaAR4AUWmFjdGlvblR5cGVdc2hvcnRjdXRf
 	ZmxhZ1pmaWx0ZXJUeXBlXXNob3J0Y3V0X2NvZGVfECIqc2FmYXJpfCpjaHJvbWV8KmNo

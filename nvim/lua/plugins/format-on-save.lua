@@ -33,7 +33,7 @@ return {
         css = formatters.lsp,
         html = formatters.lsp,
         java = formatters.lsp,
-        json = formatters.lsp,
+        -- json = formatters.lsp,
         lua = formatters.lsp,
         openscad = formatters.lsp,
         python = formatters.lsp,
