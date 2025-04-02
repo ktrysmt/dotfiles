@@ -67,6 +67,10 @@ alias typora='open -a typora'
 alias rs='evcxr'
 alias delta="delta --syntax-theme zenburn"
 
+# python
+alias va="source .venv/bin/activate"
+alias vd="deactivate"
+
 # dstat
 alias dstat='dstat -tlamp'
 alias dstat-full="dstat -Tclmdrn"  # full
