@@ -1,5 +1,5 @@
 return {
-  'lambdalisue/fern.vim',
+  'lambdalisue/vim-fern',
   keys = {
     {
       "<C-e>",
