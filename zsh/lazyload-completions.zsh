@@ -37,3 +37,13 @@ if type kind > /dev/null 2>&1 ;then
     command kind "$@"
   }
 fi
+
+# mise
+if type mise > /dev/null 2>&1 ;then
+  function mise() {
+    if ! type __start_mise >/dev/null 2>&1; then
+        source <(command mise completion zsh)
+    fi
+    command mise "$@"
+  }
+fi
