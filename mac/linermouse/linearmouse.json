@@ -1,78 +1,113 @@
 {
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0",
   "schemes" : [
     {
-      "pointer" : {
-        "speed" : 0.104
-      },
       "scrolling" : {
-        "reverse" : {
-          "vertical" : false
-        },
         "acceleration" : {
           "vertical" : 1.75
+        },
+        "reverse" : {
+          "vertical" : false
         },
         "speed" : {
           "vertical" : 5.18
         }
       },
-      "if" : {
-        "device" : {
-          "vendorID" : "0x5ac",
-          "productID" : "0x342",
-          "productName" : "Apple Internal Keyboard \/ Trackpad",
-          "category" : "trackpad"
-        }
-      }
-    },
-    {
       "pointer" : {
-        "acceleration" : 6.6119,
-        "speed" : 0.1522
+        "speed" : 0.104
       },
       "if" : {
         "device" : {
-          "productID" : "0xc534",
-          "productName" : "USB Receiver",
-          "vendorID" : "0x46d",
-          "category" : "mouse"
+          "productID" : "0x342",
+          "vendorID" : "0x5ac",
+          "category" : "trackpad",
+          "productName" : "Apple Internal Keyboard \/ Trackpad"
         }
       }
     },
     {
       "if" : {
         "device" : {
-          "vendorID" : "0x1ea7",
-          "productName" : "2.4G   Mouse ",
+          "productID" : "0xc534",
+          "category" : "mouse",
+          "vendorID" : "0x46d",
+          "productName" : "USB Receiver"
+        }
+      },
+      "pointer" : {
+        "acceleration" : 6.6119,
+        "speed" : 0.1522
+      }
+    },
+    {
+      "if" : {
+        "device" : {
           "productID" : "0x64",
+          "productName" : "2.4G   Mouse ",
+          "vendorID" : "0x1ea7",
           "category" : "mouse"
         }
       },
       "pointer" : {
         "acceleration" : 10,
-        "disableAcceleration" : false,
-        "speed" : 0.08
+        "speed" : 0.08,
+        "disableAcceleration" : false
       }
     },
     {
-      "pointer" : {
-        "disableAcceleration" : true,
-        "acceleration" : 1.3815,
-        "speed" : 0.0689655172413792768
-      },
-      "if" : {
-        "device" : {
-          "productID" : "0x5",
-          "productName" : "USB Optical Mouse",
-          "category" : "mouse",
-          "vendorID" : "0x1bcf"
-        }
-      },
       "scrolling" : {
         "reverse" : {
           "vertical" : true
         }
+      },
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "vendorID" : "0x1bcf",
+          "productID" : "0x5",
+          "productName" : "USB Optical Mouse"
+        }
+      },
+      "pointer" : {
+        "speed" : 0.0689655172413792768,
+        "disableAcceleration" : true,
+        "acceleration" : 1.3815
+      },
+      "buttons" : {
+        "mappings" : [
+          {
+            "shift" : false,
+            "control" : false,
+            "action" : "missionControl.spaceLeft",
+            "command" : false,
+            "button" : 3,
+            "option" : false
+          },
+          {
+            "button" : 4,
+            "command" : false,
+            "shift" : false,
+            "option" : false,
+            "action" : "missionControl.spaceRight",
+            "control" : false
+          }
+        ]
+      }
+    },
+    {
+      "pointer" : {
+        "acceleration" : 2,
+        "disableAcceleration" : true
+      },
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "serialNumber" : "pqrs.org:Karabiner-DriverKit-VirtualHIDPointing",
+          "productID" : "0x27da",
+          "vendorID" : "0x16c0",
+          "productName" : "Karabiner DriverKit VirtualHIDPointing 1.8.0"
+        }
       }
     }
-  ]
+  ],
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0"
 }

@@ -314,6 +314,25 @@
           }]
         }
       ]
+    },
+    {
+      "description": "Mouse",
+      "manipulators": [
+        {
+            "type": "basic",
+            "from": {
+                "pointing_button": "button3"
+            },
+            "to_if_alone": [{ "pointing_button": "button3" }],
+            "to_if_held_down": [
+                { "apple_vendor_keyboard_key_code": "mission_control" }
+            ],
+            "parameters": {
+                "basic.to_if_alone_timeout_milliseconds": 500,
+                "basic.to_if_held_down_threshold_milliseconds": 250
+            }
+        }
+      ]
     }
   ]
 }
