@@ -21,14 +21,14 @@ return {
   },
   config = function()
     vim.cmd [[
-    nnoremap <expr> <Leader>x (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Commands\<cr>"
-    nnoremap <expr> <Leader>d (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":GFiles?\<cr>"
-    nnoremap <expr> <Leader>b (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Buffers\<cr>"
-    nnoremap <expr> <Leader>hc (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":History:\<cr>"
-    nnoremap <expr> <Leader>hs (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":History/\<cr>"
-    nnoremap <expr> <Leader>r (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Ripgrep\<cr>"
-    nnoremap <expr> <Leader>w (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Windows\<cr>"
-    nnoremap <expr> <Leader>f (expand('%') =~ '^fern://' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+    nnoremap <expr> <Leader>x (expand('%') =~ '^neo-tree filesystem' ? "\<c-w>\<c-w>" : '').":Commands\<cr>"
+    nnoremap <expr> <Leader>d (expand('%') =~ '^neo-tree filesystem' ? "\<c-w>\<c-w>" : '').":GFiles?\<cr>"
+    nnoremap <expr> <Leader>b (expand('%') =~ '^neo-tree filesystem' ? "\<c-w>\<c-w>" : '').":Buffers\<cr>"
+    nnoremap <expr> <Leader>hc (expand('%') =~ '^neo-tree filesystem' ? "\<c-w>\<c-w>" : '').":History:\<cr>"
+    nnoremap <expr> <Leader>hs (expand('%') =~ '^neo-tree filesystem' ? "\<c-w>\<c-w>" : '').":History/\<cr>"
+    nnoremap <expr> <Leader>r (expand('%') =~ '^neo-tree filesystem' ? "\<c-w>\<c-w>" : '').":Ripgrep\<cr>"
+    nnoremap <expr> <Leader>w (expand('%') =~ '^neo-tree filesystem' ? "\<c-w>\<c-w>" : '').":Windows\<cr>"
+    nnoremap <expr> <Leader>f (expand('%') =~ '^neo-tree filesystem' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 
     let g:fzf_layout = { 'down': '~40%' }
 
