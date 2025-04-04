@@ -55,7 +55,7 @@ return {
   {
     'mfussenegger/nvim-treehopper',
     keys = {
-      { "m", mode = { "x", "o" } }, -- input "vm\d"
+      { "m", mode = { "x", "o" } }, -- operator "'v', 'm' then select a label"
     },
     dependencies = {
       "phaazon/hop.nvim"
