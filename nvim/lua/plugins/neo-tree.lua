@@ -15,19 +15,8 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     keys = {
-      {
-        "<C-e>",
-        ":Neotree left toggle<CR>",
-        silent = true,
-        mode = 'n'
-      },
-      {
-        '<C-w>f',
-        -- ":cd `git rev-parse --show-toplevel`<CR> :Neotree reveal focus<CR>",
-        ":Neotree reveal focus<CR>",
-        silent = true,
-        mode = 'n'
-      }
+      { "<C-e>",  mode = 'n' },
+      { '<C-w>f', mode = 'n' },
     },
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -81,15 +70,82 @@ return {
       -- vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
       -- vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
 
+
+
+      local function natural_sort(a, b)
+        local function tonumber_if_possible(s)
+          local num = tonumber(s)
+          if num then
+            return num
+          else
+            return s
+          end
+        end
+
+        local function split_by_number(s)
+          local parts = {}
+          local current_part = ""
+          for i = 1, #s do
+            local char = s:sub(i, i)
+            if char:match("%d") then
+              if current_part ~= "" and not current_part:match("%d") then
+                table.insert(parts, current_part)
+                current_part = ""
+              end
+            else
+              if current_part ~= "" and current_part:match("%d") then
+                table.insert(parts, tonumber(current_part))
+                current_part = ""
+              end
+            end
+            current_part = current_part .. char
+          end
+          if current_part ~= "" then
+            table.insert(parts, tonumber_if_possible(current_part))
+          end
+          return parts
+        end
+
+        local parts_a = split_by_number(a.path)
+        local parts_b = split_by_number(b.path)
+
+        local len_a = #parts_a
+        local len_b = #parts_b
+        local min_len = math.min(len_a, len_b)
+
+        for i = 1, min_len do
+          local part_a = parts_a[i]
+          local part_b = parts_b[i]
+
+          if type(part_a) == "number" and type(part_b) == "number" then
+            if part_a ~= part_b then
+              return part_a < part_b
+            end
+          elseif part_a ~= part_b then
+            return tostring(part_a) < tostring(part_b)
+          end
+        end
+
+        return len_a < len_b
+      end
+
+
       require("neo-tree").setup({
         close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
         popup_border_style = "rounded",
         enable_git_status = true,
         enable_diagnostics = true,
         open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
-        open_files_using_relative_paths = false,
-        sort_case_insensitive = false,                                     -- used when sorting files and directories in the tree
-        sort_function = nil,                                               -- use a custom function for sorting files and directories in the tree
+        open_files_using_relative_paths = true,
+        sort_case_insensitive = true,                                      -- used when sorting files and directories in the tree
+        -- sort_function = nil,                                               -- use a custom function for sorting files and directories in the tree
+        sort_function = function(a, b)
+          if a.type ~= b.type then
+            return a.type < b.type
+          else
+            return natural_sort(a, b)
+          end
+        end,
         -- sort_function = function (a,b)
         --       if a.type == b.type then
         --           return a.path > b.path
@@ -119,7 +175,7 @@ return {
             folder_closed = "",
             folder_open = "",
             folder_empty = "󰜌",
-            provider = function(icon, node, state) -- default icon provider utilizes nvim-web-devicons if available
+            provider = function(icon, node, _) -- default icon provider utilizes nvim-web-devicons if available
               if node.type == "file" or node.type == "terminal" then
                 local success, web_devicons = pcall(require, "nvim-web-devicons")
                 local name = node.type == "terminal" and "terminal" or node.name
@@ -194,18 +250,15 @@ return {
             local _, name = utils.split_path(path)
 
             local msg = string.format("Are you sure you want to trash '%s'? (y/n) ", name)
-
-            inputs.confirm(msg, function(confirmed, extra)
-              print(confirmed, extra)
+            inputs.confirm(msg, function(confirmed)
               if not confirmed then
                 return
               end
 
-              res = vim.fn.system({
+              vim.fn.system({
                 "trash",
                 vim.fn.fnameescape(path)
               })
-              print(res)
 
               require("neo-tree.sources.manager").refresh(state.name)
             end)
@@ -235,7 +288,7 @@ return {
             ["t"] = "open_tabnew",
             -- ["<cr>"] = "open_drop",
             -- ["t"] = "open_tab_drop",
-            -- ["w"] = "open_with_window_picker",
+            ["w"] = "noop", -- "open_with_window_picker",
             --["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
             ["C"] = "close_node",
             -- ['C'] = 'close_all_subnodes',
@@ -258,9 +311,9 @@ return {
               }
             },
             -- ["b"] = "rename_basename",
-            ["y"] = "copy_to_clipboard",
-            ["x"] = "cut_to_clipboard",
-            ["p"] = "paste_from_clipboard",
+            ["y"] = "noop", -- "copy_to_clipboard",
+            ["x"] = "noop", -- "cut_to_clipboard",
+            ["p"] = "noop", -- "paste_from_clipboard",
             -- ["c"] = "copy", -- takes text input for destination, also accepts the optional config.show_path option like "add":
             ["c"] = {
               "copy",
@@ -361,11 +414,11 @@ return {
               -- ['<key>'] = function(state) ... end,
             },
             fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
-              ["<down>"] = "move_cursor_down",
-              ["<C-n>"] = "move_cursor_down",
-              ["<up>"] = "move_cursor_up",
-              ["<C-p>"] = "move_cursor_up",
-              ["<esc>"] = "close",
+              -- ["<down>"] = "move_cursor_down",
+              -- ["<C-n>"] = "move_cursor_down",
+              -- ["<up>"] = "move_cursor_up",
+              -- ["<C-p>"] = "move_cursor_up",
+              -- ["<esc>"] = "close",
               -- ['<key>'] = function(state, scroll_padding) ... end,
             },
           },
@@ -385,7 +438,7 @@ return {
               -- ["bd"] = "buffer_delete",
               -- ["<bs>"] = "navigate_up",
               -- ["."] = "set_root",
-              ["o"] = "noop"
+              -- ["o"] = "noop"
               -- ["o"] = {
               --   "show_help",
               --   nowait = false,
@@ -427,7 +480,11 @@ return {
         },
       })
 
-      vim.keymap.set("n", "<leader>e", "<Cmd>Neotree reveal<CR>")
-    end,
-  },
+      vim.keymap.set("n", "<C-e>", "<Cmd>Neotree left toggle<CR>", { silent = true })
+      vim.keymap.set("n", "<C-w>f", function()
+        local path = vim.fn.system("git rev-parse --show-toplevel")
+        vim.cmd("Neotree reveal_file=% dir=" .. path)
+      end, { silent = true })
+    end
+  }
 }
