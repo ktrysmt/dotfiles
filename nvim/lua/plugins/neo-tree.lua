@@ -489,7 +489,7 @@ return {
         end
         vim.defer_fn(function()
           vim.cmd("Neotree action=focus reveal_file=% dir=" .. path)
-        end, 100)
+        end, 150)
       end, { silent = true })
     end
   }
