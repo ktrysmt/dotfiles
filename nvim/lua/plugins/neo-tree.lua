@@ -230,8 +230,8 @@ return {
             ["q"] = "cancel",     -- close preview or floating neo-tree window
             ["P"] = "noop",       -- { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
             ["l"] = "noop",       --  "focus_preview",
-            ["s"] = "open_split",
-            ["i"] = "open_vsplit",
+            ["i"] = "open_split",
+            ["s"] = "open_vsplit",
             ["t"] = "open_tabnew",
             -- ["<cr>"] = "open_drop",
             -- ["t"] = "open_tab_drop",
@@ -334,6 +334,7 @@ return {
           -- instead of relying on nvim autocmd events.
           window = {
             mappings = {
+              ["o"] = "open",
               ["<bs>"] = "noop",  -- "navigate_up",
               ["."] = "noop",     -- "set_root",
               ["H"] = "toggle_hidden",
@@ -345,7 +346,6 @@ return {
               ["<c-x>"] = "noop", -- "clear_filter",
               ["[g"] = "noop",    -- "prev_git_modified",
               ["]g"] = "noop",    -- "next_git_modified",
-              ["o"] = "noop",     --
               -- ["o"] = {
               --   "show_help",
               --   nowait = false,
@@ -385,6 +385,7 @@ return {
               -- ["bd"] = "buffer_delete",
               -- ["<bs>"] = "navigate_up",
               -- ["."] = "set_root",
+              ["o"] = "noop"
               -- ["o"] = {
               --   "show_help",
               --   nowait = false,
@@ -403,24 +404,24 @@ return {
           window = {
             position = "float",
             mappings = {
-              ["A"] = "git_add_all",
-              ["gu"] = "git_unstage_file",
-              ["ga"] = "git_add_file",
-              ["gr"] = "git_revert_file",
-              ["gc"] = "git_commit",
-              ["gp"] = "git_push",
-              ["gg"] = "git_commit_and_push",
-              ["o"] = {
-                "show_help",
-                nowait = false,
-                config = { title = "Order by", prefix_key = "o" },
-              },
-              ["oc"] = { "order_by_created", nowait = false },
-              ["od"] = { "order_by_diagnostics", nowait = false },
-              ["om"] = { "order_by_modified", nowait = false },
-              ["on"] = { "order_by_name", nowait = false },
-              ["os"] = { "order_by_size", nowait = false },
-              ["ot"] = { "order_by_type", nowait = false },
+              -- ["A"] = "git_add_all",
+              -- ["gu"] = "git_unstage_file",
+              -- ["ga"] = "git_add_file",
+              -- ["gr"] = "git_revert_file",
+              -- ["gc"] = "git_commit",
+              -- ["gp"] = "git_push",
+              -- ["gg"] = "git_commit_and_push",
+              -- ["o"] = {
+              --   "show_help",
+              --   nowait = false,
+              --   config = { title = "Order by", prefix_key = "o" },
+              -- },
+              -- ["oc"] = { "order_by_created", nowait = false },
+              -- ["od"] = { "order_by_diagnostics", nowait = false },
+              -- ["om"] = { "order_by_modified", nowait = false },
+              -- ["on"] = { "order_by_name", nowait = false },
+              -- ["os"] = { "order_by_size", nowait = false },
+              -- ["ot"] = { "order_by_type", nowait = false },
             },
           },
         },
