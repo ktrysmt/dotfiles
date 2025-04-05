@@ -136,7 +136,7 @@ return {
         enable_git_status = true,
         enable_diagnostics = true,
         open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
-        open_files_using_relative_paths = true,
+        open_files_using_relative_paths = false,
         sort_case_insensitive = true,                                      -- used when sorting files and directories in the tree
         -- sort_function = nil,                                               -- use a custom function for sorting files and directories in the tree
         sort_function = function(a, b)
@@ -483,7 +483,13 @@ return {
       vim.keymap.set("n", "<C-e>", "<Cmd>Neotree left toggle<CR>", { silent = true })
       vim.keymap.set("n", "<C-w>f", function()
         local path = vim.fn.system("git rev-parse --show-toplevel")
-        vim.cmd("Neotree reveal_file=% dir=" .. path)
+        if vim.bo.filetype == "" then
+          vim.cmd("Neotree left")
+          return
+        end
+        vim.defer_fn(function()
+          vim.cmd("Neotree action=focus reveal_file=% dir=" .. path)
+        end, 100)
       end, { silent = true })
     end
   }
