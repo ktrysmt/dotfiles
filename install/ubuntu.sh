@@ -56,6 +56,7 @@ brew install \
   watch \
   wget \
   difftastic \
+  trash-cli \
   mise \
   neovim
 brew install ynqa/tap/jnv

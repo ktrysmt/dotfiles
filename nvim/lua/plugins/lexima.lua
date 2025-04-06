@@ -58,6 +58,8 @@ return {
 
     LeximaAlterCommand ww w<space>!
     LeximaAlterCommand rr r<space>!
+
+    LeximaAlterCommand oi Oil<space>.<cr>
     ]]
   end
 }

@@ -66,6 +66,7 @@ alias vimdiff='nvim -d'
 alias typora='open -a typora'
 alias rs='evcxr'
 alias delta="delta --syntax-theme zenburn"
+alias rm="trash"
 
 # python
 alias va="source .venv/bin/activate"

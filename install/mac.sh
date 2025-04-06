@@ -50,6 +50,7 @@ brew install \
   neovim \
   asdf \
   raycast \
+  trash \
   difftastic \
   golangci-lint
 brew install ynqa/tap/jnv

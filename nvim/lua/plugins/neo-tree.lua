@@ -134,6 +134,7 @@ return {
         close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
         popup_border_style = "rounded",
         enable_git_status = true,
+        use_popups_for_input = false,
         enable_diagnostics = true,
         open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
         open_files_using_relative_paths = false,
@@ -257,7 +258,7 @@ return {
 
               vim.fn.system({
                 "trash",
-                vim.fn.fnameescape(path)
+                path
               })
 
               require("neo-tree.sources.manager").refresh(state.name)
@@ -483,13 +484,13 @@ return {
       vim.keymap.set("n", "<C-e>", "<Cmd>Neotree left toggle<CR>", { silent = true })
       vim.keymap.set("n", "<C-w>f", function()
         local path = vim.fn.system("git rev-parse --show-toplevel")
-        if vim.bo.filetype == "" then
+        if vim.bo.filetype == "" or vim.bo.filetype == "oil" then
           vim.cmd("Neotree left")
           return
         end
         vim.defer_fn(function()
           vim.cmd("Neotree action=focus reveal_file=% dir=" .. path)
-        end, 150)
+        end, 170)
       end, { silent = true })
     end
   }
