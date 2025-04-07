@@ -17,6 +17,7 @@ fi
 export DISPLAY=":0"
 alias pbcopy='xsel --display :0 --input --clipboard'
 alias pbpaste='xsel --display :0 --output --clipboard'
+
 export SRC_ACCESS_TOKEN=""                  # login via github oauth in sourcegraph.com
 export GEMINI_API_KEY=""                    # get it from aistudio
 export OLLAMA_HOST="192.168.33.1"           # host machine of vagrant
