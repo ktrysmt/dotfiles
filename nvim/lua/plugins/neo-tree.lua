@@ -484,7 +484,7 @@ return {
       vim.keymap.set("n", "<C-e>", "<Cmd>Neotree left toggle<CR>", { silent = true })
       vim.keymap.set("n", "<C-w>f", function()
         local path = vim.fn.system("git rev-parse --show-toplevel")
-        if vim.bo.filetype == "" or vim.bo.filetype == "oil" then
+        if is_blank_screen_by_ls() or vim.bo.filetype == "neo-tree" or vim.bo.filetype == "oil" then
           vim.cmd("Neotree left")
           return
         end
