@@ -58,6 +58,7 @@ brew install \
   difftastic \
   trash-cli \
   mise \
+  pass \
   neovim
 brew install ynqa/tap/jnv
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
