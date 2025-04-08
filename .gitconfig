@@ -46,7 +46,7 @@
 # [credential]
 # 	helper = osxkeychain
 # 	; OR
-# 	credentialStore = gpg
+# 	helper = libsecret
 
 [feature]
   manyFiles = true
