@@ -2,9 +2,6 @@
   root = ~/go/src
   root = ~/project/src
 
-# [credential]
-#   helper = osxkeychain
-
 [user]
   email = kotaro.yoshimatsu@gmail.com
   name = ktrysmt
@@ -48,6 +45,8 @@
 
 # [credential]
 # 	helper = osxkeychain
+# 	; OR
+# 	credentialStore = gpg
 
 [feature]
   manyFiles = true
