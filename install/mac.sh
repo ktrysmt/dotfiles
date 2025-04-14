@@ -7,52 +7,53 @@ set -e
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 brew install \
-  curl \
-  openssl \
-  reattach-to-user-namespace \
-  lima \
-  go \
-  wget \
-  tmux \
-  zsh \
-  nkf \
-  tree \
-  ripgrep \
-  fd \
-  procs \
-  fzf \
-  xh \
-  uv \
-  gh \
-  gat \
-  sheldon \
-  tig \
-  fzy \
-  peco \
-  eza \
-  python3 \
-  jq \
-  git-secrets \
+  asdf \
   bat \
-  watch \
+  coreutils \
+  curl \
+  difftastic \
+  eza \
+  fd \
+  fzf \
+  fzy \
+  gat \
+  gh \
   ghq \
   git \
-  pnpm \
   git-delta \
+  git-secrets \
+  glow \
+  go \
+  golangci-lint \
+  gopls \
+  jq \
   kind \
   kubectl \
-  minikube \
   kubectx \
   kubernetes-helm \
-  coreutils \
+  lima \
   llvm \
-  gopls \
+  minikube \
   neovim \
-  asdf \
+  nkf \
+  openssl \
+  peco \
+  pnpm \
+  procs \
+  python3 \
   raycast \
+  reattach-to-user-namespace \
+  ripgrep \
+  sheldon \
+  tig \
+  tmux \
   trash \
-  difftastic \
-  golangci-lint
+  tree \
+  uv \
+  watch \
+  wget \
+  xh \
+  zsh
 brew install ynqa/tap/jnv
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc

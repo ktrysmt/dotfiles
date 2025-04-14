@@ -30,35 +30,36 @@ brew install \
   coreutils \
   curl \
   diff-so-fancy \
+  difftastic \
   eza \
   fd \
-  uv \
   fzf \
   fzy \
-  xh \
   gat \
   gh \
   ghq \
   git \
   git-delta \
   git-secrets \
+  glow \
   jq \
   llvm \
+  mise \
+  neovim \
   nkf \
   nodejs \
   peco \
-  procs \
   pnpm \
+  procs \
   ripgrep \
   sheldon \
   tig \
+  trash-cli \
   tree \
+  uv \
   watch \
   wget \
-  difftastic \
-  trash-cli \
-  mise \
-  neovim
+  xh
 brew install ynqa/tap/jnv
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 brew install b4b4r07/tap/gomi
