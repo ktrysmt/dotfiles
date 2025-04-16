@@ -12,3 +12,8 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 
+function insert_and_execute_gss_fzf() {
+  LBUFFER+="\$(gss | fzf | awk '{print \$2}')"
+}
+zle -N insert_and_execute_gss_fzf
+bindkey '^v' insert_and_execute_gss_fzf
