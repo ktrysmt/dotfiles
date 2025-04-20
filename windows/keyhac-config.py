@@ -213,7 +213,7 @@ def configure(keymap):
             bit = 15
             thin = 5
             if shift:
-                center = round((mntr_right - mntr_left) / 3)
+                center = round((mntr_right - mntr_left) / 4)
             else:
                 center = round((mntr_right - mntr_left) / 2)
             if snap == "right":
