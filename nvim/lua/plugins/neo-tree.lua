@@ -14,8 +14,9 @@ return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
+    lazy = false,
     -- event = { "VeryLazy" },
-    event = { "VimEnter" },
+    -- event = { "VimEnter" },
     keys = {
       { "<C-e>",  mode = 'n' },
       { '<C-w>f', mode = 'n' },
@@ -45,7 +46,6 @@ return {
       --   end,
       -- },
     },
-    -- lazy = false,
     -----Instead of using `config`, you can use `opts` instead, if you'd like:
     -----@module "neo-tree"
     -----@type neotree.Config
