@@ -57,6 +57,14 @@ return {
 
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+        local function jump_definition_vsplit()
+          vim.cmd [[
+          silent! vsplit
+          silent! wincmd w
+          ]]
+          vim.lsp.buf.definition()
+        end
+        vim.keymap.set('n', 'gvd', jump_definition_vsplit, opts)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
         vim.keymap.set('n', 'I', vim.diagnostic.open_float, opts)
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
