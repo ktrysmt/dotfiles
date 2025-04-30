@@ -1,6 +1,7 @@
 return {
   "zbirenbaum/copilot.lua",
   cmd = "Copilot",
+  cond = not vim.env.SRC_ACCESS_TOKEN,
   event = "InsertEnter",
   config = function()
     require("copilot").setup({
