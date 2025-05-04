@@ -64,11 +64,11 @@ return {
           ]]
           vim.lsp.buf.definition()
         end
-        vim.keymap.set('n', 'gvd', jump_definition_vsplit, opts)
+        vim.keymap.set('n', 'gv', jump_definition_vsplit, opts)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
         vim.keymap.set('n', 'I', vim.diagnostic.open_float, opts)
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+        -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
         vim.keymap.set('n', 'grn', vim.lsp.buf.rename, opts)
         vim.keymap.set({ 'n', 'v' }, 'gca', vim.lsp.buf.code_action, opts)
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
