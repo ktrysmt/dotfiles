@@ -34,7 +34,7 @@ return {
     event = { "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
     config = function()
       require('gitsigns').setup({
-        signs      = {
+        signs         = {
           add          = { text = '+' },
           change       = { text = '|' },
           delete       = { text = '_' },
@@ -42,10 +42,10 @@ return {
           changedelete = { text = '~' },
           untracked    = { text = '┆' },
         },
-        -- sign_priority = 1,
-        signcolumn = true,
-        numhl      = false,
-        linehl     = false,
+        sign_priority = 2,
+        signcolumn    = true,
+        numhl         = false,
+        linehl        = false,
       })
 
       vim.cmd [[
