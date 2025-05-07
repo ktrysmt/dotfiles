@@ -31,14 +31,10 @@ return {
       local lspconfig = require('lspconfig')
       local mason_lspconfig = require("mason-lspconfig")
 
+      vim.lsp.enable(mason_lspconfig.get_installed_servers())
+
       mason_lspconfig.setup({
         automatic_installation = true
-      })
-
-      mason_lspconfig.setup_handlers({
-        function(server_name)
-          lspconfig[server_name].setup({})
-        end,
       })
 
       vim.diagnostic.config({ virtual_text = false, float = false, severity_sort = true })
@@ -56,15 +52,22 @@ return {
         end, opts)
 
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-        local function jump_definition_vsplit()
+        local function on_list(options)
+          vim.fn.setqflist({}, ' ', options)
+          vim.cmd.cfirst()
+        end
+        local function jump_to_definition_vsplit()
           vim.cmd [[
           silent! vsplit
           silent! wincmd w
           ]]
-          vim.lsp.buf.definition()
+          vim.lsp.buf.definition({ on_list = on_list })
         end
-        vim.keymap.set('n', 'gv', jump_definition_vsplit, opts)
+        local function jump_to_definition()
+          vim.lsp.buf.definition({ on_list = on_list })
+        end
+        vim.keymap.set('n', 'gv', jump_to_definition_vsplit, opts)
+        vim.keymap.set('n', 'gd', jump_to_definition, opts)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
         vim.keymap.set('n', 'I', vim.diagnostic.open_float, opts)
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
