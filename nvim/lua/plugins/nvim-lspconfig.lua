@@ -31,11 +31,16 @@ return {
       local lspconfig = require('lspconfig')
       local mason_lspconfig = require("mason-lspconfig")
 
-      vim.lsp.enable(mason_lspconfig.get_installed_servers())
-
-      mason_lspconfig.setup({
-        automatic_installation = true
-      })
+      local function get_installed_servers()
+        local servers = {}
+        for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
+          if server ~= "pylsp" then
+            table.insert(servers, server)
+          end
+        end
+        return servers
+      end
+      vim.lsp.enable(get_installed_servers())
 
       vim.diagnostic.config({ virtual_text = false, float = false, severity_sort = true })
 
@@ -98,6 +103,18 @@ return {
       lspconfig.rust_analyzer.setup {
         settings = {
           ['rust-analyzer'] = {},
+        },
+      }
+      lspconfig.pylsp.setup {
+        settings = {
+          pylsp = {
+            plugins = {
+              pycodestyle = {
+                ignore = { 'E501' }, -- This is the Error code for line too long.
+                maxLineLength = 200  -- This sets how long the line is allowed to be. Also has effect on formatter.
+              },
+            },
+          },
         },
       }
 
