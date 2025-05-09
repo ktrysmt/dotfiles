@@ -727,17 +727,13 @@
             "devices": [
                 {
                     "identifiers": {
-                        "is_keyboard": true,
-                        "product_id": 13,
-                        "vendor_id": 1278
+                        "is_keyboard": true
                     },
                     "manipulate_caps_lock_led": false
                 },
                 {
                     "identifiers": {
-                        "is_keyboard": true,
-                        "product_id": 834,
-                        "vendor_id": 1452
+                        "is_keyboard": true
                     },
                     "simple_modifications": [
                         {
@@ -752,9 +748,7 @@
                 },
                 {
                     "identifiers": {
-                        "is_pointing_device": true,
-                        "product_id": 5,
-                        "vendor_id": 7119
+                        "is_pointing_device": true
                     },
                     "ignore": false,
                     "mouse_flip_vertical_wheel": true
