@@ -34,7 +34,7 @@ return {
       local function get_installed_servers()
         local servers = {}
         for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
-          if server ~= "pylsp" then
+          if server ~= "pylsp" and server ~= "lua_ls" then
             table.insert(servers, server)
           end
         end
@@ -110,12 +110,21 @@ return {
           pylsp = {
             plugins = {
               pycodestyle = {
-                ignore = { 'E501' }, -- This is the Error code for line too long.
-                maxLineLength = 200  -- This sets how long the line is allowed to be. Also has effect on formatter.
+                ignore = { 'E501', 'E241' }, -- This is the Error code for line too long.
+                maxLineLength = 200          -- This sets how long the line is allowed to be. Also has effect on formatter.
               },
             },
           },
         },
+      }
+      lspconfig.lua_ls.setup {
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { 'vim' }
+            }
+          }
+        }
       }
 
       -- https://www.reddit.com/r/neovim/comments/11q17mq/comment/jc13v1o/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
