@@ -3,6 +3,8 @@
 set -o pipefail
 set -e
 
+sudo echo
+
 # brew
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -38,6 +40,7 @@ brew install \
   nkf \
   openssl \
   peco \
+  duckdb \
   pnpm \
   procs \
   python3 \
@@ -52,18 +55,26 @@ brew install \
   uv \
   watch \
   wget \
+  mise \
   xh \
   zsh
 brew install ynqa/tap/jnv
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
 
-# asdf
-asdf plugin add nodejs
-asdf install nodejs latest
-asdf install python latest
-asdf global nodejs latest
-asdf global python latest
+# brew cask
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+brew tap homebrew/cask
+brew install --cask appcleaner kindle rectangle alt-tab clibor-for-mac visual-studio-code macgesture flux linearmouse
+brew install --cask karabiner-elements raycast virtualbox vagrant
+mkdir -p ~/.config/karabiner/assets/complex_modifications
+ln -sf ~/dotfiles/mac/karabiner.json ~/.config/karabiner/karabiner.json
+ln -sf ~/dotfiles/mac/karabiner-complex.json ~/.config/karabiner/assets/complex_modifications/karabiner-complex.json
+
+# mise
+mise use nodejs -g
+mise use ruby -g
+mise use python -g
 
 # symlink
 cd ~/
@@ -72,7 +83,7 @@ mkdir -p ~/.config/sheldon/
 mkdir -p ~/.config/peco/
 mkdir -p ~/.local/bin/
 mkdir -p ~/.cache/vim/
-mkdir ~/.docker
+mkdir -p ~/.docker/
 ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
@@ -85,8 +96,6 @@ ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
 cp ~/dotfiles/.ctags ~/.ctags
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
-
-# cp ~/dotfiles/.switch-proxy.osx ~/.switch-proxy
 
 # ssh
 mkdir ~/.ssh
@@ -133,18 +142,8 @@ kubectl krew install tree open-svc
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
 
-# brew cask
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-brew tap homebrew/cask
-brew install --cask appcleaner kindle iterm2 rectangle alt-tab clibor visual-studio-code macgesture flux gomi mac-mouse-fix linearmouse
-brew install --cask karabiner-elements wordservice brave-browser itsycal raycast michaelvillar-timer tailscale virtualbox vagrant
-mkdir -p ~/.config/karabiner/assets/complex_modifications
-ln -sf ~/dotfiles/mac/karabiner.json ~/.config/karabiner/karabiner.json
-ln -sf ~/dotfiles/mac/karabiner-complex.json ~/.config/karabiner/assets/complex_modifications/karabiner-complex.json
-ln -sf ~/dotfiles/mac/karabiner-complex-naginata.json ~/.config/karabiner/assets/complex_modifications/karabiner-complex-naginata.json
-
 # lock
-cp -Rp /System/Library/CoreServices/ScreenSaverEngine.app /Applications/lock.app
+# cp -Rp /System/Library/CoreServices/ScreenSaverEngine.app /Applications/lock.app
 
 # ------------
 # mac
