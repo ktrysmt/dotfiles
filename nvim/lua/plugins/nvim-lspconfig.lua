@@ -33,9 +33,9 @@ return {
 
       local function get_installed_servers()
         local servers = {}
-        for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
-          if server ~= "pylsp" and server ~= "lua_ls" then
-            table.insert(servers, server)
+        for _, s in ipairs(mason_lspconfig.get_installed_servers()) do
+          if s ~= "pylsp" and s ~= "lua_ls" and s ~= "gopls" then
+            table.insert(servers, s)
           end
         end
         return servers
@@ -123,6 +123,13 @@ return {
             diagnostics = {
               globals = { 'vim' }
             }
+          }
+        }
+      }
+      lspconfig.gopls.setup {
+        settings = {
+          gopls = {
+            staticcheck = true,
           }
         }
       }
