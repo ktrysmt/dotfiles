@@ -68,7 +68,6 @@ brew tap homebrew/cask
 brew install --cask appcleaner kindle rectangle alt-tab clibor-for-mac visual-studio-code macgesture flux linearmouse
 brew install --cask karabiner-elements raycast virtualbox vagrant
 mkdir -p ~/.config/karabiner/assets/complex_modifications
-ln -sf ~/dotfiles/mac/karabiner.json ~/.config/karabiner/karabiner.json
 ln -sf ~/dotfiles/mac/karabiner-complex.json ~/.config/karabiner/assets/complex_modifications/karabiner-complex.json
 
 # mise
