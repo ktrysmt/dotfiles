@@ -6,7 +6,7 @@
 	<Cursor Allow="true" Speed="20" CS1="10" CS2="7" CS3="10" CS4="2" ChangeLayer="true" ChangeChord="1" ChangeHeld="1" LayerOverlayFontSize="10" OverlayFontSize="14" EPPThreshold1="6" EPPThreshold2="10" EnhancePointerPrecision="0" />
 	<Logging Disable="false" Thread="false" />
 	<RazorMouse DoubleClickFix="false" />
-	<ScrollWheel ScrollWindowUnderCursor="false" />
+	<ScrollWheel ScrollWindowUnderCursor="true" />
 	<ScrollLock BypassAll="true" BypassDisabled="false" />
 	<Swap4and5 Always="false" />
 	<RemoteDesktop SwapButtons4and5="false" Disable="false" DisableInvertedScroll="false" />
@@ -84,8 +84,37 @@
 		<Left action="40" keys="" keyaction="2" keyrepeat="34" active="true" blockmouse="true" randomisedelay="false" app="" desc="">
 			<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
 		</Left>
-		<Right action="40" keys="" keyaction="2" keyrepeat="34" active="true" blockmouse="true" randomisedelay="false" app="" desc="">
+		<Right action="128" keys="" keyaction="2" keyrepeat="34" active="true" blockmouse="true" randomisedelay="false" app="" desc="">
 			<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
+			<chords Description="" BlockUntilEstablished="true" UnblockAfterDelay="true" UnblockDelay="750" UnblockMovement="true" UnblockMPixels="5">
+				<Left action="40" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
+					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
+				</Left>
+				<Right action="40" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
+					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
+				</Right>
+				<Middle action="40" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
+					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
+				</Middle>
+				<XLeft action="40" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
+					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
+				</XLeft>
+				<XRight action="40" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
+					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
+				</XRight>
+				<TiltLeft action="40" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
+					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
+				</TiltLeft>
+				<TiltRight action="40" keys="" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
+					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
+				</TiltRight>
+				<WheelUp action="28" keys="{CTRL}{SHIFT}{TAB}" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
+					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
+				</WheelUp>
+				<WheelDown action="28" keys="{CTRL}{TAB}" keyaction="0" keyrepeat="0" active="false" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" desc="">
+					<mts Lock="0" Sticky="false" StickyBlock="false" Block="true" InvV="false" InvH="false" SensitivityX="5" SensitivityY="5" NoMovementAction="6" keys="" keyaction="0" keyrepeat="0" active="true" blockmouse="true" blockmouseactive="false" randomisedelay="false" app="" />
+				</WheelDown>
+			</chords>
 		</Right>
 		<Middle action="133" keys="" keyaction="2" keyrepeat="34" active="true" blockmouse="true" randomisedelay="false" app="" desc="">
 			<timedclicks Description="" ReleaseOnUp="true" AbortOnMove="false" AbortOnMove2="false" AbortPixels="5" Time0="0" Enable0="true" Time1="500" Enable1="true" Time2="1000" Enable2="false" Time3="1500" Enable3="false">
@@ -425,5 +454,4 @@
 			</WheelDown>
 		</Layer9>
 	</Default>
-	<Applications />
 </root>
