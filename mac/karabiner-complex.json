@@ -2,6 +2,172 @@
   "title": "My Complex in Browser",
   "rules": [
     {
+      "description": "Simple remap of ビルドインキーボード：かな→Enter、英数→Backspace、左command←→左option入れ替え",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "japanese_kana",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "return_or_enter"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "japanese_eisuu",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "delete_or_backspace"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "left_command",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_option"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "left_option",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_command"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Simple remap of 外付けキーボード：変換→Enter、無変換→Backspace",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "japanese_pc_xfer",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "return_or_enter"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_unless",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "japanese_pc_nfer",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "delete_or_backspace"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_unless",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "description" : "Unless Terminal" ,
       "manipulators" : [
         {
@@ -238,11 +404,11 @@
       ]
     },
     {
-      "description" : "Global (Eisu/Kana/Spotlight)" ,
+      "description" : "Global (Eisu/Kana)" ,
       "manipulators" : [
         {
           "type" : "basic",
-          "from": { "key_code": "right_command", "modifiers": {"optional": [ "any" ]} },
+          "from": { "key_code": "japanese_pc_katakana", "modifiers": {"optional": [ "any" ]} },
           "to": [ { "key_code": "japanese_eisuu" }  ],
           "conditions": [{
             "type": "input_source_if",
@@ -251,7 +417,7 @@
         },
         {
           "type" : "basic",
-          "from": { "key_code": "right_command", "modifiers": {"optional": [ "any" ]} },
+          "from": { "key_code": "japanese_pc_katakana", "modifiers": {"optional": [ "any" ]} },
           "to": [ { "key_code": "japanese_kana" }  ],
           "conditions": [{
             "type": "input_source_if",
