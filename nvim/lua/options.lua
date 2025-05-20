@@ -119,12 +119,10 @@ vim.g.loaded_matchit = 1
 function is_blank_screen_by_ls()
   -- :ls コマンドを実行し、出力をキャプチャ (true は出力を返すオプション)
   local ls_output = vim.api.nvim_exec('ls', true)
-
   -- 出力が取得できなかったり空の場合は false
   if ls_output == nil or ls_output == '' then
     return false
   end
-
   -- 出力を改行で分割し、前後の空白を除去した非空行のリストを作成
   local lines = {}
   for line in ls_output:gmatch("[^\r\n]+") do
@@ -133,22 +131,36 @@ function is_blank_screen_by_ls()
       table.insert(lines, trimmed_line)
     end
   end
-
   -- :ls の結果が1行でなければ、ブランク画面（バッファ1つ）ではない
   if #lines ~= 1 then
     return false
   end
-
   -- 唯一の行を取得
   local line_content = lines[1]
-
   -- 期待するパターンにマッチするか確認
   local pattern = '"%[No Name%]"'
-
   if string.match(line_content, pattern) then
     -- パターンに一致すればブランク画面の可能性が高い
     return true
   else
     return false
   end
+end
+
+--- https://zenn.dev/kawarimidoll/articles/68f5e8c362ee1c
+local function skip_hit_enter(fn, opts)
+  opts = opts or {}
+  local wait = opts.wait or 0
+  return function(...)
+    local save_mopt = vim.opt.messagesopt:get()
+    vim.opt.messagesopt:append('wait:' .. wait)
+    vim.opt.messagesopt:remove('hit-enter')
+    fn(...)
+    vim.schedule(function()
+      vim.opt.messagesopt = save_mopt
+    end)
+  end
+end
+if vim.fn.has('vim_starting') == 1 then
+  vim.cmd.checkhealth = skip_hit_enter(vim.cmd.checkhealth)
 end
