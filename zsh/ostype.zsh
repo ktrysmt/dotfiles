@@ -7,6 +7,20 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   if [[ "$USERNAME" == "vagrant" ]]; then
     # linux on Vagrant
   fi
+  if [ -n "$WSL_DISTRO_NAME" ]; then
+    # WSL2
+    function open() {
+      if [ $# != 1 ]; then
+        explorer.exe .
+      else
+        if [ -e $1 ]; then
+          explorer.exe $(wslpath -w $1) 2> /dev/null
+        else
+          echo "open: $1 : No such file or directory"
+        fi
+      fi
+    }
+  fi
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   export HOMEBREW_CASK_OPTS="--appdir=/Applications";
