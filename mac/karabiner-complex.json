@@ -134,7 +134,7 @@
         {
           "type" : "basic",
           "from": { "key_code": "j", "modifiers": {"mandatory": [ "left_command"], "optional": [ "shift" ] } },
-          "to": [ { "key_code": "a", "modifiers": "left_control" }  ],
+          "to": [ { "key_code": "left_arrow", "modifiers": "left_command" }  ],
           "conditions": [{
             "type": "frontmost_application_unless",
             "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^com\\.github\\.wez\\.wezterm$" ]
@@ -161,7 +161,7 @@
         {
           "type" : "basic",
           "from": { "key_code": "semicolon", "modifiers": {"mandatory": [ "left_command"], "optional": [ "shift" ] } },
-          "to": [ { "key_code": "e", "modifiers": "left_control" }  ],
+          "to": [ { "key_code": "right_arrow", "modifiers": "left_command" }  ],
           "conditions": [{
             "type": "frontmost_application_unless",
             "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^com\\.github\\.wez\\.wezterm$" ]

@@ -6,7 +6,6 @@ in simple modification,
   * eisu to `backspace`
   * PC変換 to `enter`
   * PC無変換 to `backspace`
-  * PCかな to `right_command`
 * apple keyboard
   * `left_option` to `left_command`
   * `left_command` to `left_option`
