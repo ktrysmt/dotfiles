@@ -22,7 +22,10 @@ return {
         lualine_c = {
           { 'filename',    path = 1 },
           { 'searchcount', maxcount = 999, timeout = 500, color = { fg = '#efcf00' } },
-        }
+        },
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'location' },
+        lualine_z = {},
       },
       inactive_sections = {
         lualine_a = {},
