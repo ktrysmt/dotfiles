@@ -7,7 +7,7 @@ return {
         theme = 'gruvbox-material', --'material',
         -- component_separators = { left = '', right = '' },
         -- section_separators = { left = '', right = '' },
-        globalstatus = true,
+        globalstatus = false,
       },
       sections = {
         lualine_b = {
@@ -23,6 +23,27 @@ return {
           { 'filename',    path = 1 },
           { 'searchcount', maxcount = 999, timeout = 500, color = { fg = '#efcf00' } },
         }
+      },
+      inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {
+          { 'filename' }
+        },
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {}
+      },
+      extensions = {
+        'aerial',
+        'neo-tree',
+        'mason',
+        'lazy',
+        'fugitive',
+        'oil',
+        'man',
+        'fzf',
+        'quickfix',
       }
     }
   end
