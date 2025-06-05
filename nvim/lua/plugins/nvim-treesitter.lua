@@ -33,6 +33,7 @@ return {
         "terraform",
         "hcl",
         "markdown",
+        "markdown_inline",
         "svelte",
         "astro",
         "css",
@@ -43,13 +44,7 @@ return {
       auto_install = true,
       highlight = {
         enable = true,
-        disable = function(lang, buf)
-          -- print(lang)
-          if lang ~= "terraform" and lang ~= "astro" then
-            -- print(lang)
-            return true
-          end
-        end
+        disable = { "terraform", "astro" },
       },
       indent = { enable = false },
       incremental_selection = { -- or, you should use "vib" and dot repeat...
