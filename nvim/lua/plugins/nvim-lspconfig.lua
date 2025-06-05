@@ -68,11 +68,11 @@ return {
           ]]
           vim.lsp.buf.definition({ on_list = on_list })
         end
-        local function jump_to_definition()
-          vim.lsp.buf.definition({ on_list = on_list })
-        end
+        -- local function jump_to_definition()
+        --   vim.lsp.buf.definition({ on_list = on_list })
+        -- end
         vim.keymap.set('n', 'gv', jump_to_definition_vsplit, opts)
-        vim.keymap.set('n', 'gd', jump_to_definition, opts)
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
         vim.keymap.set('n', 'I', vim.diagnostic.open_float, opts)
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)

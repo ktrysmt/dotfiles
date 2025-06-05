@@ -3,6 +3,9 @@ return {
   keys = {
     { "<leader>a", mode = "n" }
   },
+  dependencies = {
+    'epheien/outline-treesitter-provider.nvim'
+  },
   config = function()
     -- Example mapping to toggle outline
     vim.keymap.set("n", "<leader>a", "<cmd>belowright Outline<CR>",
@@ -18,6 +21,9 @@ return {
         auto_unfold = {
           hovered = true,
         },
+      },
+      providers = {
+        priority = { 'lsp', 'markdown', 'norg', 'man', 'treesitter' },
       },
     }
   end
