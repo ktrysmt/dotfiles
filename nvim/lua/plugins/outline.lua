@@ -4,7 +4,8 @@ return {
     { "<leader>a", mode = "n" }
   },
   dependencies = {
-    'epheien/outline-treesitter-provider.nvim'
+    'epheien/outline-treesitter-provider.nvim',
+    'epheien/outline-ctags-provider.nvim'
   },
   config = function()
     -- Example mapping to toggle outline
@@ -24,6 +25,24 @@ return {
       },
       providers = {
         priority = { 'lsp', 'markdown', 'norg', 'man', 'treesitter' },
+      },
+      ctags = {
+        program = 'ctags',
+        filetypes = {
+          ['c++'] = {
+            scope_sep = '::',
+            kinds = {
+              alias = 'TypeAlias',
+              ['local'] = 'Variable',
+              typedef = 'TypeAlias',
+              enumerator = 'Enum',
+            },
+          },
+          ['json'] = {
+            scope_sep = ':',
+            kinds = {}
+          }
+        },
       },
     }
   end

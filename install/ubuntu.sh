@@ -61,7 +61,7 @@ brew install \
   wget \
   xh
 brew install ynqa/tap/jnv
-brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+brew install universal-ctags
 brew install b4b4r07/tap/gomi
 $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
 

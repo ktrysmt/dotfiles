@@ -59,7 +59,7 @@ brew install \
   xh \
   zsh
 brew install ynqa/tap/jnv
-brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+brew install universal-ctags
 $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
 
 # brew cask
