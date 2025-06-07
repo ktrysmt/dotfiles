@@ -34,16 +34,17 @@ def configure(keymap):
         keymap.setTheme("black")
 
         keymap.replaceKey(29, "Back")
+        keymap.replaceKey(28, "Return")
         keymap.replaceKey(242, 244)
 
         keymap.clipboard_history.maxnum = 0
         keymap.clipboard_history.enableHook(False)
 
     # minecraft?
-    if 1:
-        keymap.replaceKey(28, "Return")
-    else:
-        keymap.replaceKey(28, "LShift")
+    # if 1:
+    #    keymap.replaceKey(28, "Return")
+    # else:
+    #    keymap.replaceKey(28, "LShift")
 
     # Global keymap which affects any windows
     if 1:
@@ -85,12 +86,20 @@ def configure(keymap):
         #    time.sleep(0.5)
         #    keymap.InputKeyCommand("2")()
         # keymap_global[ "LAlt-Return" ] = alt_return
-
         keymap_global["LCtrl-Alt-R"] = keymap.command_ReloadConfig
+
+        def FFF():
+            time.sleep(3)
+            shellExecute(None, "C:\Program Files B\mdie0253\MDIE.exe", "", "")
+            time.sleep(0.5)
+            keymap.InputKeyCommand("PageDown")()
+            time.sleep(0.5)
+            keymap.InputKeyCommand("Return")()
+        keymap_global["F12"] = FFF
 
     # tabby
     # https://gist.github.com/masato3/80bb29f74d8e52b9783e5a1abc96eed4
-    if 1:
+    if 0:
         keymap_tabby = keymap.defineWindowKeymap(
             exe_name="Tabby.exe", class_name="Chrome_WidgetWin_1")
         keymap_tabby["LCtrl-H"] = ["LCtrl-H"]
@@ -208,8 +217,7 @@ def configure(keymap):
         def window_snap(snap="left", shift=False):
             wnd = keymap.getTopLevelWindow()
             wnd_left, wnd_top, wnd_right, wnd_bottom = wnd.getRect()
-            mntr_left, mntr_top, mntr_right, mntr_bottom = get_monitor_areas()[
-                0]
+            mntr_left, mntr_top, mntr_right, mntr_bottom = get_monitor_areas()[0]
             bit = 15
             thin = 5
             if shift:
@@ -217,10 +225,9 @@ def configure(keymap):
             else:
                 center = round((mntr_right - mntr_left) / 2)
             if snap == "right":
-                to_rect = (center-bit, mntr_top,
-                           mntr_right+thin, mntr_bottom+thin)
+                to_rect = (center - bit, mntr_top, mntr_right + thin, mntr_bottom + thin)
             else:
-                to_rect = (mntr_left-thin, mntr_top, center, mntr_bottom+thin)
+                to_rect = (mntr_left - thin, mntr_top, center, mntr_bottom + thin)
             set_wnd_rect(to_rect)
 
         def window_left():
@@ -245,17 +252,15 @@ def configure(keymap):
                 return None
             wnd_left, wnd_top, wnd_right, wnd_bottom = wnd.getRect()
             width = wnd_right - wnd_left
-            mntr_left, mntr_top, mntr_right, mntr_bottom = get_monitor_areas()[
-                0]
+            mntr_left, mntr_top, mntr_right, mntr_bottom = get_monitor_areas()[0]
             center = (mntr_right - mntr_left) / 2
-            lx = int(center - width/2)
-            to_rect = (lx, mntr_top, lx+width, mntr_bottom)
+            lx = int(center - width / 2)
+            to_rect = (lx, mntr_top, lx + width, mntr_bottom)
             set_wnd_rect(to_rect)
 
         def get_monitor_areas():
             monitors = pyauto.Window.getMonitorInfo()
-            main_monitor_first = sorted(
-                monitors, key=lambda x: x[2], reverse=True)
+            main_monitor_first = sorted(monitors, key=lambda x: x[2], reverse=True)
             non_taskbar_areas = list(map(lambda x: x[1], main_monitor_first))
             return non_taskbar_areas
 
@@ -510,7 +515,7 @@ def configure(keymap):
         keymap.clipboard_history.maxnum = 1000
 
         # Total maximum size of clipboard history (Default:10MB)
-        keymap.clipboard_history.quota = 10*1024*1024
+        keymap.clipboard_history.quota = 10 * 1024 * 1024
 
         # Fixed phrases
         fixed_items = [
@@ -561,7 +566,7 @@ def configure(keymap):
             lines = s.splitlines(True)
             s = ""
             for line in lines:
-                for i in range(4+1):
+                for i in range(4 + 1):
                     if i >= len(line):
                         break
                     if line[i] == '\t':
