@@ -2,59 +2,6 @@
   "title": "My Complex in Browser",
   "rules": [
     {
-      "description": "Swap 'Enter' & 'Shift+Enter' in ChatGPT",
-      "manipulators": [
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "return_or_enter",
-            "modifiers": {
-              "mandatory": [
-                "shift"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "return_or_enter"
-            }
-          ],
-          "conditions": [
-            {
-              "type": "frontmost_application_if",
-              "bundle_identifiers": [
-                "com.hnc.Discord",
-                "com.openai.chat"
-              ]
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "return_or_enter"
-          },
-          "to": [
-            {
-              "key_code": "return_or_enter",
-              "modifiers": [
-                "shift"
-              ]
-            }
-          ],
-          "conditions": [
-            {
-              "type": "frontmost_application_if",
-              "bundle_identifiers": [
-                "com.hnc.Discord",
-                "com.openai.chat"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "description" : "Unless Terminal" ,
       "manipulators" : [
         {
@@ -295,11 +242,44 @@
       "manipulators" : [
         {
           "type" : "basic",
+          "from": { "key_code": "right_command" },
+          "to": [ { "key_code": "japanese_eisuu" }  ],
+          "conditions": [{
+            "type": "input_source_if",
+            "input_sources": [{ "language": "ja" }]
+          }, {
+            "type": "device_if",
+            "identifiers": [
+              { "is_built_in_keyboard": true }
+            ]
+          }]
+        },
+        {
+          "type" : "basic",
+          "from": { "key_code": "right_command" },
+          "to": [ { "key_code": "japanese_kana" }  ],
+          "conditions": [{
+            "type": "input_source_if",
+            "input_sources": [{ "language": "en" }]
+          }, {
+            "type": "device_if",
+            "identifiers": [
+              { "is_built_in_keyboard": true }
+            ]
+          }]
+        },
+        {
+          "type" : "basic",
           "from": { "key_code": "japanese_pc_katakana", "modifiers": {"optional": [ "any" ]} },
           "to": [ { "key_code": "japanese_eisuu" }  ],
           "conditions": [{
             "type": "input_source_if",
             "input_sources": [{ "language": "ja" }]
+          }, {
+            "type": "device_if",
+            "identifiers": [
+              { "is_built_in_keyboard": false }
+            ]
           }]
         },
         {
@@ -309,6 +289,11 @@
           "conditions": [{
             "type": "input_source_if",
             "input_sources": [{ "language": "en" }]
+          }, {
+            "type": "device_if",
+            "identifiers": [
+              { "is_built_in_keyboard": false }
+            ]
           }]
         }
       ]
