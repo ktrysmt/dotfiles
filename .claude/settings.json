@@ -428,7 +428,14 @@
         "search_repositories",
         "get_file_contents"
       ],
-      "disabled": false
+      "disabled": true
+    },
+    "container-use": {
+      "type": "stdio",
+      "command": "cu",
+      "args": [
+        "stdio"
+      ]
     }
   }
 }
