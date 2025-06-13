@@ -39,9 +39,10 @@ return {
       \ call fzf#vim#grep(
       \   'rg --hidden --glob "!{node_modules/*,vendor/*,.git/*}" --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>),
       \   1,
-      \   fzf#vim#with_preview({'options': '--exact --reverse --delimiter : --nth 3..'}, 'right:50%'),
+      \   fzf#vim#with_preview({'options': '--exact --reverse --delimiter : --nth 3..', 'sink*': function('s:grep_sink')}, 'right:50%'),
       \   <bang>0
       \ )
+    " \   fzf#vim#with_preview({'options': '--exact --reverse --delimiter : --nth 3..'}, 'right:50%'),
 
     command! -bang -nargs=? GFiles
       \ call fzf#vim#gitfiles(
@@ -69,6 +70,53 @@ return {
       catch
         echohl ErrorMsg
         echo "fzf: Failed to vsplit '" . target_path . "'"
+        echohl None
+        echomsg "fzf vsplit error: " . v:exception . " | " . v:throwpoint
+      endtry
+    endfunction
+
+    function! s:grep_sink(lines) abort
+      if empty(a:lines)
+        echohl WarningMsg | echo "fzf: No item selected" | echohl None
+        return
+      endif
+
+      let action = a:lines[0]
+      let parts = split(a:lines[1], ':')
+
+      if len(parts) < 3
+        echohl ErrorMsg | echo "fzf: Invalid ripgrep line format." | echohl None
+        return
+      endif
+
+      let filename = parts[0]
+      let line_number = parts[1]
+
+      if &filetype ==# 'neo-tree' || &filetype ==# 'oil'
+        silent! wincmd w
+      endif
+
+      try
+        if action == 'ctrl-v'
+          execute 'silent vsplit ' . fnameescape(filename)
+          execute line_number
+          normal! zz
+        elseif action == 'ctrl-t'
+          execute 'silent tabedit ' . fnameescape(filename)
+          execute line_number
+          normal! zz
+        elseif action == 'ctrl-x'
+          execute 'silent split ' . fnameescape(filename)
+          execute line_number
+          normal! zz
+        else
+          execute 'silent edit ' . fnameescape(filename)
+          execute line_number
+          normal! zz
+        endif
+      catch
+        echohl ErrorMsg
+        echo "fzf: Failed to vsplit '" . filename . "'"
         echohl None
         echomsg "fzf vsplit error: " . v:exception . " | " . v:throwpoint
       endtry
