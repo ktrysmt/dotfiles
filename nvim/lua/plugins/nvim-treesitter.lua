@@ -44,7 +44,7 @@ return {
       auto_install = true,
       highlight = {
         enable = true,
-        disable = { "terraform", "astro" },
+        disable = { "terraform", "astro", "yaml", "yaml.ansible" },
       },
       indent = { enable = false },
       incremental_selection = { -- or, you should use "vib" and dot repeat...
