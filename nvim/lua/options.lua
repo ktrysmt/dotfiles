@@ -17,6 +17,7 @@ vim.g.loaded_tutor_mode_plugin  = 1
 vim.g.loaded_zipPlugin          = 1
 vim.g.skip_loading_mswin        = 1
 vim.g.editorconfig              = false
+vim.g.omni_sql_no_default_maps  = 1
 
 vim.g.mapleader                 = ' '
 
