@@ -24,7 +24,7 @@ return {
         },
       },
       providers = {
-        priority = { 'lsp', 'markdown', 'norg', 'man', 'treesitter' },
+        priority = { 'lsp', 'markdown', 'norg', 'man', 'treesitter', 'ctags' },
       },
       ctags = {
         program = 'ctags',
@@ -41,7 +41,11 @@ return {
           ['json'] = {
             scope_sep = ':',
             kinds = {}
-          }
+          },
+          ['yaml.ansible'] = {
+            scope_sep = ':',
+            kinds = {}
+          },
         },
       },
     }
