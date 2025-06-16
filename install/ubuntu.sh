@@ -12,7 +12,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 # prepare
 sudo -E apt-get update -qq -y
-sudo -E apt-get install -qq -y zsh
+sudo -E apt-get install -qq -y zsh ncurses-term
 echo "setopt interactivecomments" > ~/.zshrc
 sudo -E bash -c "echo $(which zsh) >> /etc/shells"
 sudo -E chsh -s $(which zsh)
