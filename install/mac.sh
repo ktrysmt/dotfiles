@@ -56,11 +56,16 @@ brew install \
   watch \
   wget \
   mise \
+  ncurses \
   xh \
   zsh
 brew install ynqa/tap/jnv
 brew install universal-ctags
 $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
+
+# true color
+/usr/local/opt/ncurses/bin/infocmp tmux-256color > ~/tmux-256color.info
+sudo tic -xe tmux-256color tmux-256color.info
 
 # brew cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
