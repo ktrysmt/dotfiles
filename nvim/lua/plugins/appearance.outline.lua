@@ -1,7 +1,7 @@
 return {
   "hedyhli/outline.nvim",
   keys = {
-    { "<leader>a", mode = "n" }
+    { "<leader>o", mode = "n" }
   },
   dependencies = {
     'epheien/outline-treesitter-provider.nvim',
@@ -9,7 +9,7 @@ return {
   },
   config = function()
     -- Example mapping to toggle outline
-    vim.keymap.set("n", "<leader>a", "<cmd>belowright Outline<CR>",
+    vim.keymap.set("n", "<leader>o", "<cmd>belowright Outline<CR>",
       { desc = "Toggle Outline" })
 
     require("outline").setup {
