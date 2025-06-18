@@ -74,7 +74,7 @@ return {
         },
         submit = {
           normal = "<CR>",
-          insert = "<C-s>",
+          insert = "<C-m>",
         },
         cancel = {
           normal = { "<C-c>", "<Esc>", "q" },
@@ -113,7 +113,7 @@ return {
           start_insert = true, -- Start insert mode when opening the edit window
         },
         ask = {
-          floating = false,    -- Open the 'AvanteAsk' prompt in a floating window
+          floating = true,     -- Open the 'AvanteAsk' prompt in a floating window
           start_insert = true, -- Start insert mode when opening the ask window
           border = "rounded",
           ---@type "ours" | "theirs"
