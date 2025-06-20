@@ -14,8 +14,8 @@ return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     -- branch = "v3.x",
-    lazy = false,
-    -- event = { "VeryLazy" },
+    -- lazy = false,
+    event = { "VeryLazy" },
     -- event = { "VimEnter" },
     keys = {
       { "<C-e>",  mode = 'n' },
@@ -280,12 +280,13 @@ return {
               nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
             },
             ["<2-LeftMouse>"] = "open",
-            ["o"] = "open",       -- "open",
-            ["<cr>"] = "open",    -- "open",
-            ["<esc>"] = "cancel", -- close preview or floating neo-tree window
-            ["q"] = "cancel",     -- close preview or floating neo-tree window
-            ["P"] = "noop",       -- { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
-            ["l"] = "noop",       --  "focus_preview",
+            ["o"] = "open",                -- "open",
+            ["O"] = "expand_all_subnodes", -- "open",
+            ["<cr>"] = "open",             -- "open",
+            ["<esc>"] = "cancel",          -- close preview or floating neo-tree window
+            ["q"] = "cancel",              -- close preview or floating neo-tree window
+            ["P"] = "noop",                -- { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
+            ["l"] = "noop",                --  "focus_preview",
             ["i"] = "open_split",
             ["s"] = "open_vsplit",
             ["t"] = "open_tabnew",
@@ -295,7 +296,7 @@ return {
             --["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
             ["C"] = "close_node",
             -- ['C'] = 'close_all_subnodes',
-            ["z"] = "close_all_nodes",
+            ["z"] = "close_all_subnodes",
             --["Z"] = "expand_all_nodes",
             ["a"] = {
               "add",
