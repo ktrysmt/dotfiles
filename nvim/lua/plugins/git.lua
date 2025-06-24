@@ -47,10 +47,6 @@ return {
         numhl         = false,
         linehl        = false,
       })
-
-      vim.cmd [[
-      highlight GitSignsAdd guifg=#528832
-      ]]
     end
   },
 }
