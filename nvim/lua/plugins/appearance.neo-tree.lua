@@ -486,18 +486,20 @@ return {
 
       vim.keymap.set("n", "<C-e>", "<Cmd>Neotree left toggle<CR>", { silent = true })
       vim.keymap.set("n", "<C-w>f", function()
-        print(vim.fn.isdirectory(vim.fn.getcwd() .. "/.git"))
-        if vim.fn.isdirectory(vim.fn.getcwd() .. "/.git") == 0 then
-          vim.cmd("Neotree action=focus reveal_file=% left")
+        if vim.bo.filetype == "neo-tree" or vim.bo.filetype == "oil" then
+          vim.cmd("Neotree left")
           return
         end
-        if is_blank_screen_by_ls() or vim.bo.filetype == "neo-tree" or vim.bo.filetype == "oil" then
+        if is_blank_screen_by_ls() or vim.fn.isdirectory(vim.fn.getcwd()) == 1 then
           vim.cmd("Neotree left")
+          return
+        end
+        if (vim.fn.isdirectory(vim.fn.getcwd()) == 0) and (vim.fn.isdirectory(vim.fn.getcwd() .. "/.git") == 0) then
+          vim.cmd("Neotree action=focus reveal_file=% left")
           return
         end
         local path = vim.fn.system("git rev-parse --show-toplevel")
         vim.defer_fn(function()
-          print("DEBUG")
           vim.cmd("Neotree action=focus reveal_file=% dir=" .. path)
         end, 170)
       end, { silent = true })
