@@ -490,12 +490,8 @@ return {
           vim.cmd("Neotree left")
           return
         end
-        if is_blank_screen_by_ls() or vim.fn.isdirectory(vim.fn.getcwd()) == 1 then
+        if is_blank_screen_by_ls() and vim.fn.isdirectory(vim.fn.getcwd()) == 1 then
           vim.cmd("Neotree left")
-          return
-        end
-        if (vim.fn.isdirectory(vim.fn.getcwd()) == 0) and (vim.fn.isdirectory(vim.fn.getcwd() .. "/.git") == 0) then
-          vim.cmd("Neotree action=focus reveal_file=% left")
           return
         end
         local path = vim.fn.system("git rev-parse --show-toplevel")
