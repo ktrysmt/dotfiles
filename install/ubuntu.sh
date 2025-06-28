@@ -42,6 +42,7 @@ brew install \
   git-delta \
   git-secrets \
   glow \
+  golangci-lint \
   jq \
   llvm \
   mise \
