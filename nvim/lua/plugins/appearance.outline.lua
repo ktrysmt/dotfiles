@@ -4,6 +4,7 @@ return {
     { "<leader>o", mode = "n" }
   },
   dependencies = {
+    'bngarren/outline-test-blocks-provider.nvim',
     'epheien/outline-treesitter-provider.nvim',
     'epheien/outline-ctags-provider.nvim'
   },
@@ -24,7 +25,7 @@ return {
         },
       },
       providers = {
-        priority = { 'lsp', 'markdown', 'norg', 'man', 'treesitter', 'ctags' },
+        priority = { "test_blocks", 'lsp', 'markdown', 'norg', 'man', 'treesitter', 'ctags' },
       },
       ctags = {
         program = 'ctags',
@@ -47,6 +48,10 @@ return {
             kinds = {}
           },
         },
+      },
+      test_blocks = {
+        enable = { describe = true, it = true, pending = false },
+        max_depth = 5,
       },
     }
   end
