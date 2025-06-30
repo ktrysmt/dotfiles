@@ -1,12 +1,6 @@
 {
   "mcpServers": {
     "awslabs.aws-documentation-mcp-server": {
-      "autoApprove": [
-        "search_documentation",
-        "read_documentation"
-      ],
-      "disabled": false,
-      "timeout": 60,
       "command": "uvx",
       "args": [
         "awslabs.aws-documentation-mcp-server@latest"
@@ -14,41 +8,22 @@
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR",
         "UV_PYTHON": "python3.13"
-      },
-      "transportType": "stdio",
-      "alwaysAllow": [
-        "search_documentation",
-        "read_documentation",
-        "recommend"
-      ]
+      }
     },
     "mcp-deepwiki": {
       "command": "npx",
       "args": [
         "-y",
         "mcp-deepwiki@latest"
-      ],
-      "alwaysAllow": [
-        "deepwiki_fetch"
       ]
     },
     "mcp-think-as": {
-      "disabled": false,
-      "timeout": 60,
       "command": "uv",
       "args": [
         "--directory",
         "/Users/kotaro_yoshimatsu/workspace/mcp-think-as",
         "run",
         "main.py"
-      ],
-      "transportType": "stdio",
-      "autoApprove": [
-        "think_as_coder",
-        "think_as_architect"
-      ],
-      "alwaysAllow": [
-        "think_as_architect"
       ]
     },
     "github-mcp-server": {
@@ -63,23 +38,7 @@
       ],
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": ""
-      },
-      "autoApprove": [
-        "search_code",
-        "get_file_contents"
-      ],
-      "alwaysAllow": [
-        "search_repositories",
-        "get_file_contents"
-      ],
-      "disabled": true
-    },
-    "container-use": {
-      "type": "stdio",
-      "command": "cu",
-      "args": [
-        "stdio"
-      ]
+      }
     }
   }
 }

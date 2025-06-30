@@ -1,7 +1,4 @@
 {
-  "model": "opus",
-  "theme": "dark",
-  "cleanupPeriodDays": 30,
   "permissions": {
     "allow": [
       "Bash(7z:*)",
@@ -327,22 +324,5 @@
       "Write(/etc/shadow)",
       "Write(/etc/sudoers)"
     ]
-  },
-  "env": {
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
-    "DISABLE_COST_WARNINGS": "0",
-    "BASH_DEFAULT_TIMEOUT_MS": "300000",
-    "BASH_MAX_TIMEOUT_MS": "1200000",
-    "MAX_THINKING_TOKENS": "200000",
-    "SHELL": "/opt/homebrew/bin/zsh",
-    "UV_CACHE_DIR": "~/.cache/uv",
-    "UV_PYTHON_PREFERENCE": "managed",
-    "DENO_DIR": "~/.cache/deno",
-    "CARGO_HOME": "~/.cargo",
-    "RUSTUP_HOME": "~/.rustup",
-    "GOPATH": "~/go",
-    "NODE_OPTIONS": "--max-old-space-size=4096"
-  },
-  "apiKeyHelper": null,
-  "preferredNotifChannel": "terminal_bell"
+  }
 }
