@@ -55,7 +55,7 @@ return {
           'staticcheck',
           'stylua',
           'svelte-language-server',
-          'terraform'
+          'terraform',
           'typescript-language-server',
           'typos-lsp',
           'vim-language-server',

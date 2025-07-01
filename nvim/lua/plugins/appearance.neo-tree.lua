@@ -490,13 +490,22 @@ return {
           vim.cmd("Neotree left")
           return
         end
+
         if is_blank_screen_by_ls() and vim.fn.isdirectory(vim.fn.getcwd()) == 1 then
           vim.cmd("Neotree left")
           return
         end
-        local path = vim.fn.system("git rev-parse --show-toplevel")
+
+        -- 前方一致で"fatal"の文字列があるかどうか判定
+        dotgit = vim.fn.system("git rev-parse --show-toplevel")
+        if string.sub(dotgit, 1, 5) == "fatal" then
+          path = vim.fn.expand("%:p:h")
+          vim.cmd("Neotree action=focus reveal_file=% dir=.")
+          return
+        end
+
         vim.defer_fn(function()
-          vim.cmd("Neotree action=focus reveal_file=% dir=" .. path)
+          vim.cmd("Neotree action=focus reveal_file=% dir=" .. dotgit)
         end, 170)
       end, { silent = true })
     end
