@@ -33,7 +33,8 @@ return {
     'lewis6991/gitsigns.nvim',
     event = { "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
     config = function()
-      require('gitsigns').setup({
+      local gitsigns = require('gitsigns')
+      gitsigns.setup({
         signs         = {
           add          = { text = '+' },
           change       = { text = '|' },
@@ -47,6 +48,20 @@ return {
         numhl         = false,
         linehl        = false,
       })
+
+      local opt = { silent = true }
+      vim.keymap.set("n", "gN", function()
+        gitsigns.nav_hunk('next')
+      end, opt)
+      vim.keymap.set("n", "gP", function()
+        gitsigns.nav_hunk('prev')
+      end, opt)
+      vim.keymap.set("n", "g+", function()
+        gitsigns.stage_hunk()
+      end, opt)
+      vim.keymap.set("n", "g-", function()
+        gitsigns.undo_stage_hunk()
+      end, opt)
     end
   },
 }
