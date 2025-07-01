@@ -1,0 +1,8 @@
+```sh
+claude mcp add -s user aws-docs -- uvx awslabs.aws-documentation-mcp-server@latest
+claude mcp add -s user gemini-cli -e GEMINI_API_KEY="" -- npx @choplin/mcp-gemini-cli --allow-npx
+claude mcp add -s user deepwiki-- npx -y mcp-deepwiki@latest
+claude mcp add -s user mcp-think-as -- uv --directory "" run main.py
+
+claude mcp add -s user o3-search -- npx o3-search-mcp
+```
