@@ -1,6 +1,7 @@
 {
   "permissions": {
     "allow": [
+      "mcp*",
       "Bash(7z:*)",
       "Bash(ag:*)",
       "Bash(alias:*)",

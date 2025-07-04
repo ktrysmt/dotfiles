@@ -52,7 +52,9 @@ return {
             continue = "<leader>cC", -- Normal mode keymap for Claude Code with continue flag
             verbose = "<leader>cV",  -- Normal mode keymap for Claude Code with verbose flag
           },
-        }
+        },
+        window_navigation = false,
+        scrolling = false,
       }
     })
   end

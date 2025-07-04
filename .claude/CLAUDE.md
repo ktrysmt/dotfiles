@@ -1,8 +1,8 @@
-# ??? CLAUDE.md - Claude Code Global Configuration
+# CLAUDE.md - Claude Code Global Configuration
 
 This file provides comprehensive guidance to Claude Code (claude.ai/code) when working across all projects.
 
-## ?? Overview
+## Overview
 
 This is my global Claude Code configuration directory (`~/.claude`) that sets up:
 - **Professional development standards and workflows**
@@ -12,15 +12,7 @@ This is my global Claude Code configuration directory (`~/.claude`) that sets up
 - **Session history and todo management**
 - **Proactive AI assistance guidelines**
 
-### Directory Structure
-
-- `settings.json` - Main Claude Code configuration file with permissions, environment variables, and preferences
-- `settings.local.json` - Local overrides for Claude Code settings
-- `projects/` - Session history files for different projects worked on with Claude Code
-- `todos/` - Saved todo lists from various Claude Code sessions
-- `statsig/` - Analytics and feature flag cache files
-
-## ?? Proactive AI Assistance Philosophy
+## Proactive AI Assistance Philosophy
 
 ### Core Principles
 - **Engineer time is precious** - Automate everything possible
@@ -29,7 +21,32 @@ This is my global Claude Code configuration directory (`~/.claude`) that sets up
 - **Self-documenting code** - Generate docs automatically
 - **Continuous improvement** - Learn from patterns and optimize
 
-### YOU MUST: Always Suggest Improvements
+## Essential MCP Usage
+
+**ALWAYS use MCP tools for information gathering and verification**
+
+### MCP Tool Selection Guide
+- **aws-documentation-mcp-server**: AWS specifications and documentation
+- **gemini-cli**: General information search and error resolution
+- **context7**: OSS library documentation and specifications
+- **playwright**: Web application behavior verification
+
+### MCP Decision Flow
+1. Unknown information → Search with gemini-cli
+2. AWS-related questions → Verify with aws-documentation-mcp-server
+3. OSS/library usage → Get documentation with context7
+4. Web behavior verification → Use playwright browser operations
+
+### Required MCP Usage Scenarios
+- "How do I implement X?" → Check specifications with relevant MCP tool first
+- Error messages → Search with gemini-cli
+- AWS service usage → Get official info with aws-documentation-mcp-server
+- Library usage → Check latest docs with context7
+- Web verification → Browser operations with playwright
+
+**Prohibited: Guessing answers without MCP verification or using outdated information**
+
+### Always Suggest Improvements
 **Every interaction should include proactive suggestions to save engineer time**
 
 1. **Pattern Recognition**
@@ -58,34 +75,33 @@ This is my global Claude Code configuration directory (`~/.claude`) that sets up
 
 ### Proactive Suggestion Format
 ```
-?? **Improvement Suggestion**: [Brief title]
+**Improvement Suggestion**: [Brief title]
 **Time saved**: ~X minutes per occurrence
 **Implementation**: [Quick command or code snippet]
 **Benefits**: [Why this improves the codebase]
 ```
 
-## ?? Professional Workflow Standards
+## Professional Workflow Standards
 
 ### Efficient Explore-Plan-Code-Commit Cycle
-**Smart automation with time-saving focus**
 
 #### 1. EXPLORE Phase (Automated)
-- **Use AI to quickly scan and summarize codebase**
-- **Auto-identify dependencies and impact areas**
-- **Generate dependency graphs automatically**
-- **Present findings concisely with actionable insights**
+- Use AI to quickly scan and summarize codebase
+- Auto-identify dependencies and impact areas
+- Generate dependency graphs automatically
+- Present findings concisely with actionable insights
 
 #### 2. PLAN Phase (AI-Assisted)
-- **Generate multiple implementation approaches**
-- **Auto-create test scenarios from requirements**
-- **Predict potential issues using pattern analysis**
-- **Provide time estimates for each approach**
+- Generate multiple implementation approaches
+- Auto-create test scenarios from requirements
+- Predict potential issues using pattern analysis
+- Provide time estimates for each approach
 
 #### 3. CODE Phase (Accelerated)
-- **Generate boilerplate with full documentation**
-- **Auto-complete repetitive patterns**
-- **Real-time error detection and fixes**
-- **Parallel implementation of independent components**
+- Generate boilerplate with full documentation
+- Auto-complete repetitive patterns
+- Real-time error detection and fixes
+- Parallel implementation of independent components
 
 #### 4. COMMIT Phase (Automated Quality Checks)
 ```bash
@@ -97,13 +113,13 @@ uv run --frozen ruff format . && uv run --frozen ruff check . && uv run --frozen
 ```
 
 ### Documentation & Code Quality Requirements
-- **YOU MUST: Generate comprehensive documentation for every function**
-- **YOU MUST: Add clear comments explaining business logic**
-- **YOU MUST: Create examples in documentation**
-- **YOU MUST: Auto-fix all linting/formatting issues**
-- **YOU MUST: Generate unit tests for new code**
+- **Generate comprehensive documentation for every function**
+- **Add clear comments explaining business logic**
+- **Create examples in documentation**
+- **Auto-fix all linting/formatting issues**
+- **Generate unit tests for new code**
 
-## ?? Configuration Files
+## Configuration Files
 
 ### settings.json Structure
 
@@ -211,7 +227,7 @@ Use `/permissions` in Claude Code to:
 4. **Change cleanup period**: Modify `cleanupPeriodDays` value
 5. **Disable telemetry**: Set `CLAUDE_CODE_ENABLE_TELEMETRY` to "0"
 
-## ?? Rust Development (Primary Language)
+## Rust Development (Primary Language)
 
 ### Core Rules
 - **Package Manager**: Only use `cargo`, never install from source unless necessary
@@ -302,7 +318,7 @@ impl ConfigBuilder {
         self.port = Some(port);
         self
     }
-    
+
     pub fn build(self) -> Result<Config, MyError> {
         Ok(Config {
             port: self.port.ok_or(MyError::Custom { msg: "port required".into() })?,
@@ -312,7 +328,7 @@ impl ConfigBuilder {
 }
 ```
 
-## ?? Go Development
+## Go Development
 
 ### Core Rules
 - **Package Manager**: Use Go modules (`go mod`)
@@ -372,7 +388,7 @@ func FunctionName(ctx context.Context, input string) (string, error) {
 - **Defer**: Use for cleanup, but be aware of loop gotchas
 - **Error Wrapping**: Use `fmt.Errorf` with `%w` verb
 
-## ?? TypeScript Development
+## TypeScript Development
 
 ### Core Rules
 - **Package Manager**: Use `pnpm` > `npm` > `yarn`
@@ -402,7 +418,7 @@ npx webpack-bundle-analyzer
 ```typescript
 /**
  * Brief description of what the function does
- * 
+ *
  * @description Detailed explanation of the business logic and purpose
  * @param paramName - What this parameter represents
  * @returns What the function returns and why
@@ -427,7 +443,7 @@ export function functionName(paramName: ParamType): ReturnType {
 - **Union Types**: Prefer over enums for string literals
 - **Utility Types**: Use built-in types (Partial, Pick, Omit)
 
-## ?? Python Development
+## Python Development
 
 ### Core Rules
 - **Package Manager**: ONLY use `uv`, NEVER `pip`
@@ -457,23 +473,23 @@ uv run --frozen bandit -r .
 ```python
 def function_name(param: ParamType) -> ReturnType:
     """Brief description of the function.
-    
+
     Detailed explanation of what the function does and why.
-    
+
     Args:
         param: Description of the parameter and its purpose.
-        
+
     Returns:
         Description of what is returned and its structure.
-        
+
     Raises:
         ErrorType: When this specific error condition occurs.
-        
+
     Example:
         >>> result = function_name("input")
         >>> print(result)
         'expected output'
-        
+
     Note:
         Any important notes about usage or limitations.
     """
@@ -486,7 +502,7 @@ def function_name(param: ParamType) -> ReturnType:
 - **Testing**: Use pytest with fixtures
 - **Type Narrowing**: Explicit None checks for Optional
 
-## ?? Bash Development
+## Bash Development
 
 ### Core Rules
 - **Shebang**: Always `#!/usr/bin/env bash`
@@ -510,7 +526,7 @@ readonly SCRIPT_NAME="$(basename "${BASH_SOURCE[0]}")"
 function_name() {
     local arg1="${1:?Error: arg1 required}"
     local arg2="${2:-default}"
-    
+
     # Implementation
 }
 
@@ -518,7 +534,7 @@ function_name() {
 trap 'echo "Error on line $LINENO"' ERR
 ```
 
-## ?? Security and Quality Standards
+## Security and Quality Standards
 
 ### NEVER Rules (Non-negotiable)
 - **NEVER: Delete production data without explicit confirmation**
@@ -539,7 +555,7 @@ trap 'echo "Error on line $LINENO"' ERR
 - **YOU MUST: Use feature branches for all development**
 - **YOU MUST: Add comprehensive documentation to all public APIs**
 
-## ?? Git Worktree Workflow
+## Git Worktree Workflow
 
 ### Why Git Worktree?
 Git worktree allows working on multiple branches simultaneously without stashing or switching contexts. Each worktree is an independent working directory with its own branch.
@@ -574,7 +590,7 @@ git worktree remove ../project-feature-auth
 git worktree prune
 ```
 
-## ?? Commit Standards
+## Commit Standards
 
 ### Conventional Commits
 ```bash
@@ -601,7 +617,7 @@ git commit --trailer "Github-Issue: #123"
 - Add specific reviewers as configured
 - Include performance impact if relevant
 
-## ? Time-Saving Automations
+## Time-Saving Automations
 
 ### Smart Code Generation
 ```bash
@@ -627,17 +643,17 @@ npm init -y
 uv init python/
 ```
 
-## ?? AI-Powered Code Review
+## AI-Powered Code Review
 
 ### Continuous Analysis
 **AI should continuously analyze code and suggest improvements**
 
 ```
-?? Code Analysis Results:
+Code Analysis Results:
 - Performance: Found 3 optimization opportunities
 - Security: No issues detected
 - Maintainability: Suggest extracting 2 methods
-- Test Coverage: 85% �� Suggest 3 additional test cases
+- Test Coverage: 85% - Suggest 3 additional test cases
 - Documentation: 2 functions missing proper docs
 ```
 
@@ -672,13 +688,13 @@ for _, s := range items {
 result := builder.String()
 ```
 
-## ?? Efficiency Metrics & Tracking
+## Efficiency Metrics & Tracking
 
 ### Time Savings Report
 **Generate weekly efficiency reports**
 
 ```
-?? This Week's Productivity Gains:
+This Week's Productivity Gains:
 - Boilerplate generated: 2,450 lines (saved ~3 hours)
 - Tests auto-generated: 48 test cases (saved ~2 hours)
 - Documentation created: 156 functions (saved ~4 hours)
