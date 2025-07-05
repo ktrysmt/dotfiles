@@ -15,8 +15,8 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     -- branch = "v3.x",
     -- lazy = false,
-    event = { "VeryLazy" },
-    -- event = { "VimEnter" },
+    -- event = { "VeryLazy" },
+    event = { "VimEnter" },
     keys = {
       { "<C-e>",  mode = 'n' },
       { '<C-w>f', mode = 'n' },
@@ -25,9 +25,9 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
-      -- {"3rd/image.nvim", opts = {}}, -- Optional image support in preview window: See `# Preview Mode` for more information
+      -- { "3rd/image.nvim", opts = {} }, -- Optional image support in preview window: See `# Preview Mode` for more information
       -- {
-      --   "s1n7ax/nvim-window-picker", -- for open_with_window_picker keymaps
+      --   "s1n7ax/nvim-window-picker",   -- for open_with_window_picker keymaps
       --   version = "2.*",
       --   config = function()
       --     require("window-picker").setup({
@@ -67,10 +67,10 @@ return {
       -- })
       --
       -- In older versions, you can define the signs manually:
-      -- vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
-      -- vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
-      -- vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
-      -- vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
+      vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
+      vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
+      vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
+      vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
 
 
 
@@ -486,7 +486,7 @@ return {
 
       vim.keymap.set("n", "<C-e>", "<Cmd>Neotree left toggle<CR>", { silent = true })
       vim.keymap.set("n", "<C-w>f", function()
-        if vim.bo.filetype == "neo-tree" or vim.bo.filetype == "oil" then
+        if vim.bo.filetype == "neo-tree" or vim.bo.filetype == "oil" or vim.bo.filetype == "git" then
           vim.cmd("Neotree left")
           return
         end
