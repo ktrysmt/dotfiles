@@ -11,9 +11,7 @@ return {
     { "<Leader>w",  mode = "n" },
     { "<Leader>f",  mode = "n" },
     { "<Leader>mr", mode = "n" },
-    { "<A-m>",      mode = "n" },
-    { "<A-i>",      mode = "i" },
-    { "<A-x>",      mode = "x" },
+    { "<A-m>",      mode = { "n", "i", "x", "v" } },
   },
   dependencies = {
     'pbogut/fzf-mru.vim',
@@ -21,14 +19,6 @@ return {
   },
   config = function()
     vim.cmd [[
-    nnoremap <expr> <Leader>x (expand('%') =~ '^neo-tree filesystem\|^oil://' ? "\<c-w>\<c-w>" : '') . ":Commands\<cr>"
-    nnoremap <expr> <Leader>d (expand('%') =~ '^neo-tree filesystem\|^oil://' ? "\<c-w>\<c-w>" : '').":GFiles?\<cr>"
-    nnoremap <expr> <Leader>b (expand('%') =~ '^neo-tree filesystem\|^oil://' ? "\<c-w>\<c-w>" : '').":Buffers\<cr>"
-    nnoremap <expr> <Leader>hc (expand('%') =~ '^neo-tree filesystem\|^oil://' ? "\<c-w>\<c-w>" : '').":History:\<cr>"
-    nnoremap <expr> <Leader>hs (expand('%') =~ '^neo-tree filesystem\|^oil://' ? "\<c-w>\<c-w>" : '').":History/\<cr>"
-    nnoremap <expr> <Leader>r (expand('%') =~ '^neo-tree filesystem\|^oil://' ? "\<c-w>\<c-w>" : '').":Ripgrep\<cr>"
-    nnoremap <expr> <Leader>w (expand('%') =~ '^neo-tree filesystem\|^oil://' ? "\<c-w>\<c-w>" : '').":Windows\<cr>"
-    nnoremap <expr> <Leader>f (expand('%') =~ '^neo-tree filesystem\|^oil://' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 
     let g:fzf_layout = { 'down': '~40%' }
 
@@ -100,6 +90,7 @@ return {
     ]]
 
     vim.cmd [[
+
     function! s:ConditionalVSplit(lines) abort
       if empty(a:lines)
         echohl WarningMsg | echo "fzf: No item selected for vsplit." | echohl None
@@ -122,7 +113,6 @@ return {
       endtry
     endfunction
 
-
     function! s:build_quickfix_list(lines)
       call setqflist(map(copy(a:lines), '{ "filename": v:val, "lnum": 1 }'))
       copen
@@ -135,23 +125,59 @@ return {
       \ 'ctrl-x': 'split',
       \ 'ctrl-v': function('s:ConditionalVSplit')
       \ }
+
     ]]
 
     local opt = { silent = true }
-
-    -- vim.keymap.set("n", "<Leader>d", ":GFiles?<cr>", opt)
-    -- vim.keymap.set("n", "<Leader>b", ":Buffers<cr>", opt)
-    -- vim.keymap.set("n", "<Leader>f", ":Files<cr>", opt)
-    -- vim.keymap.set("n", "<Leader>hc", ":History:<cr>", opt)
-    -- vim.keymap.set("n", "<Leader>hs", ":History/<cr>", opt)
-    -- vim.keymap.set("n", "<Leader>r", ":Ripgrep<cr>", opt)
-    -- vim.keymap.set("n", "<Leader>w", ":Windows<cr>", opt)
-    -- vim.keymap.set("n", "<Leader>x", ":Commands<cr>", opt)
-
     vim.keymap.set("n", "<A-m>", "<plug>(fzf-maps-n)", opt)
-    vim.keymap.set("i", "<A-i>", "<plug>(fzf-maps-i)", opt)
-    vim.keymap.set("x", "<A-x>", "<plug>(fzf-maps-x)", opt)
+    vim.keymap.set("i", "<A-m>", "<plug>(fzf-maps-i)", opt)
+    vim.keymap.set({ "v", "x" }, "<A-m>", "<plug>(fzf-maps-x)", opt)
 
     vim.keymap.set("n", "<Leader>mr", ":FZFMru<cr>", opt)
+
+    local function should_switch_window()
+      local bufname = vim.fn.expand('%')
+      return bufname:match('^neo%-tree filesystem') or bufname:match('^oil://')
+    end
+
+    vim.keymap.set("n", "<Leader>x", function()
+      if should_switch_window() then vim.cmd('wincmd w') end
+      vim.cmd('Commands')
+    end, opt)
+
+    vim.keymap.set("n", "<Leader>d", function()
+      if should_switch_window() then vim.cmd('wincmd w') end
+      vim.cmd('GFiles?')
+    end, opt)
+
+    vim.keymap.set("n", "<Leader>b", function()
+      if should_switch_window() then vim.cmd('wincmd w') end
+      vim.cmd('Buffers')
+    end, opt)
+
+    vim.keymap.set("n", "<Leader>hc", function()
+      if should_switch_window() then vim.cmd('wincmd w') end
+      vim.cmd('History:')
+    end, opt)
+
+    vim.keymap.set("n", "<Leader>hs", function()
+      if should_switch_window() then vim.cmd('wincmd w') end
+      vim.cmd('History/')
+    end, opt)
+
+    vim.keymap.set("n", "<Leader>r", function()
+      if should_switch_window() then vim.cmd('wincmd w') end
+      vim.cmd('Ripgrep')
+    end, opt)
+
+    vim.keymap.set("n", "<Leader>w", function()
+      if should_switch_window() then vim.cmd('wincmd w') end
+      vim.cmd('Windows')
+    end, opt)
+
+    vim.keymap.set("n", "<Leader>f", function()
+      if should_switch_window() then vim.cmd('wincmd w') end
+      vim.cmd('Files')
+    end, opt)
   end
 }
