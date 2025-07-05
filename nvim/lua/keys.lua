@@ -137,3 +137,24 @@ end
 
 -- Visualモードで数字の列を矩形選択→g<C-a>で連番作成
 -- func(a1,|a2,a3)のときct)でfunc(a1,)でインサートモード
+
+-- upper/lower toggle in insert mode
+vim.keymap.set("i", "<C-l>",
+  function()
+    local word = vim.fn.expand('<cword>')
+    if word == "" then
+      return ""
+    end
+    local pos = vim.fn.getpos('.')
+    if word == word:upper() then
+      return "<C-o>diw" ..
+          word:lower() ..
+          "<C-o>:call setpos('.', [" .. pos[1] .. "," .. pos[2] .. "," .. pos[3] .. "," .. pos[4] .. "])<CR>"
+    else
+      return "<C-o>diw" ..
+          word:upper() ..
+          "<C-o>:call setpos('.', [" .. pos[1] .. "," .. pos[2] .. "," .. pos[3] .. "," .. pos[4] .. "])<CR>"
+    end
+  end,
+  { expr = true }
+)
