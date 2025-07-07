@@ -7,8 +7,8 @@ vim.keymap.set('n', '<Esc><Esc>', '<cmd>nohlsearch<CR><Esc><C-l>', { silent = tr
 -- stay in search
 vim.keymap.set('n', 'n', 'n``')
 vim.keymap.set('n', 'N', 'N``')
-vim.keymap.set('n', '/', '/\\v<CR>``')
-vim.keymap.set('n', '?', '?\\v<CR>``')
+-- vim.keymap.set('n', '/', '/\\v') -- nvim/lua/plugins/lexima.lua
+vim.keymap.set('n', '?', '/\\V')
 
 -- search and replace
 vim.keymap.set('n', 'x', '"_x') -- only n, not v

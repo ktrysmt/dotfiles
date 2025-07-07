@@ -1,6 +1,9 @@
 return {
   "cohama/lexima.vim",
   event = { "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
+  keys = {
+    { "/", mode = "n" },
+  },
   config = function()
     vim.keymap.set("i", "<C-f>", "<Right>")
 
@@ -45,8 +48,8 @@ return {
     LeximaAlterCommand gvc DiffviewClose
     LeximaAlterCommand gh DiffviewFileHistory
 
-    LeximaAlterCommand s\%[v] Subvert/
-    LeximaAlterCommand %s\%[v] Subvert/
+    LeximaAlterCommand %s s/\v
+    LeximaAlterCommand s s/\v
 
     LeximaAlterCommand p\%[cre] Pcre/
     LeximaAlterCommand %p\%[cre] Pcre/
@@ -54,12 +57,15 @@ return {
     LeximaAlterCommand ti\%[gcurrent] tabnew|TigOpenCurrentFile
     LeximaAlterCommand ti\%[groot] tabnew|TigOpenProjectRootDir
 
-    LeximaAlterCommand ghb !gh<space>browse<space><space>%<cr>
+    LeximaAlterCommand ghb !gh<space>browse<space><space>%
 
     LeximaAlterCommand ww w<space>!
     LeximaAlterCommand rr r<space>!
 
     LeximaAlterCommand oi Oil<space>.<cr>
+
+    nnoremap / /\v
+
     ]]
   end
 }
