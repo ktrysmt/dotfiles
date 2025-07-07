@@ -34,9 +34,6 @@ github = "ohmyzsh/ohmyzsh"
 dir = "lib"
 use = ["{completion,key-bindings,directories}.zsh"]
 
-[plugins.zsh-better-npm-completion]
-github = "lukechilds/zsh-better-npm-completion"
-
 [plugins.aws_zsh_completer]
 remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
 

@@ -16,3 +16,4 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # mise
 source <(mise activate zsh)
+source <(pnpm completion zsh)
