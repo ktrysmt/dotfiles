@@ -11,7 +11,7 @@ return {
     vim.cmd [[
 
     function! s:lexima_alter_command_add_rule(original, alternative) abort
-      let input_space = '<C-w>' . a:alternative . '<Space>'
+      let input_space = '<C-w>' . a:alternative . '<Right>'
       let input_cr    = '<C-w>' . a:alternative . '<CR>'
       let input_right = '<C-w>' . a:alternative . '<Right>'
 
