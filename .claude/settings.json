@@ -1,7 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "mcp*",
+
+      "mcp__mcp-think-as__think_as_architect",
+      "mcp__mcp-think-as__think_as_coder",
+
+      "mcp__aws-docs*",
+      "mcp__deepwiki*",
+      "mcp__gemini-cli*",
+      "mcp__mcp-think-as*",
+
+      "Bash(ss:*)",
       "Bash(7z:*)",
       "Bash(ag:*)",
       "Bash(alias:*)",
@@ -325,5 +334,6 @@
       "Write(/etc/shadow)",
       "Write(/etc/sudoers)"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true
 }
