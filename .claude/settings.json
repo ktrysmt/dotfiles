@@ -5,10 +5,10 @@
       "mcp__mcp-think-as__think_as_architect",
       "mcp__mcp-think-as__think_as_coder",
 
-      "mcp__aws-docs*",
-      "mcp__deepwiki*",
-      "mcp__gemini-cli*",
-      "mcp__mcp-think-as*",
+      "mcp__aws-docs__*",
+      "mcp__deepwiki__*",
+      "mcp__gemini-cli__*",
+      "mcp__mcp-think-as__*",
 
       "Bash(ss:*)",
       "Bash(7z:*)",
@@ -259,7 +259,7 @@
       "Write(~/dev/**)",
       "Write(~/projects/**)",
       "Write(~/src/**)",
-      "Write(~/work/**)",
+      "Write(~/work/**)"
     ],
     "deny": [
       "Bash(rm -rf /)",
@@ -334,6 +334,5 @@
       "Write(/etc/shadow)",
       "Write(/etc/sudoers)"
     ]
-  },
-  "enableAllProjectMcpServers": true
+  }
 }
