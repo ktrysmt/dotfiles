@@ -46,7 +46,7 @@ return {
           'lua-language-server',
           'lua-language-server',
           'misspell',
-          'pylsp',
+          'python-lsp-server',
           'revive',
           'rust-analyzer',
           'shellcheck',

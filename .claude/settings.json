@@ -5,10 +5,9 @@
       "mcp__mcp-think-as__think_as_architect",
       "mcp__mcp-think-as__think_as_coder",
 
-      "mcp__aws-docs__*",
-      "mcp__deepwiki__*",
-      "mcp__gemini-cli__*",
-      "mcp__mcp-think-as__*",
+      "mcp__aws-docs__:*",
+      "mcp__deepwiki__:*",
+      "mcp__gemini-cli__:*",
 
       "Bash(ss:*)",
       "Bash(7z:*)",
