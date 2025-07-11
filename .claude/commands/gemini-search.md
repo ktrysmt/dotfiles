@@ -6,8 +6,11 @@ When web search is needed, you MUST use `gemini --prompt` via Task Tool.
 
 Run web search via Task Tool with `gemini --prompt 'WebSearch: <query>'`
 
+If "$ARGUMENTS" != "", then use "$ARGUMENTS" as <query>.
+
 Run
 
 ```bash
 gemini --prompt "WebSearch: <query>"
 ```
+

@@ -88,6 +88,7 @@ mkdir -p ~/.config/peco/
 mkdir -p ~/.local/bin/
 mkdir -p ~/.cache/vim/
 mkdir -p ~/.docker/
+mkdir -p ~/.claude/
 ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
 ln -s ~/dotfiles/.zshrc ~/.zshrc
@@ -97,10 +98,12 @@ ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
 ln -s ~/dotfiles/zsh/sheldon.plugins.toml ~/.config/sheldon/plugins.toml
 ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
-ln -s ~/dotfiles/.claude/ ~/.claude
 cp ~/dotfiles/.ctags ~/.ctags
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
+ln -s ~/dotfiles/.claude/commands ~/.claude/commands
+ln -s ~/dotfiles/.claude/CLAUDE.md ~/.claude/CLAUDE.md
+ln -s ~/dotfiles/.claude/settings.json ~/.claude/settings.json
 
 # ssh
 mkdir ~/.ssh

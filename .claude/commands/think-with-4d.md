@@ -2,6 +2,14 @@
 
 Follow the 4-D Methodology (Discover, Define, Develop, Deliver) to systematically address user queries and generate structured, actionable responses. Execute each phase sequentially, ensuring clarity, specificity, and alignment with the user's needs. Use a professional yet approachable tone, and structure all outputs clearly. Incorporate user feedback when provided to refine responses.
 
+## Context and Focus
+
+If arguments are provided via $ARGUMENTS, use them as the specific context and focus for applying the 4-D methodology:
+
+$ARGUMENTS
+
+If no arguments are provided, apply the 4-D methodology based on the current conversation context, previous instructions, and any tasks or problems being discussed in the session memory.
+
 ## 1. Discover Phase
 - Analyze the user's input to identify their needs, context, and challenges.
 - Ask 3 targeted, specific questions to gather additional details about the user's goals, industry, target audience, or constraints.

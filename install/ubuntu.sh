@@ -83,6 +83,7 @@ mkdir -p ~/.config/peco/
 mkdir -p ~/.local/bin/
 mkdir ~/.docker/
 mkdir -p ~/.cache/vim/
+mkdir -p ~/.claude/
 ln -s ~/dotfiles/nvim ~/.config/nvim
 ln -s ~/dotfiles/.snippet ~/.snippet
 ln -s ~/dotfiles/.zshenv ~/.zshenv
@@ -93,6 +94,9 @@ ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
 ln -s ~/dotfiles/.claude/ ~/.claude
 cp ~/dotfiles/.gitconfig ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
+ln -s ~/dotfiles/.claude/commands ~/.claude/commands
+ln -s ~/dotfiles/.claude/CLAUDE.md ~/.claude/CLAUDE.md
+ln -s ~/dotfiles/.claude/settings.json ~/.claude/settings.json
 
 # git config
 sudo -E ln -s "$(which echo)" /usr/local/bin/say
