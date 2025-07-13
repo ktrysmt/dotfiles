@@ -24,7 +24,8 @@ return {
   underline_position = "-2px",
   scrollback_lines = 35000,
   keys = {
-    { key = 'v', mods = 'ALT',          action = act.PasteFrom 'Clipboard' },
-    { key = 'f', mods = 'CTRL | SHIFT', action = act.ToggleFullScreen },
+    { key = 'v',     mods = 'ALT',          action = act.PasteFrom 'Clipboard' },
+    { key = 'f',     mods = 'CTRL | SHIFT', action = act.ToggleFullScreen },
+    { key = 'Enter', mods = 'SHIFT',        action = act.SendKey { key = 'Enter', mods = 'META' } },
   }
 }
