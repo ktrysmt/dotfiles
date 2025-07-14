@@ -42,7 +42,7 @@ local = "~/dotfiles/zsh"
 use = [
   "*.zsh",
   "!sync.zsh",
-  "!private.zsh"
+  "!private.zsh",
 ]
 
 [plugins.dotfiles-sync]

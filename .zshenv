@@ -5,8 +5,8 @@ export GOROOT=""
 export GO111MODULE="auto"
 export BAT_THEME=gruvbox-dark
 export PATH=/opt/homebrew/bin:$PATH
+export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH"
 
-# debug
 # zmodload zsh/zprof && zprof
 
 # Wasmer
