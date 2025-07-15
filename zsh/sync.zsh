@@ -1,3 +1,4 @@
+setopt nonomatch
 setopt AUTO_CD
 setopt interactivecomments
 

@@ -1,4 +1,6 @@
+# ---------
 # start zwc
+# ---------
 # function source {
 #   ensure_zcompiled $1
 #   builtin source $1
@@ -23,7 +25,9 @@ fi
 source "$sheldon_cache"
 unset cache_dir sheldon_cache sheldon_toml
 
+# ---------
 # end zwc
+# ---------
 # zsh-defer unfunction source
 
 # zprof
