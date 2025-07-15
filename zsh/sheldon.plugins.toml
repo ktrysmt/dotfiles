@@ -18,10 +18,10 @@ github = "romkatv/zsh-defer"
 apply = ["source"]
 
 [templates]
-defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
+defer = "{{ hooks | get: \"pre\" | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks | get: \"post\" | nl }}"
 
-[plugins.compinit]
-inline = 'autoload -Uz compinit && zsh-defer compinit'
+[plugins.inline-autoload]
+inline = 'autoload -Uz colors compinit && zsh-defer colors && zsh-defer compinit -C'
 
 [plugins.zsh-syntax-highlighting]
 github = "zsh-users/zsh-syntax-highlighting"
@@ -32,23 +32,22 @@ github = "zsh-users/zsh-completions"
 [plugins.ohmyzsh-lib]
 github = "ohmyzsh/ohmyzsh"
 dir = "lib"
-use = ["{completion,key-bindings,directories}.zsh"]
+use = [
+  "{completion,key-bindings,directories}.zsh"
+]
 
 [plugins.aws_zsh_completer]
 remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
 
-[plugins.dotfiles-defers]
+[plugins.dotfiles-async]
 local = "~/dotfiles/zsh"
 use = [
-  "*.zsh",
-  "!sync.zsh",
-  "!private.zsh",
+  "async.zsh"
 ]
 
 [plugins.dotfiles-sync]
 local = "~/dotfiles/zsh"
 use = [
-  "sync.zsh",
-  "private.zsh",
+  "sync.zsh"
 ]
 apply = ["source"]

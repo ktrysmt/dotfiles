@@ -1,2 +1,0 @@
-setopt AUTO_MENU
-setopt AUTO_NAME_DIRS

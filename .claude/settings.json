@@ -4,9 +4,11 @@
 
       "mcp__mcp-think-as__think_as_architect",
       "mcp__mcp-think-as__think_as_coder",
+      "mcp__deepwiki__deepwiki_fetch",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
 
       "mcp__aws-docs__:*",
-      "mcp__deepwiki__:*",
       "mcp__gemini-cli__:*",
 
       "Bash(ss:*)",
