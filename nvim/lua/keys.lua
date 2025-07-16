@@ -1,3 +1,7 @@
+-- leader
+vim.keymap.set('n', "<C-Space>", "<Nop>", { silent = true })
+vim.keymap.set('n', "<Space>", "<Nop>", { silent = true })
+
 -- normal mode
 vim.keymap.set({ 'n', 'v' }, 'j', 'gj')
 vim.keymap.set({ 'n', 'v' }, 'k', 'gk')

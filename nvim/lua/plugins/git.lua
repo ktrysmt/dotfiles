@@ -58,10 +58,10 @@ return {
       })
 
       local opt = { silent = true }
-      vim.keymap.set("n", "gN", function()
+      vim.keymap.set("n", "gw", function()
         gitsigns.nav_hunk('next')
       end, opt)
-      vim.keymap.set("n", "gP", function()
+      vim.keymap.set("n", "gb", function()
         gitsigns.nav_hunk('prev')
       end, opt)
       vim.keymap.set("n", "g+", function()
