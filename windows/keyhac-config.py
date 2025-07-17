@@ -40,11 +40,10 @@ def configure(keymap):
         keymap.clipboard_history.maxnum = 0
         keymap.clipboard_history.enableHook(False)
 
-
     # minecraft?
-    #if 1:
+    # if 1:
     #    keymap.replaceKey(28, "Return")
-    #else:
+    # else:
     #    keymap.replaceKey(28, "LShift")
 
     # Global keymap which affects any windows
@@ -88,6 +87,7 @@ def configure(keymap):
         #    keymap.InputKeyCommand("2")()
         # keymap_global[ "LAlt-Return" ] = alt_return
         keymap_global["LCtrl-Alt-R"] = keymap.command_ReloadConfig
+
         def FFF():
             time.sleep(3)
             shellExecute(None, "C:\Program Files B\mdie0253\MDIE.exe", "", "")
@@ -95,7 +95,7 @@ def configure(keymap):
             keymap.InputKeyCommand("PageDown")()
             time.sleep(0.5)
             keymap.InputKeyCommand("Return")()
-        #keymap_global[ "F12" ] = FFF
+        # keymap_global[ "F12" ] = FFF
 
     # tabby
     # https://gist.github.com/masato3/80bb29f74d8e52b9783e5a1abc96eed4
@@ -131,16 +131,21 @@ def configure(keymap):
         keymap_wez["LCtrl-Shift-K"] = ["LCtrl-Shift-K"]
         keymap_wez["LCtrl-Shift-J"] = ["LCtrl-Shift-J"]
         keymap_wez["LCtrl-Shift-Semicolon"] = ["LCtrl-Shift-Semicolon"]
+
         def wezterm_ctrl_c():
             keymap.getWindow().setImeStatus(0)
             keymap.InputKeyCommand("LCtrl-C")()
-        keymap_wez[ "LCtrl-C" ] = wezterm_ctrl_c
+        keymap_wez["LCtrl-C"] = wezterm_ctrl_c
+
         def wezterm_ctrl_space():
             keymap.getWindow().setImeStatus(0)
             keymap.InputKeyCommand("LCtrl-Space")()
-        keymap_wez[ "LCtrl-Space" ] = wezterm_ctrl_space
+        keymap_wez["LCtrl-Space"] = wezterm_ctrl_space
 
-
+        def wezterm_ctrl_s():
+            keymap.getWindow().setImeStatus(0)
+            keymap.InputKeyCommand("LCtrl-S")()
+        keymap_wez["LCtrl-S"] = wezterm_ctrl_s
 
     # Global app hot key
     # https://zenn.dev/awtnb/books/adf6c5162a9f08/viewer/1728cd
@@ -214,11 +219,11 @@ def configure(keymap):
         }.items():
             keymap_global[key] = pseudo_cuteExec(*params)
 
-
     if 1:
         def window_maximize():
             keymap.getTopLevelWindow().maximize()
             return
+
         def window_snap(snap="left", shift=False):
             wnd = keymap.getTopLevelWindow()
             wnd_left, wnd_top, wnd_right, wnd_bottom = wnd.getRect()
@@ -230,22 +235,27 @@ def configure(keymap):
             else:
                 center = round((mntr_right - mntr_left) / 2)
             if snap == "right":
-                to_rect = (center-bit, mntr_top, mntr_right+thin, mntr_bottom+thin)
+                to_rect = (center - bit, mntr_top, mntr_right + thin, mntr_bottom + thin)
             else:
-                to_rect = (mntr_left-thin, mntr_top, center, mntr_bottom+thin)
+                to_rect = (mntr_left - thin, mntr_top, center, mntr_bottom + thin)
             set_wnd_rect(to_rect)
+
         def window_left():
             window_snap("left")
             return
+
         def window_right():
             window_snap("right")
             return
+
         def window_shift_left():
             window_snap("left", True)
             return
+
         def window_shift_right():
             window_snap("right", True)
             return
+
         def window_centerize():
             wnd = keymap.getTopLevelWindow()
             if wnd.isMaximized():
@@ -254,14 +264,16 @@ def configure(keymap):
             width = wnd_right - wnd_left
             mntr_left, mntr_top, mntr_right, mntr_bottom = get_monitor_areas()[0]
             center = (mntr_right - mntr_left) / 2
-            lx = int(center - width/2)
-            to_rect = (lx, mntr_top, lx+width, mntr_bottom)
+            lx = int(center - width / 2)
+            to_rect = (lx, mntr_top, lx + width, mntr_bottom)
             set_wnd_rect(to_rect)
+
         def get_monitor_areas():
             monitors = pyauto.Window.getMonitorInfo()
-            main_monitor_first = sorted(monitors, key=lambda x : x[2], reverse=True)
-            non_taskbar_areas = list(map(lambda x : x[1], main_monitor_first))
+            main_monitor_first = sorted(monitors, key=lambda x: x[2], reverse=True)
+            non_taskbar_areas = list(map(lambda x: x[1], main_monitor_first))
             return non_taskbar_areas
+
         def set_wnd_rect(rect):
             wnd = keymap.getTopLevelWindow()
             if list(wnd.getRect()) == rect:
@@ -279,12 +291,7 @@ def configure(keymap):
         keymap_global["LAlt-Shift-Left"] = window_shift_left
         keymap_global["LAlt-Shift-Right"] = window_shift_right
 
-
-
     # ----------------------------------------
-
-
-
 
     # USER0-F1 : Test of launching application
     if 0:
@@ -518,7 +525,7 @@ def configure(keymap):
         keymap.clipboard_history.maxnum = 1000
 
         # Total maximum size of clipboard history (Default:10MB)
-        keymap.clipboard_history.quota = 10*1024*1024
+        keymap.clipboard_history.quota = 10 * 1024 * 1024
 
         # Fixed phrases
         fixed_items = [
@@ -569,7 +576,7 @@ def configure(keymap):
             lines = s.splitlines(True)
             s = ""
             for line in lines:
-                for i in range(4+1):
+                for i in range(4 + 1):
                     if i >= len(line):
                         break
                     if line[i] == '\t':
@@ -580,8 +587,8 @@ def configure(keymap):
                 s += line[i:]
             return s
 
-        full_width_chars = "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ！”＃＄％＆’（）＊＋，−．／：；＜＝＞？＠［￥］＾＿‘｛｜｝～０１２３４５６７８９　"
-        half_width_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}～0123456789 "
+        # full_width_chars = "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ！”＃＄％＆’（）＊＋，−．／：；＜＝＞？＠［￥］＾＿‘｛｜｝～０１２３４５６７８９　"
+        # half_width_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}～0123456789 "
 
         # Convert to half-with characters
         def toHalfWidthClipboardText():
