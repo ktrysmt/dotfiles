@@ -2,16 +2,7 @@
   "permissions": {
     "allow": [
 
-      "mcp__mcp-think-as__think_as_architect",
-      "mcp__mcp-think-as__think_as_coder",
-      "mcp__deepwiki__deepwiki_fetch",
-      "mcp__context7__resolve-library-id",
-      "mcp__context7__get-library-docs",
-
-      "mcp__aws-docs__:*",
-      "mcp__gemini-cli__:*",
-
-      "Bash(ss:*)",
+      "Bash(/compact)",
       "Bash(7z:*)",
       "Bash(ag:*)",
       "Bash(alias:*)",
@@ -108,6 +99,8 @@
       "Bash(ln:*)",
       "Bash(ls:*)",
       "Bash(lsof:*)",
+      "Bash(make lint:*)",
+      "Bash(make test:*)",
       "Bash(make:*)",
       "Bash(meson:*)",
       "Bash(mise:*)",
@@ -122,6 +115,7 @@
       "Bash(nodenv:*)",
       "Bash(notebook:*)",
       "Bash(npm:*)",
+      "Bash(npx tsc:*)",
       "Bash(nslookup:*)",
       "Bash(nuxt:*)",
       "Bash(nvm:*)",
@@ -159,6 +153,7 @@
       "Bash(sed:*)",
       "Bash(solid:*)",
       "Bash(sort:*)",
+      "Bash(ss:*)",
       "Bash(ssh:*)",
       "Bash(svelte:*)",
       "Bash(sveltekit:*)",
@@ -260,7 +255,21 @@
       "Write(~/dev/**)",
       "Write(~/projects/**)",
       "Write(~/src/**)",
-      "Write(~/work/**)"
+      "Write(~/work/**)",
+      "mcp__context7__get-library-docs",
+      "mcp__context7__resolve-library-id",
+      "mcp__deepwiki__deepwiki_fetch",
+      "mcp__gemini-cli__googleSearch",
+      "mcp__mcp-think-as__think_as_architect",
+      "mcp__mcp-think-as__think_as_coder",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_install",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_wait_for"
     ],
     "deny": [
       "Bash(rm -rf /)",
