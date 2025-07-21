@@ -116,6 +116,7 @@
       "Bash(notebook:*)",
       "Bash(npm:*)",
       "Bash(npx tsc:*)",
+      "Bash(npx vitest run:*)",
       "Bash(nslookup:*)",
       "Bash(nuxt:*)",
       "Bash(nvm:*)",
@@ -256,6 +257,10 @@
       "Write(~/projects/**)",
       "Write(~/src/**)",
       "Write(~/work/**)",
+
+      "mcp__arxiv-mcp-server__download_paper",
+      "mcp__arxiv-mcp-server__read_paper",
+      "mcp__arxiv-mcp-server__search_papers",
       "mcp__context7__get-library-docs",
       "mcp__context7__resolve-library-id",
       "mcp__deepwiki__deepwiki_fetch",
@@ -264,6 +269,8 @@
       "mcp__mcp-think-as__think_as_coder",
       "mcp__playwright__browser_click",
       "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_handle_dialog",
       "mcp__playwright__browser_install",
       "mcp__playwright__browser_navigate",
       "mcp__playwright__browser_network_requests",
@@ -271,6 +278,7 @@
       "mcp__playwright__browser_take_screenshot",
       "mcp__playwright__browser_type",
       "mcp__playwright__browser_wait_for"
+
     ],
     "deny": [
       "Bash(rm -rf /)",
