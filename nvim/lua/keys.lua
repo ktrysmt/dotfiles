@@ -133,16 +133,18 @@ end
 -- <C-r>%	現在のバッファのファイルパスを挿入する
 -- <C-r>/	最後に検索した検索パターンを挿入する
 -- <C-r>={expr}<CR>	任意の Vim script の式の評価結果を挿入する
-
+--
 -- :!{cmd}	外部コマンド {cmd} を単に実行する
 -- :{range}!{cmd}	{range} で示されたバッファの範囲を標準出力とし、外部コマンド {cmd} を実行した結果で指定範囲を置き換える
 -- :r !{cmd}	外部コマンド {cmd} の実行結果をバッファに挿入する
 -- :w !{cmd}	バッファの中身を外部コマンド {cmd} の標準入力に流し込んで実行する
-
+--
 -- Visualモードで数字の列を矩形選択→g<C-a>で連番作成
 -- func(a1,|a2,a3)のときct)でfunc(a1,)でインサートモード
 
+--
 -- upper/lower toggle in insert mode
+--
 vim.keymap.set("i", "<C-l>",
   function()
     local word = vim.fn.expand('<cword>')
@@ -167,7 +169,6 @@ vim.keymap.set("i", "<C-l>",
 -- window resize mode
 --
 local win_resize_cmd_dict = {}
-
 local function has_edge(direct)
   if direct == 'left' then
     return vim.fn.winnr('h') ~= vim.fn.winnr()
@@ -180,10 +181,8 @@ local function has_edge(direct)
   end
   error('invalid direct')
 end
-
 local function win_resize_count_cmd_with_update(direct, count1)
   local signs = { left = '-', down = '+', up = '-', right = '+' }
-
   if has_edge('left') and not has_edge('right') then
     signs.left = '+'
     signs.right = '-'
@@ -192,66 +191,54 @@ local function win_resize_count_cmd_with_update(direct, count1)
     signs.up = '+'
     signs.down = '-'
   end
-
   win_resize_cmd_dict = {
     left = '<Cmd>vertical resize ' .. signs.left .. '1<CR>',
     right = '<Cmd>vertical resize ' .. signs.right .. '1<CR>',
     down = '<Cmd>resize ' .. signs.down .. '1<CR>',
     up = '<Cmd>resize ' .. signs.up .. '1<CR>',
   }
-
   if direct == 'left' or direct == 'right' then
     return '<Cmd>vertical resize ' .. signs[direct] .. count1 .. '<CR>'
   else
     return '<Cmd>resize ' .. signs[direct] .. count1 .. '<CR>'
   end
 end
-
 local function win_resize_cmd(direct)
   return win_resize_cmd_dict[direct] or ''
 end
-
 vim.keymap.set('n', '<Plug>(window-resize-mode)', '<Nop>')
-
 vim.keymap.set('n', '<C-w>-', function()
   local count = vim.v.count1
   local cmd = win_resize_count_cmd_with_update('down', count)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. '<Plug>(window-resize-mode)', true, true, true), 'n', true)
 end)
-
 vim.keymap.set('n', '<C-w>+', function()
   local count = vim.v.count1
   local cmd = win_resize_count_cmd_with_update('up', count)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. '<Plug>(window-resize-mode)', true, true, true), 'n', true)
 end)
-
 vim.keymap.set('n', '<C-w>>', function()
   local count = vim.v.count1
   local cmd = win_resize_count_cmd_with_update('right', count)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. '<Plug>(window-resize-mode)', true, true, true), 'n', true)
 end)
-
 vim.keymap.set('n', '<C-w><', function()
   local count = vim.v.count1
   local cmd = win_resize_count_cmd_with_update('left', count)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. '<Plug>(window-resize-mode)', true, true, true), 'n', true)
 end)
-
 vim.keymap.set('n', '<Plug>(window-resize-mode)-', function()
   local cmd = win_resize_cmd('down')
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. '<Plug>(window-resize-mode)', true, true, true), 'n', true)
 end)
-
 vim.keymap.set('n', '<Plug>(window-resize-mode)+', function()
   local cmd = win_resize_cmd('up')
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. '<Plug>(window-resize-mode)', true, true, true), 'n', true)
 end)
-
 vim.keymap.set('n', '<Plug>(window-resize-mode)>', function()
   local cmd = win_resize_cmd('right')
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. '<Plug>(window-resize-mode)', true, true, true), 'n', true)
 end)
-
 vim.keymap.set('n', '<Plug>(window-resize-mode)<', function()
   local cmd = win_resize_cmd('left')
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. '<Plug>(window-resize-mode)', true, true, true), 'n', true)
