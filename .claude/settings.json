@@ -261,6 +261,8 @@
       "mcp__arxiv-mcp-server__download_paper",
       "mcp__arxiv-mcp-server__read_paper",
       "mcp__arxiv-mcp-server__search_papers",
+      "mcp__awslabs_aws-documentation-mcp-server__read_documentation",
+      "mcp__awslabs_aws-documentation-mcp-server__search_documentation",
       "mcp__context7__get-library-docs",
       "mcp__context7__resolve-library-id",
       "mcp__deepwiki__deepwiki_fetch",
