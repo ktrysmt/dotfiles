@@ -147,6 +147,11 @@ def configure(keymap):
             keymap.InputKeyCommand("LCtrl-S")()
         keymap_wez["LCtrl-S"] = wezterm_ctrl_s
 
+        def wezterm_ctrl_w():
+            keymap.getWindow().setImeStatus(0)
+            keymap.InputKeyCommand("LCtrl-W")()
+        keymap_wez["LCtrl-W"] = wezterm_ctrl_w
+
     # Global app hot key
     # https://zenn.dev/awtnb/books/adf6c5162a9f08/viewer/1728cd
     if 1:
