@@ -161,6 +161,7 @@ vim.keymap.set("i", "<C-l>",
 -- window resize mode
 --
 local win_resize_cmd_dict = {}
+local count = 5
 local function has_edge(direct)
   if direct == 'left' then
     return vim.fn.winnr('h') ~= vim.fn.winnr()
@@ -173,7 +174,7 @@ local function has_edge(direct)
   end
   error('invalid direct')
 end
-local function win_resize_count_cmd_with_update(direct, count1)
+local function win_resize_count_cmd_with_update(direct)
   local signs = { left = '-', down = '+', up = '-', right = '+' }
   if has_edge('left') and not has_edge('right') then
     signs.left = '+'
@@ -184,15 +185,15 @@ local function win_resize_count_cmd_with_update(direct, count1)
     signs.down = '-'
   end
   win_resize_cmd_dict = {
-    left = '<Cmd>vertical resize ' .. signs.left .. '1<CR>',
-    right = '<Cmd>vertical resize ' .. signs.right .. '1<CR>',
-    down = '<Cmd>resize ' .. signs.down .. '1<CR>',
-    up = '<Cmd>resize ' .. signs.up .. '1<CR>',
+    left = '<Cmd>vertical resize ' .. signs.left .. count .. '<CR>',
+    right = '<Cmd>vertical resize ' .. signs.right .. count .. '<CR>',
+    down = '<Cmd>resize ' .. signs.down .. count .. '<CR>',
+    up = '<Cmd>resize ' .. signs.up .. count .. '<CR>',
   }
   if direct == 'left' or direct == 'right' then
-    return '<Cmd>vertical resize ' .. signs[direct] .. count1 .. '<CR>'
+    return '<Cmd>vertical resize ' .. signs[direct] .. count .. '<CR>'
   else
-    return '<Cmd>resize ' .. signs[direct] .. count1 .. '<CR>'
+    return '<Cmd>resize ' .. signs[direct] .. count .. '<CR>'
   end
 end
 local function win_resize_cmd(direct)
@@ -200,23 +201,19 @@ local function win_resize_cmd(direct)
 end
 vim.keymap.set('n', '<Plug>(window-resize-mode)', '<Nop>')
 vim.keymap.set('n', '<C-w>-', function()
-  local count = vim.v.count1
-  local cmd = win_resize_count_cmd_with_update('down', count)
+  local cmd = win_resize_count_cmd_with_update('down')
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. '<Plug>(window-resize-mode)', true, true, true), 'n', true)
 end)
 vim.keymap.set('n', '<C-w>+', function()
-  local count = vim.v.count1
-  local cmd = win_resize_count_cmd_with_update('up', count)
+  local cmd = win_resize_count_cmd_with_update('up')
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. '<Plug>(window-resize-mode)', true, true, true), 'n', true)
 end)
 vim.keymap.set('n', '<C-w>>', function()
-  local count = vim.v.count1
-  local cmd = win_resize_count_cmd_with_update('right', count)
+  local cmd = win_resize_count_cmd_with_update('right')
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. '<Plug>(window-resize-mode)', true, true, true), 'n', true)
 end)
 vim.keymap.set('n', '<C-w><', function()
-  local count = vim.v.count1
-  local cmd = win_resize_count_cmd_with_update('left', count)
+  local cmd = win_resize_count_cmd_with_update('left')
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. '<Plug>(window-resize-mode)', true, true, true), 'n', true)
 end)
 vim.keymap.set('n', '<Plug>(window-resize-mode)-', function()
