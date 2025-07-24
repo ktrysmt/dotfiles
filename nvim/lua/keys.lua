@@ -11,7 +11,6 @@ vim.keymap.set('n', '<Esc><Esc>', '<cmd>nohlsearch<CR><Esc><C-l>', { silent = tr
 -- stay in search
 vim.keymap.set('n', 'n', 'n``')
 vim.keymap.set('n', 'N', 'N``')
--- vim.keymap.set('n', '/', '/\\v') -- nvim/lua/plugins/lexima.lua
 vim.keymap.set('n', '?', '/\\V')
 
 -- search and replace
@@ -19,7 +18,6 @@ vim.keymap.set('n', 'x', '"_x') -- only n, not v
 vim.keymap.set('n', 's', '"_s')
 vim.keymap.set('n', 'cn', '*N"_cgn')
 vim.keymap.set('n', 'cN', '*N"_cgN')
--- vim.keymap.set('n', '<C-g>', "<cmd>echo expand('%:p')<cr>")
 vim.keymap.set('n', '<C-g>', function()
   vim.cmd [[
   let @+ =expand('%:p')
@@ -28,12 +26,6 @@ vim.keymap.set('n', '<C-g>', function()
 end)
 vim.keymap.set('n', '<Leader>p', '"0p', { silent = true })
 vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })
-vim.keymap.set('n', 'gV', '`[v`]', { silent = true })
-
--- gh
-vim.keymap.set('n', 'gb', function()
-  vim.cmd "silent !gh browse %"
-end)
 
 -- terminal mode
 vim.keymap.set('t', '<C-[>', '<Esc>')
@@ -105,10 +97,10 @@ for i = 1, 9 do
 end
 
 -- resize window
-for i, o in pairs({ j = "<", k = ">" }) do
-  vim.keymap.set('n', string.format('<C-w><C-%s>', i), string.format('<C-w>24%s', o), { silent = true })
-  vim.keymap.set('t', string.format('<C-w><C-%s>', i), string.format('<cmd>wincmd 24%s<cr>', o), { silent = true })
-end
+-- for i, o in pairs({ j = "<", k = ">" }) do
+--   vim.keymap.set('n', string.format('<C-w><C-%s>', i), string.format('<C-w>24%s', o), { silent = true })
+--   vim.keymap.set('t', string.format('<C-w><C-%s>', i), string.format('<cmd>wincmd 24%s<cr>', o), { silent = true })
+-- end
 
 -- move
 -- vim.keymap.set("n", "<C-j>", '"zdd"zp')
