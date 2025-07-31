@@ -80,6 +80,9 @@ mise use nodejs -g
 mise use ruby -g
 mise use python -g
 
+# uv
+uv python pin --global 3.12
+
 # symlink
 cd ~/
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

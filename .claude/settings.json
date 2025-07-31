@@ -1,7 +1,6 @@
 {
   "permissions": {
     "allow": [
-
       "Bash(/compact)",
       "Bash(7z:*)",
       "Bash(ag:*)",
@@ -257,30 +256,14 @@
       "Write(~/projects/**)",
       "Write(~/src/**)",
       "Write(~/work/**)",
-
-      "mcp__arxiv-mcp-server__download_paper",
-      "mcp__arxiv-mcp-server__read_paper",
-      "mcp__arxiv-mcp-server__search_papers",
-      "mcp__awslabs_aws-documentation-mcp-server__read_documentation",
-      "mcp__awslabs_aws-documentation-mcp-server__search_documentation",
-      "mcp__context7__get-library-docs",
-      "mcp__context7__resolve-library-id",
-      "mcp__deepwiki__deepwiki_fetch",
-      "mcp__gemini-cli__googleSearch",
-      "mcp__mcp-think-as__think_as_architect",
-      "mcp__mcp-think-as__think_as_coder",
-      "mcp__playwright__browser_click",
-      "mcp__playwright__browser_console_messages",
-      "mcp__playwright__browser_evaluate",
-      "mcp__playwright__browser_handle_dialog",
-      "mcp__playwright__browser_install",
-      "mcp__playwright__browser_navigate",
-      "mcp__playwright__browser_network_requests",
-      "mcp__playwright__browser_snapshot",
-      "mcp__playwright__browser_take_screenshot",
-      "mcp__playwright__browser_type",
-      "mcp__playwright__browser_wait_for"
-
+      "mcp__arxiv-mcp-server",
+      "mcp__awslabs_aws-documentation-mcp-server",
+      "mcp__context7",
+      "mcp__deepwiki",
+      "mcp__gemini-cli",
+      "mcp__mcp-think-as",
+      "mcp__playwright",
+      "mcp__serena"
     ],
     "deny": [
       "Bash(rm -rf /)",

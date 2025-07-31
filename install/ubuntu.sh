@@ -74,6 +74,9 @@ mise use -g nodejs
 mise use -g go
 mise use -g bun
 
+# uv
+uv python pin --global 3.12
+
 # symlinks
 cd ~/
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
