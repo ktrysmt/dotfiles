@@ -43,6 +43,7 @@ brew install \
   git-secrets \
   glow \
   golangci-lint \
+  gopls \
   jq \
   llvm \
   mise \
