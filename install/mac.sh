@@ -107,6 +107,7 @@ cp ~/dotfiles/.docker/config.json ~/.docker/config.json
 ln -s ~/dotfiles/.claude/commands ~/.claude/commands
 ln -s ~/dotfiles/.claude/CLAUDE.md ~/.claude/CLAUDE.md
 ln -s ~/dotfiles/.claude/settings.json ~/.claude/settings.json
+ln -s ~/dotfiles/.claude/agents ~/.claude/agents
 
 # ssh
 mkdir ~/.ssh
