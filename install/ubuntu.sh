@@ -102,6 +102,7 @@ ln -s ~/dotfiles/.claude/commands ~/.claude/commands
 ln -s ~/dotfiles/.claude/CLAUDE.md ~/.claude/CLAUDE.md
 ln -s ~/dotfiles/.claude/settings.json ~/.claude/settings.json
 ln -s ~/dotfiles/.claude/agents ~/.claude/agents
+ln -s ~/dotfiles/.claude/issues ~/.claude/issues
 
 # git config
 sudo -E ln -s "$(which echo)" /usr/local/bin/say
