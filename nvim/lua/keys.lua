@@ -6,7 +6,7 @@ vim.keymap.set('n', "<Space>", "<Nop>", { silent = true })
 vim.keymap.set({ 'n', 'v' }, 'j', 'gj')
 vim.keymap.set({ 'n', 'v' }, 'k', 'gk')
 
-vim.keymap.set('n', '<Esc><Esc>', '<cmd>nohlsearch<CR><Esc><C-l>', { silent = true })
+vim.keymap.set('n', '<Leader>hh', '<cmd>nohlsearch<CR><Esc><C-l>', { silent = true })
 
 -- stay in search
 vim.keymap.set('n', 'n', 'n``')
@@ -27,8 +27,12 @@ end)
 vim.keymap.set('n', '<Leader>p', '"0p', { silent = true })
 vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })
 
+-- customized esc
+vim.keymap.set({ 'n', 't' }, '<C-[>', '<Esc>', { remap = true })
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n><Plug>(esc)')
+vim.keymap.set('n', '<Plug(esc)<Esc>', 'i<Esc>')
+
 -- terminal mode
-vim.keymap.set('t', '<c-[><c-[>', '<C-\\><C-n>', { silent = true })
 vim.keymap.set('t', '<C-W>w', '<cmd>wincmd w<cr>')
 vim.keymap.set('t', '<C-W>k', '<cmd>wincmd k<cr>')
 vim.keymap.set('t', '<C-W>j', '<cmd>wincmd j<cr>')
