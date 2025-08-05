@@ -59,6 +59,7 @@ vim.opt.splitbelow              = true
 vim.opt.swapfile                = false
 vim.opt.tabstop                 = 2
 vim.opt.termguicolors           = true
+vim.opt.timeoutlen              = 350
 vim.opt.updatetime              = 300
 vim.opt.virtualedit             = 'all'
 vim.opt.wildmode                = 'longest:full,full'

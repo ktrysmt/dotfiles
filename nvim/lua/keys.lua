@@ -28,9 +28,8 @@ vim.keymap.set('n', '<Leader>p', '"0p', { silent = true })
 vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })
 
 -- customized esc
-vim.keymap.set({ 'n', 't' }, '<C-[>', '<Esc>', { remap = true })
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n><Plug>(esc)')
-vim.keymap.set('n', '<Plug(esc)<Esc>', 'i<Esc>')
+vim.keymap.set('t', '<Esc>', '<c-\\><c-n><Plug>(wait)')
+vim.keymap.set('t', '<Plug>(wait)<ESC>', 'i<ESC>')
 
 -- terminal mode
 vim.keymap.set('t', '<C-W>w', '<cmd>wincmd w<cr>')
