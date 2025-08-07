@@ -18,6 +18,10 @@ return {
       symbols = {
         icon_fetcher = function(kind, bufnr, symbol) return kind:sub(1, 1) end,
       },
+      outline_window = {
+        width = 60,
+        relative_width = false,
+      },
       symbol_folding = {
         autofold_depth = 3,
         auto_unfold = {
