@@ -29,6 +29,16 @@ vim.api.nvim_create_autocmd({ 'TermOpen' }, {
   group = general_group,
   command = "setl winhighlight=Normal:User1 | setl norelativenumber | setl nonumber"
 })
+vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+  -- auto reload re-enter the buffer
+  pattern = "*",
+  group = general_group,
+  callback = function()
+    if vim.fn.mode() ~= 'c' then
+      vim.cmd('checktime')
+    end
+  end
+})
 
 local json_group = vim.api.nvim_create_augroup('json_group', { clear = true })
 vim.api.nvim_create_autocmd({ 'Filetype' }, {

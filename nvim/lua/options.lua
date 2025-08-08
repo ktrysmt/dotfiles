@@ -59,12 +59,12 @@ vim.opt.splitbelow              = true
 vim.opt.swapfile                = false
 vim.opt.tabstop                 = 2
 vim.opt.termguicolors           = true
-vim.opt.timeoutlen              = 350
 vim.opt.updatetime              = 300
 vim.opt.virtualedit             = 'all'
 vim.opt.wildmode                = 'longest:full,full'
 vim.opt.winblend                = 15
 vim.opt.wrap                    = true
+vim.opt.autoread                = true
 
 -- search
 vim.opt.magic                   = true
