@@ -29,7 +29,7 @@ vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })
 
 -- customized esc
 vim.keymap.set('t', '<Esc>', '<c-\\><c-n><Plug>(wait)')
-vim.keymap.set('t', '<Plug>(wait)<ESC>', 'i<ESC>')
+vim.keymap.set('n', '<Plug>(wait)<ESC>', 'i<ESC>')
 
 -- terminal mode
 vim.keymap.set('t', '<C-W>w', '<cmd>wincmd w<cr>')
