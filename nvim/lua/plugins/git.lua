@@ -64,10 +64,10 @@ return {
       vim.keymap.set("n", "gb", function()
         gitsigns.nav_hunk('prev', { target = 'all' })
       end, opt)
-      vim.keymap.set("n", "g+", function()
+      vim.keymap.set({ "n", "v" }, "g+", function()
         gitsigns.stage_hunk()
       end, opt)
-      vim.keymap.set("n", "g-", function()
+      vim.keymap.set({ "n", "v" }, "g-", function()
         gitsigns.undo_stage_hunk()
       end, opt)
     end
