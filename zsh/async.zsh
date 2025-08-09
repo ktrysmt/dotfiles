@@ -141,7 +141,6 @@ if type kubectl > /dev/null 2>&1 ;then
     command kubectl "$@"
   }
 fi
-
 # helm
 if type helm > /dev/null 2>&1 ;then
   function helm() {
@@ -151,7 +150,6 @@ if type helm > /dev/null 2>&1 ;then
     command helm "$@"
   }
 fi
-
 # eksctl
 if type eksctl > /dev/null 2>&1 ;then
   function eksctl() {
@@ -161,7 +159,6 @@ if type eksctl > /dev/null 2>&1 ;then
     command eksctl "$@"
   }
 fi
-
 # kind
 if type kind > /dev/null 2>&1 ;then
   function kind() {
@@ -172,15 +169,18 @@ if type kind > /dev/null 2>&1 ;then
   }
 fi
 
-# mise
 if type mise > /dev/null 2>&1 ;then
-  function mise() {
-    if ! type __start_mise >/dev/null 2>&1; then
-        source <(command mise completion zsh)
-    fi
-    command mise "$@"
-  }
+  source <(mise activate zsh)
 fi
+
+if type gh > /dev/null 2>&1 ;then
+  source <(gh completion -s zsh)
+fi
+
+if type pnpm > /dev/null 2>&1 ;then
+  source <(pnpm completion zsh)
+fi
+
 
 # --------
 # os type
@@ -304,9 +304,6 @@ function precmd() {
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# mise
-source <(mise activate zsh)
-source <(pnpm completion zsh)
 
 setopt AUTO_MENU
 setopt AUTO_NAME_DIRS
