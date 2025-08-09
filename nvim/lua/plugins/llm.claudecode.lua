@@ -1,3 +1,10 @@
+local function claude_send_focus()
+  vim.cmd("ClaudeCodeSend")
+  vim.defer_fn(function()
+    vim.cmd("ClaudeCodeFocus")
+  end, 170)
+end
+
 return {
   "coder/claudecode.nvim",
   dependencies = { "folke/snacks.nvim" },
@@ -44,8 +51,8 @@ return {
   },
   keys = {
     { "<leader>cc",  "<cmd>ClaudeCode<cr>", },
-    { "<leader>ca",  "<cmd>ClaudeCodeAdd %<cr><cmd>ClaudeCodeFocus<cr>", },
-    { "<leader>cs",  "<cmd>ClaudeCodeSend<cr><cmd>ClaudeCodeFocus<cr>",  mode = "v", },
+    { "<leader>ca",  "<cmd>ClaudeCodeAdd %<cr><cmd>ClaudeCodeFocus<cr>", mode = "n" },
+    { "<leader>ca",  claude_send_focus,                                  mode = "v" },
     { "<leader>cda", "<cmd>ClaudeCodeDiffAccept<cr>", },
     { "<leader>cdd", "<cmd>ClaudeCodeDiffDeny<cr>", },
   }
