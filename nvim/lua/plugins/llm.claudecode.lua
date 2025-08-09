@@ -11,7 +11,7 @@ return {
   config = function()
     require("claudecode").setup({
       port_range = { min = 10000, max = 65535 },
-      auto_start = false,
+      auto_start = true,
       log_level = "info",
       terminal_cmd = nil,
       track_selection = true,
@@ -56,10 +56,15 @@ return {
     end
 
     local function claude_add_selected_buffer_then_focus()
-      vim.cmd("ClaudeCodeSend")
-      vim.defer_fn(function()
-        vim.cmd("ClaudeCodeFocus")
-      end, 150)
+      if is_claude_code_buffer() then
+        vim.cmd("ClaudeCodeSend")
+        vim.defer_fn(function()
+          vim.cmd("ClaudeCodeFocus")
+        end, 150)
+      else
+        vim.cmd("ClaudeCodeStart")
+        vim.cmd("ClaudeCodeSend")
+      end
     end
 
     vim.keymap.set("n", "<leader>cc", "<cmd>ClaudeCode<cr>")
