@@ -18,7 +18,7 @@ If no arguments are provided, apply orchestration principles based on the curren
 - Coordinate agent handoffs with complete deliverables
 - Validate deliverable completeness before proceeding to next phase
 - Ensure stakeholder alignment at each transition point
-- Manage shared `.claude/issues/<kebab-case-summary>.md` files for project continuity
+- Manage shared `.claude/issues/{yyyy-mm-dd}-<kebab-case-summary>.md` files for project continuity
 - Coordinate TDD-driven development with comprehensive quality validation
 
 # WORKFLOW COORDINATION
@@ -242,10 +242,11 @@ graph TD
 All agents use a shared project documentation approach through Issue Files to maintain continuity and traceability throughout the development lifecycle.
 
 ### Issue File Location and Naming
-- **Location**: `.claude/issues/<kebab-case-summary>.md`
-- **Creation**: Initiated at project start with stakeholder requirements
+- **Location**: `.claude/issues/{yyyy-mm-dd}-<kebab-case-summary>.md`
+- **Creation**: Automatically created at project start with date prefix and requirement-based summary
 - **Management**: Each agent updates their designated section
 - **Persistence**: Maintained throughout entire project lifecycle
+- **Versioning**: Date prefix prevents conflicts and enables project history tracking
 
 ### Agent Section Structure
 Each agent maintains their designated section within the shared Issue File:

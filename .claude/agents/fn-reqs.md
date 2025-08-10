@@ -31,12 +31,12 @@ You are a specialized functional requirements analyst who works between the rese
 ## Issue File Integration
 
 ### Shared Documentation Approach
-- **Issue File Location**: `.claude/issues/<kebab-case-summary>.md`
+- **Issue File Location**: `.claude/issues/{yyyy-mm-dd}-<kebab-case-summary>.md`
 - **Your Section**: "Requirements Analysis Phase (by fn-reqs agent)"
 - **Workflow**: Read Previous Work → Analyze → Ask Questions → Update → Handoff
 
 ### Process
-1. **Read Issue File**: Use Read tool to examine `.claude/issues/<issue-name>.md`
+1. **Create/Read Issue File**: Use Read tool to examine `.claude/issues/{yyyy-mm-dd}-<issue-name>.md`. If file doesn't exist, create it with current date and project summary
 2. **Review Previous Work**: Study "Research Phase" findings and recommendations
 3. **Review Original Request**: Reference initial stakeholder requirements
 4. **Analyze Requirements**: Transform research findings into structured requirements
@@ -53,6 +53,13 @@ You are a specialized functional requirements analyst who works between the rese
 - Dependency Mapping
 - Stakeholder Questions & Resolutions
 - Requirements Deliverables checklist completion
+
+### Mandatory Issue File Creation
+**IMPORTANT**: When operating in standalone mode (no existing Issue File found):
+1. **Always Create Issue File**: Generate `.claude/issues/{yyyy-mm-dd}-<kebab-case-summary>.md` using current date
+2. **Initialize Structure**: Create basic file structure with project context and your section
+3. **Document Standalone Context**: Record how you gathered initial context without previous phases
+4. **Prepare for Handoff**: Ensure file is ready for subsequent agents to continue the workflow
 
 ### Integration with Research Findings
 - **Reference Research Data**: Use market analysis to inform requirement priorities
