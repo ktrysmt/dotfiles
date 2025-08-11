@@ -22,7 +22,7 @@ return {
   },
   underline_thickness = "1px",
   underline_position = "-2px",
-  scrollback_lines = 35000,
+  scrollback_lines = 99999,
   keys = {
     { key = 'v',     mods = 'ALT',          action = act.PasteFrom 'Clipboard' },
     { key = 'f',     mods = 'CTRL | SHIFT', action = act.ToggleFullScreen },
