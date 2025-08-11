@@ -6,7 +6,7 @@ vim.keymap.set('n', "<Space>", "<Nop>", { silent = true })
 vim.keymap.set({ 'n', 'v' }, 'j', 'gj')
 vim.keymap.set({ 'n', 'v' }, 'k', 'gk')
 
-vim.keymap.set('n', '<Leader>hh', '<cmd>nohlsearch<CR><Esc><C-l>', { silent = true })
+vim.keymap.set('n', '<Esc><Esc>', '<cmd>nohlsearch<CR><Esc><C-l>', { silent = true })
 
 -- stay in search
 vim.keymap.set('n', 'n', 'n``')
