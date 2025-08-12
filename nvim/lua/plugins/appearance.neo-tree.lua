@@ -484,26 +484,48 @@ return {
         },
       })
 
+      local function detect_dir()
+        local path = vim.api.nvim_buf_get_name(0)
+        local stat = (vim.uv or vim.loop).fs_stat(path)
+
+        if stat and stat.type == "directory" then
+          return 1
+        elseif stat and stat.type == "file" then
+          return 0
+        else
+          return 2 -- unknown type
+        end
+      end
+
       vim.keymap.set("n", "<C-e>", "<Cmd>Neotree left toggle<CR>", { silent = true })
       vim.keymap.set("n", "<C-w>f", function()
+        -- special
         if vim.bo.filetype == "neo-tree" or vim.bo.filetype == "oil" or vim.bo.filetype == "git" then
           vim.cmd("Neotree left")
           return
         end
 
-        if is_blank_screen_by_ls() and vim.fn.isdirectory(vim.fn.getcwd()) == 1 then
+        -- detect
+        flag = detect_dir()
+
+        -- dir or unknown
+        if flag == 1 then
+          vim.cmd("Neotree left reveal")
+          return
+        elseif flag == 2 then
           vim.cmd("Neotree left")
           return
         end
 
-        -- 前方一致で"fatal"の文字列があるかどうか判定
+        -- file: git or ungit
         dotgit = vim.fn.system("git rev-parse --show-toplevel")
-        if string.sub(dotgit, 1, 5) == "fatal" then
+        if string.sub(dotgit, 1, 5) == "fatal" then -- 前方一致で"fatal"の文字列があるかどうか判定
           path = vim.fn.expand("%:p:h")
           vim.cmd("Neotree action=focus reveal_file=% dir=.")
           return
         end
 
+        -- git
         vim.defer_fn(function()
           vim.cmd("Neotree action=focus reveal_file=% dir=" .. dotgit)
         end, 170)
