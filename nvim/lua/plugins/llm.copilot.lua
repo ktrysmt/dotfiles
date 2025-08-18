@@ -1,7 +1,9 @@
 return {
   "zbirenbaum/copilot.lua",
   cmd = "Copilot",
-  cond = not vim.env.OPENROUTER_API_KEY,
+  cond = function()
+    return not vim.env.OPENROUTER_API_KEY and vim.bo.filetype ~= ""
+  end,
   event = "InsertEnter",
   config = function()
     require("copilot").setup({

@@ -1,7 +1,9 @@
 return {
   'kiddos/gemini.nvim',
-  event = vim.env.GEMINI_API_KEY and { "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" } or nil,
-  cond = vim.env.GEMINI_API_KEY,
+  event = { "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
+  cond = function()
+    return not vim.env.GEMINI_API_KEY and vim.bo.filetype ~= ""
+  end,
   config = function()
     local api = require('gemini.api')
 
