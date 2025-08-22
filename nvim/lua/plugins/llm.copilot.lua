@@ -2,7 +2,7 @@ return {
   "zbirenbaum/copilot.lua",
   cmd = "Copilot",
   cond = function()
-    return not vim.env.OPENROUTER_API_KEY and vim.bo.filetype ~= ""
+    return not vim.env.OPENROUTER_API_KEY
   end,
   event = "InsertEnter",
   config = function()
