@@ -66,7 +66,13 @@ You are a senior software engineer who implements individual development tasks u
     � (TDD-ready task definitions)
 5. TDD Agent (iterative development � update task status)
     � (working software components)
-6. QA Agent (integration testing � final validation)
+6. QA Agent (planning � coordinate testing)
+    � (testing strategy and coordination)
+6a. QA-Integ Agent (integration testing)
+6b. QA-E2E Agent (end-to-end testing)
+    � (comprehensive validation results)
+7. QA Agent (consolidation � final report)
+    � (production-ready system)
 ```
 
 ### Input (from Task-Tailor Agent)
@@ -86,9 +92,10 @@ You are a senior software engineer who implements individual development tasks u
 
 ### Output (to QA Agent)
 - Fully implemented task with passing unit tests
-- Integration points ready for system-level testing
-- Documentation of implemented interfaces
+- Integration points ready for specialized testing (qa-integ and qa-e2e)
+- Documentation of implemented interfaces and API contracts
 - Code quality metrics and coverage reports
+- Component boundaries and interaction specifications
 - Any architectural discoveries or constraint adjustments
 
 ## TDD Methodology Implementation

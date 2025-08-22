@@ -30,8 +30,12 @@ graph TD
     C --> D[Architect Agent]
     D --> E[Task-Tailor Agent]
     E --> F[TDD Agent]
-    F --> G[QA Agent]
-    G --> H[Production Deployment]
+    F --> G[QA Agent - Planning]
+    G --> G1[QA-Integ Agent]
+    G --> G2[QA-E2E Agent]
+    G1 --> G3[QA Agent - Consolidation]
+    G2 --> G3
+    G3 --> H[Production Deployment]
     
     B1[Market Research] --> B
     B2[Tech Analysis] --> B
@@ -53,9 +57,21 @@ graph TD
     F2[Unit Testing] --> F
     F3[Refactoring] --> F
     
-    G1[Integration Testing] --> G
-    G2[System Validation] --> G
-    G3[Quality Sign-off] --> G
+    G4[Test Strategy Planning] --> G
+    G5[Agent Coordination] --> G
+    G6[Risk Assessment] --> G
+    
+    G1A[Component Integration] --> G1
+    G1B[API Contract Testing] --> G1
+    G1C[Database Integration] --> G1
+    
+    G2A[User Journey Testing] --> G2
+    G2B[Performance Testing] --> G2
+    G2C[Cross-Platform Testing] --> G2
+    
+    G3A[Results Consolidation] --> G3
+    G3B[Final Quality Report] --> G3
+    G3C[Production Sign-off] --> G3
 ```
 
 # AGENT RESPONSIBILITIES AND HANDOFFS
@@ -202,8 +218,8 @@ graph TD
 @tdd "Implement [specific task] using strict TDD methodology. Follow the test scenarios defined in the task breakdown."
 ```
 
-## Phase 6: Quality Assurance Coordination
-**Role**: Coordinate comprehensive quality validation and production readiness assessment
+## Phase 6a: Quality Assurance Planning Coordination
+**Role**: Coordinate quality assurance strategy and orchestrate specialized testing agents
 **Agent**: @qa (Status: ✅ Defined)
 
 **Input Requirements from TDD Implementation**:
@@ -211,28 +227,126 @@ graph TD
 - Integration points with documented interfaces
 - Code coverage reports and quality metrics
 - Test data sets and mock configurations
-- Documentation of implemented features
+- Documentation of implemented features and architecture
 
 **Coordination Process**:
-1. **Implementation Review**: Assess code quality and test coverage adequacy
-2. **Integration Testing**: Validate component interactions and data flow
-3. **System Testing**: Coordinate end-to-end workflow validation
-4. **Performance Testing**: Oversee load and stress testing
-5. **Security Testing**: Guide vulnerability assessment and validation
-6. **User Acceptance**: Validate business requirements and acceptance criteria
-7. **Documentation**: Create comprehensive QA report and production sign-off
+1. **Implementation Analysis**: Assess TDD outputs and system architecture
+2. **Testing Strategy Development**: Determine integration vs end-to-end testing scope
+3. **Agent Coordination**: Create specific plans for qa-integ and qa-e2e agents
+4. **Risk Assessment**: Identify critical testing areas and quality gates
+5. **Environment Planning**: Coordinate test environment and data requirements
+6. **Success Criteria Definition**: Establish quality thresholds and acceptance criteria
 
-**Expected Output to Production**:
-- Comprehensive QA report with all test results
-- Production readiness assessment with risk analysis
-- Performance benchmarks and capacity planning
-- Security clearance and vulnerability report
-- User acceptance validation with stakeholder sign-off
-- Deployment recommendations and monitoring guidance
+**Expected Output to Specialized QA Agents**:
+- Detailed integration testing plan for qa-integ agent
+- End-to-end testing scenarios for qa-e2e agent
+- Risk areas requiring focused attention
+- Test environment specifications and data requirements
+- Quality gates and success criteria
 
 **Activation Command**:
 ```bash
-@qa "Perform comprehensive quality assurance on the implemented system. Focus on [integration/performance/security/user acceptance] validation."
+@qa "Analyze the TDD implementation and create a comprehensive testing strategy. Coordinate qa-integ and qa-e2e agents for [specific system components/workflows]."
+```
+
+## Phase 6b: Integration Testing Coordination
+**Role**: Coordinate component integration, API contract, and service boundary testing
+**Agent**: @qa-integ (Status: ✅ Defined)
+
+**Input Requirements from QA Planning**:
+- Integration testing plan with component boundaries
+- API contracts and interface specifications
+- Database integration requirements
+- External service integration points
+- Mock service configurations and test data
+
+**Coordination Process**:
+1. **Plan Analysis**: Review integration testing scope and approach
+2. **Environment Setup**: Prepare test databases and mock services
+3. **Contract Testing**: Validate API endpoints and component interfaces
+4. **Database Integration**: Test CRUD operations and data consistency
+5. **External Services**: Validate third-party integrations and error handling
+6. **Performance Validation**: Measure integration point performance
+7. **Results Documentation**: Generate comprehensive integration test report
+
+**Expected Output to QA Consolidation**:
+- Complete integration test results with pass/fail status
+- API contract validation summary
+- Database integration test outcomes
+- External service integration results
+- Performance metrics for integration scenarios
+- Identified integration issues with severity assessment
+
+**Activation Command**:
+```bash
+@qa-integ "Execute integration testing based on the provided plan. Focus on [component boundaries/API contracts/database integration] validation."
+```
+
+## Phase 6c: End-to-End Testing Coordination
+**Role**: Coordinate complete user workflows, system behavior, and performance testing
+**Agent**: @qa-e2e (Status: ✅ Defined)
+
+**Input Requirements from QA Planning**:
+- End-to-end testing plan with user journeys
+- Performance requirements and load testing specifications
+- Cross-platform compatibility requirements
+- User acceptance criteria and business workflows
+- Production-like test environment specifications
+
+**Coordination Process**:
+1. **Plan Analysis**: Review end-to-end testing scenarios and requirements
+2. **Environment Setup**: Configure production-like testing environment
+3. **User Journey Testing**: Execute complete workflow validations
+4. **Performance Testing**: Conduct load and stress testing
+5. **Cross-Platform Validation**: Test browser/platform compatibility
+6. **User Experience Testing**: Validate accessibility and usability
+7. **Results Documentation**: Generate comprehensive end-to-end test report
+
+**Expected Output to QA Consolidation**:
+- Complete end-to-end test results with user journey validation
+- Performance benchmarks and scalability analysis
+- Cross-platform compatibility assessment
+- User experience and accessibility evaluation
+- System behavior analysis under various conditions
+- Load testing results and capacity recommendations
+
+**Activation Command**:
+```bash
+@qa-e2e "Execute end-to-end testing based on the provided plan. Focus on [user workflows/performance/cross-platform] validation."
+```
+
+## Phase 6d: Quality Assurance Consolidation
+**Role**: Consolidate testing results and provide final production readiness assessment
+**Agent**: @qa (Status: ✅ Defined)
+
+**Input Requirements from Specialized QA Agents**:
+- Integration testing results from qa-integ agent
+- End-to-end testing results from qa-e2e agent
+- Performance benchmarks and scalability analysis
+- Cross-platform compatibility assessment
+- Identified issues with severity and impact analysis
+
+**Coordination Process**:
+1. **Results Analysis**: Consolidate findings from both specialized agents
+2. **Risk Assessment**: Evaluate overall system quality and deployment risks
+3. **Issue Prioritization**: Categorize and prioritize all identified issues
+4. **Performance Evaluation**: Assess system performance against requirements
+5. **Production Readiness**: Determine deployment readiness with evidence
+6. **Final Documentation**: Create comprehensive quality assessment report
+7. **Stakeholder Communication**: Present findings with deployment recommendations
+
+**Expected Output to Production**:
+- Comprehensive QA report consolidating all testing results
+- Production readiness assessment with risk analysis
+- Performance benchmarks and capacity planning recommendations
+- Security validation summary and vulnerability assessment
+- Cross-agent issue correlation and prioritization
+- Deployment recommendations and monitoring guidance
+- Final quality sign-off with stakeholder approval
+
+**Activation Command**:
+```bash
+@qa "Consolidate results from qa-integ and qa-e2e agents. Provide final production readiness assessment for deployment decision."
 ```
 
 # SHARED ISSUE FILE MANAGEMENT
@@ -256,7 +370,10 @@ Each agent maintains their designated section within the shared Issue File:
 3. **"Architecture Design Phase (by architect agent)"**
 4. **"Task Breakdown Phase (by task-tailor agent)"**
 5. **"TDD Implementation Progress (by tdd agent)"**
-6. **"Quality Assurance Phase (by qa agent)"**
+6. **"QA Planning Phase (by qa agent)"**
+7. **"Integration Testing Results (by qa-integ agent)"**
+8. **"End-to-End Testing Results (by qa-e2e agent)"**
+9. **"Final Quality Assessment (by qa agent)"**
 
 ### Coordination Workflow
 1. **Read Issue File**: Each agent begins by reading the complete Issue File
@@ -309,24 +426,47 @@ Each agent maintains their designated section within the shared Issue File:
 - [ ] Mock requirements and test data specifications ready
 - [ ] Implementation constraints and guidelines documented
 
-## TDD Implementation → Quality Assurance Transition
+## TDD Implementation → QA Planning Transition
 **Validation Criteria**:
 - [ ] All assigned tasks implemented with passing unit tests
 - [ ] Code coverage meets quality gate requirements (≥90%)
 - [ ] Integration points documented and tested
 - [ ] No critical quality violations (linting, security, performance)
 - [ ] Task acceptance criteria verified through tests
-- [ ] Handoff documentation complete for QA validation
+- [ ] Component boundaries and API contracts clearly defined
+- [ ] Handoff documentation complete for QA strategy planning
 
-## Quality Assurance → Production Transition
+## QA Planning → Specialized Testing Transition
 **Validation Criteria**:
-- [ ] Integration testing completed with all systems
-- [ ] System performance meets specified benchmarks
-- [ ] Security vulnerabilities assessed and addressed
-- [ ] User acceptance criteria validated
-- [ ] Production deployment approved with stakeholder sign-off
-- [ ] Monitoring and alerting systems configured
-- [ ] Rollback procedures tested and documented
+- [ ] Comprehensive testing strategy documented with scope and approach
+- [ ] Integration testing plan created with component boundaries and test scenarios
+- [ ] End-to-end testing plan created with user journeys and performance requirements
+- [ ] Risk areas identified and prioritized for focused testing attention
+- [ ] Test environment specifications and data requirements defined
+- [ ] Quality gates and success criteria established for each testing phase
+- [ ] Clear delegation instructions provided to qa-integ and qa-e2e agents
+
+## Specialized Testing → QA Consolidation Transition
+**Validation Criteria**:
+- [ ] Integration testing completed by qa-integ agent with comprehensive results
+- [ ] End-to-end testing completed by qa-e2e agent with user journey validation
+- [ ] Performance benchmarks collected from both integration and e2e testing
+- [ ] Cross-platform compatibility validated through appropriate testing methods
+- [ ] All identified issues documented with severity and impact assessment
+- [ ] Test coverage metrics consolidated across all testing types
+- [ ] Detailed test execution reports provided by both specialized agents
+
+## QA Consolidation → Production Transition
+**Validation Criteria**:
+- [ ] Results from qa-integ and qa-e2e agents consolidated and analyzed
+- [ ] Overall system quality assessed with comprehensive risk analysis
+- [ ] Performance requirements validated against benchmarks from all testing phases
+- [ ] Security vulnerabilities identified and appropriately addressed across all test types
+- [ ] User acceptance criteria validated through end-to-end testing
+- [ ] Cross-agent issue correlation completed with prioritized remediation plan
+- [ ] Production readiness assessment completed with stakeholder sign-off
+- [ ] Deployment recommendations provided with monitoring and rollback procedures
+- [ ] Final quality sign-off obtained with evidence-based confidence rating
 
 # PHASE EXECUTION GUIDELINES
 
@@ -369,13 +509,37 @@ Each agent maintains their designated section within the shared Issue File:
 - Integration point testing
 - Continuous progress tracking and adjustment
 
-## Phase 6: Quality Assurance Coordination (2-4 hours)
+## Phase 6a: QA Planning Coordination (1-2 hours)
 **Key Coordination Deliverables**:
-- Integration testing execution and validation
-- System performance benchmarking
-- Security vulnerability assessment
-- User acceptance testing coordination
-- Production readiness assessment and sign-off
+- TDD implementation analysis and architecture assessment
+- Comprehensive testing strategy with integration vs end-to-end scope definition
+- Detailed testing plans for qa-integ and qa-e2e agents
+- Risk assessment and critical testing area identification
+- Test environment specifications and success criteria establishment
+
+## Phase 6b: Integration Testing Coordination (2-3 hours)
+**Key Coordination Activities**:
+- Component boundary and API contract validation
+- Database integration testing execution
+- External service integration validation
+- Mock service configuration and testing
+- Integration performance benchmarking
+
+## Phase 6c: End-to-End Testing Coordination (3-4 hours)
+**Key Coordination Activities**:
+- User journey and workflow validation
+- Performance and load testing execution
+- Cross-platform compatibility testing
+- User experience and accessibility validation
+- System behavior analysis under various conditions
+
+## Phase 6d: QA Consolidation Coordination (1-2 hours)
+**Key Coordination Deliverables**:
+- Results consolidation from qa-integ and qa-e2e agents
+- Cross-agent issue correlation and prioritization
+- Overall system quality assessment and risk analysis
+- Production readiness determination with stakeholder sign-off
+- Final deployment recommendations and monitoring guidance
 
 # COMMUNICATION PROTOCOLS
 
@@ -496,16 +660,39 @@ When response is needed to maintain project momentum.
 - Integration points fully implemented and documented
 - Red-Green-Refactor methodology consistently applied
 
-## Quality Assurance Phase Success Indicators
-- Integration testing completed with comprehensive coverage
-- System performance meets or exceeds requirements
-- Security vulnerabilities identified and appropriately addressed
-- User acceptance criteria validated through systematic testing
-- Production deployment approved with stakeholder confidence
+## QA Planning Phase Success Indicators
+- TDD implementation thoroughly analyzed with architecture assessment
+- Comprehensive testing strategy created covering both integration and end-to-end scope
+- Detailed testing plans provided to qa-integ and qa-e2e agents with clear instructions
+- Risk areas identified and prioritized for focused testing attention
+- Test environment specifications and success criteria clearly established
+
+## Integration Testing Phase Success Indicators
+- Component integration testing completed with comprehensive boundary validation
+- API contracts validated through systematic testing approaches
+- Database integration tested with data consistency and performance verification
+- External service integrations validated with proper error handling
+- Integration performance benchmarks collected and analyzed
+
+## End-to-End Testing Phase Success Indicators
+- User journey testing completed with comprehensive workflow validation
+- Performance testing executed under realistic load conditions with scalability assessment
+- Cross-platform compatibility validated across required browsers/platforms
+- User experience and accessibility validated through systematic testing
+- System behavior analyzed under various conditions with comprehensive coverage
+
+## QA Consolidation Phase Success Indicators
+- Results from qa-integ and qa-e2e agents successfully consolidated and analyzed
+- Cross-agent issue correlation completed with comprehensive prioritization
+- Overall system quality assessed with evidence-based risk analysis
+- Production readiness determined with stakeholder confidence and sign-off
+- Final deployment recommendations provided with monitoring and rollback procedures
 
 ## Overall Orchestration Success Indicators
-- Smooth handoffs between all six phases with minimal rework
-- Issue File documentation maintained throughout project lifecycle
-- Stakeholder confidence sustained through transparent communication
-- Project momentum maintained through efficient phase transitions
-- Production-ready system delivered with comprehensive quality validation
+- Smooth handoffs between all phases (Research → Requirements → Architecture → Task Breakdown → TDD → QA Planning → Specialized Testing → QA Consolidation → Production)
+- Issue File documentation maintained throughout project lifecycle with clear agent section updates
+- Stakeholder confidence sustained through transparent communication and evidence-based assessments
+- Project momentum maintained through efficient phase transitions and parallel specialized testing
+- Production-ready system delivered with comprehensive quality validation from multiple specialized perspectives
+- Successful coordination between qa-integ and qa-e2e agents with consolidated results
+- Clear separation of integration testing and end-to-end testing concerns with comprehensive coverage
