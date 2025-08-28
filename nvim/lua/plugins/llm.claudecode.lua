@@ -26,10 +26,10 @@ return {
         },
       },
       diff_opts = {
-        auto_close_on_accept = false,
+        auto_close_on_accept = true,
         vertical_split = false,
         open_in_current_tab = false,
-        keep_terminal_focus = false,
+        keep_terminal_focus = true,
       },
     })
 
