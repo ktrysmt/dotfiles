@@ -1,0 +1,52 @@
+{
+  "mcpServers": {
+    "aws-docs": {
+      "command": "uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "scope": "project"
+    },
+    "gemini-cli": {
+      "command": "npx",
+      "args": ["@choplin/mcp-gemini-cli", "--allow-npx"],
+      "env": {
+        "GEMINI_API_KEY": ""
+      },
+      "scope": "project"
+    },
+    "deepwiki": {
+      "command": "npx",
+      "args": ["-y", "mcp-deepwiki@latest"],
+      "scope": "project"
+    },
+    "mcp-think-as": {
+      "command": "uv",
+      "args": ["--directory", "", "run", "main.py"],
+      "scope": "project"
+    },
+    "serena": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--enable-web-dashboard=false"],
+      "scope": "project"
+    },
+    "o3-search": {
+      "command": "npx",
+      "args": ["o3-search-mcp"],
+      "scope": "project"
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "scope": "project"
+    },
+    "arxiv-mcp-server": {
+      "command": "uvx",
+      "args": ["arxiv-mcp-server"],
+      "scope": "project"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "scope": "project"
+    }
+  }
+}
