@@ -35,6 +35,8 @@ dir = "lib"
 use = [
   "{completion,key-bindings,directories}.zsh"
 ]
+[plugins.ni]
+github = "azu/ni.zsh"
 
 [plugins.zsh-better-npm-completion]
 github = "lukechilds/zsh-better-npm-completion"
