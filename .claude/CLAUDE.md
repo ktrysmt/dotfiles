@@ -27,7 +27,7 @@ This is my global Claude Code configuration directory (`~/.claude`) that sets up
 
 ### MCP Tool Selection Guide
 - **aws-documentation-mcp-server**: AWS specifications and documentation
-- **gemini-cli**: General information search and error resolution
+- **gemini-google-search**: General information search and error resolution
 - **context7**: OSS library documentation and specifications
 - **playwright**: Web application behavior verification
 
