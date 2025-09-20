@@ -28,7 +28,7 @@ return {
       },
     },
     config = function()
-      local lspconfig = require('lspconfig')
+      -- local lspconfig = require('lspconfig')
       local mason_lspconfig = require("mason-lspconfig")
 
       local function get_installed_servers()
@@ -86,38 +86,26 @@ return {
         end
       end
 
-      local lspconfig_group = vim.api.nvim_create_augroup('lspconfig_group', { clear = true })
-      vim.api.nvim_create_autocmd("LspAttach", {
-        group = lspconfig_group,
-        callback = init_lspconfig,
-      })
-
-      -- https://rust-analyzer.github.io/book/other_editors.html#nvim-lsp
-      -- lspconfig.rust_analyzer.setup({
-      --   on_attach = function(client, bufnr)
-      --     -- vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-      --   end
-      -- })
-
-      -- https://github.com/neovim/nvim-lspconfig
-      lspconfig.rust_analyzer.setup {
+      vim.lsp.config('rust_analyzer', {
         settings = {
           ['rust-analyzer'] = {},
         },
-      }
-      lspconfig.pylsp.setup {
+      })
+
+      vim.lsp.config('pylsp', {
         settings = {
           pylsp = {
             plugins = {
               pycodestyle = {
-                ignore = { 'E501', 'E241' }, -- This is the Error code for line too long.
-                maxLineLength = 200          -- This sets how long the line is allowed to be. Also has effect on formatter.
+                ignore = { 'E501', 'E241' },
+                maxLineLength = 200
               },
             },
           },
         },
-      }
-      lspconfig.lua_ls.setup {
+      })
+
+      vim.lsp.config('lua_ls', {
         settings = {
           Lua = {
             diagnostics = {
@@ -125,33 +113,21 @@ return {
             }
           }
         }
-      }
-      lspconfig.gopls.setup {
+      })
+
+      vim.lsp.config('gopls', {
         settings = {
           gopls = {
             staticcheck = true,
           }
         }
-      }
+      })
 
-      -- https://www.reddit.com/r/neovim/comments/11q17mq/comment/jc13v1o/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-      -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
-      -- lspconfig.rust_analyzer.setup {
-      --   settings = {
-      --     ['rust-analyzer'] = {
-      --       textDocument = {
-      --         inlayHint = {
-      --           typeHints = {
-      --             dynamicRegistration = false,
-      --             resolveSupport = {
-      --               properties = { "command" }
-      --             }
-      --           }
-      --         }
-      --       }
-      --     },
-      --   },
-      -- }
+      local lspconfig_group = vim.api.nvim_create_augroup('lspconfig_group', { clear = true })
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = lspconfig_group,
+        callback = init_lspconfig,
+      })
     end,
   },
 }
