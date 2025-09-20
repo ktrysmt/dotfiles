@@ -91,6 +91,7 @@ return {
           ['rust-analyzer'] = {},
         },
       })
+      vim.lsp.enable('rust_analyzer')
 
       vim.lsp.config('pylsp', {
         settings = {
@@ -104,6 +105,7 @@ return {
           },
         },
       })
+      vim.lsp.enable('pylsp')
 
       vim.lsp.config('lua_ls', {
         settings = {
@@ -114,6 +116,7 @@ return {
           }
         }
       })
+      vim.lsp.enable('lua_ls')
 
       vim.lsp.config('gopls', {
         settings = {
@@ -122,6 +125,7 @@ return {
           }
         }
       })
+      vim.lsp.enable('gopls')
 
       local lspconfig_group = vim.api.nvim_create_augroup('lspconfig_group', { clear = true })
       vim.api.nvim_create_autocmd("LspAttach", {
