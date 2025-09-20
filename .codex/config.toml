@@ -1,0 +1,6 @@
+# https://github.com/openai/codex/blob/main/docs/config.md
+model = "gpt-5"
+model_reasoning_effort = "high"
+model_reasoning_summary = "auto"
+hide_agent_reasoning = true
+tools.web_search = true
