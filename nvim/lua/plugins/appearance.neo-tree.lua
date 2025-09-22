@@ -527,7 +527,8 @@ return {
 
         -- git
         vim.defer_fn(function()
-          vim.cmd("Neotree action=focus reveal_file=% dir=" .. dotgit)
+          path = vim.fn.expand("%:p")
+          vim.cmd("Neotree action=focus reveal_file=" .. path .. " dir=" .. dotgit)
         end, 170)
       end, { silent = true })
     end
