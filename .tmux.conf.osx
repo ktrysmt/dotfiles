@@ -47,8 +47,13 @@ set-option -g renumber-windows on;
 set-option -g history-limit 10000000
 set -g default-command "${SHELL} -l"
 
-set-option -g default-terminal "tmux-256color"
-set-option -ga terminal-overrides ',screen-256color:Tc'
+# set-option -g default-terminal "tmux-256color"
+# set-option -ga terminal-overrides ',screen-256color:Tc'
+# set -g default-terminal "screen-256color"
+
+# set -g default-terminal "tmux-256color"
+set -g default-terminal "xterm-256color"
+set -ag terminal-overrides ",xterm-256color:RGB"
 
 # --------------
 # status

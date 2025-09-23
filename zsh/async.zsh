@@ -70,7 +70,6 @@ alias vimdiff='nvim -d'
 alias typora='open -a typora'
 alias rs='evcxr'
 alias delta="delta --syntax-theme zenburn"
-alias rm="trash"
 
 # python
 alias va="source .venv/bin/activate"
@@ -208,6 +207,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
       fi
     }
   fi
+  alias rm="trash"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   export HOMEBREW_CASK_OPTS="--appdir=/Applications";
   # curl
