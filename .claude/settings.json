@@ -332,6 +332,5 @@
       "Write(/etc/shadow)",
       "Write(/etc/sudoers)"
     ]
-  },
-  "model": "opus"
+  }
 }
