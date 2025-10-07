@@ -262,6 +262,7 @@
       "mcp__mcp-think-as",
       "mcp__playwright",
       "mcp__serena",
+      "mcp__codex",
       "mcp__aws-docs"
     ],
     "deny": [
