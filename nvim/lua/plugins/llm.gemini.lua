@@ -9,13 +9,19 @@ return {
 
     require('gemini').setup({
       model_config = {
-        completion_delay = 1000,
-        model_id = api.MODELS.GEMINI_2_0_FLASH,
-        temperature = 0.2,
-        top_k = 20,
-        max_output_tokens = 8196,
+        temperature = 0.10,
+        model_id = 'gemini-2.5-flash',
+        top_k = 128,
         response_mime_type = 'text/plain',
       },
+      -- model_config = {
+      --   completion_delay = 1000,
+      --   model_id = api.MODELS.GEMINI_2_5_FLASH,
+      --   temperature = 0.2,
+      --   top_k = 20,
+      --   max_output_tokens = 8196,
+      --   response_mime_type = 'text/plain',
+      -- },
       completion = {
         move_cursor_end = true
       },

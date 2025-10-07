@@ -18,7 +18,6 @@ return {
       providers = {
         claude = {
           endpoint = "https://api.anthropic.com",
-          model = 'claude-sonnet-4-20250514',
         },
       },
       ---Specify the special dual_boost mode
