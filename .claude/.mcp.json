@@ -1,9 +1,7 @@
 {
   "mcpServers": {
     "aws-docs": {
-      "command": "uvx",
-      "args": ["awslabs.aws-documentation-mcp-server@latest"],
-      "scope": "project"
+      "url": "https://knowledge-mcp.global.api.aws"
     },
     "gemini-cli": {
       "command": "npx",
