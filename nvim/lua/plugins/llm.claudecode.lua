@@ -46,13 +46,15 @@ return {
     end
 
     local function claude_send_path_then_focus()
-      if is_claude_code_buffer() then
-        vim.cmd("ClaudeCodeAdd %")
-        vim.cmd("ClaudeCodeFocus")
-      else
-        vim.cmd("ClaudeCodeStart")
-        vim.cmd("ClaudeCodeAdd %")
-      end
+      vim.cmd("ClaudeCodeFocus")
+      vim.cmd("ClaudeCodeAdd %")
+      -- if is_claude_code_buffer() then
+      --   vim.cmd("ClaudeCodeAdd %")
+      --   vim.cmd("ClaudeCodeFocus")
+      -- else
+      --   vim.cmd("ClaudeCodeStart")
+      --   vim.cmd("ClaudeCodeAdd %")
+      -- end
     end
 
     local function claude_add_selected_buffer_then_focus()
