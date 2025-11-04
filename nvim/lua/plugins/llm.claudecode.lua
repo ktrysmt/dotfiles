@@ -1,6 +1,6 @@
 return {
   "coder/claudecode.nvim",
-  event = { "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
+  event = { "VeryLazy", "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
   keys = {
     { "<leader>cc" },
     { "<leader>ca" },
@@ -46,15 +46,12 @@ return {
     end
 
     local function claude_send_path_then_focus()
-      vim.cmd("ClaudeCodeFocus")
       vim.cmd("ClaudeCodeAdd %")
-      -- if is_claude_code_buffer() then
-      --   vim.cmd("ClaudeCodeAdd %")
-      --   vim.cmd("ClaudeCodeFocus")
-      -- else
-      --   vim.cmd("ClaudeCodeStart")
-      --   vim.cmd("ClaudeCodeAdd %")
-      -- end
+      if not is_claude_code_buffer() then
+        vim.defer_fn(function()
+          vim.cmd("ClaudeCodeOpen")
+        end, 2000)
+      end
     end
 
     local function claude_add_selected_buffer_then_focus()
