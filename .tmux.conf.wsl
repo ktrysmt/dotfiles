@@ -116,8 +116,8 @@ set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-open'
 
-set -g @resurrect-save 'S'
-set -g @resurrect-restore 'U'
+set -g @resurrect-save 'w'
+set -g @resurrect-restore 'r'
 
 # set -g @plugin 'tmux-plugins/tmux-continuum'
 # set -g @continuum-restore 'on'
