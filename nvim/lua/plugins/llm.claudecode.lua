@@ -4,7 +4,6 @@ return {
   keys = {
     { "<leader>cc" },
     { "<leader>ca" },
-    { "<leader>ca", mode = "v" },
     { "<leader>cda" },
     { "<leader>cdd" },
   },
@@ -14,12 +13,13 @@ return {
       auto_start = true,
       log_level = "info",
       terminal_cmd = nil,
+      focus_after_send = true,
       track_selection = true,
       visual_demotion_delay_ms = 50,
       terminal = {
         split_side = "right",
         split_width_percentage = 0.33,
-        provider = "auto",
+        provider = "native",
         auto_close = false,
         provider_opts = {
           external_terminal_cmd = nil,
@@ -47,23 +47,10 @@ return {
 
     local function claude_send_path_then_focus()
       vim.cmd("ClaudeCodeAdd %")
-      if not is_claude_code_buffer() then
-        vim.defer_fn(function()
-          vim.cmd("ClaudeCodeOpen")
-        end, 2000)
-      end
     end
 
     local function claude_add_selected_buffer_then_focus()
-      if is_claude_code_buffer() then
-        vim.cmd("ClaudeCodeSend")
-        vim.defer_fn(function()
-          vim.cmd("ClaudeCodeFocus")
-        end, 150)
-      else
-        vim.cmd("ClaudeCodeStart")
-        vim.cmd("ClaudeCodeSend")
-      end
+      vim.cmd("ClaudeCodeSend")
     end
 
     vim.keymap.set("n", "<leader>cc", "<cmd>ClaudeCode<cr>")

@@ -238,6 +238,7 @@
       "TodoRead(**)",
       "TodoWrite(**)",
       "WebFetch(domain:*)",
+      "WebSearch",
       "Write(!.git/**)",
       "Write(!.next/**)",
       "Write(!.venv/**)",

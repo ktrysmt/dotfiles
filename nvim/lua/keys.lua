@@ -33,6 +33,7 @@ vim.keymap.set('n', '<Plug>(wait)<ESC>', 'i<ESC>')
 
 -- terminal mode
 vim.keymap.set('t', '<C-W>w', '<cmd>wincmd w<cr>')
+vim.keymap.set('t', '<C-W>p', '<cmd>wincmd p<cr>')
 vim.keymap.set('t', '<C-W>k', '<cmd>wincmd k<cr>')
 vim.keymap.set('t', '<C-W>j', '<cmd>wincmd j<cr>')
 vim.keymap.set('t', '<C-W>h', '<cmd>wincmd h<cr>')
