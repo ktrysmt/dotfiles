@@ -3,6 +3,7 @@ return {
   event = { "VeryLazy", "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
   keys = {
     { "<leader>cc" },
+    { "<leader>cf" },
     { "<leader>ca" },
     { "<leader>cda" },
     { "<leader>cdd" },
@@ -54,6 +55,7 @@ return {
     end
 
     vim.keymap.set("n", "<leader>cc", "<cmd>ClaudeCode<cr>")
+    vim.keymap.set("n", "<leader>cf", "<cmd>ClaudeCodeFocus<cr>")
     vim.keymap.set("n", "<leader>ca", claude_send_path_then_focus)
     vim.keymap.set("v", "<leader>ca", claude_add_selected_buffer_then_focus)
     vim.keymap.set("n", "<leader>cda", "<cmd>ClaudeCodeDiffAccept<cr>")
