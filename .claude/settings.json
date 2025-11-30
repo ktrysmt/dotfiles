@@ -333,5 +333,6 @@
       "Write(/etc/shadow)",
       "Write(/etc/sudoers)"
     ]
-  }
+  },
+  "alwaysThinkingEnabled": false
 }
