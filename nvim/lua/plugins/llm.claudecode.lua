@@ -1,6 +1,6 @@
 return {
   "coder/claudecode.nvim",
-  event = { "VeryLazy", "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
+  event = { "BufReadPre", "BufNewFile" }, -- "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
   keys = {
     { "<leader>cc" },
     { "<leader>cf" },
