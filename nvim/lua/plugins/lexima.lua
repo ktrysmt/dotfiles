@@ -32,23 +32,24 @@ return {
     LeximaAlterCommand rg Rg
     LeximaAlterCommand lz Lazy
     LeximaAlterCommand qf\%[replace] Qfreplace
-    LeximaAlterCommand ma\%[son] Mason
 
-    LeximaAlterCommand g Git
-    LeximaAlterCommand gp\%[ush] Git<space>push
+    LeximaAlterCommand g Git<space>
+    LeximaAlterCommand gp\%[ush] Git<space>push<space>origin<space>
     LeximaAlterCommand gb\%[lame] Git<space>blame
+    " Enable ghb command only when MY_BROWSER is defined
+    if !empty($MY_BROWSER)
+      LeximaAlterCommand ghb !$MY_BROWSER<space>$(gh<space>browse<space>-n<space>%)
+    endif
 
     LeximaAlterCommand gv DiffviewOpen
     LeximaAlterCommand gvc DiffviewClose
-    LeximaAlterCommand gh DiffviewFileHistory
+    LeximaAlterCommand gd DiffviewFileHistory
 
     LeximaAlterCommand %s s/\v
     LeximaAlterCommand s s/\v
 
     LeximaAlterCommand ti\%[gcurrent] tabnew|TigOpenCurrentFile
     LeximaAlterCommand ti\%[groot] tabnew|TigOpenProjectRootDir
-
-    LeximaAlterCommand ghb !gh<space>browse<space><space>%
 
     LeximaAlterCommand ww w<space>!
     LeximaAlterCommand rr r<space>!

@@ -11,6 +11,8 @@ alias pbpaste='powershell.exe Get-Clipboard'
 export PATH=/home/linuxbrew/.linuxbrew/bin:\$PATH
 export PATH=/home/linuxbrew/.linuxbrew/sbin:\$PATH
 export SRC_ACCESS_TOKEN="" # login via github oauth in sourcegraph.com
+export PATH="/home/linuxbrew/.linuxbrew/opt/libpq/bin:$PATH"
+export MY_BROWSER="/mnt/c/Users/hac/AppData/Local/BraveSoftware/Brave-Browser/Application/brave.exe"
 EOF
 
 WIN_USER=$(cmd.exe /c "echo %USERNAME%")
