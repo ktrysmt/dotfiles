@@ -38,7 +38,7 @@ return {
     LeximaAlterCommand gb\%[lame] Git<space>blame
     " Enable ghb command only when MY_BROWSER is defined
     if !empty($MY_BROWSER)
-      LeximaAlterCommand ghb !$MY_BROWSER<space>$(gh<space>browse<space>-n<space>%)
+      LeximaAlterCommand gbr !$MY_BROWSER<space>$(gh<space>browse<space>-n<space>%)
     endif
 
     LeximaAlterCommand gv DiffviewOpen
