@@ -39,6 +39,8 @@ return {
     " Enable ghb command only when MY_BROWSER is defined
     if !empty($MY_BROWSER)
       LeximaAlterCommand gbr !$MY_BROWSER<space>$(gh<space>browse<space>-n<space>%)
+    else
+      LeximaAlterCommand gbr !gh<space>browse<space>%
     endif
 
     LeximaAlterCommand gv DiffviewOpen
