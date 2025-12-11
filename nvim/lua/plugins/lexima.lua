@@ -9,6 +9,15 @@ return {
 
     -- inoremap <C-f> <C-r>=lexima#insmode#leave(1, '<LT>C-G>U<LT>RIGHT>')<CR>
     vim.cmd [[
+    " Custom vsplit command that opens to the right
+    command! -nargs=? -complete=file Vsr call <SID>vsplit_right(<f-args>)
+    function! s:vsplit_right(...) abort
+      let save_splitright = &splitright
+      set splitright
+      execute 'vsplit' (a:0 > 0 ? a:1 : '')
+      let &splitright = save_splitright
+    endfunction
+
     function! s:lexima_alter_command_add_rule(original, alternative) abort
       let input_space = '<C-w>' . a:alternative . '<Right>'
       let input_cr    = '<C-w>' . a:alternative . '<CR>'
@@ -33,7 +42,7 @@ return {
     LeximaAlterCommand lz Lazy
     LeximaAlterCommand qf\%[replace] Qfreplace
 
-    LeximaAlterCommand g Git<space>
+    LeximaAlterCommand g\%[it] Git<space>
     LeximaAlterCommand gp\%[ush] Git<space>push<space>origin<space>
     LeximaAlterCommand gb\%[lame] Git<space>blame
     " Enable ghb command only when MY_BROWSER is defined
@@ -43,20 +52,23 @@ return {
       LeximaAlterCommand gbr !gh<space>browse<space>%
     endif
 
-    LeximaAlterCommand gv DiffviewOpen
-    LeximaAlterCommand gvc DiffviewClose
-    LeximaAlterCommand gd DiffviewFileHistory
+    LeximaAlterCommand gd DiffviewOpen
+    LeximaAlterCommand gdc DiffviewClose
+    LeximaAlterCommand gdh DiffviewFileHistory
 
     LeximaAlterCommand %s s/\v
     LeximaAlterCommand s s/\v
 
-    LeximaAlterCommand ti\%[gcurrent] tabnew|TigOpenCurrentFile
-    LeximaAlterCommand ti\%[groot] tabnew|TigOpenProjectRootDir
+    " LeximaAlterCommand ti\%[gcurrent] TigOpenCurrentFile
+    " LeximaAlterCommand ti\%[groot] TigOpenProjectRootDir
+    LeximaAlterCommand t\%[ig] Vsr|TigOpenCurrentFile
 
     LeximaAlterCommand ww w<space>!
     LeximaAlterCommand rr r<space>!
 
     LeximaAlterCommand oi Oil<space>.<cr>
+
+    " LeximaAlterCommand vsr Vsr|TigOpenCurrentFile
 
     nnoremap / /\v
     ]]
