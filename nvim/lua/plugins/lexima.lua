@@ -66,7 +66,7 @@ return {
     LeximaAlterCommand ww w<space>!
     LeximaAlterCommand rr r<space>!
 
-    LeximaAlterCommand oi Oil<space>.<cr>
+    LeximaAlterCommand oi\%[l] Oil<space>.<cr>
 
     " LeximaAlterCommand vsr Vsr|TigOpenCurrentFile
 
