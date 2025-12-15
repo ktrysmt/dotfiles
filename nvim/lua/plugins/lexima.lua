@@ -68,6 +68,10 @@ return {
 
     LeximaAlterCommand oi\%[l] Oil<space>.<cr>
 
+    ]]
+    vim.cmd [[
+    LeximaAlterCommand mdf !column<space>-t<space>-s<space>'|'<space>-o<space>'|'
+
     " LeximaAlterCommand vsr Vsr|TigOpenCurrentFile
 
     nnoremap / /\v
