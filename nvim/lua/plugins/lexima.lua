@@ -45,12 +45,6 @@ return {
     LeximaAlterCommand g\%[it] Git<space>
     LeximaAlterCommand gp\%[ush] Git<space>push<space>origin<space>
     LeximaAlterCommand gb\%[lame] Git<space>blame
-    " Enable ghb command only when MY_BROWSER is defined
-    if !empty($MY_BROWSER)
-      LeximaAlterCommand gbr !$MY_BROWSER<space>$(gh<space>browse<space>-n<space>%)
-    else
-      LeximaAlterCommand gbr !gh<space>browse<space>%
-    endif
 
     LeximaAlterCommand gd DiffviewOpen
     LeximaAlterCommand gdc DiffviewClose
@@ -68,13 +62,20 @@ return {
 
     LeximaAlterCommand oi\%[l] Oil<space>.<cr>
 
-    ]]
-    vim.cmd [[
     LeximaAlterCommand mdf !column<space>-t<space>-s<space>'|'<space>-o<space>'|'
 
     " LeximaAlterCommand vsr Vsr|TigOpenCurrentFile
 
     nnoremap / /\v
     ]]
+
+    -- Enable gbr command with browser support (secure Lua-based env check)
+    local my_browser = vim.env.MY_BROWSER
+    if my_browser and my_browser ~= "" then
+      local escaped = vim.fn.shellescape(my_browser)
+      vim.cmd(string.format([[LeximaAlterCommand gbr !%s<space>$(gh<space>browse<space>-n<space>%%)]], escaped))
+    else
+      vim.cmd [[LeximaAlterCommand gbr !gh<space>browse<space>%]]
+    end
   end
 }
