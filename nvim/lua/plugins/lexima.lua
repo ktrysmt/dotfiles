@@ -10,15 +10,15 @@ return {
     -- inoremap <C-f> <C-r>=lexima#insmode#leave(1, '<LT>C-G>U<LT>RIGHT>')<CR>
     vim.cmd [[
     " Custom vsplit command that opens to the right
-    command! -nargs=? -complete=file Vsr call <SID>vsplit_right(<f-args>)
-    function! s:vsplit_right(...) abort
+    function! g:LeximaVsplitRight(...) abort
       let save_splitright = &splitright
       set splitright
       execute 'vsplit' (a:0 > 0 ? a:1 : '')
       let &splitright = save_splitright
     endfunction
+    command! -nargs=? -complete=file Vsr call g:LeximaVsplitRight(<f-args>)
 
-    function! s:lexima_alter_command_add_rule(original, alternative) abort
+    function! g:LeximaAlterCommandAddRule(original, alternative) abort
       let input_space = '<C-w>' . a:alternative . '<Right>'
       let input_cr    = '<C-w>' . a:alternative . '<CR>'
       let input_right = '<C-w>' . a:alternative . '<Right>'
@@ -32,7 +32,7 @@ return {
     endfunction
 
     if !exists('g:loaded_lexima_alter_command')
-      command! -nargs=+ LeximaAlterCommand call <SID>lexima_alter_command_add_rule(<f-args>)
+      command! -nargs=+ LeximaAlterCommand call g:LeximaAlterCommandAddRule(<f-args>)
       let g:loaded_lexima_alter_command = 1
     endif
 
