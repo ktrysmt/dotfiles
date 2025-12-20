@@ -23,7 +23,7 @@ return {
         relative_width = false,
       },
       symbol_folding = {
-        autofold_depth = 3,
+        autofold_depth = 5,
         auto_unfold = {
           hovered = true,
         },
