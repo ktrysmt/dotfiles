@@ -334,6 +334,9 @@
       "Write(/etc/sudoers)"
     ]
   },
+  "model": "opus",
   "alwaysThinkingEnabled": true,
-  "model": "opus"
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true
+  }
 }
