@@ -96,7 +96,7 @@ ln -s ~/dotfiles/.tigrc ~/.tigrc
 ln -s ~/dotfiles/.config/peco/config.json ~/.config/peco/config.json
 ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
 ln -s ~/dotfiles/.claude/ ~/.claude
-cp ~/dotfiles/.gitconfig ~/.gitconfig
+cp ~/dotfiles/.gitconfig_ubuntu ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
 ln -s ~/dotfiles/.claude/commands ~/.claude/commands
 ln -s ~/dotfiles/.claude/CLAUDE.md ~/.claude/CLAUDE.md
