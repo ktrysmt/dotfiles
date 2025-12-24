@@ -6,7 +6,7 @@ return {
   dependencies = {
     'bngarren/outline-test-blocks-provider.nvim',
     'epheien/outline-treesitter-provider.nvim',
-    'epheien/outline-ctags-provider.nvim'
+    'ktrysmt/outline-ctags-provider.nvim'
   },
   config = function()
     -- Example mapping to toggle outline
