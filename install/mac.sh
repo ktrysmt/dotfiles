@@ -12,6 +12,7 @@ brew install \
   asdf \
   bat \
   coreutils \
+  util-linux \
   curl \
   difftastic \
   eza \
