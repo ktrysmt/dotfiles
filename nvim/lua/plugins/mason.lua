@@ -56,7 +56,7 @@ return {
           'stylua',
           'svelte-language-server',
           'terraform',
-          'typescript-language-server',
+          -- 'typescript-language-server', -- use typescript-tools.nvim
           'typos-lsp',
           'vim-language-server',
           'vint',
