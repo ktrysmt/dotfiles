@@ -496,7 +496,7 @@ return {
         end
 
         -- detect
-        flag = detect_dir()
+        local flag = detect_dir()
 
         -- dir or unknown
         if flag == 1 then
@@ -508,7 +508,8 @@ return {
         end
 
         -- file: git or ungit
-        dotgit = vim.fn.system("git rev-parse --show-toplevel")
+        local path = ""
+        local dotgit = vim.fn.system("git rev-parse --show-toplevel")
         if string.sub(dotgit, 1, 5) == "fatal" then -- 前方一致で"fatal"の文字列があるかどうか判定
           path = vim.fn.expand("%:p:h")
           vim.cmd("Neotree action=focus reveal_file=% dir=.")

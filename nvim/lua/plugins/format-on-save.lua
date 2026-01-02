@@ -5,22 +5,13 @@ return {
     local format_on_save = require("format-on-save")
     local formatters = require("format-on-save.formatters")
 
-    local ts_formatter = function(formatters)
-      if vim.fn.executable('node_modules/.bin/prettier') > 0 then
-        print("hoge")
-        return formatters.prettierd
-      else
-        return formatters.lsp
-      end
-    end
-
-    local js_formatter = function()
+    local js_formatter = function(f)
       if vim.fn.executable('node_modules/.bin/prettier') > 0 or vim.api.nvim_buf_get_name(0):match("^(.prettierrc|.prettierrc.*|prettier.config.*)$") then
-        return formatters.prettierd
+        return f.prettierd
       elseif vim.api.nvim_buf_get_name(0):match("^.eslintrc.*$") then
-        return formatters.eslint_d_fix
+        return f.eslint_d_fix
       else
-        return formatters.lsp
+        return f.lsp
       end
     end
 
