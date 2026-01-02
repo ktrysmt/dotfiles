@@ -65,15 +65,29 @@ vim.opt.wildmode                = 'longest:full,full'
 vim.opt.winblend                = 15
 vim.opt.wrap                    = true
 vim.opt.autoread                = true
+vim.opt.matchpairs:append({
+  "<:>",
+  "「:」",
+  "（:）",
+  "『:』",
+  "【:】",
+  "《:》",
+  "〈:〉",
+  "｛:｝",
+  "［:］",
+  "':'",
+  '":"'
+})
+
 
 -- search
-vim.opt.magic                   = true
-vim.opt.ignorecase              = true
-vim.opt.smartcase               = true
+vim.opt.magic      = true
+vim.opt.ignorecase = true
+vim.opt.smartcase  = true
 
 -- fold
-vim.opt.foldopen                = "all"
-vim.opt.foldclose               = "all"
+vim.opt.foldopen   = "all"
+vim.opt.foldclose  = "all"
 
 -- hide EndOfBuffer
 vim.opt.fillchars:append('eob: ')

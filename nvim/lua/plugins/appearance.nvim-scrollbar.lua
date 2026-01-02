@@ -1,25 +1,19 @@
 return {
   'petertriho/nvim-scrollbar',
-  event = { "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
-  -- event = { "VeryLazy" },
-  keys = {
-    { "#", mode = "n" },
-    { "n", mode = "n" },
-    { "N", mode = "n" },
-    { "*", mode = "n" },
-    { "/", mode = "n" },
-  },
+  commit = "5b103ef0fd2e8b9b4be3878ed38d224522192c6c",
+  event = { "VeryLazy" },
   dependencies = {
     {
-      "kevinhwang91/nvim-hlslens",
-      config = function()
-        require("scrollbar.handlers.search").setup({
-          override_lens = function() end,
-        })
-      end
-    }
+      'kevinhwang91/nvim-hlslens',
+      -- tag = "v1.1.0",
+    },
   },
   config = function()
+    -- これを先に呼ぶことでhlslens virtual text を無効化
+    require("scrollbar.handlers.search").setup({
+      override_lens = function() end,
+    })
+
     require("scrollbar").setup({
       excluded_buftypes = {
         'nofile', -- to disable in floating windows
@@ -27,18 +21,20 @@ return {
       excluded_filetypes = {
         "cmp_docs",
         "cmp_menu",
-        "noice",
         "prompt",
-        "fern",
-        "TelescopePrompt",
       },
-      set_highlights = false,
+      set_highlights = true,
       handlers = {
         cursor = true,
-        diagnostic = false,
+        diagnostic = true,
         handle = true,
-        search = true,
+        search = true, -- Requires hlslens
       },
     })
-  end
+
+    vim.cmd [[
+    :hi ScrollbarSearchHandle guifg=gray
+    :hi ScrollbarSearch guifg=gray
+    ]]
+  end,
 }
