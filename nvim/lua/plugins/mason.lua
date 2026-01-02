@@ -44,7 +44,6 @@ return {
           'impl',
           'json-to-struct',
           'lua-language-server',
-          'lua-language-server',
           'misspell',
           'python-lsp-server',
           'revive',
@@ -53,10 +52,9 @@ return {
           'shellcheck',
           'shfmt',
           'staticcheck',
-          'stylua',
           'svelte-language-server',
           'terraform',
-          -- 'typescript-language-server', -- use typescript-tools.nvim
+          -- 'typescript-language-server', -- use typescript-tools.nvim instead
           'typos-lsp',
           'vim-language-server',
           'vint',
