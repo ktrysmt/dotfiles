@@ -16,12 +16,12 @@ return {
       terminal_cmd = nil,
       focus_after_send = true,
       track_selection = true,
-      visual_demotion_delay_ms = 50,
+      visual_demotion_delay_ms = 5,
       terminal = {
         split_side = "right",
         split_width_percentage = 0.33,
         provider = "native",
-        auto_close = false,
+        auto_close = true,
         provider_opts = {
           external_terminal_cmd = nil,
         },
@@ -34,30 +34,10 @@ return {
       },
     })
 
-    local function is_claude_code_buffer()
-      local buffers = vim.api.nvim_list_bufs()
-      for _, buf in ipairs(buffers) do
-        if vim.api.nvim_buf_is_loaded(buf) then
-          local name = vim.api.nvim_buf_get_name(buf)
-          if name:match("bin/claude$") then
-            return true
-          end
-        end
-      end
-    end
-
-    local function claude_send_path_then_focus()
-      vim.cmd("ClaudeCodeAdd %")
-    end
-
-    local function claude_add_selected_buffer_then_focus()
-      vim.cmd("ClaudeCodeSend")
-    end
-
     vim.keymap.set("n", "<leader>cc", "<cmd>ClaudeCode<cr>")
     vim.keymap.set("n", "<leader>cf", "<cmd>ClaudeCodeFocus<cr>")
-    vim.keymap.set("n", "<leader>ca", claude_send_path_then_focus)
-    vim.keymap.set("v", "<leader>ca", claude_add_selected_buffer_then_focus)
+    vim.keymap.set("n", "<leader>ca", "<cmd>ClaudeCodeAdd %<cr>")
+    vim.keymap.set("v", "<leader>ca", "<cmd>ClaudeCodeSend<cr>")
     vim.keymap.set("n", "<leader>cda", "<cmd>ClaudeCodeDiffAccept<cr>")
     vim.keymap.set("n", "<leader>cdd", "<cmd>ClaudeCodeDiffDeny<cr>")
   end
