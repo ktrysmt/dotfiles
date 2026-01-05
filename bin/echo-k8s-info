@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Display k8s info only when context is set
+if ! command -v kubectl > /dev/null 2>&1; then
+  exit 0
+fi
+
+kubectx=$(kubectl config current-context 2>/dev/null)
+if [[ -z "$kubectx" ]]; then
+  exit 0
+fi
+
+kubens=$(kubectl config view --minify --output 'jsonpath={.contexts..context..namespace}' 2>/dev/null)
+kubens=${kubens:-<none>}
+
+echo "[${kubens} | ${kubectx}]"

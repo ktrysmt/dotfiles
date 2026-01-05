@@ -64,7 +64,7 @@ set -g status-right-length 220
 set -g status-right-style bg=colour235
 set -g status-right \
 "#{?client_prefix,#[reverse],}"\
-"#[fg=green][#(${HOME}/dotfiles/bin/echo-kubens) | #(${HOME}/dotfiles/bin/echo-kubectx)] "\
+"#[fg=green]#(${HOME}/dotfiles/bin/echo-k8s-info) "\
 "#[fg=white][%Y/%m/%d (%a) %H:%M]"\
 "#[default]"
 #"#[fg=white] [#(${HOME}/dotfiles/bin/git-echo-username-and-email)] "\
