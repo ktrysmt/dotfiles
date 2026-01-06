@@ -2,9 +2,19 @@
 
 current_path=$1
 git_info=""
-git_branch=`cd $current_path && git status 2>/dev/null | awk 'NR==1 {print $3}'`
+
+# Get current branch
+git_branch=$(cd $current_path && git symbolic-ref --short HEAD 2>/dev/null)
 
 if [[ "$git_branch" != "" ]]; then
+  # Check if in a worktree
+  git_dir=$(cd $current_path && git rev-parse --git-dir 2>/dev/null)
+  if [[ "${git_dir}" == *"/worktrees/"* ]]; then
+    # In a worktree - get main worktree's branch
+    main_worktree=$(cd $current_path && git worktree list | head -1 | awk '{print $1}')
+    main_branch=$(git -C "${main_worktree}" symbolic-ref --short HEAD 2>/dev/null)
+    git_branch="${main_branch}|${git_branch}"
+  fi
 
   g_status="$(cd $current_path && git status -s 2>/dev/null | sort -r)";
   if [[ $(echo $g_status | grep -c -E '^(UU|AA) ') > 0 ]]; then
