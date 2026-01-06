@@ -80,6 +80,7 @@ ln -sf ~/dotfiles/mac/karabiner-complex.json ~/.config/karabiner/assets/complex_
 mise use nodejs -g
 mise use ruby -g
 mise use python -g
+mise use bun -g
 
 # uv
 uv python pin --global 3.12
