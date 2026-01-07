@@ -22,12 +22,13 @@ return {
       { '<C-w>f', mode = 'n' },
     },
     dependencies = {
+      -- "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
       -- { "3rd/image.nvim", opts = {} }, -- Optional image support in preview window: See `# Preview Mode` for more information
       -- {
-      --   "s1n7ax/nvim-window-picker",   -- for open_with_window_picker keymaps
+      --   "s1n7ax/nvim-window-picker", -- for open_with_window_picker keymaps
       --   version = "2.*",
       --   config = function()
       --     require("window-picker").setup({
