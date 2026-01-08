@@ -61,6 +61,7 @@ brew install \
   uv \
   watch \
   wget \
+  yazi \
   xh
 brew install ynqa/tap/jnv
 brew install universal-ctags

@@ -59,6 +59,7 @@ brew install \
   mise \
   ncurses \
   xh \
+  yazi \
   zsh
 brew install ynqa/tap/jnv
 brew install universal-ctags
