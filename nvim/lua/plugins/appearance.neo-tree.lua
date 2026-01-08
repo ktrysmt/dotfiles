@@ -27,25 +27,25 @@ return {
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
       -- { "3rd/image.nvim", opts = {} }, -- Optional image support in preview window: See `# Preview Mode` for more information
-      -- {
-      --   "s1n7ax/nvim-window-picker", -- for open_with_window_picker keymaps
-      --   version = "2.*",
-      --   config = function()
-      --     require("window-picker").setup({
-      --       filter_rules = {
-      --         include_current_win = false,
-      --         autoselect_one = true,
-      --         -- filter using buffer options
-      --         bo = {
-      --           -- if the file type is one of following, the window will be ignored
-      --           filetype = { "neo-tree", "neo-tree-popup", "notify" },
-      --           -- if the buffer type is one of following, the window will be ignored
-      --           buftype = { "terminal", "quickfix" },
-      --         },
-      --       },
-      --     })
-      --   end,
-      -- },
+      {
+        "s1n7ax/nvim-window-picker", -- for open_with_window_picker keymaps
+        version = "2.*",
+        config = function()
+          require("window-picker").setup({
+            filter_rules = {
+              include_current_win = false,
+              autoselect_one = true,
+              -- filter using buffer options
+              bo = {
+                -- if the file type is one of following, the window will be ignored
+                filetype = { "neo-tree", "neo-tree-popup", "notify" },
+                -- if the buffer type is one of following, the window will be ignored
+                buftype = { "terminal", "quickfix" },
+              },
+            },
+          })
+        end,
+      },
     },
     -----Instead of using `config`, you can use `opts` instead, if you'd like:
     -----@module "neo-tree"
@@ -122,17 +122,17 @@ return {
         return len_a < len_b
       end
 
+      require('neo-tree').setup({
+      })
 
       require("neo-tree").setup({
-        close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
-        -- popup_border_style = "rounded",
+        close_if_last_window = true,
         enable_git_status = true,
         use_popups_for_input = false,
         enable_diagnostics = true,
-        open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
+        open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
         open_files_using_relative_paths = false,
-        sort_case_insensitive = true,                                      -- used when sorting files and directories in the tree
-        -- sort_function = nil,                                               -- use a custom function for sorting files and directories in the tree
+        sort_case_insensitive = true,
         sort_function = function(a, b)
           if a.type ~= b.type then
             return a.type < b.type
@@ -140,27 +140,18 @@ return {
             return natural_sort(a, b)
           end
         end,
-        -- sort_function = function (a,b)
-        --       if a.type == b.type then
-        --           return a.path > b.path
-        --       else
-        --           return a.type > b.type
-        --       end
-        --   end , -- this sorts files and directories descendantly
         default_component_configs = {
           container = {
             enable_character_fade = true,
           },
           indent = {
             indent_size = 2,
-            padding = 1, -- extra padding on left hand side
-            -- indent guides
+            padding = 1,
             with_markers = true,
             indent_marker = "│",
             last_indent_marker = "└",
             highlight = "NeoTreeIndentMarker",
-            -- expander config, needed for nesting files
-            with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
+            with_expanders = nil,
             expander_collapsed = "",
             expander_expanded = "",
             expander_highlight = "NeoTreeExpander",
@@ -169,7 +160,7 @@ return {
             folder_closed = "",
             folder_open = "",
             folder_empty = "󰜌",
-            provider = function(icon, node, _) -- default icon provider utilizes nvim-web-devicons if available
+            provider = function(icon, node, _)
               if node.type == "file" or node.type == "terminal" then
                 local success, web_devicons = pcall(require, "nvim-web-devicons")
                 local name = node.type == "terminal" and "terminal" or node.name
@@ -180,8 +171,6 @@ return {
                 end
               end
             end,
-            -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
-            -- then these will never be used.
             default = "*",
             highlight = "NeoTreeFileIcon",
           },
@@ -197,10 +186,10 @@ return {
           git_status = {
             symbols = {
               -- Change type
-              added = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
-              modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
-              deleted = "D", -- this can only be used in the git_status source
-              renamed = "󰁕", -- this can only be used in the git_status source
+              added = "",
+              modified = "",
+              deleted = "D",
+              renamed = "󰁕",
               -- Status type
               untracked = "",
               ignored = "",
@@ -209,26 +198,25 @@ return {
               conflict = "x",
             },
           },
-          -- If you don't want to use these columns, you can set `enabled = false` for each of them individually
           file_size = {
             enabled = true,
-            width = 12,          -- width of the column
-            required_width = 64, -- min width of window required to show this column
+            width = 12,
+            required_width = 64,
           },
           type = {
             enabled = true,
-            width = 10,           -- width of the column
-            required_width = 122, -- min width of window required to show this column
+            width = 10,
+            required_width = 122,
           },
           last_modified = {
             enabled = true,
-            width = 20,          -- width of the column
-            required_width = 88, -- min width of window required to show this column
+            width = 20,
+            required_width = 88,
           },
           created = {
             enabled = true,
-            width = 20,           -- width of the column
-            required_width = 110, -- min width of window required to show this column
+            width = 20,
+            required_width = 110,
           },
           symlink_target = {
             enabled = false,
@@ -242,18 +230,15 @@ return {
             local inputs = require("neo-tree.ui.inputs")
             local path = state.tree:get_node().path
             local _, name = utils.split_path(path)
-
             local msg = string.format("Are you sure you want to trash '%s'? (y/n) ", name)
             inputs.confirm(msg, function(confirmed)
               if not confirmed then
                 return
               end
-
               vim.fn.system({
                 "trash",
                 path
               })
-
               require("neo-tree.sources.manager").refresh(state.name)
             end)
           end,
@@ -475,6 +460,9 @@ return {
         },
       })
 
+      --
+      -- keymaps
+      --
       local function detect_dir()
         local path = vim.api.nvim_buf_get_name(0)
         local stat = (vim.uv or vim.loop).fs_stat(path)
@@ -484,10 +472,9 @@ return {
         elseif stat and stat.type == "file" then
           return 0
         else
-          return 2 -- unknown type
+          return 2
         end
       end
-
       vim.keymap.set("n", "<C-e>", "<Cmd>Neotree left toggle<CR>", { silent = true })
       vim.keymap.set("n", "<C-w>f", function()
         -- special
