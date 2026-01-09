@@ -259,7 +259,7 @@ return {
             ["o"] = "open",                -- "open",
             ["O"] = "expand_all_subnodes", -- "open",
             ["<cr>"] = "open",             -- "open",
-            ["<esc>"] = "cancel",          -- close preview or floating neo-tree window
+            -- ["<esc>"] = "cancel",          -- close preview or floating neo-tree window
             ["q"] = "cancel",              -- close preview or floating neo-tree window
             ["P"] = "noop",                -- { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
             ["l"] = "noop",                --  "focus_preview",
