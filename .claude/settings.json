@@ -240,7 +240,7 @@
       "Task(**)",
       "TodoRead(**)",
       "TodoWrite(**)",
-      "WebFetch(domain:*)",
+      "WebFetch",
       "WebSearch",
       "Write(!.git/**)",
       "Write(!.next/**)",
