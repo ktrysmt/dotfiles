@@ -99,11 +99,9 @@ ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
 ln -s ~/dotfiles/.claude/ ~/.claude
 cp ~/dotfiles/.gitconfig_ubuntu ~/.gitconfig
 cp ~/dotfiles/.docker/config.json ~/.docker/config.json
-ln -s ~/dotfiles/.claude/commands ~/.claude/commands
+ln -s ~/dotfiles/.claude/hooks ~/.claude/hooks
 ln -s ~/dotfiles/.claude/CLAUDE.md ~/.claude/CLAUDE.md
 ln -s ~/dotfiles/.claude/settings.json ~/.claude/settings.json
-ln -s ~/dotfiles/.claude/agents ~/.claude/agents
-ln -s ~/dotfiles/.claude/issues ~/.claude/issues
 
 # git config
 sudo -E ln -s "$(which echo)" /usr/local/bin/say

@@ -1,4 +1,17 @@
 {
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/session_summarizer.py",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  },
   "env": {
     "ENABLE_TOOL_SEARCH": "true"
   },
