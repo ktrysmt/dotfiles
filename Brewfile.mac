@@ -1,0 +1,38 @@
+# macOS specific packages
+# Usage: brew bundle --file=Brewfile.mac
+
+# macOS CLI tools
+brew "asdf"
+brew "duckdb"
+brew "kind"
+brew "kubectl"
+brew "kubectx"
+brew "kubernetes-helm"
+brew "lima"
+brew "minikube"
+brew "ncurses"
+brew "openssl"
+brew "python3"
+brew "reattach-to-user-namespace"
+brew "tmux"
+brew "trash"
+brew "util-linux"
+brew "zsh"
+
+# Casks (GUI applications)
+cask_args appdir: "/Applications"
+
+tap "homebrew/cask"
+cask "alt-tab"
+cask "appcleaner"
+cask "clibor-for-mac"
+cask "flux"
+cask "karabiner-elements"
+cask "kindle"
+cask "linearmouse"
+cask "macgesture"
+cask "raycast"
+cask "rectangle"
+cask "vagrant"
+cask "virtualbox"
+cask "visual-studio-code"

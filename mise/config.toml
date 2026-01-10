@@ -1,0 +1,36 @@
+# Global mise configuration
+# Symlink to: ~/.config/mise/config.toml
+# Apply with: mise install
+
+[tools]
+# Language runtimes
+python = "3.12"
+nodejs = "lts"
+go = "latest"
+bun = "latest"
+
+# Language tools
+ruff = "latest"
+pnpm = "latest"
+golangci-lint = "latest"
+uv = "latest"
+
+# Editor
+neovim = "latest"
+
+# CLI tools (version switchable)
+ripgrep = "latest"
+fzf = "latest"
+fd = "latest"
+bat = "latest"
+eza = "latest"
+gh = "latest"
+ghq = "latest"
+delta = "latest"
+jq = "latest"
+glow = "latest"
+xh = "latest"
+
+[settings]
+# Allow .python-version files to set python version
+idiomatic_version_file_enable_tools = ["python"]

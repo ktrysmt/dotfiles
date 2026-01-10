@@ -1,0 +1,9 @@
+# Ubuntu/Linux specific packages
+# Usage: brew bundle --file=Brewfile.ubuntu
+
+brew "diff-so-fancy"
+brew "tmux"
+brew "trash-cli"
+
+tap "b4b4r07/tap"
+brew "b4b4r07/tap/gomi"
