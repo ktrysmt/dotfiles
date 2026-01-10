@@ -3,3 +3,4 @@
 nvim/autoload
 *.zwc
 !.claude/
+.claude/hooks/session_summarizer.log

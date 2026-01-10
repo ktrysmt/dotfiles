@@ -62,6 +62,7 @@ brew install \
   watch \
   wget \
   yazi \
+  gemini-cli \
   xh
 brew install ynqa/tap/jnv
 brew install universal-ctags
@@ -75,6 +76,7 @@ mise use -g python@3.11
 mise use -g nodejs
 mise use -g go
 mise use -g bun
+mise use ruff -g
 
 # uv
 uv python pin --global 3.12

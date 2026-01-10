@@ -5,8 +5,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/hooks/session_summarizer.py",
-            "timeout": 60
+            "command": "bash ~/.claude/hooks/session_summarizer_wrapper.sh",
+            "timeout": 5
           }
         ]
       }

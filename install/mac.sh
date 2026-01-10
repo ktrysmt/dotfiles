@@ -26,7 +26,6 @@ brew install \
   git-delta \
   git-secrets \
   glow \
-  go \
   golangci-lint \
   gopls \
   jq \
@@ -60,6 +59,7 @@ brew install \
   ncurses \
   xh \
   yazi \
+  gemini-cli \
   zsh
 brew install ynqa/tap/jnv
 brew install universal-ctags
@@ -81,7 +81,9 @@ ln -sf ~/dotfiles/mac/karabiner-complex.json ~/.config/karabiner/assets/complex_
 mise use nodejs -g
 mise use ruby -g
 mise use python -g
+mise use -g go
 mise use bun -g
+mise use ruff -g
 
 # uv
 uv python pin --global 3.12
