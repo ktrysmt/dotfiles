@@ -161,25 +161,46 @@ def is_valid_summary_name(name: str) -> bool:
 
 def generate_summary_name(conversation: str) -> str:
     """Anthropic APIを使ってセッションの要約名を生成"""
-    prompt = f"""以下の会話セッションの内容を表す簡潔な要約名を生成してください。
+    prompt = f"""会話セッションの要約タイトルを1つだけ出力せよ。
 
-要件:
-- 20〜60文字程度の日本語
-- ファイル名として使える文字のみ（/や@は使わない）
-- 会話の主要なトピックや目的を反映
-- 要約名のみを出力（説明や装飾不要）
-- ファイルパスは要約名にしないでください
+ルール:
+- 20〜60文字の日本語タイトル
+- 前置き・説明・装飾は一切不要
+- 「〜の実装」「〜の修正」「〜についての議論」のような名詞句で終わる形式
+- ファイル名に使えない文字（/\\:*?"<>|@#）は使用禁止
+
+良い例:
+- セッション要約スクリプトのバグ修正
+- Git worktree対応の追加実装
+- TypeScript型エラーの調査と解決
+
+悪い例:
+- 「要約名を提案します：〜」← 前置き禁止
+- 「## タイトル」← マークダウン記号禁止
+- 「以下が要約です」← 説明禁止
 
 会話:
 {conversation}
 
-要約名:"""
+タイトル（1行のみ）:"""
 
     result = call_anthropic_api(prompt, max_tokens=100)
 
     if result:
         logging.debug(f"Haiku name result: {result}")
-        lines = [line.strip() for line in result.split("\n") if line.strip()]
+        # 前置きパターンを除去
+        cleaned = re.sub(
+            r"^(会話内容を踏まえて|以下[のが]|要約[名タイトル]*[をは]?|提案します)[：:、。\s]*",
+            "",
+            result.strip(),
+        )
+        # コロンの後の部分だけを取得（「タイトル：〜」形式対応）
+        if "：" in cleaned:
+            cleaned = cleaned.split("：", 1)[-1].strip()
+        if ":" in cleaned:
+            cleaned = cleaned.split(":", 1)[-1].strip()
+
+        lines = [line.strip() for line in cleaned.split("\n") if line.strip()]
         for line in lines:
             sanitized = sanitize_filename(line)
             if is_valid_summary_name(sanitized):
@@ -259,25 +280,17 @@ def fallback_summary_name(conversation: str) -> str:
     return "session"
 
 
-def get_repository_name(cwd: str | None = None) -> str:
-    """Gitリポジトリ名を取得"""
-    try:
-        result = subprocess.run(
-            ["git", "remote", "get-url", "origin"],
-            capture_output=True,
-            text=True,
-            timeout=5,
-            cwd=cwd,
-        )
-        if result.returncode == 0 and result.stdout.strip():
-            url = result.stdout.strip()
-            match = re.search(r"[/:]([^/:]+?)(?:\.git)?$", url)
-            if match:
-                return sanitize_filename(match.group(1))
-    except Exception:
-        pass
+def get_repository_info(cwd: str | None = None) -> tuple[str, str | None]:
+    """Gitリポジトリ名とworktree名を取得
+
+    Returns:
+        tuple[str, str | None]: (リポジトリ名, worktree名 or None)
+    """
+    repo_name = "unknown"
+    worktree_name = None
 
     try:
+        # リポジトリのルートディレクトリを取得
         result = subprocess.run(
             ["git", "rev-parse", "--show-toplevel"],
             capture_output=True,
@@ -286,13 +299,45 @@ def get_repository_name(cwd: str | None = None) -> str:
             cwd=cwd,
         )
         if result.returncode == 0 and result.stdout.strip():
-            return sanitize_filename(Path(result.stdout.strip()).name)
-    except Exception as e:
-        logging.warning(f"Failed to get repository name: {e}")
+            toplevel = Path(result.stdout.strip())
 
+            # worktreeかどうかを判定（git-common-dirがtoplevel/.gitと異なる場合はworktree）
+            common_result = subprocess.run(
+                ["git", "rev-parse", "--git-common-dir"],
+                capture_output=True,
+                text=True,
+                timeout=5,
+                cwd=cwd,
+            )
+            if common_result.returncode == 0 and common_result.stdout.strip():
+                common_dir = Path(common_result.stdout.strip()).resolve()
+                expected_git_dir = toplevel / ".git"
+
+                # worktreeの場合、common-dirはメインリポジトリの.gitを指す
+                if common_dir != expected_git_dir.resolve():
+                    # メインリポジトリ名を取得（common-dirの親の名前）
+                    main_repo_path = common_dir.parent
+                    repo_name = sanitize_filename(main_repo_path.name)
+                    worktree_name = sanitize_filename(toplevel.name)
+                    logging.info(
+                        f"Worktree detected: repo={repo_name}, worktree={worktree_name}"
+                    )
+                else:
+                    # 通常のリポジトリ
+                    repo_name = sanitize_filename(toplevel.name)
+            else:
+                repo_name = sanitize_filename(toplevel.name)
+
+            return repo_name, worktree_name
+
+    except Exception as e:
+        logging.warning(f"Failed to get repository info: {e}")
+
+    # フォールバック: cwdから取得
     if cwd:
-        return sanitize_filename(Path(cwd).name)
-    return "unknown"
+        repo_name = sanitize_filename(Path(cwd).name)
+
+    return repo_name, worktree_name
 
 
 def sanitize_filename(name: str) -> str:
@@ -353,9 +398,16 @@ def main():
     summary_content = generate_summary_content(conversation)
 
     cwd = input_data.get("cwd")
-    repo_name = get_repository_name(cwd)
+    repo_name, worktree_name = get_repository_info(cwd)
 
-    summary_dir = Path.home() / ".claude/session-summaries" / repo_name
+    # worktreeの場合: {repository}/{worktreename}/
+    # 通常の場合: {repository}/
+    if worktree_name:
+        summary_dir = (
+            Path.home() / ".claude/session-summaries" / repo_name / worktree_name
+        )
+    else:
+        summary_dir = Path.home() / ".claude/session-summaries" / repo_name
     summary_dir.mkdir(parents=True, exist_ok=True)
 
     date_str = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
