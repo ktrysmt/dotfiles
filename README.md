@@ -41,12 +41,12 @@ dotfiles/
 
 ## Supported Platforms
 
-| Platform | Auto-detected |
-|----------|---------------|
-| macOS    | `uname -s` = Darwin |
-| WSL      | `uname -r` contains "microsoft" |
+| Platform | Auto-detected                        |
+|----------|---------------                       |
+| macOS    | `uname -s` = Darwin                  |
+| WSL      | `uname -r` contains "microsoft"      |
 | Vagrant  | `/etc/vagrant_box_build_time` exists |
-| Ubuntu   | Other Linux |
+| Ubuntu   | Fallback if none of the above match  |
 
 ## Author
 
