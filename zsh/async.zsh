@@ -116,10 +116,10 @@ export PATH="/usr/local/opt/llvm/bin:$PATH" # clangd, clangd-format
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
 # fzf
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-export FZF_DEFAULT_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%} --select-1 --exit-0"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {}'"
+# export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+# export FZF_DEFAULT_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%} --select-1 --exit-0"
+# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {}'"
 
 # k8s/docker
 export DOCKER_BUILDKIT=1
