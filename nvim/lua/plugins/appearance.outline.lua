@@ -16,13 +16,13 @@ return {
     require("outline").setup {
       -- Your setup opts here (leave empty to use defaults)
       symbols = {
-        icon_fetcher = function(kind, bufnr, symbol)
-          print(kind, bufnr, symbol)
-          -- if kind == "Variable" then
-          --   return "  V" -- 2 spaces for visual indent
-          -- end
-          return kind
-        end,
+        icon_fetcher = function(kind, bufnr, symbol) return kind:sub(1, 1) end,
+        -- icon_fetcher = function(kind, bufnr, symbol)
+        --   -- if kind == "Variable" then
+        --   --   return "  V" -- 2 spaces for visual indent
+        --   -- end
+        --   return kind
+        -- end,
       },
       outline_window = {
         width = 60,
