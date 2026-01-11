@@ -351,13 +351,18 @@ def sanitize_filename(name: str) -> str:
 
 
 def generate_markdown_summary(
-    messages: list[dict], session_id: str, summary_name: str, summary_content: str
+    messages: list[dict],
+    session_id: str,
+    summary_name: str,
+    summary_content: str,
+    cwd: str | None = None,
 ) -> str:
     """マークダウン形式のサマリーを生成"""
     lines = [
         f"# {summary_name}",
         "",
         f"- **Session ID**: `{session_id}`",
+        f"- **CWD**: `{cwd or 'unknown'}`",
         f"- **Date**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
         f"- **Events**: {len(messages)}",
         "",
@@ -422,7 +427,7 @@ def main():
 
     try:
         markdown = generate_markdown_summary(
-            messages, session_id, summary_name, summary_content
+            messages, session_id, summary_name, summary_content, cwd
         )
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(markdown)
