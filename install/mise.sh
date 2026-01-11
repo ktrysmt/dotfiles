@@ -24,10 +24,11 @@ mise install --yes
 log_info "Pruning unused mise tools..."
 mise prune --yes
 
-# Pin global python version for uv
+# Setup Python via uv (not mise)
 if has_command uv; then
   log_info "Setting up uv python..."
-  uv python pin --global 3.12 2>/dev/null || true
+  uv python install 3.13
+  uv python pin --global 3.13
 fi
 
 log_success "mise setup complete"

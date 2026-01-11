@@ -3,8 +3,7 @@
 # Apply with: mise install
 
 [tools]
-# Language runtimes
-python = "3.12"
+# Language runtimes (Python managed by uv)
 nodejs = "lts"
 go = "latest"
 bun = "latest"

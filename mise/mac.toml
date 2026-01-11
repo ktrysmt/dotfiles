@@ -1,0 +1,5 @@
+# macOS specific mise tools
+# Symlinked to: ~/.config/mise/config.local.toml
+
+[tools]
+ruby = "latest"

@@ -14,7 +14,10 @@ log_info "Running macOS specific setup..."
 setup_mise_tools() {
   if has_command mise; then
     log_info "Installing macOS specific mise tools..."
-    mise use -g ruby@latest
+    local mac_config="${SCRIPT_DIR}/../../mise/mac.toml"
+    ln -sf "$(cd "$(dirname "${mac_config}")" && pwd)/$(basename "${mac_config}")" \
+      "${XDG_CONFIG_HOME:-$HOME/.config}/mise/config.local.toml"
+    mise install --yes
     log_success "mise tools configured"
   fi
 }
