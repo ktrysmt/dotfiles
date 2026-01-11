@@ -25,7 +25,7 @@ step_symlink() {
     mac)
       bash "${SCRIPT_DIR}/mac/symlink.sh"
       ;;
-    wsl|vagrant|ubuntu)
+    wsl | vagrant | ubuntu)
       # Ubuntu symlinks handled in OS-specific scripts
       ;;
   esac
@@ -110,12 +110,7 @@ main() {
   esac
 
   echo
-  log_success "=== Installation complete! ==="
-  echo
-  echo "Next steps:"
-  echo "  1. Restart your shell or run: exec zsh"
-  echo "  2. Run :PlugInstall in neovim"
-  echo "  3. Press prefix + I in tmux to install plugins"
+  log_success "=== Installation/Update complete! ==="
 }
 
 main "$@"
