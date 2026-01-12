@@ -3,10 +3,6 @@
 
 # macOS CLI tools
 brew "duckdb"
-brew "kind"
-brew "kubectl"
-brew "kubectx"
-brew "kubernetes-helm"
 brew "lima"
 brew "ncurses"
 brew "openssl"
