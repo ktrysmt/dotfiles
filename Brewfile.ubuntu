@@ -4,6 +4,3 @@
 # NOTE: tmux, diff-so-fancy are managed by mise
 
 brew "trash-cli"
-
-tap "b4b4r07/tap"
-brew "b4b4r07/tap/gomi"
