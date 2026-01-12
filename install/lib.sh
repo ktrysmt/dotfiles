@@ -28,6 +28,16 @@ detect_os() {
 OS_TYPE="${OS_TYPE:-$(detect_os)}"
 
 # ------------------------------------------------------------------------------
+# PATH Setup (for bash scripts)
+# ------------------------------------------------------------------------------
+# shellcheck disable=SC1091
+if [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+elif [[ -f /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# ------------------------------------------------------------------------------
 # Logging
 # ------------------------------------------------------------------------------
 log_info() {

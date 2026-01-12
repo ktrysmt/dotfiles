@@ -27,6 +27,7 @@ setopt AUTO_PUSHD
 
 export BAT_THEME=gruvbox-dark
 
+
 # fzf
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%} --select-1 --exit-0"

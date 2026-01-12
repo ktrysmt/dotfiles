@@ -1,8 +1,8 @@
 # Ubuntu/Linux specific packages
 # Usage: brew bundle --file=Brewfile.ubuntu
+#
+# NOTE: tmux, diff-so-fancy are managed by mise
 
-brew "diff-so-fancy"
-brew "tmux"
 brew "trash-cli"
 
 tap "b4b4r07/tap"

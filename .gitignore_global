@@ -2,3 +2,4 @@
 feature-*
 .serena/
 .claude/
+.claude/settings.local.json

@@ -21,7 +21,7 @@ apply = ["source"]
 defer = "{{ hooks | get: \"pre\" | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks | get: \"post\" | nl }}"
 
 [plugins.inline-autoload]
-inline = 'autoload -Uz colors compinit zmv && zsh-defer colors && zsh-defer compinit -C'
+inline = 'autoload -Uz colors compinit zmv && zsh-defer colors && zsh-defer compinit -C -u'
 
 [plugins.zsh-syntax-highlighting]
 github = "zsh-users/zsh-syntax-highlighting"

@@ -4,10 +4,11 @@
 # NOTE: Tools managed by mise are NOT listed here.
 # See mise/config.toml for: neovim, ripgrep, fzf, fd, bat, eza,
 #                           gh, ghq, delta, jq, glow, xh, uv,
-#                           golangci-lint, pnpm, ruff, python,
-#                           nodejs, go, bun
+#                           golangci-lint, pnpm, ruff, nodejs, go, bun,
+#                           difftastic, peco, procs, yazi, jnv, tmux,
+#                           diff-so-fancy, gemini-cli
 
-# Core system tools (mise doesn't have these)
+# Core system tools
 brew "coreutils"
 brew "curl"
 brew "git"
@@ -15,29 +16,14 @@ brew "tree"
 brew "watch"
 brew "wget"
 
-# Development tools (mise doesn't have these)
-brew "difftastic"
+# Development tools (not available in mise)
 brew "fzy"
-brew "gat"
 brew "git-secrets"
 brew "llvm"
 brew "nkf"
-brew "peco"
-brew "procs"
 brew "sheldon"
 brew "tig"
-brew "yazi"
-
-# Language tools (mise doesn't have these)
-brew "gopls"
+brew "universal-ctags"
 
 # mise itself
 brew "mise"
-
-# AI tools
-brew "gemini-cli"
-
-# Taps
-tap "ynqa/tap"
-brew "ynqa/tap/jnv"
-brew "universal-ctags"

@@ -170,16 +170,23 @@ if type kind > /dev/null 2>&1 ;then
   }
 fi
 
-if type mise > /dev/null 2>&1 ;then
-  source <(mise activate zsh)
-fi
-
+# gh (lazy completion)
 if type gh > /dev/null 2>&1 ;then
-  source <(gh completion -s zsh)
+  function gh() {
+    if ! type __start_gh >/dev/null 2>&1; then
+      source <(command gh completion -s zsh)
+    fi
+    command gh "$@"
+  }
 fi
-
+# pnpm (lazy completion)
 if type pnpm > /dev/null 2>&1 ;then
-  source <(pnpm completion zsh)
+  function pnpm() {
+    if ! type _pnpm >/dev/null 2>&1; then
+      source <(command pnpm completion zsh)
+    fi
+    command pnpm "$@"
+  }
 fi
 
 
@@ -187,11 +194,6 @@ fi
 # os type
 # --------
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
-  eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-  export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
-  export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
-
   if [[ "$USERNAME" == "vagrant" ]]; then
     # linux on Vagrant
   fi

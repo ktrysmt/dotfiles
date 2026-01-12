@@ -2,19 +2,15 @@
 # Usage: brew bundle --file=Brewfile.mac
 
 # macOS CLI tools
-brew "asdf"
 brew "duckdb"
 brew "kind"
 brew "kubectl"
 brew "kubectx"
 brew "kubernetes-helm"
 brew "lima"
-brew "minikube"
 brew "ncurses"
 brew "openssl"
-brew "python3"
 brew "reattach-to-user-namespace"
-brew "tmux"
 brew "trash"
 brew "util-linux"
 brew "zsh"

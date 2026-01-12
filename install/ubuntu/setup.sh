@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Ubuntu common setup (idempotent)
+# Note: Most tools are installed via brew/mise, not apt
 
 set -euo pipefail
 
@@ -11,30 +12,15 @@ log_info "Running Ubuntu common setup..."
 export DEBIAN_FRONTEND=noninteractive
 
 # ------------------------------------------------------------------------------
-# System packages
-# ------------------------------------------------------------------------------
-setup_system() {
-  log_info "Installing system packages..."
-
-  sudo apt-get update -qq -y
-  sudo apt-get install -qq -y \
-    build-essential \
-    curl \
-    file \
-    gcc \
-    git \
-    make \
-    ncurses-term \
-    wget \
-    zsh
-
-  log_success "System packages installed"
-}
-
-# ------------------------------------------------------------------------------
-# Zsh as default shell
+# Zsh (system shell - install via apt, not brew)
 # ------------------------------------------------------------------------------
 setup_zsh() {
+  if ! has_command zsh; then
+    log_info "Installing zsh..."
+    sudo apt-get update -qq -y
+    sudo apt-get install -qq -y zsh
+  fi
+
   local zsh_path
   zsh_path="$(which zsh)"
 
@@ -68,7 +54,6 @@ setup_symlinks() {
 # Main
 # ------------------------------------------------------------------------------
 main() {
-  setup_system
   setup_zsh
   setup_symlinks
 

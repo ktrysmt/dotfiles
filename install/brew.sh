@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Homebrew installation and package management (idempotent)
+# Note: fzf setup is handled by mise.sh (fzf is installed via mise)
 
 set -euo pipefail
 
@@ -26,11 +27,5 @@ case "$OS_TYPE" in
     brew bundle --file="${DOTFILES_DIR}/Brewfile.ubuntu"
     ;;
 esac
-
-# Setup fzf key bindings (idempotent - checks if already installed)
-if [[ ! -f ~/.fzf.zsh ]]; then
-  log_info "Setting up fzf..."
-  "$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish
-fi
 
 log_success "Homebrew setup complete"

@@ -24,6 +24,16 @@ mise install --yes
 log_info "Pruning unused mise tools..."
 mise prune --yes
 
+# Setup fzf key bindings (idempotent - checks if already installed)
+if [[ ! -f ~/.fzf.zsh ]]; then
+  log_info "Setting up fzf..."
+  fzf_dir="$(mise where fzf 2> /dev/null || true)"
+  if [[ -n "$fzf_dir" ]] && [[ -f "$fzf_dir/install" ]]; then
+    "$fzf_dir/install" --key-bindings --completion --no-update-rc --no-bash --no-fish
+  fi
+  unset fzf_dir
+fi
+
 # Setup Python via uv (not mise)
 if has_command uv; then
   log_info "Setting up uv python..."

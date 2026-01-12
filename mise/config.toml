@@ -5,7 +5,7 @@
 [tools]
 # Language runtimes (Python managed by uv)
 nodejs = "lts"
-go = "latest"
+go = "1.25"
 bun = "latest"
 
 # Language tools
@@ -29,6 +29,19 @@ delta = "latest"
 jq = "latest"
 glow = "latest"
 xh = "latest"
+
+# CLI tools (aqua/github backend)
+"aqua:Wilfred/difftastic" = "latest"
+"aqua:peco/peco" = "latest"
+"aqua:ynqa/jnv" = "latest"
+"aqua:sxyazi/yazi" = "latest"
+"github:dalance/procs" = "latest"
+tmux = "latest"
+
+# npm tools
+"npm:diff-so-fancy" = "latest"
+"npm:@google/gemini-cli" = "latest"
+"aqua:rossmacarthur/sheldon" = "latest"
 
 [settings]
 # Allow .python-version files to set python version
