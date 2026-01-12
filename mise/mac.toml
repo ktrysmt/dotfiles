@@ -2,4 +2,4 @@
 # Symlinked to: ~/.config/mise/config.local.toml
 
 [tools]
-ruby = "latest"
+ruby = "3.3"

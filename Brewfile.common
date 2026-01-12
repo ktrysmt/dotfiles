@@ -21,7 +21,6 @@ brew "fzy"
 brew "git-secrets"
 brew "llvm"
 brew "nkf"
-brew "sheldon"
 brew "tig"
 brew "universal-ctags"
 

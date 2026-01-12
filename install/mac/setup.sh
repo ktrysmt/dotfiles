@@ -30,9 +30,9 @@ setup_truecolor() {
     local ncurses_path
     ncurses_path="$(brew --prefix)/opt/ncurses/bin/infocmp"
     if [[ -x "$ncurses_path" ]]; then
-      "$ncurses_path" tmux-256color > ~/tmux-256color.info 2>/dev/null || true
+      "$ncurses_path" tmux-256color > ~/tmux-256color.info 2> /dev/null || true
       if [[ -f ~/tmux-256color.info ]]; then
-        sudo tic -xe tmux-256color ~/tmux-256color.info 2>/dev/null || true
+        sudo tic -xe tmux-256color ~/tmux-256color.info 2> /dev/null || true
         log_success "True color support configured"
       fi
     fi
@@ -63,8 +63,8 @@ setup_krew() {
   export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
   # Install common plugins
-  kubectl krew install tree 2>/dev/null || true
-  kubectl krew install open-svc 2>/dev/null || true
+  kubectl krew install tree 2> /dev/null || true
+  kubectl krew install open-svc 2> /dev/null || true
 
   log_success "krew installed"
 }
