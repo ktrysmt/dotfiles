@@ -45,7 +45,3 @@ pinact = "latest"
 "npm:diff-so-fancy" = "latest"
 "npm:@google/gemini-cli" = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
-
-# [settings]
-# # Allow .python-version files to set python version
-# idiomatic_version_file_enable_tools = ["python"]
