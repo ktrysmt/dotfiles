@@ -213,17 +213,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   fi
   alias rm="trash"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  export HOMEBREW_CASK_OPTS="--appdir=/Applications";
-  # curl
-  export PATH="/usr/local/opt/curl/bin:$PATH"
-  export LDFLAGS="-L/usr/local/opt/curl/lib"
-  export CPPFLAGS="-I/usr/local/opt/curl/include"
-  export PKG_CONFIG_PATH="/usr/local/opt/curl/lib/pkgconfig"
-  # openssl
-  export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-  export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
-  export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
-  export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
+  #
 elif [[ "$OSTYPE" == "cygwin" ]]; then
   #
 elif [[ "$OSTYPE" == "msys" ]]; then

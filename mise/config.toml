@@ -4,7 +4,7 @@
 
 [tools]
 # Language runtimes (Python managed by uv)
-nodejs = "22"
+node = "22"
 go = "1.25"
 bun = "latest"
 
@@ -46,6 +46,6 @@ pinact = "latest"
 "npm:@google/gemini-cli" = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
 
-[settings]
-# Allow .python-version files to set python version
-idiomatic_version_file_enable_tools = ["python"]
+# [settings]
+# # Allow .python-version files to set python version
+# idiomatic_version_file_enable_tools = ["python"]
