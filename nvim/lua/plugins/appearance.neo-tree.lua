@@ -15,8 +15,8 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     -- branch = "v3.x",
     -- lazy = false,
-    -- event = { "VeryLazy" },
-    event = { "VimEnter" },
+    event = { "VeryLazy" },
+    -- event = { "VimEnter" },
     keys = {
       { "<C-e>",  mode = 'n' },
       { '<C-w>f', mode = 'n' },

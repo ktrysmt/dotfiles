@@ -2,13 +2,13 @@
 # Usage: brew bundle --file=Brewfile.mac
 
 # macOS CLI tools
+brew "util-linux", link: :force
 brew "duckdb"
 brew "lima"
 brew "ncurses"
 brew "openssl"
 brew "reattach-to-user-namespace"
 brew "trash"
-brew "util-linux"
 brew "zsh"
 brew "aws-vault"
 
