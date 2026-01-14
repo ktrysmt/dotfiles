@@ -7,8 +7,6 @@ return {
     { "y",         mode = { "n", "v" } },
     { "p",         mode = { "n", "v" } },
     { "P",         mode = { "n", "v" } },
-    { "gp",        mode = { "n", "v" } },
-    { "gP",        mode = { "n", "v" } },
   },
   dependencies = {
     "stevearc/dressing.nvim",
