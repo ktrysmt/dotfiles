@@ -301,3 +301,6 @@ function precmd() {
 
 setopt AUTO_MENU
 setopt AUTO_NAME_DIRS
+
+# async.sh PATH上書き対策
+source ~/.zshenv
