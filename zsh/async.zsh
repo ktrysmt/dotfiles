@@ -302,6 +302,9 @@ function precmd() {
 setopt AUTO_MENU
 setopt AUTO_NAME_DIRS
 
+# async.sh PATH上書き対策
+source ~/.zshenv
+
 # --------
 # AI tools
 # --------
@@ -322,5 +325,3 @@ function trans() {
   printf '%s\n' "$result"
 }
 
-# async.sh PATH上書き対策
-source ~/.zshenv
