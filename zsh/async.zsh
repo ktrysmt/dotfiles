@@ -302,5 +302,21 @@ function precmd() {
 setopt AUTO_MENU
 setopt AUTO_NAME_DIRS
 
+# --------
+# AI tools
+# --------
+function trans() {
+  local lang="${1:?Usage: trans <en|ja|LANG> [text]}"
+  shift
+  local text="${*:-$(cat)}"
+  local target
+  case "${lang}" in
+    en) target="English" ;;
+    ja) target="Japanese" ;;
+    *) target="${lang}" ;;
+  esac
+  gemini "Translate to ${target}. Output ONLY the translation, nothing else: ${text}"
+}
+
 # async.sh PATH上書き対策
 source ~/.zshenv
