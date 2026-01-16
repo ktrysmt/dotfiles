@@ -306,16 +306,20 @@ setopt AUTO_NAME_DIRS
 # AI tools
 # --------
 function trans() {
-  local lang="${1:?Usage: trans <en|ja|LANG> [text]}"
-  shift
   local text="${*:-$(cat)}"
-  local target
-  case "${lang}" in
-    en) target="English" ;;
-    ja) target="Japanese" ;;
-    *) target="${lang}" ;;
-  esac
-  gemini "Translate to ${target}. Output ONLY the translation, nothing else: ${text}"
+  local target result
+
+  # ASCII（英語と記号）のみなら日本語へ、マルチバイトがあれば英語へ
+  # zshネイティブでASCII判定（0x00-0x7F以外があるか）
+  if [[ "$text" == *[^$'\x00'-$'\x7f']* ]]; then
+    target="English"
+  else
+    target="Japanese"
+  fi
+
+  result=$(gemini -m gemini-2.5-flash-lite "Translate to ${target}. Output ONLY the translation, nothing else: ${text}" 2>&1)
+  printf '%s' "$result" | pbcopy
+  printf '%s\n' "$result"
 }
 
 # async.sh PATH上書き対策
