@@ -320,7 +320,7 @@ function trans() {
     target="Japanese"
   fi
 
-  result=$(gemini -m gemini-2.5-flash "Translate to ${target}. Output ONLY the translation, nothing else: ${text}" 2>&1)
+  result=$(gemini -m gemini-2.5-flash-lite "Translate to ${target}. Output ONLY the translation, nothing else: ${text}" 2>&1)
   printf '%s' "$result" | pbcopy
   printf '%s\n' "$result"
 }
