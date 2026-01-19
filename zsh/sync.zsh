@@ -18,16 +18,13 @@ setopt promptsubst
 
 # general
 bindkey -e
-
 # snip
 bindkey '^X^M' peco-select-snippet
 # pushd
 export DIRSTACKSIZE=100
 setopt AUTO_PUSHD
-
+# bat
 export BAT_THEME=gruvbox-dark
-
-
 # fzf
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%} --select-1 --exit-0"

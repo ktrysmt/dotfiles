@@ -18,7 +18,6 @@ alias batd="bat -l diff"
 alias f='fzf --preview "bat --color=always --style=header,grid --line-range :100 {}"'
 alias cdg='cd $(git rev-parse --show-toplevel)'
 alias sudo='sudo '
-
 # git
 alias g="git"
 alias gf="git fetch --prune"
@@ -49,7 +48,6 @@ alias grebase='git rebase -i $(git log --date=short --pretty="format:%C(yellow)%
 alias gb="git branch"
 alias gbc="~/dotfiles/bin/git-checkout-remote-branch"
 alias gw="git worktree"
-
 # k8s
 alias k="kubectl"
 alias kg="kubectl get"
@@ -61,7 +59,6 @@ alias klo="kubectl logs -f"
 alias kex="kubectl exec -i -t"
 alias kns="kubens"
 alias kctx="kubectx"
-
 # other
 alias py="/usr/local/bin/python3.9"
 alias vi="nvim"
@@ -72,7 +69,6 @@ alias typora='open -a typora'
 alias rs='evcxr'
 alias delta="delta --syntax-theme zenburn"
 alias glow="glow -t -l"
-
 # python
 alias va="source .venv/bin/activate"
 alias vd="deactivate"
@@ -89,6 +85,20 @@ function insert_and_execute_gss_fzf() {
 }
 zle -N insert_and_execute_gss_fzf
 bindkey '^v' insert_and_execute_gss_fzf
+# expand global alias with space
+function expand-alias-widget() {
+  emulate -L zsh
+  setopt aliases
+  local -a global_aliases=(${(@f)"$(alias -g)"})
+  local -a characters=(${global_aliases%%\=*})
+  if (($characters[(I)${(q)LBUFFER##* }])); then
+    zle _expand_alias
+    zle expand-word
+  fi
+  zle self-insert
+}
+zle -N expand-alias-widget
+bindkey ' ' expand-alias-widget
 
 # -----
 # env
@@ -100,7 +110,6 @@ export HISTFILE=${HOME}/.zsh_history
 export HISTSIZE=100000
 export SAVEHIST=100000
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-
 # go
 export GOROOT=""
 export GO111MODULE="auto"
@@ -108,27 +117,14 @@ export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/go/bin:$PATH
 export PATH=$HOME/project/bin:$PATH
 export GOPATH=$HOME/go:$HOME/project
-
 # c/c++
 export PATH="/usr/local/opt/llvm/bin:$PATH" # clangd, clangd-format
-
 # rust
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
-
-# fzf
-# export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-# export FZF_DEFAULT_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%} --select-1 --exit-0"
-# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-# export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {}'"
-
 # k8s/docker
 export DOCKER_BUILDKIT=1
 export KREW_NO_UPGRADE_CHECK=1
 export PATH="$PATH:${KREW_ROOT:-$HOME/.krew}/bin"
-
-# bat
-# export BAT_THEME="gruvbox-dark"
-
 
 # ----------------
 # lazy completion
