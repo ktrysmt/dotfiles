@@ -40,7 +40,7 @@ bind-key v split-window -h -p 33 -c "#{pane_current_path}"
 # general
 # ---------
 # set -sg escape-time 0
-set -g status-interval 30
+set -g status-interval 10
 set -g base-index 1
 set -g pane-base-index 1
 set-option -g renumber-windows on;
