@@ -21,19 +21,20 @@ apply = ["source"]
 defer = "{{ hooks | get: \"pre\" | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks | get: \"post\" | nl }}"
 
 [plugins.inline-autoload]
-inline = 'autoload -Uz colors compinit zmv && zsh-defer colors && zsh-defer compinit -C -u'
+inline = 'autoload -Uz colors compinit zmv && colors'
 
 [plugins.zsh-syntax-highlighting]
 github = "zsh-users/zsh-syntax-highlighting"
 
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
+apply = ["source"]
 
 [plugins.ohmyzsh-lib]
 github = "ohmyzsh/ohmyzsh"
 dir = "lib"
 use = [
-  "{completion,key-bindings,directories}.zsh"
+  "{key-bindings,directories}.zsh"
 ]
 [plugins.ni]
 github = "azu/ni.zsh"

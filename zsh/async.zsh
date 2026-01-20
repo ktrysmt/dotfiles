@@ -1,6 +1,8 @@
 # -----
 # alias
 # -----
+# global
+alias -g gm='gca -m "`trans @@`"'
 # general
 alias history='fc -il 1' # for HIST_STAMPS in oh-my-zsh
 alias ghl='cd $(ghq list -p | peco)'
@@ -17,7 +19,7 @@ alias batn="bat --number"
 alias batd="bat -l diff"
 alias f='fzf --preview "bat --color=always --style=header,grid --line-range :100 {}"'
 alias cdg='cd $(git rev-parse --show-toplevel)'
-alias sudo='sudo '
+# NOTE: Removed `alias sudo='sudo '` to avoid extra completion work
 # git
 alias g="git"
 alias gf="git fetch --prune"
@@ -81,24 +83,29 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 function insert_and_execute_gss_fzf() {
+  emulate -L zsh
   LBUFFER+="\$(gss | fzf | awk '{print \$2}')"
 }
 zle -N insert_and_execute_gss_fzf
 bindkey '^v' insert_and_execute_gss_fzf
-# expand global alias with space
-function expand-alias-widget() {
-  emulate -L zsh
-  setopt aliases
-  local -a global_aliases=(${(@f)"$(alias -g)"})
-  local -a characters=(${global_aliases%%\=*})
-  if (($characters[(I)${(q)LBUFFER##* }])); then
-    zle _expand_alias
-    zle expand-word
-  fi
-  zle self-insert
+# # expand global alias with space
+function expand-alias() {
+    emulate -L zsh
+    local word="${LBUFFER##* }"
+    # global alias の場合のみ展開
+    if (( ${+galiases[$word]} )); then
+        zle _expand_alias
+        local placeholder='@@'
+        local pos=${BUFFER[(i)$placeholder]}
+        if (( pos <= $#BUFFER )); then
+            BUFFER="${BUFFER[1,pos-1]}${BUFFER[pos+$#placeholder,-1]}"
+            CURSOR=$((pos - 1))
+        fi
+    fi
+    zle self-insert
 }
-zle -N expand-alias-widget
-bindkey ' ' expand-alias-widget
+zle -N expand-alias
+bindkey -M main ' ' expand-alias
 
 # -----
 # env
@@ -113,78 +120,43 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 # go
 export GOROOT=""
 export GO111MODULE="auto"
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$HOME/go/bin:$PATH
-export PATH=$HOME/project/bin:$PATH
 export GOPATH=$HOME/go:$HOME/project
-# c/c++
-export PATH="/usr/local/opt/llvm/bin:$PATH" # clangd, clangd-format
-# rust
-export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 # k8s/docker
 export DOCKER_BUILDKIT=1
 export KREW_NO_UPGRADE_CHECK=1
-export PATH="$PATH:${KREW_ROOT:-$HOME/.krew}/bin"
+# PATH additions (consolidated for performance)
+export PATH="$HOME/go/bin:$HOME/project/bin:/usr/local/opt/llvm/bin:/usr/local/go/bin:$HOME/.cargo/bin:${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # ----------------
 # lazy completion
 # ----------------
-# kubectl
-if type kubectl > /dev/null 2>&1 ;then
-  function kubectl() {
-    if ! type __start_kubectl >/dev/null 2>&1; then
-        source <(command kubectl completion zsh)
-    fi
-    command kubectl "$@"
-  }
-fi
-# helm
-if type helm > /dev/null 2>&1 ;then
-  function helm() {
-    if ! type __start_helm >/dev/null 2>&1; then
-        source <(command helm completion zsh)
-    fi
-    command helm "$@"
-  }
-fi
-# eksctl
-if type eksctl > /dev/null 2>&1 ;then
-  function eksctl() {
-    if ! type __start_eksctl >/dev/null 2>&1; then
-        source <(command eksctl completion zsh)
-    fi
-    command eksctl "$@"
-  }
-fi
-# kind
-if type kind > /dev/null 2>&1 ;then
-  function kind() {
-    if ! type __start_kind >/dev/null 2>&1; then
-        source <(command kind completion zsh)
-    fi
-    command kind "$@"
-  }
-fi
+# Helper function for lazy completion loading (DRY)
+_lazy_load_completion() {
+  local cmd=$1 starter_fn=$2 completion_cmd=$3
+  if type "$cmd" > /dev/null 2>&1; then
+    eval "function $cmd() {
+      if ! type $starter_fn >/dev/null 2>&1; then
+        source <($completion_cmd)
+      fi
+      command $cmd \"\$@\"
+    }"
+  fi
+}
 
-# gh (lazy completion)
-if type gh > /dev/null 2>&1 ;then
-  function gh() {
-    if ! type __start_gh >/dev/null 2>&1; then
-      source <(command gh completion -s zsh)
-    fi
-    command gh "$@"
-  }
-fi
-# pnpm (lazy completion)
-if type pnpm > /dev/null 2>&1 ;then
-  function pnpm() {
-    if ! type _pnpm >/dev/null 2>&1; then
-      source <(command pnpm completion zsh)
-    fi
-    command pnpm "$@"
-  }
-fi
+_lazy_load_completion kubectl __start_kubectl "command kubectl completion zsh"
+_lazy_load_completion helm __start_helm "command helm completion zsh"
+_lazy_load_completion eksctl __start_eksctl "command eksctl completion zsh"
+_lazy_load_completion kind __start_kind "command kind completion zsh"
+_lazy_load_completion gh __start_gh "command gh completion -s zsh"
+_lazy_load_completion pnpm _pnpm "command pnpm completion zsh"
+unset -f _lazy_load_completion
 
+# Cache tac command (tail -r on BSD, tac on GNU)
+if (( $+commands[tac] )); then
+  ZSH_TAC_CMD=tac
+else
+  ZSH_TAC_CMD='tail -r'
+fi
 
 # --------
 # os type
@@ -193,14 +165,15 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   if [[ "$USERNAME" == "vagrant" ]]; then
     # linux on Vagrant
   fi
-  if [ -n "$WSL_DISTRO_NAME" ]; then
+  if [[ -n "$WSL_DISTRO_NAME" ]]; then
     # WSL2
     function open() {
-      if [ $# != 1 ]; then
+      emulate -L zsh
+      if [[ $# != 1 ]]; then
         explorer.exe .
       else
-        if [ -e $1 ]; then
-          explorer.exe $(wslpath -w $1) 2> /dev/null
+        if [[ -e "$1" ]]; then
+          explorer.exe "$(wslpath -w "$1")" 2> /dev/null
         else
           echo "open: $1 : No such file or directory"
         fi
@@ -234,72 +207,93 @@ function peco-select-snippet() {
 }
 zle -N peco-select-snippet
 function chpwd() {
+  emulate -L zsh
   powered_cd_add_log
 }
 function powered_cd_add_log() {
-  local i=0
-  cat ~/.powered_cd.log | while read line; do
-  (( i++ ))
-  if [ i = 30 ]; then
-    sed -i -e "30,30d" ~/.powered_cd.log
-  elif [ "$line" = "$PWD" ]; then
-    sed -i -e "${i},${i}d" ~/.powered_cd.log
-  fi
-done
-echo "$PWD" >> ~/.powered_cd.log
+  emulate -L zsh
+  local log_file="$HOME/.powered_cd.log"
+  local temp_file="${log_file}.tmp"
+  local current_pwd="$PWD"
+  typeset -i i=0
+
+  # Create log file if it doesn't exist
+  [[ -f "$log_file" ]] || touch "$log_file"
+
+  {
+    while IFS= read -r line; do
+      (( i++ ))
+      # Skip if we've hit 10000 lines or this is a duplicate
+      if (( i >= 10000 )) || [[ "$line" == "$current_pwd" ]]; then
+        continue
+      fi
+      echo "$line"
+    done < "$log_file"
+    echo "$current_pwd"
+  } > "$temp_file"
+
+  mv "$temp_file" "$log_file"
 }
 function powered_cd() {
-  if type tac > /dev/null 2>&1 ;then
-    tac="tac"
-  else
-    tac="tail -r"
-  fi
-  if [ $# = 0 ]; then
-    local dir=$(eval $tac ~/.powered_cd.log | fzf)
-    if [ "$dir" = "" ]; then
+  emulate -L zsh
+  local log_file="$HOME/.powered_cd.log"
+  [[ -f "$log_file" ]] || : >| "$log_file"
+
+  if [[ $# -eq 0 ]]; then
+    local dir
+    dir=$($ZSH_TAC_CMD "$log_file" | fzf)
+    if [[ -z "$dir" ]]; then
       return 1
-    elif [ -d "$dir" ]; then
-      cd "$dir"
+    elif [[ -d "$dir" ]]; then
+      builtin cd -- "$dir"
     else
-      local res=$(grep -v -E "^${dir}" ~/.powered_cd.log)
-      echo $res > ~/.powered_cd.log
-      echo "powerd_cd: deleted old path: ${dir}"
+      # remove stale entry using builtin read loop
+      local tmp="${log_file}.tmp"
+      : >| "$tmp"
+      local line
+      while IFS= read -r line; do
+        [[ "$line" == "$dir" ]] || print -r -- "$line" >> "$tmp"
+      done < "$log_file"
+      mv -f -- "$tmp" "$log_file"
+      print -r -- "powerd_cd: deleted old path: ${dir}"
     fi
-  elif [ $# = 1 ]; then
-    cd $1
+  elif [[ $# -eq 1 ]]; then
+    builtin cd -- "$1"
   else
-    echo "powered_cd: too many arguments"
+    print -r -- "powered_cd: too many arguments"
   fi
 }
 _powered_cd() {
   _files -/
 }
 # compdef _powered_cd powered_cd
-[ -e ~/.powered_cd.log ] || touch ~/.powered_cd.log
 alias c="powered_cd"
 
 # -------
 # private
 # -------
-if [ -e ~/.zshrc.private ]; then
+if [[ -e ~/.zshrc.private ]]; then
   source ~/.zshrc.private
 fi
 
-# tmux
+# tmux (throttle refresh to at most once/5sec)
+typeset -gi _tmux_last_refresh=0
 function precmd() {
-  if [ ! -z $TMUX ]; then
-    tmux refresh-client -S
+  emulate -L zsh
+  if [[ -n "$TMUX" ]]; then
+    local now=${EPOCHREALTIME%.*}
+    if (( now - _tmux_last_refresh >= 5 )); then
+      tmux refresh-client -S
+      _tmux_last_refresh=$now
+    fi
   fi
 }
 
 # fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
 setopt AUTO_MENU
 setopt AUTO_NAME_DIRS
-
-# async.sh PATH上書き対策
-source ~/.zshenv
 
 # --------
 # AI tools
@@ -320,4 +314,3 @@ function trans() {
   printf '%s' "$result" | pbcopy
   printf '%s\n' "$result"
 }
-
