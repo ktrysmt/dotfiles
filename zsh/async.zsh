@@ -277,17 +277,20 @@ if [[ -e ~/.zshrc.private ]]; then
 fi
 
 # tmux (throttle refresh to at most once/5sec)
+zmodload zsh/datetime
 typeset -gi _tmux_last_refresh=0
-function precmd() {
+function _tmux_refresh_status() {
   emulate -L zsh
   if [[ -n "$TMUX" ]]; then
     local now=${EPOCHREALTIME%.*}
-    if (( now - _tmux_last_refresh >= 5 )); then
+    if (( now - _tmux_last_refresh >= 4 )); then
       tmux refresh-client -S
       _tmux_last_refresh=$now
     fi
   fi
 }
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _tmux_refresh_status
 
 # fzf
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh

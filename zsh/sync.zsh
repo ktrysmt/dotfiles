@@ -61,3 +61,4 @@ zstyle ':completion:*' matcher-list \
   'l:|=* r:|=*'
 
 compinit -C -d "$ZSH_COMPDUMP"
+
