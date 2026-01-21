@@ -28,7 +28,7 @@ github = "zsh-users/zsh-syntax-highlighting"
 
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
-apply = ["source"]
+apply = ["fpath"]
 
 [plugins.ohmyzsh-lib]
 github = "ohmyzsh/ohmyzsh"

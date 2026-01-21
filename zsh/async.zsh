@@ -125,7 +125,15 @@ export GOPATH=$HOME/go:$HOME/project
 export DOCKER_BUILDKIT=1
 export KREW_NO_UPGRADE_CHECK=1
 # PATH additions (consolidated for performance)
-export PATH="$HOME/go/bin:$HOME/project/bin:/usr/local/opt/llvm/bin:/usr/local/go/bin:$HOME/.cargo/bin:${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+path=(
+  "$HOME/go/bin"
+  "$HOME/project/bin"
+  /usr/local/opt/llvm/bin
+  /usr/local/go/bin
+  "$HOME/.cargo/bin"
+  "${KREW_ROOT:-$HOME/.krew}/bin"
+  $path
+)
 
 # ----------------
 # lazy completion
@@ -153,9 +161,9 @@ unset -f _lazy_load_completion
 
 # Cache tac command (tail -r on BSD, tac on GNU)
 if (( $+commands[tac] )); then
-  ZSH_TAC_CMD=tac
+  ZSH_TAC_CMD=(tac)
 else
-  ZSH_TAC_CMD='tail -r'
+  ZSH_TAC_CMD=(tail -r)
 fi
 
 # --------
@@ -241,7 +249,7 @@ function powered_cd() {
 
   if [[ $# -eq 0 ]]; then
     local dir
-    dir=$($ZSH_TAC_CMD "$log_file" | fzf)
+    dir=$("${ZSH_TAC_CMD[@]}" "$log_file" | fzf)
     if [[ -z "$dir" ]]; then
       return 1
     elif [[ -d "$dir" ]]; then

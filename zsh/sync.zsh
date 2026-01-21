@@ -35,17 +35,13 @@ export FZF_DEFAULT_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%} --select-1 -
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {}'"
 
-# Ensure colors are available before PROMPT expansion
-autoload -Uz colors && colors
-
 # completion (oh-my-zsh style, zero-latency)
 zmodload -i zsh/complist
-autoload -Uz compinit
 
 : ${XDG_CACHE_HOME:=$HOME/.cache}
 ZSH_COMPCACHE="${XDG_CACHE_HOME}/zsh/zcompcache"
 ZSH_COMPDUMP="${XDG_CACHE_HOME}/zsh/.zcompdump-${HOST}"
-mkdir -p "${ZSH_COMPCACHE}" "${ZSH_COMPDUMP:h}"
+[[ -d "${ZSH_COMPCACHE}" ]] || mkdir -p "${ZSH_COMPCACHE}" "${ZSH_COMPDUMP:h}"
 
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$ZSH_COMPCACHE"
