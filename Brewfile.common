@@ -15,6 +15,7 @@ brew "git"
 brew "tree"
 brew "watch"
 brew "wget"
+brew "csvlens"
 
 # Development tools (not available in mise)
 brew "fzy"

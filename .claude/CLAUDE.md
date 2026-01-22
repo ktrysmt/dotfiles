@@ -1,10 +1,44 @@
 # Claude Code Global Config
 
 ## MCP Usage (Required)
-- Unknown info → gemini-google-search
-- AWS → aws-documentation-mcp-server
-- OSS/library docs → context7 OR deepwiki
-- Web verification → playwright
+
+**IMPORTANT: MCP tools are lazy-loaded. Use `ToolSearch` to load them BEFORE use.**
+
+### MCP Call Strategy: Skills First
+
+**Heavy MCPs (aws-docs, deepwiki, etc.) produce large responses that bloat context.**
+
+**ALWAYS check for a matching skill BEFORE calling MCP directly:**
+
+| Task | Skill (preferred) | Direct MCP (small-scale only) |
+|------|-------------------|-------------------------------|
+| AWS research/development | `/aws-expert` | Only for single quick lookup |
+| OSS/library research | `/oss-research` | Only for single quick lookup |
+| Large-scale refactoring | `/serena-refactor` | - |
+| Codebase analysis | `/serena-analyze` | - |
+| Quick symbol lookup | `/serena-quick` | `get_symbols_overview`, `find_symbol` |
+| Memory management | `/serena-memory` | `read_memory`, `write_memory` |
+
+### Why Skills First?
+
+1. **Context isolation**: Skills with `context: fork` run in subagent
+2. **No bloat**: MCP responses stay in subagent, only summary returns
+3. **Long tasks**: Research tasks take time; subagent handles autonomously
+
+### Direct MCP: When Acceptable
+
+- Single, quick lookup (1-2 tool calls)
+- Small response expected
+- Need conversation context for follow-up
+
+### MCP Reference
+
+| Task | MCP | ToolSearch Query |
+|------|-----|------------------|
+| General search | gemini-google-search | `select:mcp__gemini-google-search__google_search` |
+| AWS docs | aws-docs | `aws-docs` |
+| OSS/library docs | deepwiki | `deepwiki` |
+| Code symbols | serena | `serena` |
 
 **Never guess without MCP verification.**
 
