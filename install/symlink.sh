@@ -39,6 +39,7 @@ link_file "${DOTFILES_DIR}/mise/config.toml" ~/.config/mise/config.toml
 link_file "${DOTFILES_DIR}/.claude/hooks" ~/.claude/hooks
 link_file "${DOTFILES_DIR}/.claude/CLAUDE.md" ~/.claude/CLAUDE.md
 link_file "${DOTFILES_DIR}/.claude/settings.json" ~/.claude/settings.json
+link_file "${DOTFILES_DIR}/.claude/skills" ~/.claude/skills
 
 # Copy files (not symlink - may contain secrets or machine-specific config)
 copy_file "${DOTFILES_DIR}/.docker/config.json" ~/.docker/config.json
