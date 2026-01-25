@@ -27,5 +27,6 @@ case "$OS_TYPE" in
     brew bundle --file="${DOTFILES_DIR}/Brewfile.ubuntu"
     ;;
 esac
+brew cleanup
 
 log_success "Homebrew setup complete"
