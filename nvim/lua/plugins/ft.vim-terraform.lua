@@ -1,4 +1,5 @@
 return {
   'hashivim/vim-terraform',
-  ft = { "terraform" }
+  event = "VeryLazy"
+  -- ft = { "terraform" }
 }

@@ -1,6 +1,7 @@
 return {
   'evanleck/vim-svelte',
-  ft = { 'svelte' },
+  event = "VeryLazy",
+  -- ft = { 'svelte' },
   dependencies = {
     'pangloss/vim-javascript',
     'othree/html5.vim',

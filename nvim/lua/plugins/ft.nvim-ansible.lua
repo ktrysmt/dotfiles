@@ -1,4 +1,5 @@
 return {
   'mfussenegger/nvim-ansible',
-  ft = { 'yaml.ansible' },
+  event = "VeryLazy",
+  -- ft = { 'yaml.ansible' },
 }

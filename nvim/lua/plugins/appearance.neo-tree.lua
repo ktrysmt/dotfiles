@@ -52,8 +52,6 @@ return {
     -----@type neotree.Config
     --opts = {},
     config = function()
-      local utils = require("neo-tree.utils")
-
       vim.diagnostic.config({
         signs = {
           text = {
@@ -65,6 +63,7 @@ return {
         }
       })
 
+      -- natural sort
       local function natural_sort(a, b)
         local function tonumber_if_possible(s)
           local num = tonumber(s)
@@ -122,9 +121,7 @@ return {
         return len_a < len_b
       end
 
-      require('neo-tree').setup({
-      })
-
+      local utils = require("neo-tree.utils")
       require("neo-tree").setup({
         close_if_last_window = true,
         enable_git_status = true,
@@ -222,10 +219,8 @@ return {
             enabled = false,
           },
         },
-        -- A list of functions, each representing a global custom command
-        -- that will be available in all sources (if not overridden in `opts[source_name].commands`)
-        -- see `:h neo-tree-custom-commands-global`
         commands = {
+          -- my trash command
           trash = function(state)
             local inputs = require("neo-tree.ui.inputs")
             local path = state.tree:get_node().path
@@ -241,7 +236,8 @@ return {
               })
               require("neo-tree.sources.manager").refresh(state.name)
             end)
-          end,
+          end
+          ,
         },
         window = {
           position = "left",

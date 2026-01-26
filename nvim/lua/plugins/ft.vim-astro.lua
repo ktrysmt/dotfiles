@@ -1,4 +1,5 @@
 return {
   "wuelnerdotexe/vim-astro",
-  ft = { 'astro' }
+  event = "VeryLazy"
+  -- ft = { 'astro' }
 }

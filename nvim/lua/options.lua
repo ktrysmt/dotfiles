@@ -18,6 +18,7 @@ vim.g.loaded_zipPlugin          = 1
 vim.g.skip_loading_mswin        = 1
 vim.g.editorconfig              = false
 vim.g.omni_sql_no_default_maps  = 1
+vim.g.loaded_matchit            = 1
 
 vim.g.mapleader                 = " "
 vim.g.maplocalleader            = " "
@@ -91,61 +92,3 @@ vim.opt.foldclose  = "all"
 
 -- hide EndOfBuffer
 vim.opt.fillchars:append('eob: ')
-
--- win32yank
--- https://github.com/equalsraf/win32yank/releases
--- sudo ln -s /mnt/c/Users/USERNAME/path/to/script/win32yank.exe win32yank.exe
-if vim.fn.has("wsl") == 1 then
-  if vim.fn.executable("win32yank.exe") == 0 then
-    print("wl-clipboard not found, clipboard integration won't work")
-  else
-    vim.g.clipboard = {
-      name = 'myClipboard',
-      copy = {
-        ["+"] = { 'win32yank.exe', '-i' },
-        ["*"] = { 'win32yank.exe', '-i' },
-      },
-      paste = {
-        ["+"] = { 'win32yank.exe', '-o' },
-        ["*"] = { 'win32yank.exe', '-o' },
-      },
-      cache_enabled = 1,
-    }
-  end
-elseif vim.fn.has("linux") == 1 then
-  if vim.fn.executable("xsel") == 0 then
-    print("wsel not found, clipboard integration won't work")
-  else
-    vim.g.clipboard = {
-      name = 'myClipboard',
-      copy = {
-        ["+"] = { 'xsel', '-bi' },
-        ["*"] = { 'xsel', '-bi' },
-      },
-      paste = {
-        ["+"] = { 'xsel', '-bo' },
-        ["*"] = { 'xsel', '-bo' },
-      },
-      cache_enabled = 1,
-    }
-  end
-end
-vim.g.loaded_matchit = 1
-
---- https://zenn.dev/kawarimidoll/articles/68f5e8c362ee1c
-local function skip_hit_enter(fn, opts)
-  opts = opts or {}
-  local wait = opts.wait or 0
-  return function(...)
-    local save_mopt = vim.opt.messagesopt:get()
-    vim.opt.messagesopt:append('wait:' .. wait)
-    vim.opt.messagesopt:remove('hit-enter')
-    fn(...)
-    vim.schedule(function()
-      vim.opt.messagesopt = save_mopt
-    end)
-  end
-end
-if vim.fn.has('vim_starting') == 1 then
-  vim.cmd.checkhealth = skip_hit_enter(vim.cmd.checkhealth)
-end
