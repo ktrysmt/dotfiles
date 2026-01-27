@@ -35,5 +35,21 @@ Or, add arxiv mcp with docker.
     }
   }
 }
+```
 
+hooks
+```json
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/session_summarizer_wrapper.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
 ```
