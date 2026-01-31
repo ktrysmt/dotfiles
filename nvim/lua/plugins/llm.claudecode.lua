@@ -1,44 +1,44 @@
 return {
-  "coder/claudecode.nvim",
-  event = { "BufReadPre", "BufNewFile" }, -- "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
-  keys = {
-    { "<leader>cc" },
-    { "<leader>cf" },
-    { "<leader>ca" },
-    { "<leader>cda" },
-    { "<leader>cdd" },
-  },
-  config = function()
-    require("claudecode").setup({
-      port_range = { min = 10000, max = 65535 },
-      auto_start = true,
-      log_level = "info",
-      terminal_cmd = nil,
-      focus_after_send = true,
-      track_selection = true,
-      visual_demotion_delay_ms = 5,
-      terminal = {
-        split_side = "right",
-        split_width_percentage = 0.33,
-        provider = "native",
-        auto_close = true,
-        provider_opts = {
-          external_terminal_cmd = nil,
+  {
+    "coder/claudecode.nvim",
+    event = { "BufReadPre", "BufNewFile" }, -- "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
+    keys = {
+      { "<leader>cc" },
+      { "<leader>ca" },
+      { "<leader>cda" },
+      { "<leader>cdd" },
+    },
+    config = function()
+      require("claudecode").setup({
+        port_range = { min = 10000, max = 65535 },
+        auto_start = true,
+        log_level = "info",
+        terminal_cmd = nil,
+        focus_after_send = true,
+        track_selection = true,
+        visual_demotion_delay_ms = 5,
+        terminal = {
+          split_side = "right",
+          split_width_percentage = 0.33,
+          provider = "native",
+          auto_close = true,
+          provider_opts = {
+            external_terminal_cmd = nil,
+          },
         },
-      },
-      diff_opts = {
-        auto_close_on_accept = true,
-        vertical_split = false,
-        open_in_current_tab = false,
-        keep_terminal_focus = true,
-      },
-    })
+        diff_opts = {
+          auto_close_on_accept = true,
+          vertical_split = false,
+          open_in_current_tab = false,
+          keep_terminal_focus = true,
+        },
+      })
 
-    vim.keymap.set("n", "<leader>cc", "<cmd>ClaudeCode<cr>")
-    vim.keymap.set("n", "<leader>cf", "<cmd>ClaudeCodeFocus<cr>")
-    vim.keymap.set("n", "<leader>ca", "<cmd>ClaudeCodeAdd %<cr>")
-    vim.keymap.set("v", "<leader>ca", "<cmd>ClaudeCodeSend<cr>")
-    vim.keymap.set("n", "<leader>cda", "<cmd>ClaudeCodeDiffAccept<cr>")
-    vim.keymap.set("n", "<leader>cdd", "<cmd>ClaudeCodeDiffDeny<cr>")
-  end
+      vim.keymap.set("n", "<leader>cc", "<cmd>ClaudeCode<cr>")
+      vim.keymap.set("n", "<leader>ca", "<cmd>ClaudeCodeAdd %<cr>")
+      vim.keymap.set("v", "<leader>ca", "<cmd>ClaudeCodeSend<cr>")
+      vim.keymap.set("n", "<leader>cda", "<cmd>ClaudeCodeDiffAccept<cr>")
+      vim.keymap.set("n", "<leader>cdd", "<cmd>ClaudeCodeDiffDeny<cr>")
+    end
+  }
 }
