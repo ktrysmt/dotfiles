@@ -15,9 +15,9 @@ return {
         env_vars = {
           ANTHROPIC_AUTH_TOKEN = vim.env.ANTHROPIC_AUTH_TOKEN,
           ANTHROPIC_BASE_URL = "https://openrouter.ai/api",
-          ANTHROPIC_DEFAULT_OPUS_MODEL = "qwen/qwen3-coder:free",
-          ANTHROPIC_DEFAULT_SONNET_MODEL = "qwen/qwen3-coder:free",
-          ANTHROPIC_DEFAULT_HAIKU_MODEL = "qwen/qwen3-coder:free",
+          ANTHROPIC_DEFAULT_OPUS_MODEL = "arcee-ai/trinity-large-preview:free",
+          ANTHROPIC_DEFAULT_SONNET_MODEL = "arcee-ai/trinity-large-preview:free",
+          ANTHROPIC_DEFAULT_HAIKU_MODEL = "arcee-ai/trinity-large-preview:free",
         }
       end
 
