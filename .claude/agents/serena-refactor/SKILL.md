@@ -1,8 +1,6 @@
 ---
 name: serena-refactor
 description: Large-scale refactoring using Serena's symbol-based operations. Use for renaming functions/classes/methods across codebase, updating signatures, and ensuring all references are updated consistently.
-context: fork
-agent: general-purpose
 ---
 
 # Serena Refactor Skill

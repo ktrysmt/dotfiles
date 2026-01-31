@@ -1,8 +1,6 @@
 ---
 name: serena-analyze
 description: Analyze codebase structure using Serena's symbolic tools. Use for understanding project architecture, generating structure overviews, mapping dependencies between components, and onboarding to new codebases.
-context: fork
-agent: Explore
 ---
 
 # Serena Analyze Skill

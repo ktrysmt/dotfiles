@@ -31,7 +31,7 @@ logging.basicConfig(
 
 # Anthropic API設定
 ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
-ANTHROPIC_MODEL = "claude-3-5-haiku-latest"
+ANTHROPIC_MODEL = "claude-haiku-4-5"
 
 
 def call_anthropic_api(prompt: str, max_tokens: int = 500) -> str | None:
