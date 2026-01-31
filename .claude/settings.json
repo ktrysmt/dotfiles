@@ -1,7 +1,4 @@
 {
-  "env": {
-    "ENABLE_TOOL_SEARCH": "true"
-  },
   "permissions": {
     "allow": [
       "Bash(/compact)",
@@ -337,7 +334,6 @@
       "Write(/etc/sudoers)"
     ]
   },
-  "model": "opus",
   "alwaysThinkingEnabled": true,
   "enabledPlugins": {
     "code-simplifier@claude-plugins-official": true

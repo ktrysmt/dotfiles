@@ -11,7 +11,7 @@ return {
     config = function()
       local env_vars = nil
 
-      if vim.env.USE_OPENROUTER then
+      if vim.env.ANTHROPIC_AUTH_TOKEN then
         env_vars = {
           ANTHROPIC_AUTH_TOKEN = vim.env.ANTHROPIC_AUTH_TOKEN,
           ANTHROPIC_BASE_URL = "https://openrouter.ai/api",
