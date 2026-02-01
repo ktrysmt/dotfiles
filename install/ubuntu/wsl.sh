@@ -15,21 +15,26 @@ setup_symlinks() {
   # tmux config
   link_file "${DOTFILES_DIR}/.tmux.conf.wsl" ~/.tmux.conf
 
+  if [[ ! -e ~/.gitconfig ]]; then
+    # gitconfig (copy, not symlink - may need local modifications)
+    copy_file "${DOTFILES_DIR}/.gitconfig_wsl" ~/.gitconfig
+  fi
+
   # Windows tools symlinks
-  WIN_USER=$(cmd.exe /c "echo %USERNAME%" 2>/dev/null | tr -d '\r' || echo "")
+  WIN_USER=$(cmd.exe /c "echo %USERNAME%" 2> /dev/null | tr -d '\r' || echo "")
 
   if [[ -n "$WIN_USER" ]]; then
     local win_scripts="/mnt/c/Users/${WIN_USER}/home_scripts"
 
     # win32yank for clipboard
     if [[ -f "${win_scripts}/win32yank.exe" ]] && [[ ! -L /usr/local/bin/win32yank.exe ]]; then
-      sudo ln -sf "${win_scripts}/win32yank.exe" /usr/local/bin/win32yank.exe 2>/dev/null || true
+      sudo ln -sf "${win_scripts}/win32yank.exe" /usr/local/bin/win32yank.exe 2> /dev/null || true
       log_success "Linked win32yank.exe"
     fi
 
     # spzenhan for IME control
     if [[ -f "${win_scripts}/spzenhan.exe" ]] && [[ ! -L /usr/local/bin/spzenhan.exe ]]; then
-      sudo ln -sf "${win_scripts}/spzenhan.exe" /usr/local/bin/spzenhan.exe 2>/dev/null || true
+      sudo ln -sf "${win_scripts}/spzenhan.exe" /usr/local/bin/spzenhan.exe 2> /dev/null || true
       log_success "Linked spzenhan.exe"
     fi
   fi
