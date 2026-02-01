@@ -1,6 +1,7 @@
 ---
 name: oss-research
 description: Research OSS libraries and frameworks using DeepWiki MCP. Use for understanding APIs, finding usage examples, investigating implementation details, comparing libraries, and troubleshooting OSS-related issues.
+context: fork
 ---
 
 # OSS Research Skill
