@@ -5,3 +5,4 @@ nvim/autoload
 !.claude/
 .claude/hooks/session_summarizer.log
 __pycache__/
+.ruff_cache

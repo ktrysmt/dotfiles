@@ -1,0 +1,68 @@
+[ghq]
+  root = ~/go/src
+  root = ~/project/src
+
+[core]
+	excludesfile = ~/.gitignore_global
+
+[user]
+  email = kotaro.yoshimatsu@gmail.com
+  name = ktrysmt
+  signingkey = ~/.ssh/id_ed25519.pub
+
+[gpg]
+  format = ssh
+
+[commit]
+  gpgsign = true
+
+[tag]
+  gpgsign = true
+
+[merge]
+  ff = false
+
+[pull]
+  ff = only
+
+[url "https://"]
+  insteadOf = git://
+
+[alias]
+  delta = !git diff | delta
+  delta = !git diff | delta
+
+[delta]
+  # features = line-numbers decorations
+  features = side-by-side line-numbers decorations
+  syntax-theme = Dracula
+  # syntax-theme = Monokai Extended
+  plus-style = syntax "#003800"
+  minus-style = syntax "#3f0001"
+
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+  file-decoration-style = none
+  hunk-header-decoration-style = cyan box ul
+
+[delta "line-numbers"]
+  line-numbers-left-style = cyan
+  line-numbers-right-style = cyan
+  line-numbers-minus-style = 124
+  line-numbers-plus-style = 28
+
+[feature]
+  manyFiles = true
+
+[secrets]
+	providers = git secrets --aws-provider
+	patterns = (A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}
+	patterns = (\"|')?(AWS|aws|Aws)?_?(SECRET|secret|Secret)?_?(ACCESS|access|Access)?_?(KEY|key|Key)(\"|')?\\s*(:|=>|=)\\s*(\"|')?[A-Za-z0-9/\\+=]{40}(\"|')?
+	patterns = (\"|')?(AWS|aws|Aws)?_?(ACCOUNT|account|Account)_?(ID|id|Id)?(\"|')?\\s*(:|=>|=)\\s*(\"|')?[0-9]{4}\\-?[0-9]{4}\\-?[0-9]{4}(\"|')?
+
+[init]
+	templatedir = ~/.git-templates/git-secrets
+
+[credential]
+	helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe

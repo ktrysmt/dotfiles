@@ -32,8 +32,23 @@ setup_zsh() {
 
   # Set zsh as default shell
   if [[ "$SHELL" != "$zsh_path" ]]; then
-    sudo chsh -s "$zsh_path" "$(whoami)" 2>/dev/null || true
+    sudo chsh -s "$zsh_path" "$(whoami)" 2> /dev/null || true
     log_success "Set zsh as default shell"
+  fi
+}
+
+# ------------------------------------------------------------------------------
+# Imagemagick
+# ------------------------------------------------------------------------------
+setup_imagemagick() {
+  if ! has_command convert; then
+    log_info "Installing imagemagick..."
+    sudo apt-get install -qq -y imagemagick libmagickwand-dev
+  fi
+
+  if ! dpkg -l | grep -q libreadline-dev; then
+    log_info "Installing libreadline-dev..."
+    sudo apt-get install -qq -y libreadline-dev
   fi
 }
 
@@ -46,7 +61,7 @@ setup_symlinks() {
 
   # Create say command alias (used by some scripts)
   if [[ ! -L /usr/local/bin/say ]] && [[ ! -f /usr/local/bin/say ]]; then
-    sudo ln -s "$(which echo)" /usr/local/bin/say 2>/dev/null || true
+    sudo ln -s "$(which echo)" /usr/local/bin/say 2> /dev/null || true
   fi
 }
 
@@ -55,6 +70,7 @@ setup_symlinks() {
 # ------------------------------------------------------------------------------
 main() {
   setup_zsh
+  setup_imagemagick
   setup_symlinks
 
   log_success "Ubuntu common setup complete"
