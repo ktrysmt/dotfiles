@@ -18,12 +18,19 @@ vim.keymap.set('n', 'x', '"_x') -- only n, not v
 vim.keymap.set('n', 's', '"_s')
 vim.keymap.set('n', 'cn', '*N"_cgn')
 vim.keymap.set('n', 'cN', '*N"_cgN')
+
 vim.keymap.set('n', '<C-g>', function()
-  vim.cmd [[
-  let @+ =expand('%:p')
-  echo expand('%:p')
-  ]]
+  local path = vim.fn.expand('%:p')
+  vim.fn.setreg('+', path)
+  print(path)
 end)
+-- vim.keymap.set('n', '<C-g>', function()
+--   vim.cmd [[
+--   let @+ =expand('%:p')
+--   echo expand('%:p')
+--   ]]
+-- end)
+
 vim.keymap.set('n', '<Leader>p', '"0p', { silent = true })
 vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })
 
@@ -110,11 +117,6 @@ end
 -- vim.keymap.set("n", "<C-k>", '"zdd<Up>"zP')
 vim.keymap.set("v", "<C-j>", '"zx"zp`[V`]')
 vim.keymap.set("v", "<C-k>", '"zx<Up>"zP`[V`]')
-
--- a to 2i
-for _, quote in ipairs({ '"', "'", "`" }) do
-  vim.keymap.set({ "x", "o" }, "a" .. quote, "2i" .. quote)
-end
 
 -- macro shortcut
 vim.keymap.set('n', '<Leader>q', '@q')

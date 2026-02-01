@@ -1,3 +1,6 @@
+vim.g.mapleader                 = " "
+vim.g.maplocalleader            = " "
+
 vim.g.did_install_default_menus = 1
 vim.g.did_install_syntax_menu   = 1
 vim.g.did_indent_on             = 1
@@ -6,7 +9,6 @@ vim.g.did_load_ftplugin         = 1
 vim.g.loaded_2html_plugin       = 1
 vim.g.loaded_gzip               = 1
 vim.g.loaded_man                = 1
-vim.g.loaded_matchit            = 1
 vim.g.loaded_matchparen         = 1
 vim.g.loaded_netrwPlugin        = 1
 vim.g.loaded_remote_plugins     = 1
@@ -19,14 +21,9 @@ vim.g.skip_loading_mswin        = 1
 vim.g.editorconfig              = false
 vim.g.omni_sql_no_default_maps  = 1
 vim.g.loaded_matchit            = 1
-
-vim.g.mapleader                 = " "
-vim.g.maplocalleader            = " "
-
 vim.opt.encoding                = 'utf-8'
 vim.opt.fileencodings           = 'utf-8'
 vim.opt.fileformats             = 'unix,dos,mac'
-
 vim.opt.backspace               = 'start,eol,indent'
 vim.opt.clipboard               = 'unnamed'
 vim.opt.cursorline              = true

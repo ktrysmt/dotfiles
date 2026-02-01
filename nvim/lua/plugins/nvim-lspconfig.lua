@@ -28,22 +28,10 @@ return {
       },
     },
     config = function()
-      -- local lspconfig = require('lspconfig')
-      local mason_lspconfig = require("mason-lspconfig")
-
-      local function get_installed_servers()
-        local servers = {}
-        for _, s in ipairs(mason_lspconfig.get_installed_servers()) do
-          if s ~= "pylsp" and s ~= "lua_ls" and s ~= "gopls" then
-            table.insert(servers, s)
-          end
-        end
-        return servers
-      end
-      vim.lsp.enable(get_installed_servers())
-
+      -------
+      -- diagnostics
+      -------
       vim.diagnostic.config({ virtual_text = false, float = false, severity_sort = true })
-
       local init_lspconfig = function(ev)
         vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
         local opts = { buffer = ev.buf }
@@ -86,6 +74,11 @@ return {
         end
       end
 
+      -------
+      -- lsp
+      -------
+      local mason_lspconfig = require("mason-lspconfig")
+      -- rust
       vim.lsp.config('rust_analyzer', {
         settings = {
           ['rust-analyzer'] = {},
@@ -93,6 +86,7 @@ return {
       })
       vim.lsp.enable('rust_analyzer')
 
+      -- python
       vim.lsp.config('pylsp', {
         settings = {
           pylsp = {
@@ -107,6 +101,7 @@ return {
       })
       vim.lsp.enable('pylsp')
 
+      -- lua
       vim.lsp.config('lua_ls', {
         settings = {
           Lua = {
@@ -118,6 +113,7 @@ return {
       })
       vim.lsp.enable('lua_ls')
 
+      -- gopls
       vim.lsp.config('gopls', {
         settings = {
           gopls = {
@@ -127,6 +123,19 @@ return {
       })
       vim.lsp.enable('gopls')
 
+      -- others via mason
+      local function get_installed_servers()
+        local servers = {}
+        for _, s in ipairs(mason_lspconfig.get_installed_servers()) do
+          if s ~= "pylsp" and s ~= "lua_ls" and s ~= "gopls" and s ~= "rust_analyzer" then
+            table.insert(servers, s)
+          end
+        end
+        return servers
+      end
+      vim.lsp.enable(get_installed_servers())
+
+      -- attach
       local lspconfig_group = vim.api.nvim_create_augroup('lspconfig_group', { clear = true })
       vim.api.nvim_create_autocmd("LspAttach", {
         group = lspconfig_group,

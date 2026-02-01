@@ -204,7 +204,7 @@ else
 fi
 
 # -----------
-# custom fzf
+# custom fzf: peco
 # -----------
 function peco-select-snippet() {
   emulate -L zsh
@@ -218,30 +218,50 @@ function chpwd() {
   emulate -L zsh
   powered_cd_add_log
 }
+
+# -----------
+# custom fzf: powered_cd
+# -----------
 function powered_cd_add_log() {
   emulate -L zsh
   local log_file="$HOME/.powered_cd.log"
   local temp_file="${log_file}.tmp"
   local current_pwd="$PWD"
-  typeset -i i=0
 
-  # Create log file if it doesn't exist
   [[ -f "$log_file" ]] || touch "$log_file"
 
   {
-    while IFS= read -r line; do
-      (( i++ ))
-      # Skip if we've hit 10000 lines or this is a duplicate
-      if (( i >= 10000 )) || [[ "$line" == "$current_pwd" ]]; then
-        continue
-      fi
-      echo "$line"
-    done < "$log_file"
+    grep -Fvx "$current_pwd" "$log_file" 2>/dev/null | head -n 9999
     echo "$current_pwd"
   } > "$temp_file"
 
-  mv "$temp_file" "$log_file"
+mv "$temp_file" "$log_file"
 }
+# OLD powered_cd_add_log
+# function powered_cd_add_log() {
+#   emulate -L zsh
+#   local log_file="$HOME/.powered_cd.log"
+#   local temp_file="${log_file}.tmp"
+#   local current_pwd="$PWD"
+#   typeset -i i=0
+#
+#   # Create log file if it doesn't exist
+#   [[ -f "$log_file" ]] || touch "$log_file"
+#
+#   {
+#     while IFS= read -r line; do
+#       (( i++ ))
+#       # Skip if we've hit 10000 lines or this is a duplicate
+#       if (( i >= 10000 )) || [[ "$line" == "$current_pwd" ]]; then
+#         continue
+#       fi
+#       echo "$line"
+#     done < "$log_file"
+#     echo "$current_pwd"
+#   } > "$temp_file"
+#
+#   mv "$temp_file" "$log_file"
+# }
 function powered_cd() {
   emulate -L zsh
   local log_file="$HOME/.powered_cd.log"
@@ -274,7 +294,6 @@ function powered_cd() {
 _powered_cd() {
   _files -/
 }
-# compdef _powered_cd powered_cd
 alias c="powered_cd"
 
 # -------
