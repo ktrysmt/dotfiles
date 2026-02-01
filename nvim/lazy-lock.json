@@ -15,7 +15,7 @@
   "dressing.nvim": { "branch": "master", "commit": "2d7c2db2507fa3c4956142ee607431ddb2828639" },
   "format-on-save.nvim": { "branch": "main", "commit": "523256bd71543fd68184f67e82dc3cfd5092cf93" },
   "friendly-snippets": { "branch": "main", "commit": "6cd7280adead7f586db6fccbd15d2cac7e2188b9" },
-  "fzf": { "branch": "master", "commit": "6360c9261c0476e94337900fad9086ede26fcaf3" },
+  "fzf": { "branch": "master", "commit": "bc8967632b71082324a5068e812c8c2fc66c4c32" },
   "fzf-mru.vim": { "branch": "master", "commit": "5b47c29e66d0546000b2988c4c9dca53f3134f35" },
   "fzf.vim": { "branch": "master", "commit": "ddc14a6a5471147e2a38e6b32a7268282f669b0a" },
   "gemini.nvim": { "branch": "master", "commit": "4213e5b0de4fe96c8f00d8d8ad854ebf80f07211" },
