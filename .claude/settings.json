@@ -338,5 +338,8 @@
     "code-simplifier@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true
   },
+  "env": {
+    "ENABLE_TOOL_SEARCH": "true"
+  },
   "alwaysThinkingEnabled": true
 }
