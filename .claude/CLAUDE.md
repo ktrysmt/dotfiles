@@ -1,7 +1,8 @@
 # Claude Code Global Config
 
-- **IMPORTANT: Always use MCP and Skills/Agents for any analysis and any tasks as much as possible.**
-- **ALWAYS check for a matching skill BEFORE calling MCP directly.**
+## IMPORTANT
+- **ALWAYS use Skills and MCP for any analysis and tasks as much as possible.**
+- **ALWAYS check for a matching Skills BEFORE calling MCP directly.**
 
 ## NEVER
 - Delete prod data without confirmation
