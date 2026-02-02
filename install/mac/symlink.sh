@@ -12,7 +12,7 @@ log_info "Setting up macOS specific symlinks..."
 link_file "${DOTFILES_DIR}/.tmux.conf.osx" ~/.tmux.conf
 
 # gitconfig (copy, not symlink - may need local modifications)
-copy_file "${DOTFILES_DIR}/.gitconfig_macos" ~/.gitconfig
+[[ ! -e ~/.gitconfig ]] && copy_file "${DOTFILES_DIR}/.gitconfig_macos" ~/.gitconfig
 
 # Karabiner
 ensure_dir ~/.config/karabiner/assets/complex_modifications

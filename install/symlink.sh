@@ -42,7 +42,7 @@ link_file "${DOTFILES_DIR}/.claude/settings.json" ~/.claude/settings.json
 link_file "${DOTFILES_DIR}/.claude/skills" ~/.claude/skills
 
 # Copy files (not symlink - may contain secrets or machine-specific config)
-copy_file "${DOTFILES_DIR}/.docker/config.json" ~/.docker/config.json
+[[ ! -e ~/.docker/config.json ]] && copy_file "${DOTFILES_DIR}/.docker/config.json" ~/.docker/config.json
 
 # tmux plugin manager
 git_clone "https://github.com/tmux-plugins/tpm" ~/.tmux/plugins/tpm

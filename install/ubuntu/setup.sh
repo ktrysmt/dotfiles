@@ -57,7 +57,7 @@ setup_imagemagick() {
 # ------------------------------------------------------------------------------
 setup_symlinks() {
   # gitconfig (copy, not symlink)
-  copy_file "${DOTFILES_DIR}/.gitconfig_ubuntu" ~/.gitconfig
+  [[ ! -e ~/.gitconfig ]] && copy_file "${DOTFILES_DIR}/.gitconfig_ubuntu" ~/.gitconfig
 
   # Create say command alias (used by some scripts)
   if [[ ! -L /usr/local/bin/say ]] && [[ ! -f /usr/local/bin/say ]]; then

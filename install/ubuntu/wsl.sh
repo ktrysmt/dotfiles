@@ -15,10 +15,8 @@ setup_symlinks() {
   # tmux config
   link_file "${DOTFILES_DIR}/.tmux.conf.wsl" ~/.tmux.conf
 
-  if [[ ! -e ~/.gitconfig ]]; then
-    # gitconfig (copy, not symlink - may need local modifications)
-    copy_file "${DOTFILES_DIR}/.gitconfig_wsl" ~/.gitconfig
-  fi
+  # gitconfig (copy, not symlink - may need local modifications)
+  [[ ! -e ~/.gitconfig ]] && copy_file "${DOTFILES_DIR}/.gitconfig_wsl" ~/.gitconfig
 
   # Windows tools symlinks
   WIN_USER=$(cmd.exe /c "echo %USERNAME%" 2> /dev/null | tr -d '\r' || echo "")
