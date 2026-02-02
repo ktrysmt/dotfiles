@@ -1,6 +1,6 @@
 # Claude Code Global Config
 
-- **IMPORTANT: Always use MCP and Skills/Agents for analysis and complex tasks.**
+- **IMPORTANT: Always use MCP and Skills/Agents for any analysis and any tasks as much as possible.**
 - **ALWAYS check for a matching skill BEFORE calling MCP directly.**
 
 ## NEVER

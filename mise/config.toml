@@ -7,7 +7,6 @@
 node = "22"
 go = "1.25"
 bun = "latest"
-lua = "5.1"
 
 # Language tools
 ruff = "latest"
@@ -33,10 +32,10 @@ xh = "latest"
 buf = "latest"
 tmux = "latest"
 pinact = "latest"
+peco = "latest"
 
 # CLI tools (aqua/github backend)
 "aqua:Wilfred/difftastic" = "latest"
-"aqua:peco/peco" = "latest"
 "aqua:ynqa/jnv" = "latest"
 "aqua:sxyazi/yazi" = "latest"
 "aqua:rossmacarthur/sheldon" = "latest"

@@ -1,13 +1,3 @@
-# Common packages for all platforms
-# Usage: brew bundle --file=Brewfile.common
-#
-# NOTE: Tools managed by mise are NOT listed here.
-# See mise/config.toml for: neovim, ripgrep, fzf, fd, bat, eza,
-#                           gh, ghq, delta, jq, glow, xh, uv,
-#                           golangci-lint, pnpm, ruff, nodejs, go, bun,
-#                           difftastic, peco, procs, yazi, jnv, tmux,
-#                           diff-so-fancy, gemini-cli
-
 # Core system tools
 brew "coreutils"
 brew "curl"
