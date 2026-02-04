@@ -3,6 +3,7 @@
 # -----
 # global
 alias -g gm='gca -m "`trans @@`"'
+
 # general
 alias history='fc -il 1' # for HIST_STAMPS in oh-my-zsh
 alias ghl='cd $(ghq list -p | peco)'
@@ -20,6 +21,7 @@ alias batd="bat -l diff"
 alias f='fzf --preview "bat --color=always --style=header,grid --line-range :100 {}"'
 alias cdg='cd $(git rev-parse --show-toplevel)'
 # NOTE: Removed `alias sudo='sudo '` to avoid extra completion work
+
 # git
 alias g="git"
 alias gf="git fetch --prune"
@@ -49,7 +51,8 @@ alias glogo='git log --oneline --pretty=format:"%C(red)%h %C(green)%an %Creset%s
 alias grebase='git rebase -i $(git log --date=short --pretty="format:%C(yellow)%h %C(green)%cd %C(blue)%ae %C(red)%d %C(reset)%s" |fzy| cut -d" " -f1)'
 alias gb="git branch"
 alias gbc="~/dotfiles/bin/git-checkout-remote-branch"
-alias gw="git worktree"
+# alias gw="git worktree"
+
 # k8s
 alias k="kubectl"
 alias kg="kubectl get"
@@ -330,7 +333,7 @@ setopt AUTO_NAME_DIRS
 # --------
 function trans() {
   local text="${*:-$(cat)}"
-  local target result
+  local target result prompt
 
   # ASCII（英語と記号）のみなら日本語へ、マルチバイトがあれば英語へ
   # zshネイティブでASCII判定（0x00-0x7F以外があるか）
@@ -340,7 +343,26 @@ function trans() {
     target="Japanese"
   fi
 
-  result=$(gemini -m gemini-2.5-flash-lite "Translate to ${target}. Output ONLY the translation, nothing else: ${text}" 2>&1)
+  prompt="Translate to ${target}. Output ONLY the translation, nothing else:"
+  result=$(echo "$text" | gemini -m gemini-2.5-flash-lite "$prompt" 2>&1)
   printf '%s' "$result" | pbcopy
   printf '%s\n' "$result"
+}
+
+# --------------
+# git worktree
+# --------------
+function gw() {
+  if [ "$1" = "add" ]; then
+    git worktree "$@" && {
+      cd "$2" && {
+        if [[ -e uv.lock ]]; then
+          uv sync
+          source .venv/bin/activate
+        fi
+      }
+    };
+  else
+    git worktree "$@"
+  fi
 }

@@ -25,7 +25,8 @@ else
   target="English"
 fi
 
-result=$(gemini -m gemini-2.5-flash-lite "Translate to ${target}. Output ONLY the translation, nothing else: ${text}" 2>&1)
+prompt="Translate to ${target}. Output ONLY the translation, nothing else:"
+result=$(echo "$text" | gemini -m gemini-2.5-flash-lite "$prompt" 2>&1)
 
 # クリップボードにコピー
 echo -n "$result" | pbcopy
