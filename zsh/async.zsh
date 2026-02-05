@@ -20,7 +20,6 @@ alias batn="bat --number"
 alias batd="bat -l diff"
 alias f='fzf --preview "bat --color=always --style=header,grid --line-range :100 {}"'
 alias cdg='cd $(git rev-parse --show-toplevel)'
-# NOTE: Removed `alias sudo='sudo '` to avoid extra completion work
 
 # git
 alias g="git"
@@ -51,7 +50,6 @@ alias glogo='git log --oneline --pretty=format:"%C(red)%h %C(green)%an %Creset%s
 alias grebase='git rebase -i $(git log --date=short --pretty="format:%C(yellow)%h %C(green)%cd %C(blue)%ae %C(red)%d %C(reset)%s" |fzy| cut -d" " -f1)'
 alias gb="git branch"
 alias gbc="~/dotfiles/bin/git-checkout-remote-branch"
-# alias gw="git worktree"
 
 # k8s
 alias k="kubectl"
@@ -127,7 +125,7 @@ export GOPATH=$HOME/go:$HOME/project
 # k8s/docker
 export DOCKER_BUILDKIT=1
 export KREW_NO_UPGRADE_CHECK=1
-# PATH additions (consolidated for performance)
+# PATH
 path=(
   "$HOME/go/bin"
   "$HOME/project/bin"
@@ -313,7 +311,7 @@ function _tmux_refresh_status() {
   emulate -L zsh
   if [[ -n "$TMUX" ]]; then
     local now=${EPOCHREALTIME%.*}
-    if (( now - _tmux_last_refresh >= 4 )); then
+    if (( now - _tmux_last_refresh >= 3 )); then
       tmux refresh-client -S
       _tmux_last_refresh=$now
     fi
