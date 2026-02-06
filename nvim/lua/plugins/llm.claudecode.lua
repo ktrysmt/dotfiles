@@ -13,7 +13,6 @@ return {
 
       -- Check if Ollama is running
       local ollama_running = vim.fn.system("pgrep -x ollama")
-
       if ollama_running then
         -- Use Ollama with Claude mode
         -- `ollama launch claude --model qwen3-coder-next` で起動した場合
@@ -33,8 +32,8 @@ return {
           -- ANTHROPIC_DEFAULT_OPUS_MODEL = "arcee-ai/trinity-large-preview:free",
           -- ANTHROPIC_DEFAULT_SONNET_MODEL = "arcee-ai/trinity-large-preview:free",
           -- ANTHROPIC_DEFAULT_HAIKU_MODEL = "arcee-ai/trinity-large-preview:free",
-          ANTHROPIC_DEFAULT_OPUS_MODEL = "z-ai/glm-4.7",
-          ANTHROPIC_DEFAULT_SONNET_MODEL = "z-ai/glm-4.7",
+          ANTHROPIC_DEFAULT_OPUS_MODEL = "qwen/qwen3-coder-next",   -- OR, "z-ai/glm-4.7",
+          ANTHROPIC_DEFAULT_SONNET_MODEL = "qwen/qwen3-coder-next", -- OR, "z-ai/glm-4.7",
           ANTHROPIC_DEFAULT_HAIKU_MODEL = "arcee-ai/trinity-large-preview:free",
         }
       end
