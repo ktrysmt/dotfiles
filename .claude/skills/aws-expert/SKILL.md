@@ -1,6 +1,6 @@
 ---
 name: aws-expert
-description: Use for AWS-related questions, research, development, and troubleshooting. Leverages AWS official documentation MCP to provide evidence-based answers and advice. Covers AWS services, architecture, best practices, configuration, pricing, and regional availability.
+description: Use this skill whenever the keyword 'aws' or 'primary keywords related to aws' are observed in user input.
 context: fork
 ---
 

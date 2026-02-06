@@ -89,3 +89,12 @@ vim.opt.foldclose  = "all"
 
 -- hide EndOfBuffer
 vim.opt.fillchars:append('eob: ')
+
+-- au
+-- should be sync
+local ansible_group = vim.api.nvim_create_augroup('ansible_group', { clear = true })
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = { "*.yaml.j2", "*.yml.j2" },
+  group = ansible_group,
+  command = "setfiletype yaml.ansible"
+})

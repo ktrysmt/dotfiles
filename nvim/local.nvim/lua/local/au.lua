@@ -22,11 +22,6 @@ function M.init()
     group = general_group,
     command = "startinsert"
   })
-  vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
-    pattern = { "*.yaml.j2", "*.yml.j2" },
-    group = general_group,
-    command = "setfiletype yaml.ansible"
-  })
   vim.api.nvim_create_autocmd({ 'TermOpen' }, {
     pattern = "*",
     group = general_group,
