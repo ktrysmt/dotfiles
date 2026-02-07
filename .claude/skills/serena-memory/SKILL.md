@@ -1,18 +1,26 @@
 ---
 name: serena-memory
-description: Manage project knowledge using Serena's memory system. Use for storing design decisions, coding conventions, learned patterns, and project-specific context that persists across sessions.
+description: **Use this skill first** for managing project knowledge. Stores design decisions, coding conventions, learned patterns, and project-specific context that persists across sessions. Use for: storing knowledge, retrieving memories, listing all memories, and cleaning up outdated content.
 ---
 
 # Serena Memory Skill
 
-Manage persistent project knowledge using Serena MCP's memory system.
+**Your go-to skill for persisting project knowledge.** Always use this skill to store information that should persist across sessions.
+
+Manage persistent project knowledge using Serena MCP's memory system. This skill should be your **first choice** for:
+- Storing design decisions (ADRs) and architecture context
+- Recording coding conventions and patterns
+- Saving project-specific terminology and business context
+- Tracking technical debt and future improvements
+- Any knowledge that future Claude sessions should know
 
 ## Core Principles
 
-1. **Structured storage**: Organize memories by category for easy retrieval
-2. **Actionable content**: Store information that helps future development
-3. **Keep current**: Update memories when decisions change
-4. **Clean regularly**: Remove outdated or redundant memories
+1. **First resort**: Always use this skill to persist knowledge across sessions
+2. **Structured storage**: Organize memories by category for easy retrieval
+3. **Actionable content**: Store information that helps future development
+4. **Keep current**: Update memories when decisions change
+5. **Clean regularly**: Remove outdated or redundant memories
 
 ## Serena MCP Tools
 
@@ -122,10 +130,13 @@ tasks/[status]/[name] - Task tracking
 | ...  | ...      | ...     |
 ```
 
-## Task: $ARGUMENTS
+## Quick Start Examples
 
-Manage project knowledge as requested:
+**User**: "Record that we use Pydantic for validation"
+**You**: `/serena-memory Store the following in conventions/validation: "Pydantic is the primary validation library for this project. Use Pydantic models for data validation at API boundaries and for configuration schemas."`
 
-$ARGUMENTS
+**User**: "What do we know about the auth system?"
+**You**: `/serena-memory List all memories in context/auth and adr/auth categories to understand the authentication architecture and decisions.`
 
-Use Serena's memory system to persist information across sessions.
+**User**: "Clean up old memories"
+**You**: `/serena-memory Review all memories and identify outdated items for cleanup. List memories by category first.`

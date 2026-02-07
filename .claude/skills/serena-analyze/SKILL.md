@@ -1,19 +1,26 @@
 ---
 name: serena-analyze
-description: Analyze codebase structure using Serena's symbolic tools. Use for understanding project architecture, generating structure overviews, mapping dependencies between components, and onboarding to new codebases.
+description: **Always prefer this skill first** when you need to understand codebase structure, architecture, or relationships between components. Uses Serena's semantic tools for efficient symbol-based exploration without reading entire files. Ideal for: architecture overview, dependency mapping, component deep-dives, codebase onboarding, and understanding how code fits together.
 context: fork
 ---
 
 # Serena Analyze Skill
 
-Analyze codebase structure and architecture using Serena MCP's semantic code understanding tools.
+**Your go-to skill for any codebase understanding task.** Always check if this skill applies BEFORE using other MCP tools.
+
+Analyze codebase structure and architecture using Serena MCP's semantic code understanding tools. This skill should be your **first choice** for:
+- Understanding project architecture and component organization
+- Mapping dependencies between symbols/functions/classes
+- Onboarding to new codebases
+- Answering "how does this code work?" questions
 
 ## Core Principles
 
-1. **Efficient exploration**: Use symbolic tools to understand structure without reading entire files
-2. **Top-down approach**: Start with overview, drill down only where needed
-3. **Map relationships**: Understand how components connect and depend on each other
-4. **Summarize findings**: Provide clear, actionable insights
+1. **First resort**: Always try this skill before other MCP tools for codebase understanding
+2. **Efficient exploration**: Use symbolic tools to understand structure without reading entire files
+3. **Top-down approach**: Start with overview, drill down only where needed
+4. **Map relationships**: Understand how components connect and depend on each other
+5. **Summarize findings**: Provide clear, actionable insights
 
 ## Serena MCP Tools
 
@@ -31,39 +38,40 @@ Analyze codebase structure and architecture using Serena MCP's semantic code und
 - `mcp__serena__read_file`: Read file when detailed understanding needed
 - `mcp__serena__read_memory`: Check existing project knowledge
 
-## Analysis Workflow
+## When to Use (Priority Order)
 
-1. **Project overview**: Use `list_dir` to understand directory structure
-2. **Identify entry points**: Find main files, exports, public APIs
-3. **Map components**: Use `get_symbols_overview` on key files
-4. **Trace relationships**: Use `find_referencing_symbols` for dependency mapping
-5. **Document findings**: Summarize architecture and patterns
+| Priority | Scenario |
+|----------|----------|
+| **1st** | User asks "how does this code work?" or "explain the architecture" |
+| **2nd** | You need to understand relationships between components |
+| **3rd** | You're about to make changes and need to understand impact |
+| **4th** | Answering "what calls this function?" or "where is this used?" |
 
-## Analysis Types
+**Avoid this skill if**: You need exact code content (use `read_file` instead) or doing pure research (use `oss-research`).
+
+## Analysis Types (Use These Queries)
+
+When activating this skill, use one of these patterns:
 
 ### Architecture Overview
-- Directory structure analysis
-- Module/package organization
-- Entry points and public APIs
-- Configuration patterns
+```
+/analyzer Analyze the project architecture. Focus on: directory structure, module organization, entry points, and public APIs.
+```
 
 ### Component Deep-Dive
-- Class/function structure
-- Internal dependencies
-- Interface definitions
-- Design patterns used
+```
+/analyzer Deep-dive into [COMPONENT NAME]. Explain: internal structure, dependencies, interfaces, and design patterns used.
+```
 
 ### Dependency Mapping
-- Import/export relationships
-- Call graphs
-- Data flow paths
-- Circular dependency detection
+```
+/analyzer Map dependencies for [FUNCTION/CLASS NAME]. Show: what calls it, what it depends on, and data flow paths.
+```
 
 ### Codebase Onboarding
-- Key files to understand
-- Core abstractions
-- Naming conventions
-- Common patterns
+```
+/analyzer Onboard me to this codebase. Highlight: key files to understand, core abstractions, naming conventions, and common patterns.
+```
 
 ## Response Format
 
@@ -97,10 +105,13 @@ Analyze codebase structure and architecture using Serena MCP's semantic code und
 - [Suggestion 2]
 ```
 
-## Task: $ARGUMENTS
+## Quick Start Examples
 
-Analyze the codebase to answer:
+**User**: "How does this project work?"
+**You**: `/serena-analyze Analyze the project architecture. Focus on: directory structure, module organization, entry points, and public APIs.`
 
-$ARGUMENTS
+**User**: "Where is `authenticate` used?"
+**You**: `/serena-analyze Map dependencies for the authenticate function. Show what calls it and how it fits into the authentication flow.`
 
-Use Serena's symbolic tools to efficiently understand structure without reading unnecessary code.
+**User**: "Explain the data layer"
+**You**: `/serena-analyze Deep-dive into the data layer. Explain: internal structure, dependencies, interfaces, and design patterns used.`

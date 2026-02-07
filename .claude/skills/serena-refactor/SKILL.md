@@ -1,19 +1,27 @@
 ---
 name: serena-refactor
-description: Large-scale refactoring using Serena's symbol-based operations. Use for renaming functions/classes/methods across codebase, updating signatures, and ensuring all references are updated consistently.
+description: **Use this skill first** for any refactoring tasks. Performs large-scale, symbol-aware refactoring using Serena's semantic code tools. Use for: renaming functions/classes/methods across codebase, updating signatures, extracting/moving symbols, and ensuring ALL references are updated consistently.
 context: fork
 ---
 
 # Serena Refactor Skill
 
-Perform large-scale, symbol-aware refactoring using Serena MCP's semantic code tools.
+**Your go-to skill for any refactoring task.** Always use this skill BEFORE manual editing for code modifications that affect multiple locations.
+
+Perform large-scale, symbol-aware refactoring using Serena MCP's semantic code tools. This skill should be your **first choice** for:
+- Renaming functions, classes, methods, or variables across the codebase
+- Updating function signatures and all call sites
+- Extracting code into new functions/classes
+- Moving symbols between files/modules
+- Any change where consistency across references matters
 
 ## Core Principles
 
-1. **Understand before changing**: Use `find_symbol` and `get_symbols_overview` to understand the current structure
-2. **Track all references**: Use `find_referencing_symbols` to find all usages before making changes
-3. **Atomic operations**: Use symbol-based editing for precise, structure-aware modifications
-4. **Verify completeness**: Ensure all references are updated after refactoring
+1. **First resort**: Always use this skill for multi-location changes BEFORE manual editing
+2. **Understand before changing**: Use `find_symbol` and `get_symbols_overview` to understand the current structure
+3. **Track all references**: Use `find_referencing_symbols` to find all usages before making changes
+4. **Atomic operations**: Use symbol-based editing for precise, structure-aware modifications
+5. **Verify completeness**: Ensure all references are updated after refactoring
 
 ## Serena MCP Tools
 
@@ -72,10 +80,13 @@ Perform large-scale, symbol-aware refactoring using Serena MCP's semantic code t
 - [Status of verification]
 ```
 
-## Task: $ARGUMENTS
+## Quick Start Examples
 
-Perform the following refactoring task using Serena's symbol-based tools:
+**User**: "Rename `authenticate` to `validate_credentials`"
+**You**: `/serena-refactor Rename the authenticate function to validate_credentials. Find all references and update them consistently.`
 
-$ARGUMENTS
+**User**: "Add logging to all API handlers"
+**You**: `/serena-refactor Add logging to all API handler functions. Find all handler symbols and insert logging at the start of each.`
 
-Always find and update ALL references to maintain code consistency.
+**User**: "Move utils to shared package"
+**You**: `/serena-refactor Move all utility functions from src/utils to shared/utils. Update all imports across the codebase.`

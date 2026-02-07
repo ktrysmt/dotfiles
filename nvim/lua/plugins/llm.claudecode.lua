@@ -12,11 +12,8 @@ return {
       local env_vars = nil
 
       -- Check if Ollama is running
-      local ollama_running = vim.fn.system("pgrep -x ollama")
-      if ollama_running then
-        -- Use Ollama with Claude mode
-        -- `ollama launch claude --model qwen3-coder-next` で起動した場合
-        -- APIは http://localhost:11434/v1 で、モデル名は qwen3-coder-next
+      local ollama_running = vim.fn.system("pgrep -f 'ollama serve'")
+      if ollama_running ~= "" then
         env_vars = {
           ANTHROPIC_AUTH_TOKEN = "ollama",
           ANTHROPIC_BASE_URL = "http://localhost:11434",
@@ -26,14 +23,13 @@ return {
           ANTHROPIC_DEFAULT_HAIKU_MODEL = "qwen3-coder-next:cloud",
         }
       elseif vim.env.ANTHROPIC_AUTH_TOKEN then
-        -- Use Anthropic/OpenRouter
         env_vars = {
           ANTHROPIC_AUTH_TOKEN = vim.env.ANTHROPIC_AUTH_TOKEN,
           ANTHROPIC_BASE_URL = "https://openrouter.ai/api",
           -- ANTHROPIC_DEFAULT_OPUS_MODEL = "arcee-ai/trinity-large-preview:free",
           -- ANTHROPIC_DEFAULT_SONNET_MODEL = "arcee-ai/trinity-large-preview:free",
           -- ANTHROPIC_DEFAULT_HAIKU_MODEL = "arcee-ai/trinity-large-preview:free",
-          ANTHROPIC_MODEL = "qwen3-coder-next",
+          ANTHROPIC_MODEL = "qwen/qwen3-coder-next",
           ANTHROPIC_DEFAULT_OPUS_MODEL = "qwen/qwen3-coder-next",   -- OR, "z-ai/glm-4.7",
           ANTHROPIC_DEFAULT_SONNET_MODEL = "qwen/qwen3-coder-next", -- OR, "z-ai/glm-4.7",
           ANTHROPIC_DEFAULT_HAIKU_MODEL = "arcee-ai/trinity-large-preview:free",

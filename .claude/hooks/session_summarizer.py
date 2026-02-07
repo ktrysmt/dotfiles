@@ -2,7 +2,7 @@
 """
 Claude Code SessionEnd Hook
 セッション履歴をサマライズして、日付+要約名のmarkdownファイルとして保存
-Anthropic APIを直接呼び出し（標準ライブラリのみ、SDKなし）
+Gemini CLIをsubprocessで直接呼び出し（標準ライブラリのみ）
 """
 
 import json
@@ -12,8 +12,6 @@ import re
 import subprocess
 import logging
 import time
-import urllib.request
-import urllib.error
 from datetime import datetime
 from pathlib import Path
 
@@ -29,49 +27,62 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 
-# Anthropic API設定
-ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
-ANTHROPIC_MODEL = "claude-haiku-4-5"
+# Gemini CLI設定
+GEMINI_COMMAND = "gemini"
+GEMINI_MODEL = "gemini-2.0-flash-exp"
 
 
-def call_anthropic_api(prompt: str, max_tokens: int = 500) -> str | None:
-    """Anthropic APIを直接呼び出す（標準ライブラリのみ）"""
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        logging.error("ANTHROPIC_API_KEY not set")
-        return None
-
-    data = json.dumps(
-        {
-            "model": ANTHROPIC_MODEL,
-            "max_tokens": max_tokens,
-            "messages": [{"role": "user", "content": prompt}],
-        }
-    ).encode("utf-8")
-
-    req = urllib.request.Request(
-        ANTHROPIC_API_URL,
-        data=data,
-        headers={
-            "Content-Type": "application/json",
-            "x-api-key": api_key,
-            "anthropic-version": "2023-06-01",
-        },
-    )
+def call_gemini_cli(prompt: str, max_tokens: int = 500) -> str | None:
+    """Gemini CLIをsubprocessで呼び出す"""
+    # Gemini CLIの応答フィルタリング用パターン
+    skip_patterns = [
+        "YOLO mode is enabled",
+        "Hook registry initialized",
+    ]
 
     try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            result = json.loads(resp.read().decode("utf-8"))
-            return result["content"][0]["text"]
-    except urllib.error.HTTPError as e:
-        logging.error(f"Anthropic API HTTP error: {e.code} {e.reason}")
+        result = subprocess.run(
+            [GEMINI_COMMAND, "-p", prompt, "--yolo", "-m", GEMINI_MODEL],
+            capture_output=True,
+            text=True,
+            timeout=60,
+        )
+
+        if result.returncode != 0:
+            logging.error(f"Gemini CLI error: {result.stderr}")
+            return None
+
+        output = result.stdout
+        logging.debug(f"Gemini CLI raw output: {output[:200]}")
+
+        # YOLO警告やHookメッセージをフィルタリング
+        lines = output.split("\n")
+        filtered_lines = []
+        for line in lines:
+            skip = False
+            for pattern in skip_patterns:
+                if re.search(pattern, line, re.IGNORECASE):
+                    skip = True
+                    break
+            if not skip and line.strip():
+                filtered_lines.append(line.strip())
+
+        response = "\n".join(filtered_lines).strip()
+        return response if response else None
+
+    except subprocess.TimeoutExpired:
+        logging.error("Gemini CLI timeout")
         return None
-    except urllib.error.URLError as e:
-        logging.error(f"Anthropic API URL error: {e.reason}")
+    except FileNotFoundError:
+        logging.error("Gemini CLI not found. Please install: npm install -g @google/gemini-cli")
         return None
     except Exception as e:
-        logging.error(f"Anthropic API error: {e}")
+        logging.error(f"Gemini CLI error: {e}")
         return None
+
+
+# 関数名の互換性維持のためエイリアス
+call_anthropic_api = call_gemini_cli
 
 
 def load_transcript(transcript_path: str) -> list[dict]:
@@ -350,7 +361,7 @@ def sanitize_filename(name: str) -> str:
     return name[:80] if name else "session"
 
 
-def generate_markdown_summary(
+def make_markdown(
     messages: list[dict],
     session_id: str,
     summary_name: str,
@@ -426,7 +437,7 @@ def main():
         counter += 1
 
     try:
-        markdown = generate_markdown_summary(
+        markdown = make_markdown(
             messages, session_id, summary_name, summary_content, cwd
         )
         with open(output_path, "w", encoding="utf-8") as f:
