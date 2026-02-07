@@ -1,17 +1,18 @@
 return {
   "zbirenbaum/copilot.lua",
   cmd = "Copilot",
-  cond = function()
-    return not vim.env.OPENROUTER_API_KEY
-  end,
+  build = ":Copilot auth",
+  dependencies = {
+    "copilotlsp-nvim/copilot-lsp",
+  },
   event = "InsertEnter",
   config = function()
     require("copilot").setup({
       suggestion = {
         auto_trigger = true,
+        hide_during_completion = false,
         keymap = {
           accept = "<S-Tab>",
-          -- accept = "<M-n>",
           accept_word = "<S-M-n>",
         }
       },

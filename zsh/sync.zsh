@@ -1,5 +1,7 @@
 setopt nonomatch
 setopt AUTO_CD
+setopt AUTO_MENU
+setopt AUTO_NAME_DIRS
 setopt interactivecomments
 
 # https://qiita.com/sho-t/items/d553dd694900cae0966d
@@ -10,6 +12,7 @@ setopt hist_ignore_all_dups
 setopt hist_no_store
 setopt hist_verify
 setopt share_history
+
 
 # zsh-syntax-highlighting performance
 # Limit per-line length to highlight to reduce latency on long inputs

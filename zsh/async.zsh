@@ -21,6 +21,7 @@ alias batd="bat -l diff"
 alias f='fzf --preview "bat --color=always --style=header,grid --line-range :100 {}"'
 alias cdg='cd $(git rev-parse --show-toplevel)'
 
+
 # git
 alias g="git"
 alias gf="git fetch --prune"
@@ -323,9 +324,6 @@ add-zsh-hook precmd _tmux_refresh_status
 
 # fzf
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-
-setopt AUTO_MENU
-setopt AUTO_NAME_DIRS
 
 # --------
 # AI tools
