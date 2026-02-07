@@ -1,17 +1,11 @@
-# Claude Code Global Config
+# Agent Behavior
 
-## IMPORTANT: **EVIDENCE FIRST**
-- ALWAYS use Skills and MCP for any analysis and tasks as much as possible before working.
+## Evicence first
+- ALWAYS use Skills and MCP for any analysis and tasks as much as possible before working to gather evidence.
 - ALWAYS check for a matching Skills BEFORE calling MCP directly.
 
-## NEVER
+## Never
 - Delete prod data without confirmation
 - Hardcode secrets
 - Commit with failing tests/lint
-- Push directly to main
-
-## MUST
-- Write tests for new features/fixes
-- Run CI before completion
-- Document breaking changes
-- Use feature branches
+- Push directly to main/master

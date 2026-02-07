@@ -18,8 +18,9 @@ return {
         -- `ollama launch claude --model qwen3-coder-next` で起動した場合
         -- APIは http://localhost:11434/v1 で、モデル名は qwen3-coder-next
         env_vars = {
-          ANTHROPIC_AUTH_TOKEN = "not-needed-for-ollama",
-          ANTHROPIC_BASE_URL = "http://localhost:11434/v1",
+          ANTHROPIC_AUTH_TOKEN = "ollama",
+          ANTHROPIC_BASE_URL = "http://localhost:11434",
+          ANTHROPIC_MODEL = "qwen3-coder-next:cloud",
           ANTHROPIC_DEFAULT_OPUS_MODEL = "qwen3-coder-next:cloud",
           ANTHROPIC_DEFAULT_SONNET_MODEL = "qwen3-coder-next:cloud",
           ANTHROPIC_DEFAULT_HAIKU_MODEL = "qwen3-coder-next:cloud",
@@ -32,6 +33,7 @@ return {
           -- ANTHROPIC_DEFAULT_OPUS_MODEL = "arcee-ai/trinity-large-preview:free",
           -- ANTHROPIC_DEFAULT_SONNET_MODEL = "arcee-ai/trinity-large-preview:free",
           -- ANTHROPIC_DEFAULT_HAIKU_MODEL = "arcee-ai/trinity-large-preview:free",
+          ANTHROPIC_MODEL = "qwen3-coder-next",
           ANTHROPIC_DEFAULT_OPUS_MODEL = "qwen/qwen3-coder-next",   -- OR, "z-ai/glm-4.7",
           ANTHROPIC_DEFAULT_SONNET_MODEL = "qwen/qwen3-coder-next", -- OR, "z-ai/glm-4.7",
           ANTHROPIC_DEFAULT_HAIKU_MODEL = "arcee-ai/trinity-large-preview:free",
