@@ -45,15 +45,15 @@ github = "lukechilds/zsh-better-npm-completion"
 [plugins.aws_zsh_completer]
 remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
 
-[plugins.dotfiles-async]
-local = "~/dotfiles/zsh"
-use = [
-  "async.zsh"
-]
-
 [plugins.dotfiles-sync]
 local = "~/dotfiles/zsh"
 use = [
   "sync.zsh"
 ]
 apply = ["source"]
+
+[plugins.dotfiles-async]
+local = "~/dotfiles/zsh"
+use = [
+  "async.zsh"
+]

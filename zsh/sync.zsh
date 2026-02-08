@@ -19,8 +19,7 @@ setopt share_history
 # Limit per-line length to highlight to reduce latency on long inputs
 typeset -g ZSH_HIGHLIGHT_MAXLENGTH=${ZSH_HIGHLIGHT_MAXLENGTH:-300}
 
-# export PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c '$aws_is'%{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
-export PROMPT='[%*] %{$fg[cyan]%}%1~%{$reset_color%} %(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
+export PROMPT='[%*] %{$fg[cyan]%}%1d%{$reset_color%} %(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
 
 # general
 bindkey -e
