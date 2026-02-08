@@ -30,12 +30,13 @@ github = "zsh-users/zsh-syntax-highlighting"
 github = "zsh-users/zsh-completions"
 apply = ["fpath"]
 
-[plugins.ohmyzsh-lib]
+[plugins.ohmyzsh-lib-async]
 github = "ohmyzsh/ohmyzsh"
 dir = "lib"
 use = [
   "{key-bindings,directories}.zsh"
 ]
+
 [plugins.ni]
 github = "azu/ni.zsh"
 
@@ -45,6 +46,12 @@ github = "lukechilds/zsh-better-npm-completion"
 [plugins.aws_zsh_completer]
 remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
 
+[plugins.dotfiles-async]
+local = "~/dotfiles/zsh"
+use = [
+  "async.zsh"
+]
+
 [plugins.dotfiles-sync]
 local = "~/dotfiles/zsh"
 use = [
@@ -52,8 +59,6 @@ use = [
 ]
 apply = ["source"]
 
-[plugins.dotfiles-async]
-local = "~/dotfiles/zsh"
-use = [
-  "async.zsh"
-]
+[plugins.ohmyzsh-lib-sync]
+remote = "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/lib/completion.zsh"
+apply = ["source"]

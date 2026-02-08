@@ -119,16 +119,14 @@ export HISTSIZE=100000
 export SAVEHIST=100000
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 # go
-export GOROOT=""
-export GO111MODULE="auto"
-export GOPATH=$HOME/go:$HOME/project
+export GOPATH=$HOME/go
+export GOBIN="$HOME/go/bin" # avoid to call "mise reshim" w/ mise use -g go
 # k8s/docker
 export DOCKER_BUILDKIT=1
 export KREW_NO_UPGRADE_CHECK=1
 # PATH
 path=(
-  "$HOME/go/bin"
-  "$HOME/project/bin"
+  "$GOPATH/bin"
   /usr/local/opt/llvm/bin
   /usr/local/go/bin
   "$HOME/.cargo/bin"
