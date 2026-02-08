@@ -1,4 +1,4 @@
- {
+{
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
     "actions":
@@ -398,7 +398,7 @@
             "black": "#000000",
             "blue": "#89E6FC",
             "brightBlack": "#555753",
-            "brightBlue": "#729FCF",
+            "brightBlue": "#88BEF7",
             "brightCyan": "#34E2E2",
             "brightGreen": "#8AE234",
             "brightPurple": "#AD7FA8",
