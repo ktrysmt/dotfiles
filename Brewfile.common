@@ -6,6 +6,7 @@ brew "tree"
 brew "watch"
 brew "wget"
 brew "csvlens"
+brew "tmux"
 
 # Development tools (not available in mise)
 brew "fzy"

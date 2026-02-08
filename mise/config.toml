@@ -30,7 +30,6 @@ jq = "latest"
 glow = "latest"
 xh = "latest"
 buf = "latest"
-tmux = "latest"
 pinact = "latest"
 peco = "latest"
 
