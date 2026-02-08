@@ -66,6 +66,8 @@ return {
 
     " LeximaAlterCommand vsr Vsr|TigOpenCurrentFile
 
+    LeximaAlterCommand o\%[cto] Octo<space>
+
     nnoremap / /\v
     ]]
 
