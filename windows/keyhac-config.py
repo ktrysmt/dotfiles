@@ -81,6 +81,8 @@ def configure(keymap):
     keymap_wez["LCtrl-Shift-J"] = ["LCtrl-Shift-J"]
     keymap_wez["LCtrl-Shift-Semicolon"] = ["LCtrl-Shift-Semicolon"]
 
+    keymap_wez["LShift-Enter"] = ["LCtrl-Enter"]
+
     def wezterm_ctrl_c():
         keymap.getWindow().setImeStatus(0)
         keymap.InputKeyCommand("LCtrl-C")()

@@ -3,6 +3,7 @@ setopt AUTO_CD
 setopt AUTO_MENU
 setopt AUTO_NAME_DIRS
 setopt interactivecomments
+setopt promptsubst
 
 # https://qiita.com/sho-t/items/d553dd694900cae0966d
 setopt extended_history
@@ -19,9 +20,7 @@ setopt share_history
 typeset -g ZSH_HIGHLIGHT_MAXLENGTH=${ZSH_HIGHLIGHT_MAXLENGTH:-300}
 
 # export PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c '$aws_is'%{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
-export PROMPT='[%*]%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$reset_color%}%(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
-
-setopt promptsubst
+export PROMPT='[%*] %{$fg[cyan]%}%1~%{$reset_color%} %(?.%{$fg[green]%}.%{$fg[red]%})%B%(!.#.$)%b '
 
 # general
 bindkey -e
@@ -44,7 +43,11 @@ zmodload -i zsh/complist
 : ${XDG_CACHE_HOME:=$HOME/.cache}
 ZSH_COMPCACHE="${XDG_CACHE_HOME}/zsh/zcompcache"
 ZSH_COMPDUMP="${XDG_CACHE_HOME}/zsh/.zcompdump-${HOST}"
-[[ -d "${ZSH_COMPCACHE}" ]] || mkdir -p "${ZSH_COMPCACHE}" "${ZSH_COMPDUMP:h}"
+ZSH_COMPLETIONS="${HOME}/.zsh/completions"
+[[ -d "${ZSH_COMPCACHE}" ]] || mkdir -p "${ZSH_COMPCACHE}" "${ZSH_COMPDUMP:h}" "${ZSH_COMPLETIONS}"
+
+# Add custom completion directory to fpath
+fpath=("${ZSH_COMPLETIONS}" ${fpath})
 
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$ZSH_COMPCACHE"

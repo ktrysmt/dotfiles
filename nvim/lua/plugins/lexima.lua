@@ -46,9 +46,9 @@ return {
     LeximaAlterCommand gp\%[ush] Git<space>push<space>origin<space>
     LeximaAlterCommand gb\%[lame] Git<space>blame
 
-    LeximaAlterCommand gd DiffviewOpen
-    LeximaAlterCommand gdc DiffviewClose
-    LeximaAlterCommand gdh DiffviewFileHistory
+    LeximaAlterCommand dv DiffviewOpen
+    LeximaAlterCommand dvc DiffviewClose
+    LeximaAlterCommand dvh DiffviewFileHistory
 
     LeximaAlterCommand %s s/\v
     LeximaAlterCommand s s/\v
