@@ -1,8 +1,7 @@
 # Agent Behavior
 
-## Evicence first
-- ALWAYS use Skills and MCP for any analysis and tasks as much as possible before working to gather evidence.
-- ALWAYS check for a matching Skills BEFORE calling MCP directly.
+## MCP first
+- ALWAYS use MCP for any analysis and tasks as much as possible before working to gather evidence.
 
 ## Never
 - Delete prod data without confirmation
