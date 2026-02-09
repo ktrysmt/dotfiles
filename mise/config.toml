@@ -32,7 +32,6 @@ xh = "latest"
 buf = "latest"
 pinact = "latest"
 peco = "latest"
-mermaid-ascii = "latest"
 
 # CLI tools (aqua/github backend)
 "aqua:Wilfred/difftastic" = "latest"

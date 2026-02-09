@@ -171,7 +171,7 @@ def configure(keymap):
         "LAlt-G": (
             "WindowsTerminal.exe",
             "CASCADIA_HOSTING_WINDOW_CLASS",
-            r"%windir%\system32\cmd.exe",
+            r"C:\Program Files\WindowsApps\Microsoft.WindowsTerminal_1.23.20211.0_x64__8wekyb3d8bbwe\WindowsTerminal.exe",
             "Terminal",
         ),
     }.items():
