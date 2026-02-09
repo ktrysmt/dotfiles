@@ -1,3 +1,18 @@
+# completion
+autoload -Uz compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+  { zcompile ~/.zcompdump } &!
+else
+  compinit -C
+fi
+# lazy load
+function zmv() {
+  unfunction zmv
+  autoload -Uz zmv
+  zmv "$@"
+}
+
 # -----
 # alias
 # -----
@@ -137,25 +152,22 @@ path=(
 # ----------------
 # lazy completion
 # ----------------
-# Helper function for lazy completion loading (DRY)
 _lazy_load_completion() {
-  local cmd=$1 starter_fn=$2 completion_cmd=$3
-  if type "$cmd" > /dev/null 2>&1; then
+  local cmd=$1; shift
+  if (( $+commands[$cmd] )); then
     eval "function $cmd() {
-      if ! type $starter_fn >/dev/null 2>&1; then
-        source <($completion_cmd)
-      fi
-      command $cmd \"\$@\"
+      unfunction $cmd
+      source <($*)
+      $cmd \"\$@\"
     }"
   fi
 }
-
-_lazy_load_completion kubectl __start_kubectl "command kubectl completion zsh"
-_lazy_load_completion helm __start_helm "command helm completion zsh"
-_lazy_load_completion eksctl __start_eksctl "command eksctl completion zsh"
-_lazy_load_completion kind __start_kind "command kind completion zsh"
-_lazy_load_completion gh __start_gh "command gh completion -s zsh"
-_lazy_load_completion pnpm _pnpm "command pnpm completion zsh"
+_lazy_load_completion kubectl kubectl completion zsh
+_lazy_load_completion helm helm completion zsh
+_lazy_load_completion eksctl eksctl completion zsh
+_lazy_load_completion kind kind completion zsh
+_lazy_load_completion gh gh completion -s zsh
+_lazy_load_completion pnpm pnpm completion zsh
 unset -f _lazy_load_completion
 
 # Cache tac command (tail -r on BSD, tac on GNU)

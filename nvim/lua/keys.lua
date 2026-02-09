@@ -20,16 +20,10 @@ vim.keymap.set('n', 'cn', '*N"_cgn')
 vim.keymap.set('n', 'cN', '*N"_cgN')
 
 vim.keymap.set('n', '<C-g>', function()
-  local path = vim.fn.expand('%:p')
+  local path = vim.fn.expand('%')
   vim.fn.setreg('+', path)
   print(path)
 end)
--- vim.keymap.set('n', '<C-g>', function()
---   vim.cmd [[
---   let @+ =expand('%:p')
---   echo expand('%:p')
---   ]]
--- end)
 
 vim.keymap.set('n', '<Leader>p', '"0p', { silent = true })
 vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })

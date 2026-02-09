@@ -55,6 +55,8 @@ set -g default-command "${SHELL} -l"
 set -g default-terminal "xterm-256color"
 set -ag terminal-overrides ",xterm-256color:RGB"
 
+set -g allow-passthrough on
+
 # --------------
 # status
 # --------------

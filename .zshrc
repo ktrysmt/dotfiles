@@ -30,6 +30,11 @@ unset cache_dir sheldon_cache sheldon_toml
 # ---------
 # zsh-defer unfunction source
 
+
+# Ensure Homebrew is at the front of PATH (after path_helper in /etc/zprofile)
+path=(/opt/homebrew/bin /opt/homebrew/sbin $path)
+path=("$HOME/.local/bin" "$HOME/.local/share/mise/shims" $path)
+
 # Ensure mise shims are at the front of PATH (after path_helper in /etc/zprofile)
 # path=("$HOME/.local/bin" "$HOME/.local/share/mise/shims" $path)
 
