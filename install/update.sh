@@ -69,6 +69,17 @@ step_post_install() {
   bash "${SCRIPT_DIR}/post-install.sh"
 }
 
+step_sheldon() {
+  log_info "=== Step: Sheldon Plugin Update ==="
+  if command -v sheldon &> /dev/null; then
+    rm ~/.cache/sheldon.zsh || true
+    sheldon lock --update
+    sheldon source > ~/.cache/sheldon.zsh
+  else
+    log_warning "Sheldon not found; skipping plugin update."
+  fi
+}
+
 # ------------------------------------------------------------------------------
 # Main
 # ------------------------------------------------------------------------------
@@ -87,6 +98,7 @@ main() {
       step_mise
       step_os_specific
       step_post_install
+      step_sheldon
       ;;
     symlink)
       step_symlink

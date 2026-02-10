@@ -16,14 +16,13 @@
 
 # cache
 cache_dir=${XDG_CACHE_HOME:-$HOME/.cache}
-sheldon_cache="$cache_dir/sheldon.zsh"
-sheldon_toml="$HOME/.config/sheldon/plugins.toml"
-if [[ ! -r "$sheldon_cache" || "$sheldon_toml" -nt "$sheldon_cache" ]]; then
+sheldon_cache_path="$cache_dir/sheldon.zsh"
+if [[ ! -r "$sheldon_cache_path" ]]; then
   mkdir -p $cache_dir
-  sheldon source > $sheldon_cache
+  sheldon source > $sheldon_cache_path
 fi
-source "$sheldon_cache"
-unset cache_dir sheldon_cache sheldon_toml
+source "$sheldon_cache_path"
+unset cache_dir sheldon_cache_path
 
 # ---------
 # end zwc
