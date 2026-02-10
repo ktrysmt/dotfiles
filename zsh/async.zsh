@@ -64,6 +64,7 @@ alias glogo='git log --oneline --pretty=format:"%C(red)%h %C(green)%an %Creset%s
 alias grebase='git rebase -i $(git log --date=short --pretty="format:%C(yellow)%h %C(green)%cd %C(blue)%ae %C(red)%d %C(reset)%s" |fzy| cut -d" " -f1)'
 alias gb="git branch"
 alias gbc="~/dotfiles/bin/git-checkout-remote-branch"
+alias gw="git worktree"
 
 # k8s
 alias k="kubectl"
@@ -357,17 +358,13 @@ function trans() {
 # --------------
 # git worktree
 # --------------
-function gw() {
-  if [ "$1" = "add" ]; then
-    git worktree "$@" && {
-      cd "$2" && {
-        if [[ -e uv.lock ]]; then
-          uv sync
-          source .venv/bin/activate
-        fi
-      }
-    };
-  else
-    git worktree "$@"
-  fi
+function gwa() {
+  git worktree add "$@" && {
+    cd "$1" && {
+      if [[ -e uv.lock ]]; then
+        uv sync
+        source .venv/bin/activate
+      fi
+    }
+  };
 }
