@@ -25,5 +25,5 @@ path=("$HOME/.local/bin" "$HOME/.local/share/mise/shims" $path)
 # zmodload zsh/zprof
 # zsh -i -c 'zmodload zsh/zprof; source ~/.zshenv; source ~/.zshrc; zprof'
 
-# prevent compinit in /etc/zsh/zshrc
+# prevent compinit in /etc/zsh/zshrc (ubuntu)
 skip_global_compinit=1
