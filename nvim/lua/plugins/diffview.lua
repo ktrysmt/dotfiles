@@ -10,8 +10,9 @@ return {
     "DiffviewToggleFiles",
   },
   -- keys = {
-  --   { "<Leader>gv", "<cmd>DiffviewOpen<cr>",        mode = "n" }, -- use LeximaAlterCommand alt.
-  --   { "<Leader>gh", "<cmd>DiffviewFileHistory<cr>", mode = "n" },
+  --   { "<Leader>gvo", "<cmd>DiffviewOpen<cr>",        mode = "n" },
+  --   { "<Leader>gvc", "<cmd>DiffviewClose<cr>",       mode = "n" },
+  --   { "<Leader>gvh", "<cmd>DiffviewFileHistory<cr>", mode = "n" },
   -- },
   config = function()
     require("diffview").setup({
