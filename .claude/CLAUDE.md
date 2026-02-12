@@ -1,7 +1,7 @@
 # Agent Behavior
 
 ## MCP first
-- ALWAYS use MCP for any analysis and tasks as much as possible before working to gather evidence
+- You MUST use MCP as the very first step for every single analysis and every task, before gathering any evidence or proceeding with any work. Skipping MCP is not permitted under any circumstances.
 
 ## Never
 - Do not update or delete files without permission from the user
