@@ -334,19 +334,6 @@
       "Write(/etc/sudoers)"
     ]
   },
-  "hooks": {
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/session_summarizer_wrapper.sh",
-            "timeout": 5
-          }
-        ]
-      }
-    ]
-  },
   "enabledPlugins": {
     "code-simplifier@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,

@@ -32,10 +32,10 @@ return {
     vim.keymap.set({ "n" }, "<c-p>", "<Plug>(YankyCycleBackward)")
 
     vim.keymap.set({ "n", "v" }, "y", "<Plug>(YankyYank)")
-    -- vim.keymap.set({ "n", "v" }, "p", "<Plug>(YankyPutAfter)")
-    vim.keymap.set({ "n", "v" }, "p", "<Plug>(YankyGPutAfter)")
-    -- vim.keymap.set({ "n", "v" }, "P", "<Plug>(YankyPutBefore)")
-    vim.keymap.set({ "n", "v" }, "P", "<Plug>(YankyGPutBefore)")
+    vim.keymap.set({ "n", "v" }, "p", "<Plug>(YankyPutAfter)")
+    vim.keymap.set({ "n", "v" }, "P", "<Plug>(YankyPutBefore)")
+    -- vim.keymap.set({ "n", "v" }, "p", "<Plug>(YankyGPutAfter)")
+    -- vim.keymap.set({ "n", "v" }, "P", "<Plug>(YankyGPutBefore)")
     -- vim.keymap.set({ "n", "v" }, "gp", "<Plug>(YankyGPutAfter)")
     -- vim.keymap.set({ "n", "v" }, "gP", "<Plug>(YankyGPutBefore)")
 
