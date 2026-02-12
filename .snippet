@@ -196,3 +196,4 @@ echo 'Upper Strings' | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g'               
 echo >| /tmp/startup.log; vim --startuptime /tmp/startup.log +q ; bat /tmp/startup.log                                                                                                                                     # vim startuptime
 hyperfine --warmup 5 'zsh -i -c exit'                                                                                                                                                                                      # hyperfine
 fd -t d -d 1 -E '*HOGE*' -E '*HOGE*' -0 | xargs -0 -I {} sh -c 'zip -r "${1%/}.zip" "$1"' _ '{}'                                                                                                                           # fd then xargs zip w/ ignore HOGE,FUGA
+fd -p 'path/to/[^/]+/dir/aaa\..*\.bbb\.ccc$' | sed 's/.*\/tmpl\.\(.*\)\.yaml\.j2/\1/' | sort -u

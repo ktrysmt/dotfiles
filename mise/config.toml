@@ -43,4 +43,3 @@ peco = "latest"
 # npm tools
 "npm:diff-so-fancy" = "latest"
 "npm:@google/gemini-cli" = "latest"
-"npm:@anthropic-ai/claude-code" = "latest"

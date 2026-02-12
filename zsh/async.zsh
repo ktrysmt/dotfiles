@@ -218,6 +218,7 @@ fi
 # -----------
 # custom fzf: peco
 # -----------
+# bat -l=sh --color=always .snippet| fzf --ansi で代替できる
 function peco-select-snippet() {
   emulate -L zsh
   BUFFER=$(cat ~/.snippet | peco)
