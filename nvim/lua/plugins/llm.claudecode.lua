@@ -32,6 +32,10 @@ return {
             ANTHROPIC_DEFAULT_HAIKU_MODEL = "arcee-ai/trinity-large-preview:free",
           }
         end
+      else
+        env_vars = {
+          ANTHROPIC_AUTH_TOKEN = ""
+        }
       end
 
       require("claudecode").setup({
