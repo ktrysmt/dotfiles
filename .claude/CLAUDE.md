@@ -9,3 +9,4 @@
 - Hardcode secrets
 - Commit with failing tests/lint
 - Push directly to main/master
+- Do not use multi-byte languages such as Japanese or emojis in mermaid blocks within Markdown
