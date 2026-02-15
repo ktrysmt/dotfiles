@@ -29,6 +29,12 @@ return {
   {
     'lewis6991/gitsigns.nvim',
     event = { "CursorHold", "CursorMoved", "ModeChanged", "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
+    keys = {
+      { "gw", mode = "n" },
+      { "gb", mode = "n" },
+      { "g+", mode = { "n", "v" } },
+      { "g-", mode = { "n", "v" } },
+    },
     config = function()
       local gitsigns = require('gitsigns')
       gitsigns.setup({
