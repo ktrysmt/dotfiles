@@ -11,7 +11,6 @@ bun = "latest"
 # Language tools
 ruff = "latest"
 pnpm = "latest"
-golangci-lint = "latest"
 uv = "latest"
 
 # Editor

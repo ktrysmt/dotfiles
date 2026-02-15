@@ -22,15 +22,38 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
+      "williamboman/mason-lspconfig.nvim",
+      "weilbith/nvim-lsp-smag",
       {
-        "williamboman/mason-lspconfig.nvim",
-        "weilbith/nvim-lsp-smag",
+        'williamboman/mason.nvim',
+        cmd = {
+          "Mason",
+          "MasonInstall",
+          "MasonUninstall",
+          "MasonUninstallAll",
+          "MasonLog",
+          "MasonUpdate",
+        },
+        opts = {
+          ui = {
+            check_outdated_packages_on_open = true,
+            icons = {
+              package_installed = "✓",
+              package_uninstalled = "✗",
+              package_pending = "⟳",
+            },
+          },
+        },
+        build = ":MasonUpdate",
+        config = function()
+          require("mason").setup()
+        end
       },
     },
     config = function()
-      -------
+      --
       -- diagnostics
-      -------
+      --
       vim.diagnostic.config({ virtual_text = false, float = false, severity_sort = true })
       local init_lspconfig = function(ev)
         vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
@@ -74,10 +97,29 @@ return {
         end
       end
 
-      -------
-      -- lsp
-      -------
+      --
+      -- mason
+      --
+      local all_servers = {
+        'bashls',
+        'clangd',
+        'dockerls',
+        'gopls',
+        'lua_ls',
+        'pylsp',
+        'rust_analyzer',
+        'svelte',
+        'typos_lsp',
+        'vimls',
+      }
       local mason_lspconfig = require("mason-lspconfig")
+      mason_lspconfig.setup({
+        ensure_installed = all_servers,
+      })
+
+      --
+      -- lsp each config
+      --
       -- rust
       vim.lsp.config('rust_analyzer', {
         settings = {
@@ -123,19 +165,12 @@ return {
       })
       vim.lsp.enable('gopls')
 
-      -- others via mason
-      local function get_installed_servers()
-        local servers = {}
-        for _, s in ipairs(mason_lspconfig.get_installed_servers()) do
-          if s ~= "pylsp" and s ~= "lua_ls" and s ~= "gopls" and s ~= "rust_analyzer" then
-            table.insert(servers, s)
-          end
-        end
-        return servers
-      end
-      vim.lsp.enable(get_installed_servers())
+      -- other lsp
+      vim.lsp.enable(all_servers)
 
-      -- attach
+      --
+      -- attach it
+      --
       local lspconfig_group = vim.api.nvim_create_augroup('lspconfig_group', { clear = true })
       vim.api.nvim_create_autocmd("LspAttach", {
         group = lspconfig_group,
