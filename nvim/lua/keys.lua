@@ -231,3 +231,15 @@ vim.keymap.set('n', '<Plug>(window-resize-mode)<', function()
   local cmd = win_resize_cmd('left')
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. '<Plug>(window-resize-mode)', true, true, true), 'n', true)
 end)
+
+-- memd terminal
+vim.keymap.set('n', '<Leader>md', function()
+  local filepath = vim.api.nvim_buf_get_name(0)
+  if filepath == '' then
+    vim.notify('No file in current buffer', vim.log.levels.WARN)
+    return
+  end
+  vim.cmd('rightbelow vnew')
+  vim.fn.termopen('memd ' .. vim.fn.shellescape(filepath))
+  vim.cmd('startinsert')
+end, { desc = 'Run memd on current file' })
