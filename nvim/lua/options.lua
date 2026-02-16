@@ -63,6 +63,7 @@ vim.opt.wildmode                = 'longest:full,full'
 vim.opt.winblend                = 15
 vim.opt.wrap                    = true
 vim.opt.autoread                = true
+vim.opt.winborder               = "rounded"
 vim.opt.matchpairs:append({
   "<:>",
   "「:」",
