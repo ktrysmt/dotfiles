@@ -1,5 +1,5 @@
 local highlight_group = vim.api.nvim_create_augroup('highlight_group', { clear = true })
-vim.api.nvim_create_autocmd({ 'VimEnter', 'Colorscheme' }, {
+vim.api.nvim_create_autocmd({ 'VimEnter', 'Colorscheme', 'BufReadPre' }, {
   pattern = "*",
   group = highlight_group,
   command =
