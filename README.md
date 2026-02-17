@@ -88,9 +88,6 @@ dotfiles/
 * macosは指定なし、/etc/ 直下
 ```
 
-
-
-
 ## Author
 
 [ktrysmt](https://github.com/ktrysmt)
