@@ -1,5 +1,4 @@
 .DS_Store
 feature-*
-.serena/
-.claude/
+.serena/project.yml
 .claude/settings.local.json

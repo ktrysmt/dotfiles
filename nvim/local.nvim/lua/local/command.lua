@@ -6,7 +6,7 @@ function M.init()
   -- Rg
   vim.api.nvim_create_user_command('Rg', ':silent grep <args>', { nargs = '*', complete = file })
   if vim.fn.executable('rg') == 1 then
-    vim.opt.grepprg = 'rg --vimgrep --no-heading --sort-files'
+    vim.opt.grepprg = "rg --vimgrep --no-heading --sort-files --hidden --glob '!.git/'"
     vim.opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
   end
 
