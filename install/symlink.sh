@@ -39,6 +39,7 @@ link_file "${DOTFILES_DIR}/mise/config.toml" ~/.config/mise/config.toml
 link_file "${DOTFILES_DIR}/.claude/hooks" ~/.claude/hooks
 link_file "${DOTFILES_DIR}/.claude/CLAUDE.md" ~/.claude/CLAUDE.md
 link_file "${DOTFILES_DIR}/.claude/settings.json" ~/.claude/settings.json
+link_file "${DOTFILES_DIR}/.claude/statusline-command.sh" ~/.claude/statusline-command.sh
 
 # DISABLE SKILLS FOR NOW
 # link_file "${DOTFILES_DIR}/.claude/skills" ~/.claude/skills

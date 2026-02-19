@@ -2,7 +2,7 @@
 """
 Claude Code SessionEnd Hook
 セッション履歴をサマライズして、日付+要約名のmarkdownファイルとして保存
-Gemini CLIをsubprocessで直接呼び出し（標準ライブラリのみ）
+Claude Code CLIをsubprocessで直接呼び出し（標準ライブラリのみ）
 """
 
 import json
@@ -18,7 +18,6 @@ from pathlib import Path
 # ログ設定
 LOG_FILE = Path.home() / ".claude/hooks/session_summarizer.log"
 LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
-# 環境変数でDEBUGモードを有効化: DEBUG=1 で実行
 LOG_LEVEL = logging.DEBUG if os.environ.get("DEBUG") else logging.INFO
 logging.basicConfig(
     filename=LOG_FILE,
@@ -27,108 +26,92 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 
-# Gemini CLI設定
-GEMINI_COMMAND = "gemini"
-GEMINI_MODEL = "gemini-2.0-flash-exp"
+CLAUDE_MODEL = "sonnet"
+
+# システムタグ除去用の正規表現をモジュールレベルで事前コンパイル
+_SYSTEM_TAGS = [
+    "system-reminder", "local-command-caveat", "env", "claude_background_info",
+    "antml:thinking", "antml:function_calls", "function_results",
+    "bash-input", "bash-stdout", "bash-stderr",
+]
+_TAG_PATTERNS = []
+for _tag in _SYSTEM_TAGS:
+    _TAG_PATTERNS.append(re.compile(rf"<{_tag}[^>]*>.*?</{_tag}>", re.DOTALL | re.IGNORECASE))
+    _TAG_PATTERNS.append(re.compile(rf"<{_tag}[^>]*/?>", re.IGNORECASE))
+_RE_FILE_REF = re.compile(r"@\.?[\w./-]+(?:\.\w+)?(?:#L\d+(?:-\d+)?)?\s*")
+_RE_SYMBOL_REF = re.compile(r"(?<!#)#([a-zA-Z_][a-zA-Z0-9_]*)\b")
+_RE_MD_HEADING = re.compile(r"^#{1,6}\s*", re.MULTILINE)
+_RE_BLANK_LINES = re.compile(r"\n{3,}")
+_RE_PREAMBLE = re.compile(
+    r"^(会話内容を踏まえて|以下[のが]|要約[名タイトル]*[をは]?|提案します)[：:、。\s]*"
+)
+_RE_UNSAFE_CHARS = re.compile(r'[<>:"/\\|?*@#]')
+_RE_MULTI_DASH = re.compile(r"-+")
 
 
-def call_gemini_cli(prompt: str, max_tokens: int = 500) -> str | None:
-    """Gemini CLIをsubprocessで呼び出す"""
-    # Gemini CLIの応答フィルタリング用パターン
-    skip_patterns = [
-        "YOLO mode is enabled",
-        "Hook registry initialized",
-    ]
-
+def call_claude_cli(prompt: str) -> str | None:
+    """Claude Code CLIをsubprocessで呼び出す"""
     try:
         result = subprocess.run(
-            [GEMINI_COMMAND, "-p", prompt, "--yolo", "-m", GEMINI_MODEL],
+            ["claude", "-p", prompt, "--model", CLAUDE_MODEL, "--output-format", "text", "--no-session-persistence"],
             capture_output=True,
             text=True,
-            timeout=60,
+            timeout=120,
         )
 
         if result.returncode != 0:
-            logging.error(f"Gemini CLI error: {result.stderr}")
+            logging.error(f"Claude CLI error: {result.stderr}")
             return None
 
-        output = result.stdout
-        logging.debug(f"Gemini CLI raw output: {output[:200]}")
-
-        # YOLO警告やHookメッセージをフィルタリング
-        lines = output.split("\n")
-        filtered_lines = []
-        for line in lines:
-            skip = False
-            for pattern in skip_patterns:
-                if re.search(pattern, line, re.IGNORECASE):
-                    skip = True
-                    break
-            if not skip and line.strip():
-                filtered_lines.append(line.strip())
-
-        response = "\n".join(filtered_lines).strip()
+        response = result.stdout.strip()
+        logging.debug(f"Claude CLI output: {response[:200]}")
         return response if response else None
 
     except subprocess.TimeoutExpired:
-        logging.error("Gemini CLI timeout")
+        logging.error("Claude CLI timeout")
         return None
     except FileNotFoundError:
-        logging.error("Gemini CLI not found. Please install: npm install -g @google/gemini-cli")
+        logging.error("Claude CLI not found. Please install: npm install -g @anthropic-ai/claude-code")
         return None
     except Exception as e:
-        logging.error(f"Gemini CLI error: {e}")
+        logging.error(f"Claude CLI error: {e}")
         return None
-
-
-# 関数名の互換性維持のためエイリアス
-call_anthropic_api = call_gemini_cli
 
 
 def load_transcript(transcript_path: str) -> list[dict]:
     """JSONLトランスクリプトを読み込む"""
     messages = []
-    if transcript_path and os.path.exists(transcript_path):
-        with open(transcript_path, "r", encoding="utf-8") as f:
-            for line in f:
-                if line.strip():
-                    try:
-                        messages.append(json.loads(line))
-                    except json.JSONDecodeError:
-                        continue
+    if not transcript_path or not os.path.exists(transcript_path):
+        return messages
+    with open(transcript_path, "r", encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                try:
+                    messages.append(json.loads(line))
+                except json.JSONDecodeError:
+                    continue
     return messages
 
 
 def clean_system_tags(text: str) -> str:
     """システムタグとその内容を除去"""
-    tags_to_remove = [
-        "system-reminder",
-        "local-command-caveat",
-        "env",
-        "claude_background_info",
-        "antml:thinking",
-        "antml:function_calls",
-        "function_results",
-        "bash-input",
-        "bash-stdout",
-        "bash-stderr",
-    ]
-
     result = text
-    for tag in tags_to_remove:
-        pattern = rf"<{tag}[^>]*>.*?</{tag}>"
-        result = re.sub(pattern, "", result, flags=re.DOTALL | re.IGNORECASE)
-        result = re.sub(rf"<{tag}[^>]*/?>", "", result, flags=re.IGNORECASE)
-
-    # @ファイル参照を除去（.で始まる隠しディレクトリにも対応）
-    result = re.sub(r"@\.?[\w./-]+(?:\.\w+)?(?:#L\d+(?:-\d+)?)?\s*", "", result)
-    # #シンボル参照を除去
-    result = re.sub(r"(?<!#)#([a-zA-Z_][a-zA-Z0-9_]*)\b", r"\1", result)
-    # Markdown見出し記号を除去
-    result = re.sub(r"^#{1,6}\s*", "", result, flags=re.MULTILINE)
-    # 空行整理
-    result = re.sub(r"\n{3,}", "\n\n", result)
+    for pattern in _TAG_PATTERNS:
+        result = pattern.sub("", result)
+    result = _RE_FILE_REF.sub("", result)
+    result = _RE_SYMBOL_REF.sub(r"\1", result)
+    result = _RE_MD_HEADING.sub("", result)
+    result = _RE_BLANK_LINES.sub("\n\n", result)
     return result.strip()
+
+
+def _extract_text(content) -> str:
+    """メッセージcontentからテキストを抽出"""
+    if isinstance(content, list):
+        return " ".join(
+            str(c.get("text", "")) for c in content if isinstance(c, dict)
+        )
+    return str(content)
 
 
 def extract_conversation(messages: list[dict]) -> str:
@@ -136,24 +119,14 @@ def extract_conversation(messages: list[dict]) -> str:
     conversation = []
     for m in messages:
         msg_type = m.get("type", "")
-        if msg_type == "user":
-            content = m.get("message", {}).get("content", "")
-            if isinstance(content, list):
-                content = " ".join(
-                    str(c.get("text", "")) for c in content if isinstance(c, dict)
-                )
-            content = clean_system_tags(str(content))
-            if content:
-                conversation.append(f"User: {content[:500]}")
-        elif msg_type == "assistant":
-            content = m.get("message", {}).get("content", "")
-            if isinstance(content, list):
-                content = " ".join(
-                    str(c.get("text", "")) for c in content if isinstance(c, dict)
-                )
-            content = clean_system_tags(str(content))
-            if content:
-                conversation.append(f"Assistant: {content[:300]}")
+        if msg_type not in ("user", "assistant"):
+            continue
+        content = m.get("message", {}).get("content", "")
+        content = clean_system_tags(_extract_text(content))
+        if not content:
+            continue
+        limit = 500 if msg_type == "user" else 300
+        conversation.append(f"{'User' if msg_type == 'user' else 'Assistant'}: {content[:limit]}")
     return "\n".join(conversation[:30])
 
 
@@ -165,13 +138,11 @@ def is_valid_summary_name(name: str) -> bool:
         return False
     if re.search(r"\.\w{1,4}$", name):
         return False
-    if re.match(r"^[\d\-]+$", name):
-        return False
-    return True
+    return not re.match(r"^[\d\-]+$", name)
 
 
 def generate_summary_name(conversation: str) -> str:
-    """Anthropic APIを使ってセッションの要約名を生成"""
+    """Claude CLIを使ってセッションの要約名を生成"""
     prompt = f"""会話セッションの要約タイトルを1つだけ出力せよ。
 
 ルール:
@@ -195,17 +166,11 @@ def generate_summary_name(conversation: str) -> str:
 
 タイトル（1行のみ）:"""
 
-    result = call_anthropic_api(prompt, max_tokens=100)
+    result = call_claude_cli(prompt)
 
     if result:
-        logging.debug(f"Haiku name result: {result}")
-        # 前置きパターンを除去
-        cleaned = re.sub(
-            r"^(会話内容を踏まえて|以下[のが]|要約[名タイトル]*[をは]?|提案します)[：:、。\s]*",
-            "",
-            result.strip(),
-        )
-        # コロンの後の部分だけを取得（「タイトル：〜」形式対応）
+        logging.debug(f"Summary name result: {result}")
+        cleaned = _RE_PREAMBLE.sub("", result.strip())
         if "：" in cleaned:
             cleaned = cleaned.split("：", 1)[-1].strip()
         if ":" in cleaned:
@@ -224,14 +189,14 @@ def generate_summary_name(conversation: str) -> str:
                 logging.info(f"Using first line as summary name: {sanitized}")
                 return sanitized
 
-    logging.warning("No valid summary name from API, using fallback")
+    logging.warning("No valid summary name from CLI, using fallback")
     fallback = fallback_summary_name(conversation)
     logging.info(f"Fallback summary name: {fallback}")
     return fallback
 
 
 def generate_summary_content(conversation: str) -> str:
-    """Anthropic APIで会話の要約を生成"""
+    """Claude CLIで会話の要約を生成"""
     prompt = f"""以下の会話セッションを要約してください。
 
 要件:
@@ -246,19 +211,18 @@ def generate_summary_content(conversation: str) -> str:
 
 要約:"""
 
-    result = call_anthropic_api(prompt, max_tokens=1000)
+    result = call_claude_cli(prompt)
 
     if result and len(result) >= 50:
         logging.info(f"Summary generated: {len(result)} chars")
         return result
 
-    logging.warning("API summary failed or too short, using fallback")
+    logging.warning("CLI summary failed or too short, using fallback")
     return generate_fallback_summary(conversation)
 
 
 def generate_fallback_summary(conversation: str) -> str:
     """フォールバック用の要約を生成"""
-    lines = []
     user_messages = []
     assistant_messages = []
 
@@ -268,23 +232,20 @@ def generate_fallback_summary(conversation: str) -> str:
         elif line.startswith("Assistant:"):
             assistant_messages.append(line[10:].strip())
 
+    lines = []
     if user_messages:
         lines.append("### ユーザーの質問/リクエスト")
-        for msg in user_messages[:5]:
-            lines.append(f"- {msg[:100]}")
-
+        lines.extend(f"- {msg[:100]}" for msg in user_messages[:5])
     if assistant_messages:
         lines.append("\n### アシスタントの対応")
-        for msg in assistant_messages[:3]:
-            lines.append(f"- {msg[:100]}")
+        lines.extend(f"- {msg[:100]}" for msg in assistant_messages[:3])
 
     return "\n".join(lines) if lines else "要約生成失敗"
 
 
 def fallback_summary_name(conversation: str) -> str:
-    """APIが使えない場合のフォールバック"""
-    lines = conversation.split("\n")
-    for line in lines:
+    """CLIが使えない場合のフォールバック"""
+    for line in conversation.split("\n"):
         if line.startswith("User:"):
             text = line[5:].strip()[:40]
             return sanitize_filename(text) or "session"
@@ -292,72 +253,42 @@ def fallback_summary_name(conversation: str) -> str:
 
 
 def get_repository_info(cwd: str | None = None) -> tuple[str, str | None]:
-    """Gitリポジトリ名とworktree名を取得
-
-    Returns:
-        tuple[str, str | None]: (リポジトリ名, worktree名 or None)
-    """
-    repo_name = "unknown"
-    worktree_name = None
-
+    """Gitリポジトリ名とworktree名を取得"""
     try:
-        # リポジトリのルートディレクトリを取得
         result = subprocess.run(
-            ["git", "rev-parse", "--show-toplevel"],
+            ["git", "rev-parse", "--show-toplevel", "--git-common-dir"],
             capture_output=True,
             text=True,
             timeout=5,
             cwd=cwd,
         )
         if result.returncode == 0 and result.stdout.strip():
-            toplevel = Path(result.stdout.strip())
+            lines = result.stdout.strip().split("\n")
+            toplevel = Path(lines[0])
+            common_dir = Path(lines[1]).resolve() if len(lines) > 1 else None
 
-            # worktreeかどうかを判定（git-common-dirがtoplevel/.gitと異なる場合はworktree）
-            common_result = subprocess.run(
-                ["git", "rev-parse", "--git-common-dir"],
-                capture_output=True,
-                text=True,
-                timeout=5,
-                cwd=cwd,
-            )
-            if common_result.returncode == 0 and common_result.stdout.strip():
-                common_dir = Path(common_result.stdout.strip()).resolve()
-                expected_git_dir = toplevel / ".git"
+            if common_dir and common_dir != (toplevel / ".git").resolve():
+                repo_name = sanitize_filename(common_dir.parent.name)
+                worktree_name = sanitize_filename(toplevel.name)
+                logging.info(f"Worktree detected: repo={repo_name}, worktree={worktree_name}")
+                return repo_name, worktree_name
 
-                # worktreeの場合、common-dirはメインリポジトリの.gitを指す
-                if common_dir != expected_git_dir.resolve():
-                    # メインリポジトリ名を取得（common-dirの親の名前）
-                    main_repo_path = common_dir.parent
-                    repo_name = sanitize_filename(main_repo_path.name)
-                    worktree_name = sanitize_filename(toplevel.name)
-                    logging.info(
-                        f"Worktree detected: repo={repo_name}, worktree={worktree_name}"
-                    )
-                else:
-                    # 通常のリポジトリ
-                    repo_name = sanitize_filename(toplevel.name)
-            else:
-                repo_name = sanitize_filename(toplevel.name)
-
-            return repo_name, worktree_name
+            return sanitize_filename(toplevel.name), None
 
     except Exception as e:
         logging.warning(f"Failed to get repository info: {e}")
 
-    # フォールバック: cwdから取得
     if cwd:
-        repo_name = sanitize_filename(Path(cwd).name)
-
-    return repo_name, worktree_name
+        return sanitize_filename(Path(cwd).name), None
+    return "unknown", None
 
 
 def sanitize_filename(name: str) -> str:
     """ファイル名として安全な文字列に変換"""
     name = name.replace("\n", " ").replace("\r", "")
-    name = name.replace(" ", "-").replace("　", "-")
-    name = re.sub(r'[<>:"/\\|?*@#]', "", name)
-    name = re.sub(r"-+", "-", name)
-    name = name.strip("-")
+    name = name.replace(" ", "-").replace("\u3000", "-")
+    name = _RE_UNSAFE_CHARS.sub("", name)
+    name = _RE_MULTI_DASH.sub("-", name).strip("-")
     return name[:80] if name else "session"
 
 
@@ -369,7 +300,7 @@ def make_markdown(
     cwd: str | None = None,
 ) -> str:
     """マークダウン形式のサマリーを生成"""
-    lines = [
+    return "\n".join([
         f"# {summary_name}",
         "",
         f"- **Session ID**: `{session_id}`",
@@ -381,8 +312,7 @@ def make_markdown(
         "",
         summary_content,
         "",
-    ]
-    return "\n".join(lines)
+    ])
 
 
 def main():
@@ -406,9 +336,7 @@ def main():
         logging.info("No conversation content extracted, exiting")
         sys.exit(0)
 
-    logging.debug(
-        f"Extracted conversation ({len(conversation)} chars):\n{conversation[:500]}"
-    )
+    logging.debug(f"Extracted conversation ({len(conversation)} chars):\n{conversation[:500]}")
 
     summary_name = generate_summary_name(conversation)
     summary_content = generate_summary_content(conversation)
@@ -416,12 +344,8 @@ def main():
     cwd = input_data.get("cwd")
     repo_name, worktree_name = get_repository_info(cwd)
 
-    # worktreeの場合: {repository}/{worktreename}/
-    # 通常の場合: {repository}/
     if worktree_name:
-        summary_dir = (
-            Path.home() / ".claude/session-summaries" / repo_name / worktree_name
-        )
+        summary_dir = Path.home() / ".claude/session-summaries" / repo_name / worktree_name
     else:
         summary_dir = Path.home() / ".claude/session-summaries" / repo_name
     summary_dir.mkdir(parents=True, exist_ok=True)
@@ -437,11 +361,8 @@ def main():
         counter += 1
 
     try:
-        markdown = make_markdown(
-            messages, session_id, summary_name, summary_content, cwd
-        )
-        with open(output_path, "w", encoding="utf-8") as f:
-            f.write(markdown)
+        markdown = make_markdown(messages, session_id, summary_name, summary_content, cwd)
+        output_path.write_text(markdown, encoding="utf-8")
         elapsed = time.time() - start_time
         logging.info(f"Saved: {filename} ({elapsed:.1f}s)")
     except Exception as e:

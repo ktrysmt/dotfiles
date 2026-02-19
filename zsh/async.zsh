@@ -18,6 +18,7 @@ function zmv() {
 # -----
 # global
 alias -g gm='gca -m "`trans @@`"'
+alias -g ss="fd . -t f ~/.claude/session-summaries | sed 's#^.*session-summaries/##' | fzf | xargs -I{} bat ~/.claude/session-summaries/{}"
 
 # general
 alias history='fc -il 1' # for HIST_STAMPS in oh-my-zsh
@@ -368,4 +369,34 @@ function gwa() {
       fi
     }
   };
+}
+function gwflush() {
+  local dry_run=false
+  [[ "$1" == "-n" || "$1" == "--dry-run" ]] && dry_run=true
+
+  local branch wt count=0
+
+  git branch --merged master | sed 's/^[+* ]*//' | grep '^feature-' | while read branch; do
+  wt=$(git worktree list --porcelain \
+    | grep -B2 "branch refs/heads/$branch" \
+    | grep '^worktree ' \
+    | sed 's/^worktree //')
+
+  [[ -z "$wt" ]] && continue
+
+  if [[ -n "$(git -C "$wt" status --porcelain)" ]]; then
+    echo "SKIP  $branch  (未コミットの変更あり)"
+    continue
+  fi
+
+  if $dry_run; then
+    echo "DELETE (dry-run)  $branch  ($wt)"
+  else
+    git worktree remove "$wt" && git branch -d "$branch" \
+      && echo "DELETED  $branch  ($wt)"
+  fi
+  (( count++ ))
+done
+
+echo "\n${count} worktree(s) ${dry_run:+would be }removed."
 }
