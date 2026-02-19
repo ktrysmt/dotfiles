@@ -26,7 +26,7 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 
-CLAUDE_MODEL = "sonnet"
+CLAUDE_MODEL = "haiku"
 
 # システムタグ除去用の正規表現をモジュールレベルで事前コンパイル
 _SYSTEM_TAGS = [
