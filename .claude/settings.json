@@ -342,7 +342,7 @@
   "alwaysThinkingEnabled": true,
   "statusLine": {
     "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
+    "command": "bash ~/dotfiles/.claude/statusline-command.sh"
   },
   "hooks": {
     "SessionStart": [
@@ -360,8 +360,7 @@
       {
         "matcher": "",
         "hooks": [
-          {
-            "type": "command",
+          { "type": "command",
             "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh thinking"
           }
         ]
