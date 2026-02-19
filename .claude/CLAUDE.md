@@ -5,12 +5,12 @@
 - **Actively utilize subagents**: Proactively leverage subagents to divide tasks, parallelize work, and improve efficiency.
 
 ## Never
-- Do not update or delete files without permission from the user
 - Delete prod data without confirmation
 - Hardcode secrets
 - Commit with failing tests/lint
 - Push directly to main/master
-- Do not use multi-byte languages (such as Japanese or emojis) and `<br />` in mermaid blocks within Markdown
+- Do not use emojis anywhere
+- Do not use multi-byte languages (such as Japanese) and `<br />` in mermaid blocks within Markdown
 
 ## Behavior
 
