@@ -67,6 +67,7 @@ return {
       vim.keymap.set("n", "<leader>cc", "<cmd>ClaudeCode<cr>")
       vim.keymap.set("n", "<leader>ca", "<cmd>ClaudeCodeAdd %<cr>")
       vim.keymap.set("v", "<leader>ca", "<cmd>ClaudeCodeSend<cr>")
+      vim.keymap.set("n", "<leader>cf", "<cmd>ClaudeCodeFocus<cr>")
       vim.keymap.set("n", "<leader>cda", "<cmd>ClaudeCodeDiffAccept<cr>")
       vim.keymap.set("n", "<leader>cdd", "<cmd>ClaudeCodeDiffDeny<cr>")
     end
