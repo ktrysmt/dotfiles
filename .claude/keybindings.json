@@ -1,0 +1,17 @@
+{
+  "bindings": [
+    {
+      "context": "Chat",
+      "bindings": {
+        "ctrl+b": "left"
+      }
+    },
+    {
+      "context": "Task",
+      "bindings": {
+        "ctrl+b": "left",
+        "ctrl+shift+b": "task:background"
+      }
+    }
+  ]
+}

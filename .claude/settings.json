@@ -339,6 +339,9 @@
     "typescript-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true
   },
+  "env": {
+    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
+  },
   "alwaysThinkingEnabled": true,
   "statusLine": {
     "type": "command",
