@@ -334,11 +334,7 @@
       "Write(/etc/sudoers)"
     ]
   },
-  "enabledPlugins": {
-    "code-simplifier@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true
-  },
+  "enabledPlugins": {},
   "env": {
     "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
   },
