@@ -334,7 +334,12 @@
       "Write(/etc/sudoers)"
     ]
   },
-  "enabledPlugins": {},
+  "enabledPlugins": {
+    "clangd-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
+  },
   "env": {
     "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
   },
