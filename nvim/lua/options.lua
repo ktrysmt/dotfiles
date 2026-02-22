@@ -78,15 +78,17 @@ vim.opt.matchpairs:append({
   '":"'
 })
 
+-- log dir from ~/.local/state/nvim/ to /tmp/
+vim.env.NVIM_LOG_FILE = '/tmp/nvim_log'
 
 -- search
-vim.opt.magic      = true
-vim.opt.ignorecase = true
-vim.opt.smartcase  = true
+vim.opt.magic         = true
+vim.opt.ignorecase    = true
+vim.opt.smartcase     = true
 
 -- fold
-vim.opt.foldopen   = "all"
-vim.opt.foldclose  = "all"
+vim.opt.foldopen      = "all"
+vim.opt.foldclose     = "all"
 
 -- hide EndOfBuffer
 vim.opt.fillchars:append('eob: ')
