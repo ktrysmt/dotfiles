@@ -2,6 +2,7 @@
 # user
 claude mcp add -s user -t http aws-docs https://knowledge-mcp.global.api.aws
 claude mcp add -s user -t http deepwiki https://mcp.deepwiki.com/mcp
+claude mcp add -s user -t http grep-github https://mcp.grep.app
 claude mcp add -s user mcp-think-as -- uv --directory "" run main.py
 claude mcp add -s user serena -- uvx --from git+https://github.com/oraios/serena@d5f90710676b6a7cacc450f59005b4934c49b6db serena start-mcp-server --enable-web-dashboard=false
 claude mcp add -s user gemini-google-search -e GEMINI_API_KEY="" -e GEMINI_MODEL="gemini-2.5-flash" -- npx mcp-gemini-google-search@0.1.1

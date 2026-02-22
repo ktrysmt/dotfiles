@@ -111,6 +111,7 @@ return {
         'svelte',
         'typos_lsp',
         'vimls',
+        'yamlls',
       }
       local mason_lspconfig = require("mason-lspconfig")
       mason_lspconfig.setup({

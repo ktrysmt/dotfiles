@@ -45,6 +45,9 @@
       "command": "npx",
       "args": ["-y", "@playwright/mcp@latest"],
       "scope": "project"
+    },
+    "grep-github": {
+      "url" : "https://mcp.grep.app"
     }
   }
 }
