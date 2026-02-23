@@ -20,7 +20,7 @@ return {
   config = function()
     vim.cmd [[
 
-    let g:fzf_layout = { 'down': '~40%' }
+    let g:fzf_layout = { 'down': '~55%' }
 
     command! -bang -nargs=? -complete=dir Files
       \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
