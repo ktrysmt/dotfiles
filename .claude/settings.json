@@ -1,4 +1,7 @@
 {
+  "env": {
+    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
+  },
   "permissions": {
     "allow": [
       "Bash(/compact)",
@@ -334,21 +337,6 @@
       "Write(/etc/sudoers)"
     ]
   },
-  "enabledPlugins": {
-    "slack@claude-plugins-official": false,
-    "clangd-lsp@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true
-  },
-  "env": {
-    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
-  },
-  "alwaysThinkingEnabled": true,
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
   "hooks": {
     "SessionStart": [
       {
@@ -365,7 +353,8 @@
       {
         "matcher": "",
         "hooks": [
-          { "type": "command",
+          {
+            "type": "command",
             "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh thinking"
           }
         ]
@@ -397,5 +386,17 @@
         ]
       }
     ]
-  }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "slack@claude-plugins-official": false,
+    "clangd-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true
 }
