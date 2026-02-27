@@ -365,7 +365,7 @@ return {
             mappings = {
               ["o"] = "open",
               ["<bs>"] = "noop",  -- "navigate_up",
-              ["."] = "noop",     -- "set_root",
+              ["."] = "set_root", -- "set_root",
               ["H"] = "toggle_hidden",
               ["/"] = "noop",     -- "fuzzy_finder",
               ["D"] = "noop",     -- "fuzzy_finder_directory",

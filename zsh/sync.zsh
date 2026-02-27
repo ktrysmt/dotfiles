@@ -8,7 +8,7 @@ setopt AUTO_MENU
 setopt interactivecomments
 setopt promptsubst
 setopt extended_history
-setopt append_history
+setopt share_history # append_history is not needed quz share_history implies it
 setopt hist_allow_clobber
 setopt hist_ignore_all_dups
 setopt hist_no_store

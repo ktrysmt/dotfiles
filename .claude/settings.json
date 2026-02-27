@@ -360,6 +360,28 @@
         ]
       }
     ],
+    "PostToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh thinking"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh notification"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "matcher": "",

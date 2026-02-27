@@ -1,13 +1,18 @@
 #!/bin/bash
 
 # Usage: tmux-window-claude-status <action>
-#   action: start | thinking | done | reset
+#   action: start | thinking | notification | done | reset
 #
 # Called from Claude Code hooks to update tmux window tab
 # with Claude's processing state.
 #
 # Supports multiple panes per window: each pane stores its own
 # @claude-status option, and the window name aggregates all panes.
+
+command -v tmux &>/dev/null || exit 0
+
+# Skip when running inside session_summarizer subprocess
+[ "$CLAUDE_SUMMARIZER_RUNNING" = "1" ] && exit 0
 
 action="$1"
 pane="$TMUX_PANE"
@@ -18,24 +23,29 @@ fi
 
 # --- 1. Update per-pane status ---
 case "$action" in
-  start|thinking|done)
+  start | thinking | done | notification)
     tmux set-option -p -t "$pane" @claude-status "$action"
     ;;
   reset)
     tmux set-option -pu -t "$pane" @claude-status
     ;;
+  *)
+    echo "tmux-window-claude-status: unknown action '$action'" >&2
+    exit 1
+    ;;
 esac
 
 # --- 2. Collect statuses from all panes in the same window ---
 window=$(tmux display-message -t "$pane" -p '#{window_id}')
-dir=$(basename "$(tmux display-message -t "$pane" -p '#{pane_current_path}')")
+dir=$(basename "$(tmux display-message -t "$pane" -p '#{pane_current_path}')" | tr -cd '[:alnum:]._-')
 
 symbols=()
 has_thinking=false
+has_notification=false
 has_active=false
 
 while IFS= read -r pane_id; do
-  status=$(tmux show-options -p -t "$pane_id" -v @claude-status 2>/dev/null)
+  status=$(tmux show-options -p -t "$pane_id" -v @claude-status 2> /dev/null)
   case "$status" in
     start)
       symbols+=("--")
@@ -50,15 +60,25 @@ while IFS= read -r pane_id; do
       symbols+=("==")
       has_active=true
       ;;
+    notification)
+      symbols+=("??")
+      has_notification=true
+      has_active=true
+      ;;
   esac
 done < <(tmux list-panes -t "$window" -F '#{pane_id}')
 
 # --- 3. Update window name and style ---
 if [ "$has_active" = true ]; then
-  joined=$(IFS='|'; echo "${symbols[*]}")
+  joined=$(
+    IFS='|'
+    echo "${symbols[*]}"
+  )
   tmux rename-window -t "$window" "[${joined}]${dir}"
 
-  if [ "$has_thinking" = true ]; then
+  if [ "$has_notification" = true ]; then
+    tmux set-option -w -t "$window" window-status-style 'fg=yellow,bold'
+  elif [ "$has_thinking" = true ]; then
     tmux set-option -w -t "$window" window-status-style 'fg=blue,bold'
   else
     tmux set-option -w -t "$window" window-status-style 'fg=green,bold'

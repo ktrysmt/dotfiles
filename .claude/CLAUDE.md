@@ -3,11 +3,12 @@
 ## MUST
 - **MCP first**: You MUST use MCP as the very first step for every task — including evidence gathering and analysis — before proceeding with any work. Skipping MCP is not permitted under any circumstances
 - **Actively use subagents**: Proactively leverage subagents to divide tasks, parallelize work, and improve efficiency
-- **Output language**: Think in English and output in Japanese
+- **Output language**: Think in English and output in Japanese. Exception: content inside Mermaid code blocks must be written in English using ASCII characters only
+- **Cite sources**: When reporting findings from evidence-based research or analysis, you MUST append the referenced evidence URLs at the end of your response
 
 ## Never
 - Hardcode secrets
 - Commit when tests or lint are failing
 - Push directly to main/master
 - Use emojis anywhere
-- Include multi-byte characters (such as Japanese), `<br />` or `\n` in Mermaid blocks within Markdown
+- Use `<br />` or `\n` inside Mermaid code blocks
