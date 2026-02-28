@@ -64,6 +64,10 @@ export MY_BROWSER="/mnt/c/Users/${USER}/AppData/Local/BraveSoftware/Brave-Browse
 
 # API tokens (fill in after setup)
 export SRC_ACCESS_TOKEN=""
+
+# https://zenn.dev/momonga/articles/ee5b114e038938
+export CLAUDE_CODE_SKIP_WINDOWS_PROFILE=1
+export USERPROFILE="/mnt/c/Users/<your_windows_username>"
 EOF
 
   log_success "Created private zshrc"
