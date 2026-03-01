@@ -29,10 +29,12 @@ if [[ "$git_branch" != "" ]]; then
     state="#[bg=green,fg=black] o #[default]" ;
   fi
 
+  git_hash=$(cd $current_path && git rev-parse --short HEAD 2>/dev/null)
+
   if [[ $git_branch != "master" ]]; then
-    git_info="#[underscore]#[bg=black,fg=colour014] (${git_branch}) #[default]"
+    git_info="#[underscore]#[bg=black,fg=colour014] (${git_branch}) [${git_hash}] #[default]"
   else
-    git_info="#[underscore]#[bg=black,fg=blue] (master) #[default]"
+    git_info="#[underscore]#[bg=black,fg=blue] (master) [${git_hash}] #[default]"
   fi
 
 else

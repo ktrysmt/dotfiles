@@ -12,6 +12,7 @@ return {
       local env_vars = nil
 
       if vim.env.FALLBACK then
+        vim.env.ANTHROPIC_API_KEY = nil
         local ollama_running = vim.fn.system("pgrep -f 'ollama serve'")
         if ollama_running ~= "" then
           env_vars = {
