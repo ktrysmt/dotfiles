@@ -59,6 +59,7 @@ vim.opt.tabstop                 = 2
 vim.opt.termguicolors           = true
 vim.opt.updatetime              = 300
 vim.opt.virtualedit             = 'all'
+vim.opt.wildmenu                = true
 vim.opt.wildmode                = 'longest:full,full'
 vim.opt.winblend                = 15
 vim.opt.wrap                    = true

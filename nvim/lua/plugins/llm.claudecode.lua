@@ -17,19 +17,19 @@ return {
           env_vars = {
             ANTHROPIC_AUTH_TOKEN = "ollama",
             ANTHROPIC_BASE_URL = "http://localhost:11434",
-            ANTHROPIC_MODEL = "qwen3-coder-next:cloud",
-            ANTHROPIC_DEFAULT_OPUS_MODEL = "qwen3-coder-next:cloud",
-            ANTHROPIC_DEFAULT_SONNET_MODEL = "qwen3-coder-next:cloud",
-            ANTHROPIC_DEFAULT_HAIKU_MODEL = "qwen3-coder-next:cloud",
+            ANTHROPIC_MODEL = vim.env.FALLBACK_OLLAMA_MEDIUM_MODEL, -- "qwen3-coder-next:cloud",
+            ANTHROPIC_DEFAULT_OPUS_MODEL = vim.env.FALLBACK_OLLAMA_MEDIUM_MODEL,
+            ANTHROPIC_DEFAULT_SONNET_MODEL = vim.env.FALLBACK_OLLAMA_MEDIUM_MODEL,
+            ANTHROPIC_DEFAULT_HAIKU_MODEL = vim.env.FALLBACK_OLLAMA_SMALL_MODEL,
           }
-        elseif vim.env.ANTHROPIC_AUTH_TOKEN then
+        elseif vim.env.FALLBACK_OPENROUTER_TOKEN then
           env_vars = {
-            ANTHROPIC_AUTH_TOKEN = vim.env.ANTHROPIC_AUTH_TOKEN,
+            ANTHROPIC_AUTH_TOKEN = vim.env.FALLBACK_OPENROUTER_TOKEN,
             ANTHROPIC_BASE_URL = "https://openrouter.ai/api",
-            ANTHROPIC_MODEL = "z-ai/glm-4.5-air:free",
-            ANTHROPIC_DEFAULT_OPUS_MODEL = "qwen/qwen3-coder-next",
-            ANTHROPIC_DEFAULT_SONNET_MODEL = "z-ai/glm-5",
-            ANTHROPIC_DEFAULT_HAIKU_MODEL = "z-ai/glm-5",
+            ANTHROPIC_MODEL = vim.env.FALLBACK_OPENROUTER_MEDIUM_MODEL,
+            ANTHROPIC_DEFAULT_OPUS_MODEL = vim.env.FALLBACK_OPENROUTER_MEDIUM_MODEL,
+            ANTHROPIC_DEFAULT_SONNET_MODEL = vim.env.FALLBACK_OPENROUTER_MEDIUM_MODEL,
+            ANTHROPIC_DEFAULT_HAIKU_MODEL = vim.env.FALLBACK_OPENROUTER_SMALL_MODEL,
           }
         end
       else
