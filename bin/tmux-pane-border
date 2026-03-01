@@ -1,4 +1,7 @@
 #!/bin/zsh
+#
+# color palettes
+# for i in {0..255}; do printf "\x1b[38;5;${i}mcolour${i}\x1b[0m\n"; done
 
 current_path=$1
 git_info=""
@@ -32,9 +35,9 @@ if [[ "$git_branch" != "" ]]; then
   git_hash=$(cd $current_path && git rev-parse --short HEAD 2>/dev/null)
 
   if [[ $git_branch != "master" ]]; then
-    git_info="#[underscore]#[bg=black,fg=colour014] (${git_branch}) [${git_hash}] #[default]"
+    git_info="#[bg=black,fg=colour014] (${git_branch}) #[default]#[bg=black,fg=colour109][${git_hash}] #[default]"
   else
-    git_info="#[underscore]#[bg=black,fg=blue] (master) [${git_hash}] #[default]"
+    git_info="#[bg=black,fg=blue] (master) #[default]#[bg=black,fg=colour109][${git_hash}] #[default]"
   fi
 
 else
