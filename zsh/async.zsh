@@ -18,7 +18,8 @@ function zmv() {
 # -----
 # global
 alias -g gm='gca -m "`trans @@`"'
-alias -g ss="fd . -t f ~/.claude/session-summaries | sed 's#^.*session-summaries/##' | fzf | xargs -I{} bat ~/.claude/session-summaries/{}"
+# alias -g ss="fd . -t f ~/.claude/session-summaries | sed 's#^.*session-summaries/##' | fzf | xargs -I{} bat ~/.claude/session-summaries/{}"
+alias -g ss="fd . -t f ~/.claude/session-summaries | sed 's#^.*session-summaries/##' | fzf --preview 'bat --style=numbers --color=always ~/.claude/session-summaries/{}' | xargs -I{} bat ~/.claude/session-summaries/{}"
 
 # general
 alias history='fc -il 1' # for HIST_STAMPS in oh-my-zsh
