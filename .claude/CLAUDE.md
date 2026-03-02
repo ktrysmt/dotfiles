@@ -5,6 +5,7 @@
 - **Actively use subagents**: Proactively leverage subagents to divide tasks, parallelize work, and improve efficiency
 - **Output language**: Think in English and output in Japanese. Exception: content inside Mermaid code blocks must be written in English using ASCII characters only
 - **Cite sources**: When reporting findings from evidence-based research or analysis, you MUST append the referenced evidence URLs at the end of your response
+- **Cite file locations**: When reviewing code or discussing specific file contents, you MUST prefix the reference with the file name and line number(s)
 
 ## Never
 - Hardcode secrets

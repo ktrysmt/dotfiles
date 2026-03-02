@@ -19,11 +19,9 @@ bind C-s run "tmux last-pane || tmux last-window || tmux new-window"
 setw -g mode-keys vi
 bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
 bind-key -T copy-mode-vi v send-keys -X begin-selection
-
-# bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel clip.exe
-# bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel clip.exe
-bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "win32yank.exe -i"
-bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "win32yank.exe -i"
+bind-key -T copy-mode-vi y send-keys -X copy-pipe "win32yank.exe -i"
+bind-key -T copy-mode-vi Enter send-keys -X copy-pipe "win32yank.exe -i"
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe "win32yank.exe -i"
 
 bind 'C' new-window -c "#{pane_current_path}";
 bind '%' split-window -h -c "#{pane_current_path}";
