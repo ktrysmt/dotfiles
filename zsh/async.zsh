@@ -69,6 +69,9 @@ alias gb="git branch"
 alias gbc="~/dotfiles/bin/git-checkout-remote-branch"
 alias gw="git worktree"
 
+_gd_diff_complete() { words=(git diff "${words[@]:1}"); ((CURRENT++)); _git }
+for _a in gd0 gdd gdc gds gdt gdw gdww; do compdef _gd_diff_complete $_a; done; unset _a
+
 # k8s
 alias k="kubectl"
 alias kg="kubectl get"
@@ -233,6 +236,7 @@ zle -N peco-select-snippet
 function chpwd() {
   emulate -L zsh
   powered_cd_add_log
+  _tmux_auto_rename
 }
 
 # -----------
@@ -319,21 +323,44 @@ if [[ -e ~/.zshrc.private ]]; then
   source ~/.zshrc.private
 fi
 
-# tmux (throttle refresh to at most once/5sec)
-zmodload zsh/datetime
-typeset -gi _tmux_last_refresh=0
-function _tmux_refresh_status() {
-  emulate -L zsh
-  if [[ -n "$TMUX" ]]; then
-    local now=${EPOCHREALTIME%.*}
-    if (( now - _tmux_last_refresh >= 3 )); then
-      tmux refresh-client -S
-      _tmux_last_refresh=$now
-    fi
+# -----------
+# tmux window auto-rename
+# -----------
+# Rename window to basename of $PWD on cd / shell init.
+# Skips when: (1) @manual-rename is set, (2) Claude status is active,
+# (3) this pane is not the active pane of the window.
+function _tmux_auto_rename() {
+  [[ -n "$TMUX" && -n "$TMUX_PANE" ]] || return
+
+  local info
+  info=$(tmux display-message -t "$TMUX_PANE" -p '#{pane_active}|#{window_id}')
+  local is_active="${info%%|*}"
+  local window="${info#*|}"
+  [[ "$is_active" == "1" ]] || return
+
+  # manual rename flag
+  local manual
+  manual=$(tmux show-options -wv -t "$window" @manual-rename 2>/dev/null)
+  [[ "$manual" == "1" ]] && return
+
+  # Claude status active (saved-window-name exists while Claude owns the title)
+  local saved
+  saved=$(tmux show-options -wv -t "$window" @saved-window-name 2>/dev/null)
+  [[ -n "$saved" ]] && return
+
+  tmux rename-window -t "$window" "$(basename "$PWD")"
+}
+
+# One-shot: rename window on first prompt (new window / shell startup)
+typeset -g _tmux_initial_rename_done=0
+function _tmux_initial_rename() {
+  if (( _tmux_initial_rename_done == 0 )) && [[ -n "$TMUX" ]]; then
+    _tmux_initial_rename_done=1
+    _tmux_auto_rename
   fi
 }
 autoload -Uz add-zsh-hook
-add-zsh-hook precmd _tmux_refresh_status
+add-zsh-hook precmd _tmux_initial_rename
 
 # fzf
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh

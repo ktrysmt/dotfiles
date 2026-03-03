@@ -20,10 +20,10 @@ setw -g mode-keys vi
 bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
 bind-key -T copy-mode-vi v send-keys -X begin-selection
 bind-key -T copy-mode-vi y send-keys -X copy-pipe "win32yank.exe -i"
-bind-key -T copy-mode-vi Enter send-keys -X copy-pipe "win32yank.exe -i"
+bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "win32yank.exe -i"
 bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe "win32yank.exe -i"
 
-bind 'C' new-window -c "#{pane_current_path}";
+bind 'C' new-window -c "#{pane_current_path}" -n "#{b:pane_current_path}";
 bind '%' split-window -h -c "#{pane_current_path}";
 bind '"' split-window -v -c "#{pane_current_path}";
 # move pane
@@ -78,17 +78,13 @@ set-option -g pane-border-format "#[bg=black] #[fg=black,bg=white] #P #[bg=black
 # --------------
 # window
 # --------------
-set -g automatic-rename on
-set -g window-status-format         '#I:#{?#{m:#W,zsh},#(basename #{pane_current_path}),#W}#F'
-set -g window-status-current-format '#I:#{?#{m:#W,zsh},#(basename #{pane_current_path}),#W}#F'
+set -g automatic-rename off
+set -g allow-rename off
+set -g window-status-format         '#I:#W#F'
+set -g window-status-current-format '#I:#W#F'
 set -g window-status-current-style fg=black,bg=white
-# set-window-option -g allow-rename off
-# set-window-option -g window-status-format " #I: #(basename $PWD) "
-# set-window-option -g window-status-current-format "#[fg=colour255,bg=colour27,bold] #I: #(${HOME}/dotfiles/bin/sh-echo-current-dir) #[default]"
-# set -g visual-activity on
-# setw -g monitor-activity on
-# set -g visual-silence on
-# setw -g monitor-silence 30
+# manual rename: set @manual-rename flag so zsh chpwd hook preserves it
+bind , command-prompt -I "#W" "rename-window -- '%%'; set-option -w @manual-rename 1"
 
 # --------------
 # pane

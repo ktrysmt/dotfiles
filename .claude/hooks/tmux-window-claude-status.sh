@@ -37,7 +37,6 @@ esac
 
 # --- 2. Collect statuses from all panes in the same window ---
 window=$(tmux display-message -t "$pane" -p '#{window_id}')
-dir=$(basename "$(tmux display-message -t "$pane" -p '#{pane_current_path}')" | tr -cd '[:alnum:]._-')
 
 symbols=()
 has_thinking=false
@@ -70,11 +69,18 @@ done < <(tmux list-panes -t "$window" -F '#{pane_id}')
 
 # --- 3. Update window name and style ---
 if [ "$has_active" = true ]; then
+  # Save original window name before first Claude rename
+  saved=$(tmux show-options -wv -t "$window" @saved-window-name 2>/dev/null)
+  if [ -z "$saved" ]; then
+    saved=$(tmux display-message -t "$window" -p '#W')
+    tmux set-option -w -t "$window" @saved-window-name "$saved"
+  fi
+
   joined=$(
     IFS='|'
     echo "${symbols[*]}"
   )
-  tmux rename-window -t "$window" "[${joined}]${dir}"
+  tmux rename-window -t "$window" "[${joined}]${saved}"
 
   if [ "$has_notification" = true ]; then
     tmux set-option -w -t "$window" window-status-style 'fg=yellow,bold'
@@ -84,7 +90,11 @@ if [ "$has_active" = true ]; then
     tmux set-option -w -t "$window" window-status-style 'fg=green,bold'
   fi
 else
-  # All panes inactive: restore automatic rename
-  tmux set-option -w -t "$window" automatic-rename on
+  # All panes inactive: restore saved window name
+  saved=$(tmux show-options -wv -t "$window" @saved-window-name 2>/dev/null)
+  if [ -n "$saved" ]; then
+    tmux rename-window -t "$window" "$saved"
+    tmux set-option -wu -t "$window" @saved-window-name
+  fi
   tmux set-option -wu -t "$window" window-status-style
 fi
