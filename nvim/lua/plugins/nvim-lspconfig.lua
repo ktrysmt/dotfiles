@@ -112,6 +112,7 @@ return {
         'typos_lsp',
         'vimls',
         'yamlls',
+        'jsonls',
       }
       local mason_lspconfig = require("mason-lspconfig")
       mason_lspconfig.setup({
