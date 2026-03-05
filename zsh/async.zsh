@@ -455,3 +455,60 @@ if (( $+commands[bw] )); then
     eval "$(bw list items | jq -r '.[] | select(.type == 2) | select(.notes != null and .notes != "") | "export \(.name | ascii_upcase)=\(.notes | @sh)"')"
   }
 fi
+
+# --- git credential manager env helpers ---
+_GCM_EXE=$(git config --get credential.helper 2>/dev/null)
+if [[ "$_GCM_EXE" == *credential-manager* ]]; then
+  GCM_ENV_KEYS=(
+    ANTHROPIC_API_KEY
+    GEMINI_API_KEY
+    EDINETDB_API_KEY
+    FALLBACK_OPENROUTER_TOKEN
+  )
+
+  _gcm-call() {
+    local action=$1; shift
+    printf '%s\n' "$@" "" | timeout 1 zsh -c 'eval "$1" "$2"' -- "$_GCM_EXE" "$action" 2>/dev/null
+  }
+
+  gcm-get() {
+    _gcm-call get "protocol=custom" "host=env" "username=$1" | sed -n 's/^password=//p'
+  }
+
+  gcm-set() {
+    local key=${1:u}
+    local val
+    printf 'Enter value for %s: ' "$key"
+    read -rs val
+    echo
+    [[ -z "$val" ]] && return 1
+    _gcm-call store "protocol=custom" "host=env" "username=$key" "password=$val"
+  }
+
+  gcm-rm() {
+    _gcm-call erase "protocol=custom" "host=env" "username=${1:u}"
+  }
+
+  gcm-ls() {
+    local key val
+    for key in "${GCM_ENV_KEYS[@]}"; do
+      val=$(gcm-get "$key")
+      if [[ -n "$val" ]]; then
+        printf '%s\t%s\n' "$key" "${val[1,4]}****"
+      else
+        printf '%s\t(not set)\n' "$key"
+      fi
+    done
+  }
+
+  gcm-env() {
+    local key val
+    for key in "${GCM_ENV_KEYS[@]}"; do
+      val=$(gcm-get "$key")
+      [[ -n "$val" ]] && export "$key=$val"
+    done
+  }
+
+  _gcm-key-completion() { compadd -a GCM_ENV_KEYS }
+  compdef _gcm-key-completion gcm-set gcm-get gcm-rm
+fi

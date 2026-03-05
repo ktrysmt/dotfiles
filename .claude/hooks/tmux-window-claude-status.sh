@@ -21,6 +21,12 @@ if [ -z "$pane" ]; then
   exit 0
 fi
 
+# --- 0. Skip if pane already has the same status ---
+current=$(tmux show-options -p -t "$pane" -v @claude-status 2>/dev/null)
+if [ "$current" = "$action" ]; then
+  exit 0
+fi
+
 # --- 1. Update per-pane status ---
 case "$action" in
   start | thinking | done | notification)
