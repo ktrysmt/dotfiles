@@ -100,15 +100,6 @@ setup_go() {
 setup_neovim() {
   log_info "Setting up Neovim..."
 
-  # Create vim symlink
-  if has_command nvim; then
-    if [[ "$OS_TYPE" == "mac" ]]; then
-      sudo ln -sf "$(which nvim)" /usr/local/bin/vim 2>/dev/null || true
-    else
-      sudo ln -sf "$(which nvim)" /usr/local/bin/vim 2>/dev/null || true
-    fi
-  fi
-
   # Python providers for neovim (using uv)
   if has_command uv; then
     uv tool install pynvim 2>/dev/null || uv tool upgrade pynvim 2>/dev/null || true

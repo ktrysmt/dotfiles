@@ -130,6 +130,42 @@
       "manipulators" : [
         {
           "type" : "basic",
+          "from": { "key_code": "h", "modifiers": {"mandatory": [ "left_option" ]} },
+          "to": [ { "key_code": "left_arrow" }  ],
+          "conditions": [{
+            "type": "frontmost_application_if",
+            "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^com\\.github\\.wez\\.wezterm$"]
+          }]
+        },
+        {
+          "type" : "basic",
+          "from": { "key_code": "j", "modifiers": {"mandatory": [ "left_option" ]} },
+          "to": [ { "key_code": "down_arrow" }  ],
+          "conditions": [{
+            "type": "frontmost_application_if",
+            "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^com\\.github\\.wez\\.wezterm$"]
+          }]
+        },
+        {
+          "type" : "basic",
+          "from": { "key_code": "k", "modifiers": {"mandatory": [ "left_option" ]} },
+          "to": [ { "key_code": "up_arrow" }  ],
+          "conditions": [{
+            "type": "frontmost_application_if",
+            "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^com\\.github\\.wez\\.wezterm$"]
+          }]
+        },
+        {
+          "type" : "basic",
+          "from": { "key_code": "l", "modifiers": {"mandatory": [ "left_option" ]} },
+          "to": [ { "key_code": "right_arrow" }  ],
+          "conditions": [{
+            "type": "frontmost_application_if",
+            "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^com\\.github\\.wez\\.wezterm$"]
+          }]
+        },
+        {
+          "type" : "basic",
           "from": { "key_code": "v", "modifiers": {"mandatory": [ "left_option" ]} },
           "to": [ { "key_code": "v", "modifiers":  "left_command" }  ],
           "conditions": [{
@@ -141,15 +177,6 @@
           "type" : "basic",
           "from": { "key_code": "left_command", "modifiers": {"optional": [ "any" ]} },
           "to": [ { "key_code": "left_control" }  ],
-          "conditions": [{
-            "type": "frontmost_application_if",
-            "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^com\\.github\\.wez\\.wezterm$"]
-          }]
-        },
-        {
-          "type" : "basic",
-          "from": { "key_code": "v", "modifiers": {"mandatory": [ "left_option" ]} },
-          "to": [ { "key_code": "v", "modifiers":  "left_command" }  ],
           "conditions": [{
             "type": "frontmost_application_if",
             "bundle_identifiers": ["^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^com\\.github\\.wez\\.wezterm$"]

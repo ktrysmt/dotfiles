@@ -20,15 +20,6 @@ source "${SCRIPT_DIR}/lib.sh"
 step_symlink() {
   log_info "=== Step: Symlinks ==="
   bash "${SCRIPT_DIR}/symlink.sh"
-
-  case "$OS_TYPE" in
-    mac)
-      bash "${SCRIPT_DIR}/mac/symlink.sh"
-      ;;
-    wsl | vagrant | ubuntu)
-      # Ubuntu symlinks handled in OS-specific scripts
-      ;;
-  esac
 }
 
 step_brew() {
@@ -46,18 +37,18 @@ step_os_specific() {
 
   case "$OS_TYPE" in
     mac)
-      bash "${SCRIPT_DIR}/mac/setup.sh"
+      bash "${SCRIPT_DIR}/mac/common.sh"
       ;;
     wsl)
-      bash "${SCRIPT_DIR}/ubuntu/setup.sh"
+      bash "${SCRIPT_DIR}/ubuntu/common.sh"
       bash "${SCRIPT_DIR}/ubuntu/wsl.sh"
       ;;
     vagrant)
-      bash "${SCRIPT_DIR}/ubuntu/setup.sh"
+      bash "${SCRIPT_DIR}/ubuntu/common.sh"
       bash "${SCRIPT_DIR}/ubuntu/vagrant.sh"
       ;;
     ubuntu)
-      bash "${SCRIPT_DIR}/ubuntu/setup.sh"
+      bash "${SCRIPT_DIR}/ubuntu/common.sh"
       # Plain ubuntu - use wsl tmux config as default
       link_file "${DOTFILES_DIR}/.tmux.conf.ubuntu" ~/.tmux.conf
       ;;

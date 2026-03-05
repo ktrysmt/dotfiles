@@ -9,6 +9,33 @@ source "${SCRIPT_DIR}/../lib.sh"
 log_info "Running WSL specific setup..."
 
 # ------------------------------------------------------------------------------
+# WSL specific mise tools
+# ------------------------------------------------------------------------------
+setup_mise_tools() {
+  if has_command mise; then
+    log_info "Installing WSL specific mise tools..."
+    local wsl_config="${SCRIPT_DIR}/../../mise/wsl.toml"
+    ln -sf "$(cd "$(dirname "${wsl_config}")" && pwd)/$(basename "${wsl_config}")" \
+      "${XDG_CONFIG_HOME:-$HOME/.config}/mise/config.local.toml"
+    mise install --yes
+    log_success "mise tools configured"
+  fi
+}
+
+# ------------------------------------------------------------------------------
+# wslu (wslview for opening URLs in Windows default browser)
+# ------------------------------------------------------------------------------
+setup_wslu() {
+  if ! has_command wslview; then
+    log_info "Installing wslu (wslview)..."
+    sudo apt-get install -y wslu
+    log_success "wslu installed"
+  else
+    log_success "wslu already installed"
+  fi
+}
+
+# ------------------------------------------------------------------------------
 # Symlinks
 # ------------------------------------------------------------------------------
 setup_symlinks() {
@@ -29,12 +56,6 @@ setup_symlinks() {
       sudo ln -sf "${win_scripts}/win32yank.exe" /usr/local/bin/win32yank.exe 2> /dev/null || true
       log_success "Linked win32yank.exe"
     fi
-
-    # spzenhan for IME control
-    if [[ -f "${win_scripts}/spzenhan.exe" ]] && [[ ! -L /usr/local/bin/spzenhan.exe ]]; then
-      sudo ln -sf "${win_scripts}/spzenhan.exe" /usr/local/bin/spzenhan.exe 2> /dev/null || true
-      log_success "Linked spzenhan.exe"
-    fi
   fi
 }
 
@@ -54,12 +75,14 @@ setup_private_zshrc() {
 # WSL specific settings
 alias pbcopy='clip.exe'
 alias pbpaste='powershell.exe Get-Clipboard'
+alias open='wslview'
 
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 export PATH="/home/linuxbrew/.linuxbrew/sbin:$PATH"
 export PATH="/home/linuxbrew/.linuxbrew/opt/libpq/bin:$PATH"
 
-# Browser for opening URLs
+# Browser for opening URLs (wslview uses Windows default browser)
+export BROWSER=wslview
 export MY_BROWSER="/mnt/c/Users/${USER}/AppData/Local/BraveSoftware/Brave-Browser/Application/brave.exe"
 
 # API tokens (fill in after setup)
@@ -77,6 +100,8 @@ EOF
 # Main
 # ------------------------------------------------------------------------------
 main() {
+  setup_wslu
+  setup_mise_tools
   setup_symlinks
   setup_private_zshrc
 

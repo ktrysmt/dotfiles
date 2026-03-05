@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Ubuntu common setup (idempotent)
+# Ubuntu common setup (shared by wsl/vagrant/ubuntu) (idempotent)
 # Note: Most tools are installed via brew/mise, not apt
 
 set -euo pipefail

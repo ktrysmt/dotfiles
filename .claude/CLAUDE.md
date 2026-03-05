@@ -8,6 +8,8 @@
 - **Cite file locations**: When reviewing code or discussing specific file contents, you MUST prefix the reference with the file name and line number(s)
 
 ## Never
+- **Delete files directly**: When a task requires file deletion, do NOT execute the deletion yourself. Instead, present the exact deletion command to the user and let them run it manually
+- **No unverified claims**: Never assert facts about the current workspace — files, data, state, or command results — without having actually read or verified them in the current session
 - Hardcode secrets
 - Commit when tests or lint are failing
 - Push directly to main/master
