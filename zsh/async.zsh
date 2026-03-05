@@ -429,3 +429,20 @@ done
 
 echo "\n${count} worktree(s) ${dry_run:+would be }removed."
 }
+
+# --- bitwarden cli helpers ---
+bw-unlock() {
+  if ! bw status 2>/dev/null | grep -q '"unlocked"'; then
+    export BW_SESSION=$(bw unlock --raw)
+  fi
+}
+
+bw-ls() {
+  bw-unlock
+  bw list items | jq -r '.[] | select(.type == 2) | .name'
+}
+
+bw-get() {
+  bw-unlock
+  bw get notes "$1"
+}

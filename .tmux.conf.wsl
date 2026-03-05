@@ -21,7 +21,9 @@ bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
 bind-key -T copy-mode-vi v send-keys -X begin-selection
 bind-key -T copy-mode-vi y send-keys -X copy-pipe "win32yank.exe -i"
 bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "win32yank.exe -i"
-bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe "win32yank.exe -i"
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-no-clear "bash -c 'content=$(cat); [ -n \"$content\" ] && echo -n \"$content\" | win32yank.exe -i'"
+bind-key -T copy-mode-vi M-v send-keys -X cancel \; run "win32yank.exe -o | tmux load-buffer - && tmux paste-buffer"
+bind-key -T root M-v run "win32yank.exe -o | tmux load-buffer - && tmux paste-buffer"
 
 bind 'C' new-window -c "#{pane_current_path}" -n "#{b:pane_current_path}";
 bind '%' split-window -h -c "#{pane_current_path}";
@@ -40,6 +42,7 @@ bind-key v split-window -h -p 33 -c "#{pane_current_path}"
 # general
 # ---------
 # set -sg escape-time 0
+set -sg escape-time 50
 # set -g status-interval 10
 set -g base-index 1
 set -g pane-base-index 1
@@ -51,6 +54,8 @@ set-option -g default-terminal "tmux-256color"
 set-option -ga terminal-overrides ",*:Tc"
 
 set -g allow-passthrough on
+set -s extended-keys on
+set -as terminal-features 'xterm*:extkeys'
 
 # --------------
 # status

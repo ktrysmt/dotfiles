@@ -86,11 +86,6 @@ def configure(keymap):
     keymap_wez["LAlt-K"] = "Up"
     keymap_wez["LAlt-L"] = "Right"
 
-    keymap_wez["LAlt-Up"] = ["LAlt-Up"]
-    keymap_wez["LAlt-Down"] = ["LAlt-Down"]
-    keymap_wez["LAlt-Left"] = ["LAlt-Left"]
-    keymap_wez["LAlt-Right"] = ["LAlt-Right"]
-
     keymap_wez["LShift-Enter"] = ["LCtrl-Enter"]
 
     def wezterm_ctrl_c():
