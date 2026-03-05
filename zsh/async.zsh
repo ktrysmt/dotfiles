@@ -436,6 +436,7 @@ if (( $+commands[bw] )); then
   bw-unlock() {
     if ! bw status 2>/dev/null | grep -q '"unlocked"'; then
       export BW_SESSION=$(bw unlock --raw)
+      bw sync --quiet
     fi
   }
 
@@ -447,5 +448,10 @@ if (( $+commands[bw] )); then
   bw-get() {
     bw-unlock
     bw get notes "$1"
+  }
+
+  bwe() {
+    bw-unlock
+    eval "$(bw list items | jq -r '.[] | select(.type == 2) | select(.notes != null and .notes != "") | "export \(.name | ascii_upcase)=\(.notes | @sh)"')"
   }
 fi
