@@ -46,7 +46,6 @@ alias gdd="git diff | delta"
 alias gdc="git diff --cached"
 alias gds="git diff --stat"
 alias gdt="GIT_EXTERNAL_DIFF=difft git diff"
-alias gd0="git diff -U0"
 alias gp="git push"
 alias gpf="git push --force-with-lease"
 alias gl="git pull"
@@ -69,8 +68,10 @@ alias gb="git branch"
 alias gbc="~/dotfiles/bin/git-checkout-remote-branch"
 alias gw="git worktree"
 
-_gd_diff_complete() { words=(git diff "${words[@]:1}"); ((CURRENT++)); _git }
-for _a in gd0 gdd gdc gds gdt gdw gdww; do compdef _gd_diff_complete $_a; done; unset _a
+gd0() {
+  git diff -U0 "$@"
+}
+compdef gd0=git-diff
 
 # k8s
 alias k="kubectl"
@@ -431,18 +432,20 @@ echo "\n${count} worktree(s) ${dry_run:+would be }removed."
 }
 
 # --- bitwarden cli helpers ---
-bw-unlock() {
-  if ! bw status 2>/dev/null | grep -q '"unlocked"'; then
-    export BW_SESSION=$(bw unlock --raw)
-  fi
-}
+if (( $+commands[bw] )); then
+  bw-unlock() {
+    if ! bw status 2>/dev/null | grep -q '"unlocked"'; then
+      export BW_SESSION=$(bw unlock --raw)
+    fi
+  }
 
-bw-ls() {
-  bw-unlock
-  bw list items | jq -r '.[] | select(.type == 2) | .name'
-}
+  bw-ls() {
+    bw-unlock
+    bw list items | jq -r '.[] | select(.type == 2) | .name'
+  }
 
-bw-get() {
-  bw-unlock
-  bw get notes "$1"
-}
+  bw-get() {
+    bw-unlock
+    bw get notes "$1"
+  }
+fi
