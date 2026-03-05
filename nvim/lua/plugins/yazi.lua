@@ -18,14 +18,10 @@ return {
       "<cmd>Yazi cwd<cr>",
       desc = "Open the file manager in nvim's working directory",
     },
-    {
-      "<c-up>",
-      "<cmd>Yazi toggle<cr>",
-      desc = "Resume the last yazi session",
-    },
   },
   opts = {
     open_for_directories = false,
+    floating_window_scaling_factor = 0.95,
     keymaps = {
       show_help = "<f1>",
     },

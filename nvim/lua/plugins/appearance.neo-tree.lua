@@ -196,24 +196,16 @@ return {
             },
           },
           file_size = {
-            enabled = true,
-            width = 12,
-            required_width = 64,
+            enabled = false,
           },
           type = {
-            enabled = true,
-            width = 10,
-            required_width = 122,
+            enabled = false,
           },
           last_modified = {
-            enabled = true,
-            width = 20,
-            required_width = 88,
+            enabled = false,
           },
           created = {
-            enabled = true,
-            width = 20,
-            required_width = 110,
+            enabled = false,
           },
           symlink_target = {
             enabled = false,
