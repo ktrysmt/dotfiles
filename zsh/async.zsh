@@ -23,7 +23,6 @@ alias -g ss="fd . -t f ~/.claude/session-summaries | sed 's#^.*session-summaries
 
 # general
 alias history='fc -il 1' # for HIST_STAMPS in oh-my-zsh
-alias gl='claude /rc'
 alias ghl='cd $(ghq list -p | peco)'
 alias rg='rg -S'
 alias rgn='rg -S --hidden --no-heading'
