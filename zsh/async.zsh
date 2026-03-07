@@ -73,6 +73,8 @@ gd0() {
 }
 compdef gd0=git-diff
 
+alias delta='delta --syntax-theme zenburn'
+
 # k8s
 alias k="kubectl"
 alias kg="kubectl get"
@@ -92,7 +94,6 @@ alias vimf='nvim $(fzf)'
 alias vimdiff='nvim -d'
 alias typora='open -a typora'
 alias rs='evcxr'
-alias delta="delta --syntax-theme zenburn"
 alias glow="glow -t -l"
 alias csvlens="csvlens -S"
 # python
