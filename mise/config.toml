@@ -3,8 +3,6 @@
 # Apply with: mise install
 
 [tools]
-# Language runtimes (Python managed by uv)
-node = "22"
 go = "1.25"
 bun = "latest"
 
@@ -42,3 +40,5 @@ peco = "latest"
 "npm:diff-so-fancy" = "latest"
 "npm:@google/gemini-cli" = "latest"
 "npm:pnpm" = "latest"
+"npm:memd-cli" = "latest"
+node = "latest"
