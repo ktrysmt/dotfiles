@@ -20,6 +20,9 @@ eval "$(mise activate bash)"
 log_info "Installing mise tools..."
 mise install --yes
 
+log_info "updating mise tools..."
+mise up --yes
+
 # Remove tools not defined in any config
 log_info "Pruning unused mise tools..."
 mise prune --yes

@@ -5,6 +5,7 @@
 [tools]
 go = "1.25"
 bun = "latest"
+node = "latest"
 
 # Language tools
 ruff = "latest"
@@ -16,7 +17,7 @@ neovim = "latest"
 # CLI tools (version switchable)
 ripgrep = "latest"
 fzf = "latest"
-fd = "latest"
+fd  = "10.3"
 bat = "latest"
 eza = "latest"
 gh = "latest"
@@ -41,4 +42,3 @@ peco = "latest"
 "npm:@google/gemini-cli" = "latest"
 "npm:pnpm" = "latest"
 "npm:memd-cli" = "latest"
-node = "latest"
