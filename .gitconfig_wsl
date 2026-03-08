@@ -4,6 +4,7 @@
 
 [core]
 	excludesfile = ~/.gitignore_global
+  quotepath = false
 
 [user]
   email = kotaro.yoshimatsu@gmail.com
