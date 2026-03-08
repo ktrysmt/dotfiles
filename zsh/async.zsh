@@ -75,6 +75,12 @@ compdef gd0=git-diff
 
 alias delta='delta --syntax-theme zenburn'
 
+# claude
+alias cl='claude'
+alias cls='claude --model sonnet'
+alias clo='claude --model opus'
+alias clr='claude /rc'
+
 # k8s
 alias k="kubectl"
 alias kg="kubectl get"
