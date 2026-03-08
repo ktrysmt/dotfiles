@@ -467,12 +467,7 @@ if [[ "$_GCM_RAW" == *credential-manager* ]]; then
   fi
   unset _GCM_RAW
   readonly _GCM_EXE
-  GCM_ENV_KEYS=(
-    ANTHROPIC_API_KEY
-    GEMINI_API_KEY
-    EDINETDB_API_KEY
-    FALLBACK_OPENROUTER_TOKEN
-  )
+  GCM_ENV_KEYS=("${(@f)$(< "${0:h}/.keys")}")
 
   _gcm-call() {
     local action=$1; shift
