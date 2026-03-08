@@ -28,7 +28,7 @@ color_for_pct() {
   elif [ "$ipct" -ge 50 ]; then
     printf '%s' "$YELLOW"
   else
-    printf '%s' "$GREEN"
+    printf '%s' "$RESET"
   fi
 }
 
@@ -230,7 +230,8 @@ if [ -n "$cost_display" ]; then
   line1+="${SEP}${cost_display}"
 fi
 
-line1+="${SEP}${ctx_pct_int}%"
+ctx_color=$(color_for_pct "$ctx_pct_int")
+line1+="${SEP}${ctx_color}${ctx_pct_int}%${RESET}"
 
 # ---------- Line 2 (5h + 7d side by side) ----------
 part5=""
