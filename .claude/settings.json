@@ -403,6 +403,10 @@
           },
           {
             "type": "command",
+            "command": "bash ~/.claude/hooks/cleanup-short-sessions.sh"
+          },
+          {
+            "type": "command",
             "command": "bash ~/.claude/hooks/session_summarizer_wrapper.sh"
           }
         ]
@@ -420,6 +424,5 @@
     "lua-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true,
-  "model": "sonnet"
+  "alwaysThinkingEnabled": true
 }
