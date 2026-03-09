@@ -28,6 +28,7 @@ bind-key -T root M-v run "win32yank.exe -o | tmux load-buffer - && tmux paste-bu
 bind 'C' new-window -c "#{pane_current_path}" -n "#{b:pane_current_path}";
 bind '%' split-window -h -c "#{pane_current_path}";
 bind '"' split-window -v -c "#{pane_current_path}";
+# bind g popup -E -w 80% -h 80% いつか使いそう
 # move pane
 bind h select-pane -L
 bind j select-pane -D
