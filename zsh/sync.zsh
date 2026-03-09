@@ -30,7 +30,7 @@ export DIRSTACKSIZE=100
 # bat
 export BAT_THEME=gruvbox-dark
 # fzf
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-export FZF_DEFAULT_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%} --select-1 --exit-0"
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git | sort'
+export FZF_DEFAULT_OPTS="--reverse --height ${FZF_TMUX_HEIGHT:-80%} --select-1 --exit-0 --tiebreak=index"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {}'"
