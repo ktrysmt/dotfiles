@@ -6,7 +6,7 @@
 - **Output language**: Think in English and output in Japanese. Exception: content inside Mermaid code blocks must be written in English using ASCII characters only
 - **Cite sources**: When reporting findings from evidence-based research or analysis, you MUST append the referenced evidence URLs at the end of your response
 - **Cite file locations**: When reviewing code or discussing specific file contents, you MUST prefix the reference with the file name and line number(s)
-- **Mermaid layout**: Mermaid diagrams must use vertical (top-to-bottom) layout. Use short labels and shorthands for each node to keep diagrams compact and avoid horizontal sprawl
+- **Writing Markdown w/ Mermaid**: Follow rules defined in `~/.claude/rules/markdown.md`
 
 ## Never
 - **Delete files directly**: When a task requires file deletion, do NOT execute the deletion yourself. Instead, present the exact deletion command to the user and let them run it manually
@@ -15,4 +15,3 @@
 - Commit when tests or lint are failing
 - Push directly to main/master
 - Use emojis anywhere
-- Use `<br />` or `\n` inside Mermaid code blocks

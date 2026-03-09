@@ -41,6 +41,7 @@ link_file "${DOTFILES_DIR}/.claude/CLAUDE.md" ~/.claude/CLAUDE.md
 link_file "${DOTFILES_DIR}/.claude/settings.json" ~/.claude/settings.json
 link_file "${DOTFILES_DIR}/.claude/statusline-command.sh" ~/.claude/statusline-command.sh
 link_file "${DOTFILES_DIR}/.claude/keybindings.json" ~/.claude/keybindings.json
+link_file "${DOTFILES_DIR}/.claude/rules" ~/.claude/rules
 
 # DISABLE SKILLS FOR NOW
 # link_file "${DOTFILES_DIR}/.claude/skills" ~/.claude/skills
