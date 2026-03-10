@@ -224,7 +224,11 @@ fi
 
 # ---------- Line 1 ----------
 SEP="${GRAY} │ ${RESET}"
-line1="${cwd_display:+${cwd_display}${SEP}}${model_name}"
+model_color=""
+case "$model_name" in
+  *[Ss]onnet*) model_color="$GREEN" ;;
+esac
+line1="${cwd_display:+${cwd_display}${SEP}}${model_color}${model_name}${model_color:+${RESET}}"
 
 if [ -n "$cost_display" ]; then
   line1+="${SEP}${cost_display}"
