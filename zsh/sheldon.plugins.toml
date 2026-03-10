@@ -42,7 +42,8 @@ remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer
 [plugins.dotfiles-async]
 local = "~/dotfiles/zsh"
 use = [
-  "async.zsh"
+  "async.zsh",
+  "gcm.zsh"
 ]
 
 [plugins.dotfiles-sync]

@@ -1,5 +1,6 @@
 return {
   "ktrysmt/memd.nvim",
+  -- dir = "~/workspace/memd.nvim", -- for development
   event = "VeryLazy",
   keys = {
     { '<leader>md', mode = "n", desc = 'Memd: Toggle preview' },
