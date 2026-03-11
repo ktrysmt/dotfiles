@@ -31,6 +31,7 @@ alias ll="ls -lha"
 alias lt="eza -lhTa --ignore-glob '.git|node_modules'"
 alias ltt="eza -Ta --ignore-glob '.git|node_modules'"
 alias tsync="tmux set-window-option synchronize-panes"
+tm() { tmux new-session -A -s "${1:-main}"; }
 alias bat="bat -p"
 alias batn="bat --number"
 alias batd="bat -l diff"
@@ -197,11 +198,12 @@ fi
 # os type
 # --------
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  # common linux
+  alias rm="trash"
   if [[ "$USERNAME" == "vagrant" ]]; then
     # linux on Vagrant
   fi
-  if [[ -n "$WSL_DISTRO_NAME" ]]; then
-    # WSL2
+  if [[ -n "$WSL_DISTRO_NAME" ]]; then # WSL2
     function open() {
       emulate -L zsh
       if [[ $# != 1 ]]; then
@@ -214,8 +216,10 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
         fi
       fi
     }
+    alias sshon='sudo systemctl start ssh'
+    alias sshoff='sudo systemctl stop ssh'
+    alias sshst='systemctl is-active ssh'
   fi
-  alias rm="trash"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   #
 elif [[ "$OSTYPE" == "cygwin" ]]; then

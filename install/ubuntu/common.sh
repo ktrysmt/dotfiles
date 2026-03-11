@@ -19,7 +19,7 @@ setup_zsh() {
     log_info "Installing zsh..."
     sudo apt-get update -qq -y
     sudo apt-get install -qq -y zsh
-    sudo apt-get install -qq -y ttyd
+    sudo apt-get install -qq -y ttyd ssh
   fi
 
   local zsh_path
