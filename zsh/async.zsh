@@ -103,7 +103,7 @@ alias typora='open -a typora'
 alias rs='evcxr'
 alias glow="glow -t -l"
 alias csvlens="csvlens -S"
-alias mm="memd --theme nord"
+alias mm="memd"
 # python
 alias va="source .venv/bin/activate"
 alias vd="deactivate"
