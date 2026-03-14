@@ -31,7 +31,7 @@ alias ll="ls -lha"
 alias lt="eza -lhTa --ignore-glob '.git|node_modules'"
 alias ltt="eza -Ta --ignore-glob '.git|node_modules'"
 alias tsync="tmux set-window-option synchronize-panes"
-tm() { tmux new-session -A -s "${1:-main}"; }
+tm() { tmux new-session -A -s "${1:-0}"; }
 alias bat="bat -p"
 alias batn="bat --number"
 alias batd="bat -l diff"
