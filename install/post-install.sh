@@ -12,38 +12,14 @@ source "${SCRIPT_DIR}/lib.sh"
 setup_git() {
   log_info "Setting up git..."
 
-  # git-secrets
+  # git-secrets (template install only; static config lives in .gitconfig_* files)
   if has_command git-secrets; then
     git secrets --register-aws --global 2>/dev/null || true
 
     if [[ ! -d ~/.git-templates/git-secrets ]]; then
       git secrets --install ~/.git-templates/git-secrets
     fi
-
-    git config --global init.templatedir '~/.git-templates/git-secrets'
   fi
-
-  git config --global core.excludesfile ~/.gitignore_global
-
-  # OS-specific credential helper
-  case "$OS_TYPE" in
-    mac)
-      git config --global credential.helper osxkeychain
-      ;;
-    wsl)
-      # Use Windows Git Credential Manager
-      if [[ -f "/mnt/c/Program Files (x86)/Git Credential Manager/git-credential-manager.exe" ]]; then
-        git config --global credential.helper "/mnt/c/Program\\ Files\\ \\(x86\\)/Git\\ Credential\\ Manager/git-credential-manager.exe"
-      elif [[ -f "/mnt/c/Program Files/Git/mingw64/bin/git-credential-manager.exe" ]]; then
-        git config --global credential.helper "/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe"
-      else
-        git config --global credential.helper store
-      fi
-      ;;
-    *)
-      git config --global credential.helper store
-      ;;
-  esac
 
   log_success "Git configuration complete"
 }
