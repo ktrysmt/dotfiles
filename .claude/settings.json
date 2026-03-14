@@ -239,6 +239,15 @@
       "NotebookRead(**)",
       "Read(~/.claude/**)",
       "Read(.claude/**)",
+      "Edit(.claude/hooks/**)",
+      "Edit(.claude/rules/**)",
+      "Edit(.claude/skills/**)",
+      "Update(.claude/hooks/**)",
+      "Update(.claude/rules/**)",
+      "Update(.claude/skills/**)",
+      "Write(.claude/hooks/**)",
+      "Write(.claude/rules/**)",
+      "Write(.claude/skills/**)",
       "Task(**)",
       "TodoRead(**)",
       "TodoWrite(**)",
@@ -426,5 +435,6 @@
     "lua-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high"
 }
