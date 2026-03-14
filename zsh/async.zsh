@@ -108,6 +108,7 @@ alias csvlens="csvlens -S"
 alias mm="memd"
 
 mmh() { local f=/tmp/memd-preview.html; memd --html "$@" > "$f" && open "$f"; }
+pmm() { printf '```mermaid\n%s\n```\n' "$(pbpaste)" | memd; }
 
 # python
 alias va="source .venv/bin/activate"
