@@ -11,6 +11,8 @@ claude mcp add -s user context7  -- npx -y @upstash/context7-mcp@1.0.21
 # project
 claude mcp add -s project arxiv-mcp-server -- uvx --from git+https://github.com/blazickjp/arxiv-mcp-server.git@057e2000be7b56823239815b0fe7c7fc0dbced96 arxiv-mcp-server
 claude mcp add -s project playwright -- npx -y @playwright/mcp@0.0.43
+claude mcp add -s project pdf-docling -- uvx --from=docling-mcp docling-mcp-server
+claude mcp add -s project pdf-mcp -- uvx pdf-mcp
 
 ```
 

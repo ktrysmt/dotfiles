@@ -103,7 +103,12 @@ alias typora='open -a typora'
 alias rs='evcxr'
 alias glow="glow -t -l"
 alias csvlens="csvlens -S"
+
+# memd
 alias mm="memd"
+
+mmh() { local f=/tmp/memd-preview.html; memd --html "$@" > "$f" && open "$f"; }
+
 # python
 alias va="source .venv/bin/activate"
 alias vd="deactivate"

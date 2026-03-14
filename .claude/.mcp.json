@@ -48,6 +48,19 @@
     },
     "grep-github": {
       "url" : "https://mcp.grep.app"
+    },
+    "pdf-docling": {
+      "command": "uvx",
+      "args": [
+        "--from=docling-mcp",
+        "docling-mcp-server"
+      ]
+    },
+    "pdf-mcp": {
+      "command": "uvx",
+      "args": [
+        "pdf-mcp"
+      ]
     }
   }
 }
