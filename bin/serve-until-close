@@ -1,0 +1,63 @@
+#!/usr/bin/env python3
+"""HTTP server that auto-exits when the browser tab is closed.
+
+Expects the served HTML to send periodic POST /__hb requests.
+Exits after TIMEOUT seconds of no heartbeat.
+
+Usage: serve-until-close [port] [directory] [portfile]
+  port=0 lets the OS pick a free port.
+  If portfile is given, the actual port is written to it.
+"""
+
+import http.server
+import os
+import sys
+import threading
+import time
+
+TIMEOUT = 5
+
+_last_hb = time.time()
+_lock = threading.Lock()
+
+
+class Handler(http.server.SimpleHTTPRequestHandler):
+    def do_POST(self):
+        if self.path == "/__hb":
+            global _last_hb
+            with _lock:
+                _last_hb = time.time()
+            self.send_response(204)
+            self.end_headers()
+            return
+        self.send_response(404)
+        self.end_headers()
+
+    def log_message(self, format, *args):
+        pass
+
+
+def watchdog():
+    while True:
+        time.sleep(1)
+        with _lock:
+            elapsed = time.time() - _last_hb
+        if elapsed > TIMEOUT:
+            os._exit(0)
+
+
+if __name__ == "__main__":
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else 0
+    directory = sys.argv[2] if len(sys.argv) > 2 else "."
+    portfile = sys.argv[3] if len(sys.argv) > 3 else None
+
+    handler = lambda *a, **kw: Handler(*a, directory=directory, **kw)
+    server = http.server.HTTPServer(("", port), handler)
+
+    actual_port = server.server_address[1]
+    if portfile:
+        with open(portfile, "w") as f:
+            f.write(str(actual_port))
+
+    threading.Thread(target=watchdog, daemon=True).start()
+    server.serve_forever()
