@@ -11,6 +11,8 @@ GREEN=$'\e[38;2;151;201;195m'
 YELLOW=$'\e[38;2;229;192;123m'
 RED=$'\e[38;2;224;108;117m'
 GRAY=$'\e[38;2;74;88;92m'
+GRAY_5H=$'\e[38;2;106;124;129m'
+GRAY_7D=$'\e[38;2;106;124;129m'
 RESET=$'\e[0m'
 DIM=$'\e[2m'
 
@@ -216,6 +218,42 @@ if [ -n "$SEVEN_DAY_RESET" ] && [ "$SEVEN_DAY_RESET" != "0" ]; then
   seven_reset_display="Resets $(format_epoch_time "$SEVEN_DAY_RESET" "+%b %-d at %-I%p") (Asia/Tokyo)"
 fi
 
+# ---------- Remaining time label ----------
+remaining_label() {
+  local reset_epoch="$1" fallback="$2"
+  if [ -z "$reset_epoch" ] || [ "$reset_epoch" = "0" ]; then
+    echo "$fallback"
+    return
+  fi
+  local now remaining_secs
+  now=$(date +%s)
+  remaining_secs=$((reset_epoch - now))
+  if [ "$remaining_secs" -le 0 ]; then
+    echo "$fallback"
+    return
+  fi
+  local days hours
+  days=$((remaining_secs / 86400))
+  hours=$(( (remaining_secs % 86400) / 3600 ))
+  if [ "$days" -gt 0 ]; then
+    if [ "$hours" -gt 0 ]; then
+      echo "${days}d${hours}h"
+    else
+      echo "${days}d"
+    fi
+  else
+    if [ "$hours" -gt 0 ]; then
+      echo "${hours}h"
+    else
+      local mins=$(( (remaining_secs % 3600) / 60 ))
+      echo "${mins}m"
+    fi
+  fi
+}
+
+five_label=$(remaining_label "$FIVE_HOUR_RESET" "5h")
+seven_label=$(remaining_label "$SEVEN_DAY_RESET" "7d")
+
 # ---------- Format context used% ----------
 ctx_pct_int=0
 if [ -n "$used_pct" ] && [ "$used_pct" != "null" ] && [ "$used_pct" != "0" ]; then
@@ -241,17 +279,17 @@ line1+="${SEP}${ctx_color}${ctx_pct_int}%${RESET}"
 part5=""
 if [ -n "$FIVE_HOUR_PCT" ]; then
   bar5=$(progress_bar "$FIVE_HOUR_PCT")
-  part5="${GRAY}5h ${bar5} ${FIVE_HOUR_PCT}%${RESET}"
+  part5="${GRAY_5H}${five_label} ${bar5} ${FIVE_HOUR_PCT}%${RESET}"
 else
-  part5="${GRAY}5h ▱▱▱▱▱▱▱▱▱▱ --%${RESET}"
+  part5="${GRAY_5H}${five_label} ▱▱▱▱▱▱▱▱▱▱ --%${RESET}"
 fi
 
 part7=""
 if [ -n "$SEVEN_DAY_PCT" ]; then
   bar7=$(progress_bar "$SEVEN_DAY_PCT")
-  part7="${GRAY}7d ${bar7} ${SEVEN_DAY_PCT}%${RESET}"
+  part7="${GRAY_7D}${seven_label} ${bar7} ${SEVEN_DAY_PCT}%${RESET}"
 else
-  part7="${GRAY}7d ▱▱▱▱▱▱▱▱▱▱ --%${RESET}"
+  part7="${GRAY_7D}${seven_label} ▱▱▱▱▱▱▱▱▱▱ --%${RESET}"
 fi
 
 line2="${part5}${SEP}${part7}"
