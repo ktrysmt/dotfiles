@@ -15,7 +15,7 @@ import sys
 import threading
 import time
 
-TIMEOUT = 5
+TIMEOUT = 120
 
 _last_hb = time.time()
 _lock = threading.Lock()

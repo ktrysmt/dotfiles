@@ -111,7 +111,7 @@ mml() { local f=/tmp/index.html; memd --html "$@" > "$f" && open "$f"; }
 mmh() {
   local f=/tmp/index.html
   memd --html "$@" > "$f" || return 1
-  printf '<script>setInterval(()=>fetch("/__hb",{method:"POST"}),2e3)</script>' >> "$f"
+  printf '<script>const b=new Blob(['"'"'setInterval(()=>fetch("/__hb",{method:"POST"}),2e3)'"'"'],{type:"text/javascript"});new Worker(URL.createObjectURL(b))</script>' >> "$f"
   local pf=$(mktemp)
   ~/dotfiles/bin/serve-until-close 0 /tmp/ "$pf" &
   local pid=$!
