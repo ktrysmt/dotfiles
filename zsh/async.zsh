@@ -107,16 +107,8 @@ alias csvlens="csvlens -S"
 # memd
 alias mm="memd"
 
-mml() { local f=/tmp/preview.html; memd --html "$@" > "$f" && open "$f"; }
-mmh() {
-  local f=/tmp/index.html; memd --html "$@" > "$f"
-  && {
-    uv run -m http.server 8000 -d /tmp/ & local pid=$!;
-    open http://localhost:8000;
-    trap "kill $pid 2>/dev/null; trap - INT" INT;
-    wait $pid;
-  };
-}
+mml() { local f=/tmp/index.html; memd --html "$@" > "$f" && open "$f"; }
+mmh() { local f=/tmp/index.html; memd --html "$@" > "$f" && { uv run -m http.server 8000 -d /tmp/ & local pid=$!; open http://localhost:8000; trap "kill $pid 2>/dev/null; trap - INT" INT; wait $pid; };}
 pmm() { printf '```mermaid\n%s\n```\n' "$(pbpaste)" | memd; }
 
 # python
@@ -212,28 +204,19 @@ fi
 # --------
 # os type
 # --------
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+if [[ "$OSTYPE" == "linux-gnu" ]]; then # ubuntu(common)
   # common linux
   alias rm="trash"
-  if [[ "$USERNAME" == "vagrant" ]]; then
-    # linux on Vagrant
+  if [[ "$USERNAME" == "vagrant" ]]; then # vagrant
+    alias vagrant="vagrant.exe"
   fi
   if [[ -n "$WSL_DISTRO_NAME" ]]; then # WSL2
-    function open() {
-      emulate -L zsh
-      if [[ $# != 1 ]]; then
-        explorer.exe .
-      else
-        if [[ -e "$1" ]]; then
-          explorer.exe "$(wslpath -w "$1")" 2> /dev/null
-        else
-          echo "open: $1 : No such file or directory"
-        fi
-      fi
-    }
+    function open() { wslview "$@"; }
     alias sshon='sudo systemctl start ssh'
     alias sshoff='sudo systemctl stop ssh'
     alias sshst='systemctl is-active ssh'
+    alias pbcopy='clip.exe'
+    alias pbpaste='powershell.exe Get-Clipboard'
   fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   #
