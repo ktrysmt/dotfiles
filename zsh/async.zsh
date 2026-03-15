@@ -107,7 +107,16 @@ alias csvlens="csvlens -S"
 # memd
 alias mm="memd"
 
-mmh() { local f=/tmp/memd-preview.html; memd --html "$@" > "$f" && open "$f"; }
+mml() { local f=/tmp/preview.html; memd --html "$@" > "$f" && open "$f"; }
+mmh() {
+  local f=/tmp/index.html; memd --html "$@" > "$f"
+  && {
+    uv run -m http.server 8000 -d /tmp/ & local pid=$!;
+    open http://localhost:8000;
+    trap "kill $pid 2>/dev/null; trap - INT" INT;
+    wait $pid;
+  };
+}
 pmm() { printf '```mermaid\n%s\n```\n' "$(pbpaste)" | memd; }
 
 # python
