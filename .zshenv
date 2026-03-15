@@ -28,3 +28,4 @@ path=("$HOME/.local/bin" "$HOME/.local/share/mise/shims" $path)
 
 # prevent compinit in /etc/zsh/zshrc (ubuntu)
 skip_global_compinit=1
+export MEMD_THEME=catppuccin-mocha
