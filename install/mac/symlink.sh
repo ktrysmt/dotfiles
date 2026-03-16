@@ -18,4 +18,13 @@ link_file "${DOTFILES_DIR}/.tmux.conf.osx" ~/.tmux.conf
 ensure_dir ~/.config/karabiner/assets/complex_modifications
 link_file "${DOTFILES_DIR}/mac/karabiner-complex.json" ~/.config/karabiner/assets/complex_modifications/karabiner-complex.json
 
+# WezTerm
+link_file "${DOTFILES_DIR}/mac/wezterm.lua" ~/.config/wezterm/wezterm.lua
+
+# LinearMouse
+link_file "${DOTFILES_DIR}/mac/linermouse/linearmouse.json" "${HOME}/Library/Application Support/LinearMouse/linearmouse.json"
+
+# Rectangle
+link_file "${DOTFILES_DIR}/mac/RectangleConfig.json" "${HOME}/Library/Application Support/Rectangle/RectangleConfig.json"
+
 log_success "macOS symlinks complete"
