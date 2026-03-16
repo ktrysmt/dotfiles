@@ -16,6 +16,9 @@ fi
 # Activate mise for current session
 eval "$(mise activate bash)"
 
+# Trust config file (required on first run; idempotent)
+mise trust ~/.config/mise/config.toml
+
 # Install all tools defined in config.toml
 log_info "Installing mise tools..."
 mise install --yes

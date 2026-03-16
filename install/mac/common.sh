@@ -15,8 +15,10 @@ setup_mise_tools() {
   if has_command mise; then
     log_info "Installing macOS specific mise tools..."
     local mac_config="${SCRIPT_DIR}/../../mise/mac.toml"
+    local mise_local="${XDG_CONFIG_HOME:-$HOME/.config}/mise/config.local.toml"
     ln -sf "$(cd "$(dirname "${mac_config}")" && pwd)/$(basename "${mac_config}")" \
-      "${XDG_CONFIG_HOME:-$HOME/.config}/mise/config.local.toml"
+      "${mise_local}"
+    mise trust "${mise_local}"
     mise install --yes
     log_success "mise tools configured"
   fi

@@ -67,7 +67,7 @@ step_sheldon() {
     sheldon lock --update
     sheldon source > ~/.cache/sheldon.zsh
   else
-    log_warning "Sheldon not found; skipping plugin update."
+    log_warn "Sheldon not found; skipping plugin update."
   fi
 }
 

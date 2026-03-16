@@ -4,7 +4,6 @@
 # macOS CLI tools
 brew "util-linux", link: :force
 brew "duckdb"
-brew "lima"
 brew "ncurses"
 brew "openssl"
 brew "reattach-to-user-namespace"
@@ -24,10 +23,7 @@ cask "linearmouse"
 cask "macgesture"
 cask "raycast"
 cask "rectangle"
-cask "vagrant"
-cask "virtualbox"
 cask "visual-studio-code"
-cask "1password-cli"
 cask "cursor"
 cask "devtoys"
 cask "rancher"

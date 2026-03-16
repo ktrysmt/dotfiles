@@ -15,7 +15,7 @@ detect_os() {
     Linux)
       if [[ "$(uname -r)" == *microsoft* ]]; then
         echo "wsl"
-      elif [[ -f /etc/vagrant_box_build_time ]] || grep -q "vagrant" /etc/passwd 2>/dev/null; then
+      elif [[ -f /etc/vagrant_box_build_time ]] || grep -q "vagrant" /etc/passwd 2> /dev/null; then
         echo "vagrant"
       else
         echo "ubuntu"
@@ -118,7 +118,7 @@ copy_file() {
     return 1
   fi
 
-  if [[ -e "$dst" ]] && diff -q "$src" "$dst" >/dev/null 2>&1; then
+  if [[ -e "$dst" ]] && diff -q "$src" "$dst" > /dev/null 2>&1; then
     log_success "Already up to date: $dst"
     return 0
   fi
@@ -169,7 +169,7 @@ ensure_line() {
 # Command Existence Check
 # ------------------------------------------------------------------------------
 has_command() {
-  command -v "$1" >/dev/null 2>&1
+  command -v "$1" > /dev/null 2>&1
 }
 
 # ------------------------------------------------------------------------------
