@@ -386,7 +386,7 @@ autoload -Uz add-zsh-hook
 add-zsh-hook precmd _tmux_initial_rename
 
 # fzf
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+eval "$(fzf --zsh)"
 
 # --------
 # AI tools

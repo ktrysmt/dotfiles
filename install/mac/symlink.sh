@@ -22,7 +22,7 @@ link_file "${DOTFILES_DIR}/mac/karabiner-complex.json" ~/.config/karabiner/asset
 link_file "${DOTFILES_DIR}/mac/wezterm.lua" ~/.config/wezterm/wezterm.lua
 
 # LinearMouse
-link_file "${DOTFILES_DIR}/mac/linermouse/linearmouse.json" "${HOME}/Library/Application Support/LinearMouse/linearmouse.json"
+link_file "${DOTFILES_DIR}/mac/linearmouse/linearmouse.json" "${HOME}/.config/linearmouse/linearmouse.json"
 
 # Rectangle
 link_file "${DOTFILES_DIR}/mac/RectangleConfig.json" "${HOME}/Library/Application Support/Rectangle/RectangleConfig.json"

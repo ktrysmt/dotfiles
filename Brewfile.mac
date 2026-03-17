@@ -30,6 +30,4 @@ cask "rancher"
 cask "wezterm"
 cask "wordservice"
 cask "firefox"
-
-# Fonts
 cask "font-cica"
