@@ -16,6 +16,7 @@ brew "nkf"
 brew "tig"
 brew "universal-ctags"
 brew "hyperfine"
+brew "dufs"
 
 # mise itself
 brew "mise"
