@@ -32,6 +32,4 @@ cask "wordservice"
 cask "firefox"
 
 # Fonts
-tap "ryota2357/pleck-jp"
-brew "pleck-jp"
 cask "font-cica"
