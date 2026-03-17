@@ -107,6 +107,11 @@
       "pointer" : {
         "acceleration" : 2,
         "disableAcceleration" : true
+      },
+      "scrolling" : {
+        "reverse" : {
+          "vertical" : true
+        }
       }
     },
     {
