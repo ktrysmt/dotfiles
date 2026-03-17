@@ -13,6 +13,8 @@ claude mcp add -s project arxiv-mcp-server -- uvx --from git+https://github.com/
 claude mcp add -s project playwright -- npx -y @playwright/mcp@0.0.43
 claude mcp add -s project pdf-docling -- uvx --from=docling-mcp docling-mcp-server
 claude mcp add -s project pdf-mcp -- uvx pdf-mcp
+claude mcp add -s project pdf-docling -- uvx --from=docling-mcp docling-mcp-server
+claude mcp add -s project pdf-mcp -- uvx pdf-mcp
 
 ```
 
