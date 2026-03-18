@@ -1,3 +1,5 @@
+[[ -n "$WSL_DISTRO_NAME" ]] || return 0 2>/dev/null || true
+
 _GCM_RAW=$(git config --global --get credential.helper 2>/dev/null)
 if [[ "$_GCM_RAW" == *credential-manager* ]]; then
   _GCM_EXE=(${(Q)${(z)_GCM_RAW}})

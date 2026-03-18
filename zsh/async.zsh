@@ -213,36 +213,6 @@ else
   ZSH_TAC_CMD=(tail -r)
 fi
 
-# --------
-# os type
-# --------
-if [[ "$OSTYPE" == "linux-gnu" ]]; then # ubuntu(common)
-  # common linux
-  alias rm="trash"
-  if [[ "$USERNAME" == "vagrant" ]]; then # vagrant
-    alias vagrant="vagrant.exe"
-  fi
-  if [[ -n "$WSL_DISTRO_NAME" ]]; then # WSL2
-    function open() { wslview "$@"; }
-    alias sshon='sudo systemctl start ssh'
-    alias sshoff='sudo systemctl stop ssh'
-    alias sshst='systemctl is-active ssh'
-    alias pbcopy='clip.exe'
-    alias pbpaste='powershell.exe Get-Clipboard'
-  fi
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-  #
-elif [[ "$OSTYPE" == "cygwin" ]]; then
-  #
-elif [[ "$OSTYPE" == "msys" ]]; then
-  #
-elif [[ "$OSTYPE" == "win32" ]]; then
-  #
-elif [[ "$OSTYPE" == "freebsd"* ]]; then
-  #
-else
-  # Unknown.
-fi
 
 # -----------
 # custom fzf: peco
@@ -453,32 +423,10 @@ done
 echo "\n${count} worktree(s) ${dry_run:+would be }removed."
 }
 
-# --- bitwarden cli helpers ---
-if (( $+commands[bw] )); then
-  bw-unlock() {
-    if ! bw status 2>/dev/null | grep -q '"unlocked"'; then
-      export BW_SESSION=$(bw unlock --raw)
-      bw sync --quiet
-    fi
-  }
 
-  bw-ls() {
-    bw-unlock
-    bw list items | jq -r '.[] | select(.type == 2) | .name'
-  }
-
-  bw-get() {
-    bw-unlock
-    bw get notes "$1"
-  }
-
-  bwe() {
-    bw-unlock
-    eval "$(bw list items | jq -r '.[] | select(.type == 2) | select(.notes != null and .notes != "") | "export \(.name | ascii_upcase)=\(.notes | @sh)"')"
-  }
-fi
-
-# --- sheldon wrapper: clear cache on lock/add/remove ---
+# ------
+# sheldon wrapper: clear cache on lock/add/remove
+# ------
 sheldon() {
   command sheldon "$@"
   local ret=$?
@@ -488,3 +436,34 @@ sheldon() {
   return $ret
 }
 
+
+# --------
+# os type
+# --------
+if [[ "$OSTYPE" == "linux-gnu" ]]; then # ubuntu(common)
+  # common linux
+  alias rm="trash"
+  if [[ "$USERNAME" == "vagrant" ]]; then # vagrant
+    alias vagrant="vagrant.exe"
+  fi
+  if [[ -n "$WSL_DISTRO_NAME" ]]; then # WSL2
+    function open() { wslview "$@"; }
+    alias sshon='sudo systemctl start ssh'
+    alias sshoff='sudo systemctl stop ssh'
+    alias sshst='systemctl is-active ssh'
+    alias pbcopy='clip.exe'
+    alias pbpaste='powershell.exe Get-Clipboard'
+  fi
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  #
+elif [[ "$OSTYPE" == "cygwin" ]]; then
+  #
+elif [[ "$OSTYPE" == "msys" ]]; then
+  #
+elif [[ "$OSTYPE" == "win32" ]]; then
+  #
+elif [[ "$OSTYPE" == "freebsd"* ]]; then
+  #
+else
+  # Unknown.
+fi
