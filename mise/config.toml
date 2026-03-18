@@ -36,6 +36,7 @@ peco = "latest"
 "aqua:sxyazi/yazi" = "latest"
 "aqua:rossmacarthur/sheldon" = "latest"
 "github:dalance/procs" = "latest"
+"github:sudorandom/fauxrpc" = "latest" # grpc mock
 
 # npm tools
 "npm:diff-so-fancy" = "latest"
