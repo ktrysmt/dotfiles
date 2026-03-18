@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Skip recursive invocation from claude -p subprocess
+[ "${CLAUDE_SUMMARIZER_RUNNING:-}" = "1" ] && exit 0
+
 LOG_FILE="$HOME/.claude/hooks/session_summarizer.log"
 
 # stdinを一時ファイルに保存してからnohupで実行

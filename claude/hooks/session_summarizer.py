@@ -11,6 +11,7 @@ import os
 import re
 import subprocess
 import logging
+import logging.handlers
 import time
 from datetime import datetime
 from pathlib import Path
@@ -19,14 +20,16 @@ from pathlib import Path
 LOG_FILE = Path.home() / ".claude/hooks/session_summarizer.log"
 LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
 LOG_LEVEL = logging.DEBUG if os.environ.get("DEBUG") else logging.INFO
-logging.basicConfig(
-    filename=LOG_FILE,
-    level=LOG_LEVEL,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
+_handler = logging.handlers.RotatingFileHandler(
+    LOG_FILE, maxBytes=100 * 1024, backupCount=2,
 )
+_handler.setFormatter(logging.Formatter(
+    "%(asctime)s [%(levelname)s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S",
+))
+logging.basicConfig(level=LOG_LEVEL, handlers=[_handler])
 
 CLAUDE_MODEL = "haiku"
+MIN_USER_TURNS = 2
 
 # システムタグ除去用の正規表現をモジュールレベルで事前コンパイル
 _SYSTEM_TAGS = [
@@ -52,11 +55,14 @@ _RE_MULTI_DASH = re.compile(r"-+")
 def call_claude_cli(prompt: str) -> str | None:
     """Claude Code CLIをsubprocessで呼び出す"""
     try:
+        env = os.environ.copy()
+        env["CLAUDE_SUMMARIZER_RUNNING"] = "1"
         result = subprocess.run(
             ["claude", "-p", prompt, "--model", CLAUDE_MODEL, "--output-format", "text", "--no-session-persistence"],
             capture_output=True,
             text=True,
             timeout=120,
+            env=env,
         )
 
         if result.returncode != 0:
@@ -331,6 +337,11 @@ def main():
     if not messages:
         sys.exit(0)
 
+    user_turns = sum(1 for m in messages if m.get("type") == "user")
+    if user_turns < MIN_USER_TURNS:
+        logging.info(f"Too few user turns ({user_turns}), skipping")
+        sys.exit(0)
+
     conversation = extract_conversation(messages)
     if not conversation.strip():
         logging.info("No conversation content extracted, exiting")
@@ -356,7 +367,7 @@ def main():
 
     counter = 1
     while output_path.exists():
-        filename = f"{date_str}-{summary_name}-{counter}.md"
+        filename = f"{date_str}_{summary_name}_{counter}.md"
         output_path = summary_dir / filename
         counter += 1
 
