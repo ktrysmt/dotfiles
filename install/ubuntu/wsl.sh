@@ -37,13 +37,10 @@ setup_wslu() {
   fi
 }
 setup_sandbox() {
-  if ! has_command sandbox; then
-    log_info "Installing sandbox (for running WSL executables)..."
-    sudo apt-get install -y bubblewrap socat
-    log_success "sandbox installed"
-  else
-    log_success "sandbox already installed"
-  fi
+  log_info "Installing sandbox dependencies (for Claude sandbox)..."
+  npm install -g @anthropic-ai/sandbox-runtime
+  sudo apt-get install -y bubblewrap socat
+  log_success "sandbox dependencies installed"
 }
 
 # ------------------------------------------------------------------------------

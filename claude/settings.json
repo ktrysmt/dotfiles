@@ -1,8 +1,4 @@
 {
-  "sandbox": {
-    "enabled": true,
-    "autoAllowBashIfSandboxed": true
-  },
   "env": {
     "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
@@ -449,6 +445,11 @@
     "lua-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true
   },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true
 }

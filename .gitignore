@@ -2,7 +2,7 @@
 .DS_Store
 *.zwc
 !.claude/
-.claude/hooks/session_summarizer.log
+claude/hooks/session_summarizer.log
 __pycache__/
 .ruff_cache
 zsh/.keys

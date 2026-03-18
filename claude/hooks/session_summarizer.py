@@ -372,6 +372,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-        env = os.environ.copy()
-        env["CLAUDE_SUMMARIZER_RUNNING"] = "1"
-            env=env,
