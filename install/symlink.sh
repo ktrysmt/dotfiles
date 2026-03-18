@@ -35,16 +35,14 @@ link_file "${DOTFILES_DIR}/.gitignore_global" ~/.gitignore_global
 # mise
 link_file "${DOTFILES_DIR}/mise/config.toml" ~/.config/mise/config.toml
 
-# Claude
-link_file "${DOTFILES_DIR}/.claude/hooks" ~/.claude/hooks
-link_file "${DOTFILES_DIR}/.claude/CLAUDE.md" ~/.claude/CLAUDE.md
-link_file "${DOTFILES_DIR}/.claude/settings.json" ~/.claude/settings.json
-link_file "${DOTFILES_DIR}/.claude/statusline-command.sh" ~/.claude/statusline-command.sh
-link_file "${DOTFILES_DIR}/.claude/keybindings.json" ~/.claude/keybindings.json
-link_file "${DOTFILES_DIR}/.claude/rules" ~/.claude/rules
-
-# DISABLE SKILLS FOR NOW
-# link_file "${DOTFILES_DIR}/.claude/skills" ~/.claude/skills
+# Claude (source from claude/ not .claude/ to avoid Claude Code's built-in protection)
+link_file "${DOTFILES_DIR}/claude/hooks" ~/.claude/hooks
+link_file "${DOTFILES_DIR}/claude/CLAUDE.md" ~/.claude/CLAUDE.md
+link_file "${DOTFILES_DIR}/claude/settings.json" ~/.claude/settings.json
+link_file "${DOTFILES_DIR}/claude/statusline-command.sh" ~/.claude/statusline-command.sh
+link_file "${DOTFILES_DIR}/claude/keybindings.json" ~/.claude/keybindings.json
+link_file "${DOTFILES_DIR}/claude/rules" ~/.claude/rules
+link_file "${DOTFILES_DIR}/claude/skills" ~/.claude/skills
 
 # Copy files (not symlink - may contain secrets or machine-specific config)
 [[ ! -e ~/.docker/config.json ]] && copy_file "${DOTFILES_DIR}/.docker/config.json" ~/.docker/config.json
