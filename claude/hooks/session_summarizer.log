@@ -3801,3 +3801,48 @@ IndentationError: unexpected indent
   File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
     env = os.environ.copy()
 IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent
+  File "/home/ubuntu/.claude/hooks/session_summarizer.py", line 375
+    env = os.environ.copy()
+IndentationError: unexpected indent

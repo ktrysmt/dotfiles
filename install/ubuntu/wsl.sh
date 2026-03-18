@@ -36,6 +36,15 @@ setup_wslu() {
     log_success "wslu already installed"
   fi
 }
+setup_sandbox() {
+  if ! has_command sandbox; then
+    log_info "Installing sandbox (for running WSL executables)..."
+    sudo apt-get install -y bubblewrap socat
+    log_success "sandbox installed"
+  else
+    log_success "sandbox already installed"
+  fi
+}
 
 # ------------------------------------------------------------------------------
 # Symlinks
@@ -102,6 +111,7 @@ EOF
 # Main
 # ------------------------------------------------------------------------------
 main() {
+  setup_sandbox
   setup_wslu
   setup_mise_tools
   setup_symlinks
