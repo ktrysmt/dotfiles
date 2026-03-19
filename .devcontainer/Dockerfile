@@ -116,14 +116,8 @@ ARG USERNAME=node
 # node user already exists in node:20 base image; just set shell to zsh
 RUN usermod -s /bin/zsh $USERNAME
 
-# Persist bash history
-RUN mkdir -p /commandhistory && \
-  touch /commandhistory/.bash_history && \
-  chown -R $USERNAME /commandhistory
-
-# Create workspace and config directories
-RUN mkdir -p /workspace /home/node/.claude && \
-  chown -R node:node /workspace /home/node/.claude
+# Create workspace directory (/.claude is volume-mounted at runtime)
+RUN mkdir -p /workspace && chown node:node /workspace
 
 # Dotfiles baked into image
 COPY --chown=node:node claude/ /home/node/.dotfiles-claude/

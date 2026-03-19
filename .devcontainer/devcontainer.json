@@ -24,7 +24,6 @@
   "remoteUser": "node",
   "mounts": [
     "source=claude-config-${devcontainerId},target=/home/node/.claude,type=volume",
-    "source=claude-bashhistory-${devcontainerId},target=/commandhistory,type=volume",
     "source=${localEnv:TMUX_TMPDIR:/tmp/tmux-1000},target=${localEnv:TMUX_TMPDIR:/tmp/tmux-1000},type=bind"
   ],
   "containerEnv": {
@@ -37,6 +36,6 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
   "workspaceFolder": "/workspace",
   "postCreateCommand": "bash /usr/local/bin/setup-claude.sh",
-  "postStartCommand": "sudo /usr/local/bin/init-firewall.sh && curl -fsSL https://claude.ai/install.sh | bash",
+  "postStartCommand": "sudo /usr/local/bin/init-firewall.sh",
   "waitFor": "postStartCommand"
 }

@@ -24,16 +24,16 @@ devcontainer exec --workspace-folder <repo> claude login
 
 ## 使い方
 
-### ローカルビルド (このリポジトリ自身を対象にする場合)
+### ローカルビルド (debug用)
 
 ```sh
-devcontainer up --workspace-folder .
+devcontainer up --workspace-folder . --remove-existing-container
 devcontainer exec --workspace-folder . \
   env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" \
   claude --dangerously-skip-permissions
 ```
 
-### レジストリイメージ (他リポジトリを対象にする場合)
+### レジストリイメージ (普段使い)
 
 ```sh
 cd ~/projects/target-repo

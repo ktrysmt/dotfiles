@@ -1,7 +1,7 @@
 #!/bin/bash
-# postCreateCommand: symlink dotfiles Claude config into container
+# postCreateCommand: copy dotfiles Claude config into container
 # Source: /home/node/.dotfiles-claude (baked into image)
-# settings.json is generated (container-specific), not symlinked
+# settings.json is generated (container-specific), not copied
 
 set -euo pipefail
 
@@ -11,14 +11,15 @@ CLAUDE_DIR="$HOME/.claude"
 mkdir -p "$CLAUDE_DIR"
 
 # --------------------------------------------------------------------------
-# Symlink config files from image-baked dotfiles
+# Copy config files from image-baked dotfiles
 # --------------------------------------------------------------------------
 for name in CLAUDE.md rules skills hooks keybindings.json statusline-command.sh .mcp.json; do
     if [ -e "$DOTFILES_CLAUDE/$name" ]; then
-        ln -sf "$DOTFILES_CLAUDE/$name" "$CLAUDE_DIR/$name"
+        rm -rf "$CLAUDE_DIR/$name"
+        cp -rf "$DOTFILES_CLAUDE/$name" "$CLAUDE_DIR/$name"
     fi
 done
-echo "Dotfiles Claude config symlinked."
+echo "Dotfiles Claude config copied."
 
 # --------------------------------------------------------------------------
 # Create container-specific settings.json
