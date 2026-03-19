@@ -1,6 +1,7 @@
 {
   "mcpServers": {
     "aws-docs": {
+      "type": "http",
       "url": "https://knowledge-mcp.global.api.aws"
     },
     "gemini-cli": {
@@ -47,20 +48,8 @@
       "scope": "project"
     },
     "grep-github": {
-      "url" : "https://mcp.grep.app"
-    },
-    "pdf-docling": {
-      "command": "uvx",
-      "args": [
-        "--from=docling-mcp",
-        "docling-mcp-server"
-      ]
-    },
-    "pdf-mcp": {
-      "command": "uvx",
-      "args": [
-        "pdf-mcp"
-      ]
+      "type": "http",
+      "url": "https://mcp.grep.app"
     },
     "pdf-docling": {
       "command": "uvx",

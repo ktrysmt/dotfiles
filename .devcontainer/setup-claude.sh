@@ -13,13 +13,23 @@ mkdir -p "$CLAUDE_DIR"
 # --------------------------------------------------------------------------
 # Copy config files from image-baked dotfiles
 # --------------------------------------------------------------------------
-for name in CLAUDE.md rules skills hooks keybindings.json statusline-command.sh .mcp.json; do
+for name in CLAUDE.md rules skills hooks keybindings.json statusline-command.sh; do
     if [ -e "$DOTFILES_CLAUDE/$name" ]; then
         rm -rf "$CLAUDE_DIR/$name"
         cp -rf "$DOTFILES_CLAUDE/$name" "$CLAUDE_DIR/$name"
     fi
 done
 echo "Dotfiles Claude config copied."
+
+# --------------------------------------------------------------------------
+# Register MCP servers via CLI
+# --------------------------------------------------------------------------
+if command -v claude >/dev/null 2>&1; then
+    echo "Registering MCP servers..."
+    claude mcp add -s user -t http aws-docs https://knowledge-mcp.global.api.aws
+    claude mcp add -s user -t http grep-github https://mcp.grep.app
+    echo "MCP servers registered."
+fi
 
 # --------------------------------------------------------------------------
 # Create container-specific settings.json

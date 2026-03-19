@@ -106,7 +106,7 @@ ENV PATH="/usr/local/cargo/bin:$PATH"
 # ------------------------------------------------------------------------------
 ARG CLAUDE_CODE_VERSION=latest
 RUN curl -fsSL https://claude.ai/install.sh | bash -s -- ${CLAUDE_CODE_VERSION} && \
-    cp "$(readlink -f /root/.local/bin/claude)" /usr/local/bin/claude
+  cp "$(readlink -f /root/.local/bin/claude)" /usr/local/bin/claude
 
 # ------------------------------------------------------------------------------
 # User setup
@@ -118,6 +118,7 @@ RUN usermod -s /bin/zsh $USERNAME
 
 # Create workspace directory (/.claude is volume-mounted at runtime)
 RUN mkdir -p /workspace && chown node:node /workspace
+RUN mkdir -p /home/node/.local/bin && chown node:node -R /home/node/.local
 
 # Dotfiles baked into image
 COPY --chown=node:node claude/ /home/node/.dotfiles-claude/
@@ -135,6 +136,7 @@ RUN chmod +x /usr/local/bin/init-firewall.sh /usr/local/bin/setup-claude.sh && \
 
 ENV TERM=xterm-256color
 ENV COLORTERM=truecolor
+ENV PATH="/home/node/.local/bin:$PATH"
 
 # Force TERM/COLORTERM in zsh (pty may override Docker ENV)
 RUN echo 'export TERM=xterm-256color' >> /etc/zsh/zshenv && \
