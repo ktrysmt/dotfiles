@@ -105,6 +105,9 @@ ALLOWED_DOMAINS=(
     # Rust crates
     "crates.io"
     "static.crates.io"
+    # Claude Code installer
+    "claude.ai"
+    "storage.googleapis.com"
 )
 
 # --- Extra domains from environment variable ---

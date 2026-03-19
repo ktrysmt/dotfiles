@@ -1,6 +1,7 @@
 # Claude Code Devcontainer
 
-`--dangerously-skip-permissions` を安全に使う
+`--dangerously-skip-permissions` を安全に使うためのサンドボックス環境。
+dotfiles の Claude 設定 (`claude/`) と `.gitignore_global` は image に焼き込まれており、どの環境でも同じツールチェインが使える。
 
 ## 前提
 
@@ -8,14 +9,14 @@
 mise install  # npm:@devcontainers/cli
 ```
 
-## 初回認証
+## 認証
 
 ```bash
 claude setup-token
 export CLAUDE_CODE_OAUTH_TOKEN="sk-ant-oat01-..."
 ```
 
-or,
+or
 
 ```bash
 devcontainer exec --workspace-folder <repo> claude login
@@ -23,24 +24,22 @@ devcontainer exec --workspace-folder <repo> claude login
 
 ## 使い方
 
-in local
+### ローカルビルド (このリポジトリ自身を対象にする場合)
 
 ```sh
-devcontainer build --workspace-folder . --no-cache
 devcontainer up --workspace-folder .
 devcontainer exec --workspace-folder . \
   env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" \
   claude --dangerously-skip-permissions
 ```
 
-with registry
+### レジストリイメージ (他リポジトリを対象にする場合)
 
-```bash
+```sh
 cd ~/projects/target-repo
 
-CONFIG=~/dotfiles/.devcontainer/portable/devcontainer.json
-
-devcontainer up --workspace-folder . --config $CONFIG && \
+devcontainer up --workspace-folder . \
+  --config ~/dotfiles/.devcontainer/portable/devcontainer.json
 devcontainer exec --workspace-folder . \
   env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" \
   claude --dangerously-skip-permissions
@@ -50,41 +49,34 @@ devcontainer exec --workspace-folder . \
 
 | ファイル | 役割 |
 |---------|------|
-| `Dockerfile` | ツール群のインストール (brew/mise 不使用、バイナリ直DL) |
-| `init-firewall.sh` | ネットワーク制限 (GitHub, npm, Anthropic API, PyPI, MCP endpoints のみ許可) |
-| `setup-claude.sh` | ホストの `~/.claude/CLAUDE.md`, `rules/`, hooks, `.mcp.json` をコンテナに注入 |
-| `devcontainer.portable.json` | 他リポジトリ用テンプレート (GHCR イメージ参照) |
+| `Dockerfile` | ツール群のインストール (バイナリ直DL)。`claude/` と `.gitignore_global` を image に焼き込む |
+| `init-firewall.sh` | ネットワーク制限 (許可ドメインのみ通信可) |
+| `setup-claude.sh` | image 内の dotfiles を `~/.claude/` にシンボリックリンク。コンテナ用 `settings.json` を生成 |
+| `portable/devcontainer.json` | 他リポジトリ用テンプレート (GHCR イメージ参照) |
 
-## ファイアウォール許可ドメイン
+Claude Code は `postStartCommand` でコンテナ起動のたびに最新版へ自動更新される。
 
-GitHub, npm, Anthropic API, Sentry, VS Code services に加え以下を追加:
+## ファイアウォール
 
-- `pypi.org` / `files.pythonhosted.org` -- uvx (MCP サーバー実行)
-- `knowledge-mcp.global.api.aws` -- aws-docs MCP
-- `mcp.grep.app` -- grep-github MCP
-- `proxy.golang.org` / `sum.golang.org` -- Go modules
-- `crates.io` / `static.crates.io` -- Rust crates
+許可ドメインの追加は `init-firewall.sh` の `ALLOWED_DOMAINS` を編集するか、環境変数で渡す:
 
-許可ドメインの追加は `init-firewall.sh` の `ALLOWED_DOMAINS` 配列を編集するか、環境変数で渡す:
-
-```bash
-# devcontainer.json の containerEnv に追加
+```jsonc
+// devcontainer.json の containerEnv に追加
 "FIREWALL_EXTRA_DOMAINS": "api.example.com,cdn.example.com"
 ```
 
 ### Permissive モード
 
-ブロックせずログだけ記録する緩いモード。まず permissive で動かし、必要なドメインを特定してから strict に切り替える運用。
+ブロックせずログだけ記録する。必要なドメインを特定してから strict に切り替える運用向け。
 
-```bash
-# devcontainer.json の containerEnv に追加
+```jsonc
+// devcontainer.json の containerEnv に追加
 "FIREWALL_MODE": "permissive"
 ```
 
-許可リスト外へのアクセスを確認 (ホスト側のターミナルで実行):
+許可リスト外へのアクセスを確認 (ホスト側で実行):
 
 ```bash
-# iptables LOG はホストのカーネルログに出る。コンテナ内からは見えない。
 dmesg -T | grep 'FIREWALL-UNLISTED' | grep -oP 'DST=\K[0-9.]+' | sort -u | \
   while read -r ip; do
     domain=$(dig +short -x "$ip" 2>/dev/null | head -1)
@@ -94,4 +86,4 @@ dmesg -T | grep 'FIREWALL-UNLISTED' | grep -oP 'DST=\K[0-9.]+' | sort -u | \
 
 ## GHCR イメージのビルド
 
-`.devcontainer/**` を変更して master に push すると自動ビルド。
+`.devcontainer/**`, `claude/**`, `.gitignore_global` を変更して master に push すると自動ビルド。
