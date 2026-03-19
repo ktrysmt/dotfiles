@@ -29,7 +29,9 @@
   ],
   "containerEnv": {
     "NODE_OPTIONS": "--max-old-space-size=4096",
-    "DEVCONTAINER": "true"
+    "DEVCONTAINER": "true",
+    "TERM": "xterm-256color",
+    "COLORTERM": "truecolor"
   },
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
   "workspaceFolder": "/workspace",

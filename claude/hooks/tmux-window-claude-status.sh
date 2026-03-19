@@ -10,6 +10,7 @@
 # @claude-status option, and the window name aggregates all panes.
 
 command -v tmux &>/dev/null || exit 0
+tmux display-message -p '' 2>/dev/null || exit 0
 
 # Skip when running inside session_summarizer subprocess
 [ "$CLAUDE_SUMMARIZER_RUNNING" = "1" ] && exit 0

@@ -121,5 +121,8 @@ RUN chmod +x /usr/local/bin/init-firewall.sh /usr/local/bin/setup-claude.sh && \
   echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/node-firewall && \
   chmod 0440 /etc/sudoers.d/node-firewall
 
+ENV TERM=xterm-256color
+ENV COLORTERM=truecolor
+
 USER node
 ENV SHELL=/bin/zsh
