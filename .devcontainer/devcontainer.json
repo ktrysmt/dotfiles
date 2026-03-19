@@ -1,6 +1,7 @@
 {
   "name": "Claude Code Sandbox",
   "build": {
+    "context": "..",
     "dockerfile": "Dockerfile",
     "args": {
       "TZ": "${localEnv:TZ:Asia/Tokyo}",
@@ -22,7 +23,6 @@
   ],
   "remoteUser": "node",
   "mounts": [
-    "source=${localEnv:HOME}/.claude,target=/home/node/.claude-host,type=bind,readonly",
     "source=claude-config-${devcontainerId},target=/home/node/.claude,type=volume",
     "source=claude-bashhistory-${devcontainerId},target=/commandhistory,type=volume",
     "source=${localEnv:TMUX_TMPDIR:/tmp/tmux-1000},target=${localEnv:TMUX_TMPDIR:/tmp/tmux-1000},type=bind"
@@ -30,12 +30,13 @@
   "containerEnv": {
     "NODE_OPTIONS": "--max-old-space-size=4096",
     "DEVCONTAINER": "true",
+    "DEVCONTAINER_HOST_PATH": "${localWorkspaceFolder}",
     "TERM": "xterm-256color",
     "COLORTERM": "truecolor"
   },
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
   "workspaceFolder": "/workspace",
   "postCreateCommand": "bash /usr/local/bin/setup-claude.sh",
-  "postStartCommand": "sudo /usr/local/bin/init-firewall.sh",
+  "postStartCommand": "sudo /usr/local/bin/init-firewall.sh && curl -fsSL https://claude.ai/install.sh | bash",
   "waitFor": "postStartCommand"
 }

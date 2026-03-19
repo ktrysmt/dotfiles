@@ -8,37 +8,42 @@
 mise install  # npm:@devcontainers/cli
 ```
 
-## 初回のみ認証
-
-環境変数を設定しておけば認証ステップ不要で即実行できる:
+## 初回認証
 
 ```bash
-claude setup-token  # ホストで実行 -> トークンが出力される
+claude setup-token
 export CLAUDE_CODE_OAUTH_TOKEN="sk-ant-oat01-..."
 ```
 
-環境変数を使わない場合は、コンテナ起動後に一度だけ対話ログインが必要:
+or,
 
 ```bash
 devcontainer exec --workspace-folder <repo> claude login
 ```
 
-OAuth トークンは named volume に永続化されるため、どちらの方法でも rebuild 後の再認証は不要。
-
 ## 使い方
 
-```bash
-CONFIG=~/dotfiles/.devcontainer/portable/devcontainer.json
+in local
 
+```sh
+devcontainer build --workspace-folder . --no-cache
+devcontainer up --workspace-folder .
+devcontainer exec --workspace-folder . \
+  env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" \
+  claude --dangerously-skip-permissions
+```
+
+with registry
+
+```bash
 cd ~/projects/target-repo
+
+CONFIG=~/dotfiles/.devcontainer/portable/devcontainer.json
 
 devcontainer up --workspace-folder . --config $CONFIG && \
 devcontainer exec --workspace-folder . \
   env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" \
   claude --dangerously-skip-permissions
-
-# 終了
-devcontainer down --workspace-folder .
 ```
 
 ## 構成

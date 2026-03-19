@@ -2,3 +2,5 @@
 feature-*
 .serena/project.yml
 .claude/settings.local.json
+tmux-client-*.log
+tmux-server-*.log

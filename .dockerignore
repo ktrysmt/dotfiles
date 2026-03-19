@@ -1,0 +1,15 @@
+# Only send what the Dockerfile needs
+*
+
+!.devcontainer/init-firewall.sh
+!.devcontainer/setup-claude.sh
+!claude/
+!claude/**
+!.gitignore_global
+
+# Exclude unnecessary claude files
+claude/hooks/__pycache__/
+claude/hooks/.ruff_cache/
+claude/hooks/*.log
+claude/settings.local.json
+claude/README.md

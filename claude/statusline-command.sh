@@ -260,6 +260,12 @@ if [ -n "$used_pct" ] && [ "$used_pct" != "null" ] && [ "$used_pct" != "0" ]; th
   ctx_pct_int=$(printf "%.0f" "$used_pct" 2> /dev/null || echo 0)
 fi
 
+# ---------- Devcontainer indicator ----------
+devc_display=""
+if [ "$DEVCONTAINER" = "true" ] && [ -n "$DEVCONTAINER_HOST_PATH" ]; then
+  devc_display="devc:${DEVCONTAINER_HOST_PATH}"
+fi
+
 # ---------- Line 1 ----------
 SEP="${GRAY} │ ${RESET}"
 model_color=""
@@ -274,6 +280,10 @@ fi
 
 ctx_color=$(color_for_pct "$ctx_pct_int")
 line1+="${SEP}${ctx_color}${ctx_pct_int}%${RESET}"
+
+if [ -n "$devc_display" ]; then
+  line1+="${SEP}${DIM}${devc_display}${RESET}"
+fi
 
 # ---------- Line 2 (5h + 7d side by side) ----------
 part5=""

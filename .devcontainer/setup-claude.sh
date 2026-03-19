@@ -1,71 +1,30 @@
 #!/bin/bash
-# postCreateCommand: inject host Claude config into container
-# Copies CLAUDE.md, rules, skills, hooks, .mcp.json, keybindings, statusline
-# Creates a container-appropriate settings.json (permissions stripped for --dangerously-skip-permissions)
+# postCreateCommand: symlink dotfiles Claude config into container
+# Source: /home/node/.dotfiles-claude (baked into image)
+# settings.json is generated (container-specific), not symlinked
 
 set -euo pipefail
 
-HOST_DIR="$HOME/.claude-host"
-WORKSPACE_CLAUDE="/workspace/.claude"
+DOTFILES_CLAUDE="$HOME/.dotfiles-claude"
 CLAUDE_DIR="$HOME/.claude"
 
 mkdir -p "$CLAUDE_DIR"
 
 # --------------------------------------------------------------------------
-# Helper: copy file/dir from host mount, falling back to workspace .claude/
-# Host mount may contain broken symlinks (pointing to host paths that don't
-# exist inside the container), so we fall back to the workspace copy.
+# Symlink config files from image-baked dotfiles
 # --------------------------------------------------------------------------
-copy_config() {
-    local name="$1"
-    local is_dir="${2:-false}"
-
-    if [ "$is_dir" = "true" ]; then
-        if [ -d "$HOST_DIR/$name" ] && cp -rL "$HOST_DIR/$name" "$CLAUDE_DIR/" 2>/dev/null; then
-            return 0
-        elif [ -d "$WORKSPACE_CLAUDE/$name" ]; then
-            cp -r "$WORKSPACE_CLAUDE/$name" "$CLAUDE_DIR/"
-            return 0
-        fi
-    else
-        if [ -f "$HOST_DIR/$name" ] && cp -L "$HOST_DIR/$name" "$CLAUDE_DIR/$name" 2>/dev/null; then
-            return 0
-        elif [ -f "$WORKSPACE_CLAUDE/$name" ]; then
-            cp "$WORKSPACE_CLAUDE/$name" "$CLAUDE_DIR/$name"
-            return 0
-        fi
+for name in CLAUDE.md rules skills hooks keybindings.json statusline-command.sh .mcp.json; do
+    if [ -e "$DOTFILES_CLAUDE/$name" ]; then
+        ln -sf "$DOTFILES_CLAUDE/$name" "$CLAUDE_DIR/$name"
     fi
-    return 1
-}
-
-# --------------------------------------------------------------------------
-# Copy config files from host (readonly bind mount)
-# Follow symlinks with -L; fall back to /workspace/.claude/ if broken
-# --------------------------------------------------------------------------
-if [ -d "$HOST_DIR" ] || [ -d "$WORKSPACE_CLAUDE" ]; then
-    copy_config "CLAUDE.md"
-    copy_config "rules" true
-    # Skills (only if non-empty)
-    if [ -d "$HOST_DIR/skills" ] && [ "$(ls -A "$HOST_DIR/skills" 2>/dev/null)" ]; then
-        copy_config "skills" true
-    elif [ -d "$WORKSPACE_CLAUDE/skills" ] && [ "$(ls -A "$WORKSPACE_CLAUDE/skills" 2>/dev/null)" ]; then
-        cp -r "$WORKSPACE_CLAUDE/skills" "$CLAUDE_DIR/"
-    fi
-    copy_config "hooks" true
-    copy_config "statusline-command.sh"
-    copy_config ".mcp.json"
-    copy_config "keybindings.json"
-
-    echo "Host Claude config injected."
-else
-    echo "WARNING: Host mount not found at $HOST_DIR. Skipping config injection."
-fi
+done
+echo "Dotfiles Claude config symlinked."
 
 # --------------------------------------------------------------------------
 # Create container-specific settings.json
 # --------------------------------------------------------------------------
 # - permissions: stripped (bypassed by --dangerously-skip-permissions)
-# - settings.local.json: not copied (host-specific allow rules, also bypassed)
+# - settings.local.json: not needed (host-specific allow rules, also bypassed)
 # - hooks: included (tmux hooks are guarded, others work as-is)
 # - statusLine: included (uses jq/curl/git, all available in container)
 # - enabledPlugins, env, effortLevel, alwaysThinkingEnabled: preserved

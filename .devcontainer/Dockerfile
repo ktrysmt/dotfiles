@@ -9,9 +9,23 @@ ENV TZ="$TZ"
 RUN apt-get update && apt-get install -y --no-install-recommends \
   less git procps sudo zsh man-db unzip gnupg2 gh \
   iptables ipset iproute2 dnsutils aggregate jq \
-  curl wget tree watch tmux \
+  curl wget tree watch \
   build-essential python3 python3-venv \
+  libevent-dev ncurses-dev bison pkg-config \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# ------------------------------------------------------------------------------
+# tmux (built from source to match host version for socket compatibility)
+# ------------------------------------------------------------------------------
+ARG TMUX_VERSION=3.6a
+
+RUN wget -q "https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz" && \
+  tar xzf "tmux-${TMUX_VERSION}.tar.gz" && \
+  cd "tmux-${TMUX_VERSION}" && \
+  ./configure --prefix=/usr/local && \
+  make -j"$(nproc)" && \
+  make install && \
+  cd .. && rm -rf "tmux-${TMUX_VERSION}" "tmux-${TMUX_VERSION}.tar.gz"
 
 # ------------------------------------------------------------------------------
 # CLI tools from GitHub Releases (pinned versions, no API calls)
@@ -108,15 +122,19 @@ RUN mkdir -p /commandhistory && \
   chown -R $USERNAME /commandhistory
 
 # Create workspace and config directories
-RUN mkdir -p /workspace /home/node/.claude /home/node/.claude-host && \
-  chown -R node:node /workspace /home/node/.claude /home/node/.claude-host
+RUN mkdir -p /workspace /home/node/.claude && \
+  chown -R node:node /workspace /home/node/.claude
+
+# Dotfiles baked into image
+COPY --chown=node:node claude/ /home/node/.dotfiles-claude/
+COPY --chown=node:node .gitignore_global /home/node/.gitignore_global
 
 WORKDIR /workspace
 
 # ------------------------------------------------------------------------------
 # Firewall & setup scripts
 # ------------------------------------------------------------------------------
-COPY init-firewall.sh setup-claude.sh /usr/local/bin/
+COPY .devcontainer/init-firewall.sh .devcontainer/setup-claude.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/init-firewall.sh /usr/local/bin/setup-claude.sh && \
   echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/node-firewall && \
   chmod 0440 /etc/sudoers.d/node-firewall
@@ -124,5 +142,11 @@ RUN chmod +x /usr/local/bin/init-firewall.sh /usr/local/bin/setup-claude.sh && \
 ENV TERM=xterm-256color
 ENV COLORTERM=truecolor
 
+# Force TERM/COLORTERM in zsh (pty may override Docker ENV)
+RUN echo 'export TERM=xterm-256color' >> /etc/zsh/zshenv && \
+  echo 'export COLORTERM=truecolor' >> /etc/zsh/zshenv
+
 USER node
 ENV SHELL=/bin/zsh
+
+RUN git config --global core.excludesfile ~/.gitignore_global
