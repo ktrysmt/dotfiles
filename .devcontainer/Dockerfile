@@ -118,6 +118,7 @@ RUN usermod -s /bin/zsh $USERNAME
 
 # Create workspace directory (/.claude is volume-mounted at runtime)
 RUN mkdir -p /workspace && chown node:node /workspace
+RUN mkdir -p /home/node/.claude && chown node:node /home/node/.claude
 RUN mkdir -p /home/node/.local/bin && chown node:node -R /home/node/.local
 
 # Dotfiles baked into image
