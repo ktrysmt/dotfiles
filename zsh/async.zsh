@@ -125,8 +125,8 @@ pmm() { printf '```mermaid\n%s\n```\n' "$(pbpaste)" | memd; }
 
 # devcontainer
 alias -g dcls='docker ps --filter "label=devcontainer.local_folder" --format "table {{.ID}}\t{{.Status}}\t{{.Label \"devcontainer.local_folder\"}}"'
-alias -g dcu='devcontainer up --workspace-folder . --config ~/dotfiles/.devcontainer/devcontainer.json'
-alias -g dcur='devcontainer up --workspace-folder . --config ~/dotfiles/.devcontainer/devcontainer.json --remove-existing-container=true'
+alias -g dcu='docker pull $(jq -r .image ~/dotfiles/.devcontainer/devcontainer.json) && devcontainer up --workspace-folder . --config ~/dotfiles/.devcontainer/devcontainer.json'
+alias -g dcur='docker pull $(jq -r .image ~/dotfiles/.devcontainer/devcontainer.json) && devcontainer up --workspace-folder . --config ~/dotfiles/.devcontainer/devcontainer.json --remove-existing-container=true'
 alias -g dcex='devcontainer exec --config ~/dotfiles/.devcontainer/devcontainer.json  --workspace-folder . env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" bash -c "cd .@@  && claude --dangerously-skip-permissions"'
 alias -g dcdown="dcls | tail -n -1 | fzf | awk -F ' ' '{print \$1}' | xargs docker stop"
 
