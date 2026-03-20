@@ -1,3 +1,24 @@
+# ==============================================================================
+# Builder: tmux (separate stage to keep build deps out of final image)
+# ==============================================================================
+FROM node:20 AS tmux-builder
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  build-essential libevent-dev ncurses-dev bison pkg-config wget \
+  && rm -rf /var/lib/apt/lists/*
+
+ARG TMUX_VERSION=3.6a
+RUN wget -q "https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz" && \
+  tar xzf "tmux-${TMUX_VERSION}.tar.gz" && \
+  cd "tmux-${TMUX_VERSION}" && \
+  ./configure --prefix=/usr/local && \
+  make -j"$(nproc)" && \
+  make install && \
+  cd .. && rm -rf "tmux-${TMUX_VERSION}" "tmux-${TMUX_VERSION}.tar.gz"
+
+# ==============================================================================
+# Final image
+# ==============================================================================
 FROM node:20
 
 ARG TZ
@@ -10,22 +31,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   less git procps sudo zsh man-db unzip gnupg2 gh \
   iptables ipset iproute2 dnsutils aggregate jq \
   curl wget tree watch \
-  build-essential python3 python3-venv \
-  libevent-dev ncurses-dev bison pkg-config \
+  build-essential \
+  libevent-2.1-7 \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # ------------------------------------------------------------------------------
-# tmux (built from source to match host version for socket compatibility)
+# tmux (built in separate stage to match host version for socket compatibility)
 # ------------------------------------------------------------------------------
-ARG TMUX_VERSION=3.6a
-
-RUN wget -q "https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz" && \
-  tar xzf "tmux-${TMUX_VERSION}.tar.gz" && \
-  cd "tmux-${TMUX_VERSION}" && \
-  ./configure --prefix=/usr/local && \
-  make -j"$(nproc)" && \
-  make install && \
-  cd .. && rm -rf "tmux-${TMUX_VERSION}" "tmux-${TMUX_VERSION}.tar.gz"
+COPY --from=tmux-builder /usr/local/bin/tmux /usr/local/bin/tmux
+RUN tmux -V
 
 # ------------------------------------------------------------------------------
 # CLI tools from GitHub Releases (pinned versions, no API calls)
@@ -102,13 +116,6 @@ ENV CARGO_HOME=/usr/local/cargo
 ENV PATH="/usr/local/cargo/bin:$PATH"
 
 # ------------------------------------------------------------------------------
-# Claude Code (native installer, not npm)
-# ------------------------------------------------------------------------------
-ARG CLAUDE_CODE_VERSION=latest
-RUN curl -fsSL https://claude.ai/install.sh | bash -s -- ${CLAUDE_CODE_VERSION} && \
-  cp "$(readlink -f /root/.local/bin/claude)" /usr/local/bin/claude
-
-# ------------------------------------------------------------------------------
 # User setup
 # ------------------------------------------------------------------------------
 ARG USERNAME=node
@@ -135,15 +142,15 @@ RUN chmod +x /usr/local/bin/init-firewall.sh /usr/local/bin/setup-claude.sh && \
   echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/node-firewall && \
   chmod 0440 /etc/sudoers.d/node-firewall
 
-ENV TERM=xterm-256color
-ENV COLORTERM=truecolor
 ENV PATH="/home/node/.local/bin:$PATH"
-
-# Force TERM/COLORTERM in zsh (pty may override Docker ENV)
-RUN echo 'export TERM=xterm-256color' >> /etc/zsh/zshenv && \
-  echo 'export COLORTERM=truecolor' >> /etc/zsh/zshenv
 
 USER node
 ENV SHELL=/bin/zsh
+
+# ------------------------------------------------------------------------------
+# Claude Code (native installer as node user -> ~/.local/bin/claude)
+# ------------------------------------------------------------------------------
+ARG CLAUDE_CODE_VERSION=latest
+RUN curl -fsSL https://claude.ai/install.sh | bash -s -- ${CLAUDE_CODE_VERSION}
 
 RUN git config --global core.excludesfile ~/.gitignore_global

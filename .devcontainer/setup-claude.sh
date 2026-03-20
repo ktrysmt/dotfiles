@@ -28,113 +28,19 @@ echo "Dotfiles Claude config symlinked."
 # --------------------------------------------------------------------------
 if command -v claude >/dev/null 2>&1; then
     echo "Registering MCP servers..."
-    claude mcp add -s user -t http aws-docs https://knowledge-mcp.global.api.aws || true
-    claude mcp add -s user -t http grep-github https://mcp.grep.app || true
+    registered=$(claude mcp list -s user 2>/dev/null || true)
+    echo "$registered" | grep -q "aws-docs" || claude mcp add -s user -t http aws-docs https://knowledge-mcp.global.api.aws || true
+    echo "$registered" | grep -q "grep-github" || claude mcp add -s user -t http grep-github https://mcp.grep.app || true
     echo "MCP servers registered."
 fi
 
 # --------------------------------------------------------------------------
 # Merge container-specific settings into settings.json
 # --------------------------------------------------------------------------
-# These settings are container-specific (hooks paths, statusLine, plugins).
-# jq deep-merge preserves keys Claude Code writes (e.g. skipDangerousModePermissionPrompt).
-DESIRED_SETTINGS=$(cat << 'SETTINGS_EOF'
-{
-  "env": {
-    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
-    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
-  },
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh start"
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh thinking"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh thinking"
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "matcher": "permission_prompt",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh notification"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh done"
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh reset"
-          },
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/cleanup-short-sessions.sh"
-          },
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/session_summarizer_wrapper.sh"
-          }
-        ]
-      }
-    ]
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
-  "enabledPlugins": {
-    "clangd-lsp@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true
-  },
-  "alwaysThinkingEnabled": true,
-  "effortLevel": "high"
-}
-SETTINGS_EOF
-)
+# Read baked-in settings.json and strip permission-related keys
+# (container uses --dangerously-skip-permissions, so permissions/sandbox are unnecessary).
+# jq deep-merge preserves keys Claude Code writes at runtime.
+DESIRED_SETTINGS=$(jq 'del(.permissions, .sandbox, .skipDangerousModePermissionPrompt)' "$DOTFILES_CLAUDE/settings.json")
 
 if [ -f "$CLAUDE_DIR/settings.json" ]; then
     jq -s '.[0] * .[1]' "$CLAUDE_DIR/settings.json" <(echo "$DESIRED_SETTINGS") > "$CLAUDE_DIR/settings.json.tmp"
