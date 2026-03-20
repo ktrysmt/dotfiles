@@ -262,7 +262,8 @@ fi
 
 # ---------- Devcontainer: override cwd ----------
 if [ "$DEVCONTAINER" = "true" ] && [ -n "$DEVCONTAINER_HOST_PATH" ]; then
-  cwd_display="devc:${DEVCONTAINER_HOST_PATH}"
+  host_repo=$(basename "$DEVCONTAINER_HOST_PATH")
+  cwd_display="*${host_repo}:${cwd_display}"
 fi
 
 # ---------- Line 1 ----------

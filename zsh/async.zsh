@@ -77,7 +77,7 @@ compdef gd0=git-diff
 alias delta='delta --syntax-theme zenburn'
 
 # claude
-alias cl='claude'
+alias cl='claude --enable-auto-mode'
 alias cls='claude --model sonnet'
 alias clo='claude --model opus'
 alias clr='claude /rc'
@@ -126,9 +126,8 @@ pmm() { printf '```mermaid\n%s\n```\n' "$(pbpaste)" | memd; }
 # devcontainer
 alias -g dcls='docker ps --filter "label=devcontainer.local_folder" --format "table {{.ID}}\t{{.Status}}\t{{.Label \"devcontainer.local_folder\"}}"'
 alias -g dcu='devcontainer up --workspace-folder . --config ~/dotfiles/.devcontainer/devcontainer.json'
-alias -g dcur='devcontainer up --workspace-folder . --remove-existing-container=true --config ~/dotfiles/.devcontainer/devcontainer.json'
-alias -g dce='devcontainer exec --workspace-folder . env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" bash -c cd @@  && claude --enable-auto-mode'
-alias -g dcex='devcontainer exec --workspace-folder . --config ~/dotfiles/.devcontainer/devcontainer.json bash -c cd @@  && claude --enable-auto-mode'
+alias -g dcur='devcontainer up --workspace-folder . --config ~/dotfiles/.devcontainer/devcontainer.json --remove-existing-container=true'
+alias -g dcex='devcontainer exec --config ~/dotfiles/.devcontainer/devcontainer.json  --workspace-folder . env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" bash -c "cd @@  && claude --dangerously-skip-permissions"'
 alias -g dcdown="dcls | tail -n -1 | fzf | awk -F ' ' '{print $1}' | xargs docker stop | xargs docker rm"
 alias -g dckill='docker ps -q --filter "label=devcontainer.local_folder" | xargs -r docker stop | xargs -r docker rm'
 
