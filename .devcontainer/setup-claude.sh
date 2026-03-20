@@ -2,13 +2,14 @@
 # postStartCommand: inject dotfiles Claude config into container
 #
 # Source resolution (first match wins):
-#   1. $HOME/.dotfiles-claude  -- baked into self-built image (Dockerfile COPY)
+#   1. $HOME/claude             -- baked into self-built image (Dockerfile COPY)
 #   2. /workspace/claude        -- portable image with repo bind-mounted
 #
 # settings.json is regenerated for the container (permissions stripped),
 # not copied from the source.
 
 set -euo pipefail
+trap 'echo "ERROR: setup-claude.sh failed at line $LINENO (exit $?): $BASH_COMMAND" >&2' ERR
 
 CLAUDE_DIR="$HOME/.claude"
 mkdir -p "$CLAUDE_DIR"
@@ -16,13 +17,13 @@ mkdir -p "$CLAUDE_DIR"
 # --------------------------------------------------------------------------
 # Resolve source directory
 # --------------------------------------------------------------------------
-if [ -d "$HOME/.dotfiles-claude" ]; then
-    SRC_DIR="$HOME/.dotfiles-claude"
+if [ -d "$HOME/claude" ]; then
+    SRC_DIR="$HOME/claude"
 elif [ -d "/workspace/claude" ]; then
     SRC_DIR="/workspace/claude"
 else
     echo "ERROR: No claude config source found." >&2
-    echo "  Checked: \$HOME/.dotfiles-claude, /workspace/claude" >&2
+    echo "  Checked: \$HOME/claude, /workspace/claude" >&2
     exit 1
 fi
 echo "Using config source: $SRC_DIR"
@@ -48,9 +49,8 @@ echo "Config files linked."
 # --------------------------------------------------------------------------
 if command -v claude >/dev/null 2>&1; then
     echo "Registering MCP servers..."
-    registered=$(claude mcp list -s user 2>/dev/null || true)
-    echo "$registered" | grep -q "aws-docs"    || claude mcp add -s user -t http aws-docs https://knowledge-mcp.global.api.aws || true
-    echo "$registered" | grep -q "grep-github"  || claude mcp add -s user -t http grep-github https://mcp.grep.app || true
+    claude mcp get aws-docs   >/dev/null 2>&1 || claude mcp add -s user -t http aws-docs https://knowledge-mcp.global.api.aws
+    claude mcp get grep-github >/dev/null 2>&1 || claude mcp add -s user -t http grep-github https://mcp.grep.app
     echo "MCP servers registered."
 fi
 

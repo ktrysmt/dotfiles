@@ -58,84 +58,20 @@ iptables -A OUTPUT -o lo -j ACCEPT
 # --------------------------------------------------------------------------
 # 3. Build allowed IP set
 # --------------------------------------------------------------------------
-ipset create allowed-domains hash:net
+IPSET_TIMEOUT="${FIREWALL_IPSET_TIMEOUT:-3600}"
+export FIREWALL_IPSET_TIMEOUT="$IPSET_TIMEOUT"
 
-# --- GitHub IP ranges (dynamic) ---
-echo "Fetching GitHub IP ranges..."
-gh_ranges=$(curl -s https://api.github.com/meta)
-if [ -z "$gh_ranges" ]; then
-    echo "ERROR: Failed to fetch GitHub IP ranges"
-    exit 1
-fi
+ipset create allowed-domains hash:net timeout "$IPSET_TIMEOUT"
 
-if ! echo "$gh_ranges" | jq -e '.web and .api and .git' >/dev/null; then
-    echo "ERROR: GitHub API response missing required fields"
-    exit 1
-fi
+# --- Resolve domains and populate ipset (shared with refresh-firewall.sh) ---
+/usr/local/bin/refresh-firewall.sh
 
-echo "Processing GitHub IPs..."
-while read -r cidr; do
-    if [[ ! "$cidr" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/[0-9]{1,2}$ ]]; then
-        echo "ERROR: Invalid CIDR range from GitHub meta: $cidr"
-        exit 1
-    fi
-    ipset add allowed-domains "$cidr"
-done < <(echo "$gh_ranges" | jq -r '(.web + .api + .git)[]' | aggregate -q)
-
-# --- Static domain whitelist ---
-ALLOWED_DOMAINS=(
-    # Core (official Anthropic devcontainer)
-    "registry.npmjs.org"
-    "api.anthropic.com"
-    "sentry.io"
-    "statsig.anthropic.com"
-    "statsig.com"
-    "marketplace.visualstudio.com"
-    "vscode.blob.core.windows.net"
-    "update.code.visualstudio.com"
-    # PyPI (uvx MCP servers)
-    "pypi.org"
-    "files.pythonhosted.org"
-    # MCP server endpoints
-    "knowledge-mcp.global.api.aws"
-    "mcp.grep.app"
-    # Go module proxy
-    "proxy.golang.org"
-    "sum.golang.org"
-    # Rust crates
-    "crates.io"
-    "static.crates.io"
-    # Claude Code installer
-    "claude.ai"
-    "storage.googleapis.com"
-)
-
-# --- Extra domains from environment variable ---
-if [ -n "${FIREWALL_EXTRA_DOMAINS:-}" ]; then
-    IFS=',' read -ra EXTRA <<< "$FIREWALL_EXTRA_DOMAINS"
-    for d in "${EXTRA[@]}"; do
-        d=$(echo "$d" | xargs)  # trim whitespace
-        [ -n "$d" ] && ALLOWED_DOMAINS+=("$d")
-    done
-    echo "Extra domains added: $FIREWALL_EXTRA_DOMAINS"
-fi
-
-for domain in "${ALLOWED_DOMAINS[@]}"; do
-    echo "Resolving $domain..."
-    ips=$(dig +noall +answer A "$domain" | awk '$4 == "A" {print $5}')
-    if [ -z "$ips" ]; then
-        echo "WARNING: Failed to resolve $domain (skipping)"
-        continue
-    fi
-
-    while read -r ip; do
-        if [[ ! "$ip" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-            echo "WARNING: Invalid IP from DNS for $domain: $ip (skipping)"
-            continue
-        fi
-        ipset add allowed-domains "$ip" 2>/dev/null || true
-    done < <(echo "$ips")
-done
+# --- Register cron to periodically refresh ipset ---
+REFRESH_INTERVAL="${FIREWALL_REFRESH_INTERVAL:-30}"
+CRON_LINE="*/${REFRESH_INTERVAL} * * * * FIREWALL_IPSET_TIMEOUT=${IPSET_TIMEOUT} FIREWALL_EXTRA_DOMAINS=${FIREWALL_EXTRA_DOMAINS:-} /usr/local/bin/refresh-firewall.sh --quiet 2>&1 | logger -t refresh-firewall"
+{ crontab -l 2>/dev/null || true; } | { grep -v refresh-firewall || true; } | { cat; echo "$CRON_LINE"; } | crontab -
+service cron start >/dev/null 2>&1 || true
+echo "Cron registered: refresh ipset every ${REFRESH_INTERVAL}m"
 
 # --------------------------------------------------------------------------
 # 4. Host network

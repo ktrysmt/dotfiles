@@ -2,7 +2,9 @@
 *
 
 !.devcontainer/init-firewall.sh
+!.devcontainer/refresh-firewall.sh
 !.devcontainer/setup-claude.sh
+!mise/config.toml
 !claude/
 !claude/**
 !.gitignore_global

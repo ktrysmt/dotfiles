@@ -1,7 +1,7 @@
 # Claude Code Devcontainer
 
 `--dangerously-skip-permissions` を安全に使うためのサンドボックス環境。
-dotfiles の Claude 設定 (`claude/`) と `.gitignore_global` は image に焼き込まれており、どの環境でも同じツールチェインが使える。
+dotfiles の Claude 設定 (`claude/`) と `.gitignore_global` は image の `~/claude/` に焼き込まれており、どの環境でも同じツールチェインが使える。
 
 ## 前提
 
@@ -38,9 +38,9 @@ devcontainer exec --workspace-folder . \
 
 | ファイル | 役割 |
 |---------|------|
-| `Dockerfile` | ツール群のインストール (バイナリ直DL)。`claude/` と `.gitignore_global` を image に焼き込む |
+| `Dockerfile` | ツール群のインストール (バイナリ直DL)。`claude/` と `.gitignore_global` を `~/claude/` に焼き込む |
 | `init-firewall.sh` | ネットワーク制限 (許可ドメインのみ通信可) |
-| `setup-claude.sh` | image 内の dotfiles を `~/.claude/` にシンボリックリンク。コンテナ用 `settings.json` を生成 |
+| `setup-claude.sh` | `~/claude/` の dotfiles を `~/.claude/` にシンボリックリンク。コンテナ用 `settings.json` を生成 |
 | `devcontainer.json` | ランタイム設定 (GHCR イメージ参照、他リポジトリでも利用可) |
 
 ## セッションログの永続化
@@ -83,3 +83,11 @@ dmesg -T | grep 'FIREWALL-UNLISTED' | grep -oP 'DST=\K[0-9.]+' | sort -u | \
 ## GHCR イメージのビルド
 
 `.devcontainer/**`, `claude/**`, `.gitignore_global` を変更して master に push すると自動ビルド。
+
+## ローカルデバッグビルド
+
+```bash
+cd ~/dotfiles
+docker build -t claude-devcontainer-debug -f .devcontainer/Dockerfile .
+docker run --rm -it -v "$PWD:/workspace" -u node claude-devcontainer-debug bash -x /usr/local/bin/setup-claude.sh
+```
