@@ -1,0 +1,17 @@
+# mise configuration for devcontainer (trimmed for image size)
+# Full config: mise/config.toml
+
+[tools]
+node = "latest"
+
+# Editor
+neovim = "latest"
+
+# CLI tools
+ripgrep = "latest"
+fzf = "latest"
+fd = "10.3"
+bat = "latest"
+eza = "latest"
+gh = "latest"
+jq = "latest"

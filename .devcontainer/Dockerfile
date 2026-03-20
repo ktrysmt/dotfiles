@@ -1,10 +1,10 @@
 # ==============================================================================
 # Builder: tmux (separate stage to keep build deps out of final image)
 # ==============================================================================
-FROM node:20 AS tmux-builder
+FROM ubuntu:24.04 AS tmux-builder
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  build-essential libevent-dev ncurses-dev bison pkg-config wget \
+  build-essential libevent-dev libncurses-dev bison pkg-config wget ca-certificates \
   && rm -rf /var/lib/apt/lists/*
 
 ARG TMUX_VERSION=3.6a
@@ -19,7 +19,7 @@ RUN wget -q "https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux
 # ==============================================================================
 # Final image
 # ==============================================================================
-FROM node:20
+FROM ubuntu:24.04
 
 ARG TZ=Asia/Tokyo
 ENV TZ="$TZ"
@@ -30,9 +30,9 @@ ENV TZ="$TZ"
 RUN apt-get update && apt-get install -y --no-install-recommends \
   less git procps sudo zsh man-db unzip gnupg2 \
   iptables ipset iproute2 dnsutils aggregate jq cron \
-  curl wget tree watch \
+  curl wget tree watch ca-certificates \
   build-essential \
-  libevent-2.1-7 \
+  libevent-core-2.1-7t64 libncurses6 \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # ------------------------------------------------------------------------------
@@ -64,8 +64,11 @@ ENV PATH="/usr/local/cargo/bin:$PATH"
 # ------------------------------------------------------------------------------
 ARG USERNAME=node
 
-# node user already exists in node:20 base image; just set shell to zsh
-RUN usermod -s /bin/zsh $USERNAME
+# Create node user (UID/GID 1000, matching node:20 convention)
+# Ubuntu 24.04 has existing ubuntu user/group at 1000; remove it first
+RUN userdel -r ubuntu 2>/dev/null || true && \
+  groupadd --gid 1000 $USERNAME && \
+  useradd --uid 1000 --gid $USERNAME --shell /bin/zsh --create-home $USERNAME
 
 # Create workspace directory (/.claude is volume-mounted at runtime)
 RUN mkdir -p /workspace && chown node:node /workspace
@@ -95,9 +98,9 @@ ENV SHELL=/bin/zsh
 # mise (tool version manager) -- replaces manual binary downloads
 # ------------------------------------------------------------------------------
 RUN curl https://mise.run | sh
-COPY --chown=node:node mise/config.toml /home/node/.config/mise/config.toml
+COPY --chown=node:node .devcontainer/mise.toml /home/node/.config/mise/config.toml
 ENV MISE_YES=1
-RUN mise install
+RUN mise install && mise cache clear && rm -rf /home/node/.local/share/mise/downloads
 
 # ------------------------------------------------------------------------------
 # Claude Code (native installer as node user -> ~/.local/bin/claude)
@@ -105,4 +108,5 @@ RUN mise install
 ARG CLAUDE_CODE_VERSION=latest
 RUN curl -fsSL https://claude.ai/install.sh | bash -s -- ${CLAUDE_CODE_VERSION}
 
-RUN git config --global core.excludesfile ~/.gitignore_global
+RUN git config --global core.excludesfile ~/.gitignore_global && \
+  echo 'alias l="eza -lha"' >> ~/.zshrc
