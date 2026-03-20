@@ -86,6 +86,9 @@ def configure(keymap):
     keymap_wez["LAlt-K"] = "Up"
     keymap_wez["LAlt-L"] = "Right"
 
+    keymap_wez["LCtrl-Left"] = ["LCtrl-Left"]
+    keymap_wez["LCtrl-Right"] = ["LCtrl-Right"]
+
     keymap_wez["LShift-Enter"] = ["LCtrl-Enter"]
 
     def wezterm_ctrl_c():
@@ -107,6 +110,16 @@ def configure(keymap):
         keymap.getWindow().setImeStatus(0)
         keymap.InputKeyCommand("LCtrl-W")()
     keymap_wez["LCtrl-W"] = wezterm_ctrl_w
+
+    # Brave
+    keymap_brave = keymap.defineWindowKeymap(exe_name="brave.exe")
+    keymap_brave["LCtrl-Left"] = "Left"
+    keymap_brave["LCtrl-Right"] = "Right"
+
+    # MPC-HC
+    keymap_mpchc = keymap.defineWindowKeymap(exe_name="mpc-hc64.exe")
+    keymap_mpchc["LCtrl-Left"] = "Left"
+    keymap_mpchc["LCtrl-Right"] = "Right"
 
     # Global hot key
     # https://zenn.dev/awtnb/books/adf6c5162a9f08/viewer/1728cd
