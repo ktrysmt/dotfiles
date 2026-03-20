@@ -125,9 +125,12 @@ pmm() { printf '```mermaid\n%s\n```\n' "$(pbpaste)" | memd; }
 
 # devcontainer
 alias -g dcls='docker ps --filter "label=devcontainer.local_folder" --format "table {{.ID}}\t{{.Status}}\t{{.Label \"devcontainer.local_folder\"}}"'
-alias -g dcup='devcontainer up --workspace-folder .'
-alias -g dcex='devcontainer exec --workspace-folder . env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" bash -c cd @@  && claude --enable-auto-mode'
-alias -g dcdown='docker ps -q --filter "label=devcontainer.local_folder" | xargs -r docker stop | xargs -r docker rm'
+alias -g dcu='devcontainer up --workspace-folder . --config ~/dotfiles/.devcontainer/devcontainer.json'
+alias -g dcur='devcontainer up --workspace-folder . --remove-existing-container=true --config ~/dotfiles/.devcontainer/devcontainer.json'
+alias -g dce='devcontainer exec --workspace-folder . env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" bash -c cd @@  && claude --enable-auto-mode'
+alias -g dcex='devcontainer exec --workspace-folder . --config ~/dotfiles/.devcontainer/devcontainer.json bash -c cd @@  && claude --enable-auto-mode'
+alias -g dcdown="dcls | tail -n -1 | fzf | awk -F ' ' '{print $1}' | xargs docker stop | xargs docker rm"
+alias -g dckill='docker ps -q --filter "label=devcontainer.local_folder" | xargs -r docker stop | xargs -r docker rm'
 
 
 # python
