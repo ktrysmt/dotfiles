@@ -1,7 +1,7 @@
 #!/bin/bash
-# postCreateCommand: copy dotfiles Claude config into container
+# postStartCommand: symlink dotfiles Claude config into container
 # Source: /home/node/.dotfiles-claude (baked into image)
-# settings.json is generated (container-specific), not copied
+# settings.json is merged (container-specific), not symlinked
 
 set -euo pipefail
 
@@ -11,35 +11,34 @@ CLAUDE_DIR="$HOME/.claude"
 mkdir -p "$CLAUDE_DIR"
 
 # --------------------------------------------------------------------------
-# Copy config files from image-baked dotfiles
+# Symlink config files from image-baked dotfiles
 # --------------------------------------------------------------------------
 for name in CLAUDE.md rules skills hooks keybindings.json statusline-command.sh; do
-    if [ -e "$DOTFILES_CLAUDE/$name" ]; then
-        rm -rf "$CLAUDE_DIR/$name"
-        cp -rf "$DOTFILES_CLAUDE/$name" "$CLAUDE_DIR/$name"
+    src="$DOTFILES_CLAUDE/$name"
+    dst="$CLAUDE_DIR/$name"
+    if [ -e "$src" ]; then
+        rm -rf "$dst"
+        ln -sfn "$src" "$dst"
     fi
 done
-echo "Dotfiles Claude config copied."
+echo "Dotfiles Claude config symlinked."
 
 # --------------------------------------------------------------------------
 # Register MCP servers via CLI
 # --------------------------------------------------------------------------
 if command -v claude >/dev/null 2>&1; then
     echo "Registering MCP servers..."
-    claude mcp add -s user -t http aws-docs https://knowledge-mcp.global.api.aws
-    claude mcp add -s user -t http grep-github https://mcp.grep.app
+    claude mcp add -s user -t http aws-docs https://knowledge-mcp.global.api.aws || true
+    claude mcp add -s user -t http grep-github https://mcp.grep.app || true
     echo "MCP servers registered."
 fi
 
 # --------------------------------------------------------------------------
-# Create container-specific settings.json
+# Merge container-specific settings into settings.json
 # --------------------------------------------------------------------------
-# - permissions: stripped (bypassed by --dangerously-skip-permissions)
-# - settings.local.json: not needed (host-specific allow rules, also bypassed)
-# - hooks: included (tmux hooks are guarded, others work as-is)
-# - statusLine: included (uses jq/curl/git, all available in container)
-# - enabledPlugins, env, effortLevel, alwaysThinkingEnabled: preserved
-cat > "$CLAUDE_DIR/settings.json" << 'SETTINGS_EOF'
+# These settings are container-specific (hooks paths, statusLine, plugins).
+# jq deep-merge preserves keys Claude Code writes (e.g. skipDangerousModePermissionPrompt).
+DESIRED_SETTINGS=$(cat << 'SETTINGS_EOF'
 {
   "env": {
     "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
@@ -135,8 +134,15 @@ cat > "$CLAUDE_DIR/settings.json" << 'SETTINGS_EOF'
   "effortLevel": "high"
 }
 SETTINGS_EOF
+)
 
-echo "Container settings.json created."
+if [ -f "$CLAUDE_DIR/settings.json" ]; then
+    jq -s '.[0] * .[1]' "$CLAUDE_DIR/settings.json" <(echo "$DESIRED_SETTINGS") > "$CLAUDE_DIR/settings.json.tmp"
+    mv "$CLAUDE_DIR/settings.json.tmp" "$CLAUDE_DIR/settings.json"
+else
+    echo "$DESIRED_SETTINGS" > "$CLAUDE_DIR/settings.json"
+fi
+echo "Container settings.json merged."
 
 # --------------------------------------------------------------------------
 # Create .claude.json (skip onboarding wizard)
