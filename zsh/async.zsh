@@ -126,7 +126,7 @@ pmm() { printf '```mermaid\n%s\n```\n' "$(pbpaste)" | memd; }
 # devcontainer
 alias -g dcls='docker ps --filter "label=devcontainer.local_folder" --format "table {{.ID}}\t{{.Status}}\t{{.Label \"devcontainer.local_folder\"}}"'
 alias -g dcup='devcontainer up --workspace-folder .'
-alias -g dcex='devcontainer exec --workspace-folder . env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" claude --dangerously-skip-permissions'
+alias -g dcex='devcontainer exec --workspace-folder . env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" bash -c cd @@  && claude --enable-auto-mode'
 alias -g dcdown='docker ps -q --filter "label=devcontainer.local_folder" | xargs -r docker stop | xargs -r docker rm'
 
 
