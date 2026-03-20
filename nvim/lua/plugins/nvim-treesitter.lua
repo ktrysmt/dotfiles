@@ -30,6 +30,7 @@ return {
         "jsonc",
         "markdown",
         "markdown_inline",
+        "mermaid",
         "svelte",
         "terraform",
         'dockerfile',
