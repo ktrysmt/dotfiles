@@ -1,29 +1,15 @@
 {
   "name": "Claude Code Sandbox",
-  "build": {
-    "context": "..",
-    "dockerfile": "Dockerfile",
-    "args": {
-      "TZ": "${localEnv:TZ:Asia/Tokyo}",
-      "CLAUDE_CODE_VERSION": "latest",
-      "GIT_DELTA_VERSION": "0.18.2",
-      "RIPGREP_VERSION": "15.1.0",
-      "FD_VERSION": "v10.4.2",
-      "BAT_VERSION": "v0.26.1",
-      "EZA_VERSION": "v0.23.4",
-      "FZF_VERSION": "v0.70.0",
-      "GO_VERSION": "1.25.3",
-      "INSTALL_GO": "true",
-      "INSTALL_RUST": "true"
-    }
-  },
+  "image": "ghcr.io/ktrysmt/claude-devcontainer:latest",
+  "initializeCommand": "mkdir -p ${HOME}/.claude-devcontainer",
   "runArgs": [
     "--cap-add=NET_ADMIN",
     "--cap-add=NET_RAW"
   ],
   "remoteUser": "node",
   "mounts": [
-    "source=claude-config-${devcontainerId},target=/home/node/.claude,type=volume",
+    "source=${localEnv:HOME}/.claude-devcontainer,target=/home/node/.claude,type=bind",
+    "source=claude-bashhistory-${devcontainerId},target=/commandhistory,type=volume",
     "source=${localEnv:TMUX_TMPDIR:/tmp/tmux-1000},target=${localEnv:TMUX_TMPDIR:/tmp/tmux-1000},type=bind"
   ],
   "containerEnv": {

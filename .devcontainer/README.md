@@ -24,22 +24,11 @@ devcontainer exec --workspace-folder <repo> claude login
 
 ## 使い方
 
-### ローカルビルド (debug用)
-
-```sh
-devcontainer up --workspace-folder . --remove-existing-container
-devcontainer exec --workspace-folder . \
-  env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" \
-  claude --dangerously-skip-permissions
-```
-
-### レジストリイメージ (普段使い)
-
 ```sh
 cd ~/projects/target-repo
 
 devcontainer up --workspace-folder . \
-  --config ~/dotfiles/.devcontainer/portable/devcontainer.json
+  --config ~/dotfiles/.devcontainer/devcontainer.json
 devcontainer exec --workspace-folder . \
   env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" \
   claude --dangerously-skip-permissions
@@ -52,7 +41,14 @@ devcontainer exec --workspace-folder . \
 | `Dockerfile` | ツール群のインストール (バイナリ直DL)。`claude/` と `.gitignore_global` を image に焼き込む |
 | `init-firewall.sh` | ネットワーク制限 (許可ドメインのみ通信可) |
 | `setup-claude.sh` | image 内の dotfiles を `~/.claude/` にシンボリックリンク。コンテナ用 `settings.json` を生成 |
-| `portable/devcontainer.json` | 他リポジトリ用テンプレート (GHCR イメージ参照) |
+| `devcontainer.json` | ランタイム設定 (GHCR イメージ参照、他リポジトリでも利用可) |
+
+## セッションログの永続化
+
+`~/.claude` はホスト側の `~/.claude-devcontainer/` にバインドマウントされる。
+セッションログ (`projects/*/sessions/`) を含む全データがコンテナ破棄後も保持される。
+
+`initializeCommand` でホスト側ディレクトリを自動作成するため、初回起動時の手動操作は不要。
 
 Claude Code は `postStartCommand` でコンテナ起動のたびに最新版へ自動更新される。
 

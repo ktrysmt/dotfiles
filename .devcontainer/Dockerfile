@@ -21,7 +21,7 @@ RUN wget -q "https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux
 # ==============================================================================
 FROM node:20
 
-ARG TZ
+ARG TZ=Asia/Tokyo
 ENV TZ="$TZ"
 
 # ------------------------------------------------------------------------------
