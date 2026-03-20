@@ -22,7 +22,7 @@
   "workspaceFolder": "/workspace",
   "postStartCommand": {
     "firewall": "sudo /usr/local/bin/init-firewall.sh",
-    "claude-setup": "bash /usr/local/bin/setup-claude.sh"
+    "claude-setup": "bash /workspace/.devcontainer/setup-claude.sh"
   },
   "waitFor": "postStartCommand"
 }
