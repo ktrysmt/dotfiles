@@ -90,4 +90,5 @@ dmesg -T | grep 'FIREWALL-UNLISTED' | grep -oP 'DST=\K[0-9.]+' | sort -u | \
 cd ~/dotfiles
 docker build -t claude-devcontainer-debug -f .devcontainer/Dockerfile .
 docker run --rm -it -v "$PWD:/workspace" -u ubuntu claude-devcontainer-debug bash -x /usr/local/bin/setup-claude.sh
+docker run -it --env TMUX="$TMUX" --env TMUX_PANE="$TMUX_PANE" --env TERM=xterm-256color --env COLORTERM=truecolor claude-devcontainer-debug bash
 ```

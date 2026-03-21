@@ -53,9 +53,6 @@ ALLOWED_DOMAINS=(
     # Go module proxy
     "proxy.golang.org"
     "sum.golang.org"
-    # Rust crates
-    "crates.io"
-    "static.crates.io"
     # Claude Code installer
     "claude.ai"
     "storage.googleapis.com"
