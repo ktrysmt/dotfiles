@@ -58,9 +58,9 @@ ARG NODE_VERSION=25.8.1
 RUN curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz" | \
   tar xz -C /usr/local --strip-components=1 --no-same-owner && \
   rm -rf /usr/local/include/node /usr/local/share/doc /usr/local/share/man \
-         /usr/local/share/systemtap /usr/local/lib/node_modules/corepack \
-         /usr/local/bin/corepack /usr/local/CHANGELOG.md /usr/local/README.md \
-         /usr/local/LICENSE
+  /usr/local/share/systemtap /usr/local/lib/node_modules/corepack \
+  /usr/local/bin/corepack /usr/local/CHANGELOG.md /usr/local/README.md \
+  /usr/local/LICENSE
 
 ARG GH_VERSION=2.88.1
 RUN curl -fsSL "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz" | \
@@ -86,4 +86,5 @@ ENV SHELL=/bin/bash
 ARG CLAUDE_CODE_VERSION=latest
 RUN curl -fsSL https://claude.ai/install.sh | bash -s -- ${CLAUDE_CODE_VERSION} && \
   git config --global core.excludesfile ~/.gitignore_global && \
-  echo 'alias l="ls -lha"' >> ~/.bashrc
+  echo 'alias l="ls -lha"' >> ~/.bashrc && \
+  echo 'alias cl="claude --dangerously-skip-permissions"' >> ~/.bashrc

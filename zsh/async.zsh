@@ -132,7 +132,7 @@ dcu() {
   local cid
   cid=$(printf '%s\n' "$up_output" | grep 'containerId' | jq -r '.containerId')
   [[ -z "$cid" || "$cid" == "null" ]] && { echo "dcu: failed to get container ID"; return 1; }
-  devcontainer exec --config ~/dotfiles/.devcontainer/devcontainer.json --workspace-folder . env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" bash -c "claude --dangerously-skip-permissions"
+  devcontainer exec --config ~/dotfiles/.devcontainer/devcontainer.json --workspace-folder . env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" bash
   docker stop "$cid" && docker rm "$cid"
 }
 alias -g dcrm='docker ps --filter "label=devcontainer.local_folder" --format "table {{.Names}}\t{{.ID}}\t{{.Status}}\t{{.Label \"devcontainer.local_folder\"}}" | fzf | cut -d " " -f1 | xargs docker stop | xargs docker rm'
