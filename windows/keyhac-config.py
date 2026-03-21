@@ -171,7 +171,7 @@ def configure(keymap):
         "LAlt-A": (
             "brave.exe",
             "Chrome_WidgetWin_1",
-            r"C:\Users\%s\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe" % username,
+            r"C:\Users\%s\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe --remote-debugging-port=9222" % username,
             "",
         ),
         "LAlt-O": (
