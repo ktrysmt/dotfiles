@@ -46,29 +46,34 @@ RUN mkdir -p /workspace /home/ubuntu/.claude /home/ubuntu/.local/bin && \
   chown ubuntu:ubuntu /workspace /home/ubuntu/.claude && \
   chown -R ubuntu:ubuntu /home/ubuntu/.local
 
-# Dotfiles baked into image
-COPY --chown=ubuntu:ubuntu claude/ /home/ubuntu/claude/
-COPY --chown=ubuntu:ubuntu .gitignore_global /home/ubuntu/.gitignore_global
+RUN echo "ubuntu ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/ubuntu-firewall && \
+  chmod 0440 /etc/sudoers.d/ubuntu-firewall
 
 WORKDIR /workspace
 
 # ------------------------------------------------------------------------------
-# Firewall & setup scripts
-# ------------------------------------------------------------------------------
-COPY --chmod=755 .devcontainer/init-firewall.sh .devcontainer/refresh-firewall.sh .devcontainer/setup-claude.sh /usr/local/bin/
-RUN echo "ubuntu ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/ubuntu-firewall && \
-  chmod 0440 /etc/sudoers.d/ubuntu-firewall
-
-# ------------------------------------------------------------------------------
-# Node.js & GitHub CLI (direct binary install)
+# Tools: each in its own layer so version bumps only re-pull that layer
 # ------------------------------------------------------------------------------
 ARG NODE_VERSION=25.8.1
-ARG GH_VERSION=2.88.1
 RUN curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz" | \
   tar xz -C /usr/local --strip-components=1 --no-same-owner && \
-  curl -fsSL "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz" | \
-  tar xz -C /usr/local --strip-components=1 --no-same-owner && \
-  curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local sh
+  rm -rf /usr/local/include/node /usr/local/share/doc /usr/local/share/man \
+         /usr/local/share/systemtap /usr/local/lib/node_modules/corepack \
+         /usr/local/bin/corepack /usr/local/CHANGELOG.md /usr/local/README.md \
+         /usr/local/LICENSE
+
+ARG GH_VERSION=2.88.1
+RUN curl -fsSL "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz" | \
+  tar xz -C /usr/local --strip-components=1 --no-same-owner
+
+RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local sh
+
+# ------------------------------------------------------------------------------
+# Local files: COPY layers last (before USER) to avoid busting tool layer cache
+# ------------------------------------------------------------------------------
+COPY --chmod=755 .devcontainer/init-firewall.sh .devcontainer/refresh-firewall.sh .devcontainer/setup-claude.sh /usr/local/bin/
+COPY --chown=ubuntu:ubuntu claude/ /home/ubuntu/claude/
+COPY --chown=ubuntu:ubuntu .gitignore_global /home/ubuntu/.gitignore_global
 
 ENV PATH="/home/ubuntu/.local/bin:$PATH"
 
@@ -79,7 +84,6 @@ ENV SHELL=/bin/bash
 # Claude Code (native installer as ubuntu user -> ~/.local/bin/claude)
 # ------------------------------------------------------------------------------
 ARG CLAUDE_CODE_VERSION=latest
-RUN curl -fsSL https://claude.ai/install.sh | bash -s -- ${CLAUDE_CODE_VERSION}
-
-RUN git config --global core.excludesfile ~/.gitignore_global && \
+RUN curl -fsSL https://claude.ai/install.sh | bash -s -- ${CLAUDE_CODE_VERSION} && \
+  git config --global core.excludesfile ~/.gitignore_global && \
   echo 'alias l="ls -lha"' >> ~/.bashrc

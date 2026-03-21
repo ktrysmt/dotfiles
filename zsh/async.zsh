@@ -125,7 +125,16 @@ pmm() { printf '```mermaid\n%s\n```\n' "$(pbpaste)" | memd; }
 
 # devcontainer
 alias -g dcls='docker ps --filter "label=devcontainer.local_folder" --format "table {{.Names}}\t{{.ID}}\t{{.Status}}\t{{.Label \"devcontainer.local_folder\"}}"'
-alias -g dcu='docker pull $(jq -r .image ~/dotfiles/.devcontainer/devcontainer.json) && devcontainer up --config ~/dotfiles/.devcontainer/devcontainer.json --remove-existing-container=true --workspace-folder . && devcontainer exec --config ~/dotfiles/.devcontainer/devcontainer.json --workspace-folder . env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" bash -c "claude --dangerously-skip-permissions"'
+dcu() {
+  docker pull "$(jq -r .image ~/dotfiles/.devcontainer/devcontainer.json)" || return
+  local up_output
+  up_output=$(devcontainer up --config ~/dotfiles/.devcontainer/devcontainer.json --remove-existing-container=true --workspace-folder .) || return
+  local cid
+  cid=$(printf '%s\n' "$up_output" | grep 'containerId' | jq -r '.containerId')
+  [[ -z "$cid" || "$cid" == "null" ]] && { echo "dcu: failed to get container ID"; return 1; }
+  devcontainer exec --config ~/dotfiles/.devcontainer/devcontainer.json --workspace-folder . env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" bash -c "claude --dangerously-skip-permissions"
+  docker stop "$cid" && docker rm "$cid"
+}
 alias -g dcrm='docker ps --filter "label=devcontainer.local_folder" --format "table {{.Names}}\t{{.ID}}\t{{.Status}}\t{{.Label \"devcontainer.local_folder\"}}" | fzf | cut -d " " -f1 | xargs docker stop | xargs docker rm'
 
 # python
