@@ -4,7 +4,6 @@
 !.devcontainer/init-firewall.sh
 !.devcontainer/refresh-firewall.sh
 !.devcontainer/setup-claude.sh
-!mise/config.toml
 !.devcontainer/mise.toml
 !claude/
 !claude/**

@@ -89,5 +89,5 @@ dmesg -T | grep 'FIREWALL-UNLISTED' | grep -oP 'DST=\K[0-9.]+' | sort -u | \
 ```bash
 cd ~/dotfiles
 docker build -t claude-devcontainer-debug -f .devcontainer/Dockerfile .
-docker run --rm -it -v "$PWD:/workspace" -u node claude-devcontainer-debug bash -x /usr/local/bin/setup-claude.sh
+docker run --rm -it -v "$PWD:/workspace" -u ubuntu claude-devcontainer-debug bash -x /usr/local/bin/setup-claude.sh
 ```

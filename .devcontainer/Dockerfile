@@ -60,24 +60,18 @@ ENV CARGO_HOME=/usr/local/cargo
 ENV PATH="/usr/local/cargo/bin:$PATH"
 
 # ------------------------------------------------------------------------------
-# User setup
+# User setup (use default ubuntu user, UID/GID 1000)
 # ------------------------------------------------------------------------------
-ARG USERNAME=node
-
-# Create node user (UID/GID 1000, matching node:20 convention)
-# Ubuntu 24.04 has existing ubuntu user/group at 1000; remove it first
-RUN userdel -r ubuntu 2>/dev/null || true && \
-  groupadd --gid 1000 $USERNAME && \
-  useradd --uid 1000 --gid $USERNAME --shell /bin/zsh --create-home $USERNAME
+RUN chsh -s /bin/zsh ubuntu
 
 # Create workspace directory (/.claude is volume-mounted at runtime)
-RUN mkdir -p /workspace && chown node:node /workspace
-RUN mkdir -p /home/node/.claude && chown node:node /home/node/.claude
-RUN mkdir -p /home/node/.local/bin && chown node:node -R /home/node/.local
+RUN mkdir -p /workspace && chown ubuntu:ubuntu /workspace
+RUN mkdir -p /home/ubuntu/.claude && chown ubuntu:ubuntu /home/ubuntu/.claude
+RUN mkdir -p /home/ubuntu/.local/bin && chown ubuntu:ubuntu -R /home/ubuntu/.local
 
 # Dotfiles baked into image
-COPY --chown=node:node claude/ /home/node/claude/
-COPY --chown=node:node .gitignore_global /home/node/.gitignore_global
+COPY --chown=ubuntu:ubuntu claude/ /home/ubuntu/claude/
+COPY --chown=ubuntu:ubuntu .gitignore_global /home/ubuntu/.gitignore_global
 
 WORKDIR /workspace
 
@@ -86,24 +80,24 @@ WORKDIR /workspace
 # ------------------------------------------------------------------------------
 COPY .devcontainer/init-firewall.sh .devcontainer/refresh-firewall.sh .devcontainer/setup-claude.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/init-firewall.sh /usr/local/bin/refresh-firewall.sh /usr/local/bin/setup-claude.sh && \
-  echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/node-firewall && \
-  chmod 0440 /etc/sudoers.d/node-firewall
+  echo "ubuntu ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/ubuntu-firewall && \
+  chmod 0440 /etc/sudoers.d/ubuntu-firewall
 
-ENV PATH="/home/node/.local/share/mise/shims:/home/node/.local/bin:$PATH"
+ENV PATH="/home/ubuntu/.local/share/mise/shims:/home/ubuntu/.local/bin:$PATH"
 
-USER node
+USER ubuntu
 ENV SHELL=/bin/zsh
 
 # ------------------------------------------------------------------------------
 # mise (tool version manager) -- replaces manual binary downloads
 # ------------------------------------------------------------------------------
 RUN curl https://mise.run | sh
-COPY --chown=node:node .devcontainer/mise.toml /home/node/.config/mise/config.toml
+COPY --chown=ubuntu:ubuntu .devcontainer/mise.toml /home/ubuntu/.config/mise/config.toml
 ENV MISE_YES=1
-RUN mise install && mise cache clear && rm -rf /home/node/.local/share/mise/downloads
+RUN mise install && mise cache clear && rm -rf /home/ubuntu/.local/share/mise/downloads
 
 # ------------------------------------------------------------------------------
-# Claude Code (native installer as node user -> ~/.local/bin/claude)
+# Claude Code (native installer as ubuntu user -> ~/.local/bin/claude)
 # ------------------------------------------------------------------------------
 ARG CLAUDE_CODE_VERSION=latest
 RUN curl -fsSL https://claude.ai/install.sh | bash -s -- ${CLAUDE_CODE_VERSION}

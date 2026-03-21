@@ -6,9 +6,9 @@
     "--cap-add=NET_ADMIN",
     "--cap-add=NET_RAW"
   ],
-  "remoteUser": "node",
+  "remoteUser": "ubuntu",
   "mounts": [
-    "source=${localEnv:HOME}/.claude-devcontainer,target=/home/node/.claude,type=bind",
+    "source=${localEnv:HOME}/.claude-devcontainer,target=/home/ubuntu/.claude,type=bind",
     "source=claude-bashhistory-${devcontainerId},target=/commandhistory,type=volume",
     "source=${localEnv:TMUX_TMPDIR:/tmp/tmux-1000},target=${localEnv:TMUX_TMPDIR:/tmp/tmux-1000},type=bind"
   ],
