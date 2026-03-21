@@ -66,7 +66,7 @@ ARG GH_VERSION=2.88.1
 RUN curl -fsSL "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz" | \
   tar xz -C /usr/local --strip-components=1 --no-same-owner
 
-RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local sh
+RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin sh
 
 # ------------------------------------------------------------------------------
 # Local files: COPY layers last (before USER) to avoid busting tool layer cache
