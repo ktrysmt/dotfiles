@@ -70,13 +70,22 @@ fi
 echo "Container settings.json merged."
 
 # --------------------------------------------------------------------------
-# Create .claude.json (skip onboarding wizard)
+# Persist .claude.json inside bind-mounted $CLAUDE_DIR so it survives
+# container recreation (--remove-existing-container).
 # --------------------------------------------------------------------------
-if [ -f "$HOME/.claude.json" ]; then
-    jq '.hasCompletedOnboarding = true' "$HOME/.claude.json" > "$HOME/.claude.json.tmp" && mv "$HOME/.claude.json.tmp" "$HOME/.claude.json"
-else
-    echo '{"hasCompletedOnboarding": true}' > "$HOME/.claude.json"
+CLAUDE_JSON="$CLAUDE_DIR/.claude.json"
+if [ -f "$HOME/.claude.json" ] && [ ! -L "$HOME/.claude.json" ]; then
+    # claude mcp add may have created ~/.claude.json before us; merge it
+    if [ -f "$CLAUDE_JSON" ]; then
+        jq -s '.[0] * .[1] | .hasCompletedOnboarding = true' "$CLAUDE_JSON" "$HOME/.claude.json" > "$CLAUDE_JSON.tmp" && mv "$CLAUDE_JSON.tmp" "$CLAUDE_JSON"
+    else
+        jq '.hasCompletedOnboarding = true' "$HOME/.claude.json" > "$CLAUDE_JSON"
+    fi
+    rm -f "$HOME/.claude.json"
+elif [ ! -f "$CLAUDE_JSON" ]; then
+    echo '{"hasCompletedOnboarding": true}' > "$CLAUDE_JSON"
 fi
-echo "Ensured hasCompletedOnboarding in .claude.json."
+ln -sfn "$CLAUDE_JSON" "$HOME/.claude.json"
+echo "Persisted .claude.json in bind mount."
 
 echo "Claude setup complete."
