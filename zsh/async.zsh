@@ -126,6 +126,7 @@ pmm() { printf '```mermaid\n%s\n```\n' "$(pbpaste)" | memd; }
 # devcontainer
 alias -g dcls='docker ps --filter "label=devcontainer.local_folder" --format "table {{.Names}}\t{{.ID}}\t{{.Status}}\t{{.Label \"devcontainer.local_folder\"}}"'
 alias -g dcu='docker pull $(jq -r .image ~/dotfiles/.devcontainer/devcontainer.json) && devcontainer up --config ~/dotfiles/.devcontainer/devcontainer.json --remove-existing-container=true --workspace-folder . && devcontainer exec --config ~/dotfiles/.devcontainer/devcontainer.json --workspace-folder . env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" bash -c "claude --dangerously-skip-permissions"'
+alias -g dcrm='docker ps --filter "label=devcontainer.local_folder" --format "table {{.Names}}\t{{.ID}}\t{{.Status}}\t{{.Label \"devcontainer.local_folder\"}}" | fzf | cut -d " " -f1 | xargs docker stop | xargs docker rm'
 
 # python
 alias va="source .venv/bin/activate"
