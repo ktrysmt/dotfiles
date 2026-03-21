@@ -72,9 +72,11 @@ echo "Container settings.json merged."
 # --------------------------------------------------------------------------
 # Create .claude.json (skip onboarding wizard)
 # --------------------------------------------------------------------------
-if [ ! -f "$HOME/.claude.json" ]; then
+if [ -f "$HOME/.claude.json" ]; then
+    jq '.hasCompletedOnboarding = true' "$HOME/.claude.json" > "$HOME/.claude.json.tmp" && mv "$HOME/.claude.json.tmp" "$HOME/.claude.json"
+else
     echo '{"hasCompletedOnboarding": true}' > "$HOME/.claude.json"
-    echo "Created .claude.json (skip onboarding)."
 fi
+echo "Ensured hasCompletedOnboarding in .claude.json."
 
 echo "Claude setup complete."
