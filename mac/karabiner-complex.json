@@ -414,6 +414,64 @@
             }
         }
       ]
+    },
+    {
+      "description": "Apple Device (vendor_id: 1452, product_id: 556)",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "key_code": "2" },
+          "conditions": [{
+            "type": "device_if",
+            "identifiers": [{ "vendor_id": 1452, "product_id": 556 }]
+          }]
+        },
+        {
+          "type": "basic",
+          "from": { "key_code": "3" },
+          "to": [{ "key_code": "right_arrow" }],
+          "conditions": [{
+            "type": "device_if",
+            "identifiers": [{ "vendor_id": 1452, "product_id": 556 }]
+          }]
+        },
+        {
+          "type": "basic",
+          "from": { "key_code": "1" },
+          "to": [{ "key_code": "left_arrow" }],
+          "conditions": [{
+            "type": "device_if",
+            "identifiers": [{ "vendor_id": 1452, "product_id": 556 }]
+          }]
+        },
+        {
+          "type": "basic",
+          "from": { "key_code": "a" },
+          "to": [{ "key_code": "period", "modifiers": ["left_shift"] }],
+          "conditions": [{
+            "type": "device_if",
+            "identifiers": [{ "vendor_id": 1452, "product_id": 556 }]
+          }]
+        },
+        {
+          "type": "basic",
+          "from": { "key_code": "b" },
+          "to": [{ "consumer_key_code": "mute" }],
+          "conditions": [{
+            "type": "device_if",
+            "identifiers": [{ "vendor_id": 1452, "product_id": 556 }]
+          }]
+        },
+        {
+          "type": "basic",
+          "from": { "key_code": "c" },
+          "to": [{ "key_code": "comma", "modifiers": ["left_shift"] }],
+          "conditions": [{
+            "type": "device_if",
+            "identifiers": [{ "vendor_id": 1452, "product_id": 556 }]
+          }]
+        }
+      ]
     }
   ]
 }
