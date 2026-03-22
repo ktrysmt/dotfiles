@@ -35,7 +35,6 @@ start_daemon() {
     fi
 
     ensure_tracefs
-    ulimit -l unlimited 2>/dev/null || true
 
     if [ -f "$PID_FILE" ] && kill -0 "$(cat "$PID_FILE" 2>/dev/null)" 2>/dev/null; then
         stop_tracer quiet
