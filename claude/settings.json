@@ -446,7 +446,7 @@
     "typescript-lsp@claude-plugins-official": true
   },
   "sandbox": {
-    "enabled": true,
+    "enabled": false,
     "autoAllowBashIfSandboxed": true
   },
   "alwaysThinkingEnabled": true,
