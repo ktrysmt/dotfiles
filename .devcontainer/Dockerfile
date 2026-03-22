@@ -27,8 +27,9 @@ ENV TZ="$TZ"
 # ------------------------------------------------------------------------------
 # System packages
 # ------------------------------------------------------------------------------
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  git sudo jq \
+RUN apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+  git sudo jq tzdata \
   iproute2 dnsutils bpftrace \
   curl ca-certificates \
   libevent-core-2.1-7t64 libncurses6 libatomic1 \
