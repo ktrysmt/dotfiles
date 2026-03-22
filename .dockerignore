@@ -1,8 +1,7 @@
 # Only send what the Dockerfile needs
 *
 
-!.devcontainer/init-firewall.sh
-!.devcontainer/refresh-firewall.sh
+!.devcontainer/trace-network.sh
 !.devcontainer/setup-claude.sh
 !.devcontainer/mise.toml
 !claude/

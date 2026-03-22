@@ -1,6 +1,6 @@
 {
   "name": "Claude Code Sandbox",
-  "build": { "dockerfile": "Dockerfile", "context": ".." },
+  "image": "ghcr.io/ktrysmt/claude-devcontainer:latest",
   "initializeCommand": "mkdir -p ${HOME}/.claude-devcontainer",
   "runArgs": [
     "--cap-add=SYS_ADMIN",
