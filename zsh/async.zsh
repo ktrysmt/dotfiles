@@ -125,8 +125,7 @@ mmh() {
 pmm() { printf '```mermaid\n%s\n```\n' "$(pbpaste)" | memd; }
 
 # devcontainer
-alias -g dcls='docker ps --filter "label=devcontainer.local_folder" --format "table {{.Names}}\t{{.ID}}\t{{.Status}}\t{{.Label \"devcontainer.local_folder\"}}"'
-dcu() {
+dc() {
   local dir="${1:-.}"
   dir="${dir:a}"
   local rel="${PWD#$dir}"
@@ -140,6 +139,7 @@ dcu() {
   devcontainer exec --config ~/dotfiles/.devcontainer/devcontainer.json --workspace-folder "$dir" env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" bash -c "cd '$rel' && exec bash"
   docker stop "$cid" && docker rm "$cid"
 }
+alias -g dcls='docker ps --filter "label=devcontainer.local_folder" --format "table {{.Names}}\t{{.ID}}\t{{.Status}}\t{{.Label \"devcontainer.local_folder\"}}"'
 alias -g dcrm='docker ps --filter "label=devcontainer.local_folder" --format "table {{.Names}}\t{{.ID}}\t{{.Status}}\t{{.Label \"devcontainer.local_folder\"}}" | fzf | cut -d " " -f1 | xargs docker stop | xargs docker rm'
 
 # python
