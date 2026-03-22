@@ -86,7 +86,7 @@ kretprobe:tcp_v6_connect /@sk6[tid]/ {
     delete(@sk6[tid]);
 }
 END { clear(@sk); clear(@sk6); }
-' 2>/dev/null | while IFS='|' read -r ts ip port proto pid_num comm; do
+' 2>> "$LOG_FILE" | while IFS='|' read -r ts ip port proto pid_num comm; do
             [[ "$ts" =~ ^[0-9]{4}- ]] || continue
             host=$(resolve "$ip")
             echo "${ts}|${host}|${ip}|${port}|${proto}|${pid_num}|${comm}"
@@ -99,10 +99,9 @@ END { clear(@sk); clear(@sk6); }
 
     sleep 2
     if ! kill -0 "$daemon_pid" 2>/dev/null; then
-        echo "ERROR: Tracer failed to start. Check kernel eBPF support and capabilities." >&2
-        echo "  Required: --cap-add=SYS_ADMIN in container runArgs" >&2
+        echo "WARNING: Tracer failed to start. See $LOG_FILE for details." >&2
         rm -f "$PID_FILE"
-        exit 1
+        return 0
     fi
 
     echo "eBPF tracer started (PID: $daemon_pid, log: $LOG_FILE)"
