@@ -3,10 +3,10 @@
 #
 # Uses bpftrace kprobes on tcp_v4_connect / tcp_v6_connect to trace outbound
 # TCP connections. Filtered by cgroup to capture only this container's traffic.
-# Resolves destination IPs to hostnames via reverse DNS (cached).
+# Resolves IPs to hostnames via forward DNS snooping (getaddrinfo uprobe).
 #
 # Log format (pipe-delimited):
-#   timestamp|hostname|ip|port|protocol|pid|command
+#   timestamp|host|ip|port|protocol|command
 #
 # Usage:
 #   trace-network.sh               Start tracer daemon
@@ -46,50 +46,76 @@ start_daemon() {
     chmod 644 "$LOG_FILE"
     echo "# trace started $(date '+%Y-%m-%d %H:%M:%S')" >> "$LOG_FILE"
 
+    # Resolve libc path for getaddrinfo uprobe
+    local libc
+    libc=$(ldconfig -p 2>/dev/null | grep -oP '/\S+/libc\.so\.6' | head -1)
+    if [ -z "$libc" ]; then
+        libc="/lib/x86_64-linux-gnu/libc.so.6"
+    fi
+
     (
-        declare -A dns_cache
+        bpftrace -B line -e "
+/*
+ * Forward DNS snooping: capture hostname from getaddrinfo(node, ...) calls.
+ * The hostname is saved per-tid and associated with the next tcp connect.
+ */
+uprobe:${libc}:getaddrinfo /cgroup == cgroupid(\"/sys/fs/cgroup\")/ {
+    \$name = str(arg0);
+    if (\$name != \"0\") {
+        @dns[tid] = \$name;
+    }
+}
 
-        resolve() {
-            local ip=$1
-            if [[ -z "${dns_cache[$ip]+_}" ]]; then
-                dns_cache[$ip]=$(dig +short +timeout=2 +tries=1 -x "$ip" 2>/dev/null | head -1 | sed 's/\.$//')
-                [[ -z "${dns_cache[$ip]}" ]] && dns_cache[$ip]="-"
-            fi
-            printf '%s' "${dns_cache[$ip]}"
-        }
-
-        bpftrace -B line -e '
-kprobe:tcp_v4_connect /cgroup == cgroupid("/sys/fs/cgroup")/ {
+kprobe:tcp_v4_connect /cgroup == cgroupid(\"/sys/fs/cgroup\")/ {
     @sk[tid] = arg0;
+    if (@dns[tid]) {
+        @host[tid] = @dns[tid];
+    }
+    delete(@dns[tid]);
 }
 kretprobe:tcp_v4_connect /@sk[tid]/ {
-    $sk = (struct sock *)@sk[tid];
-    $dport = ($sk->__sk_common.skc_dport >> 8) |
-             (($sk->__sk_common.skc_dport & 0xff) << 8);
-    printf("%s|%s|%d|tcp|%d|%s\n",
-        strftime("%Y-%m-%d %H:%M:%S", nsecs),
-        ntop($sk->__sk_common.skc_daddr),
-        $dport, pid, comm);
+    \$sk = (struct sock *)@sk[tid];
+    \$dport = (\$sk->__sk_common.skc_dport >> 8) |
+             ((\$sk->__sk_common.skc_dport & 0xff) << 8);
+    \$host = @host[tid];
+    printf(\"%s|%s|%s|%d|tcp|%s\n\",
+        strftime(\"%Y-%m-%d %H:%M:%S\", nsecs),
+        \$host,
+        ntop(\$sk->__sk_common.skc_daddr),
+        \$dport, comm);
     delete(@sk[tid]);
+    delete(@host[tid]);
 }
-kprobe:tcp_v6_connect /cgroup == cgroupid("/sys/fs/cgroup")/ {
+
+kprobe:tcp_v6_connect /cgroup == cgroupid(\"/sys/fs/cgroup\")/ {
     @sk6[tid] = arg0;
+    if (@dns[tid]) {
+        @host6[tid] = @dns[tid];
+    }
+    delete(@dns[tid]);
 }
 kretprobe:tcp_v6_connect /@sk6[tid]/ {
-    $sk = (struct sock *)@sk6[tid];
-    $dport = ($sk->__sk_common.skc_dport >> 8) |
-             (($sk->__sk_common.skc_dport & 0xff) << 8);
-    printf("%s|%s|%d|tcp|%d|%s\n",
-        strftime("%Y-%m-%d %H:%M:%S", nsecs),
-        ntop(10, $sk->__sk_common.skc_v6_daddr.in6_u.u6_addr8),
-        $dport, pid, comm);
+    \$sk = (struct sock *)@sk6[tid];
+    \$dport = (\$sk->__sk_common.skc_dport >> 8) |
+             ((\$sk->__sk_common.skc_dport & 0xff) << 8);
+    \$host = @host6[tid];
+    printf(\"%s|%s|%s|%d|tcp|%s\n\",
+        strftime(\"%Y-%m-%d %H:%M:%S\", nsecs),
+        \$host,
+        ntop(10, \$sk->__sk_common.skc_v6_daddr.in6_u.u6_addr8),
+        \$dport, comm);
     delete(@sk6[tid]);
+    delete(@host6[tid]);
 }
-END { clear(@sk); clear(@sk6); }
-' 2>> "$LOG_FILE" | while IFS='|' read -r ts ip port proto pid_num comm; do
+END {
+    clear(@dns); clear(@sk); clear(@sk6);
+    clear(@host); clear(@host6);
+}
+" 2>> "$LOG_FILE" | while IFS='|' read -r ts host ip port proto comm; do
             [[ "$ts" =~ ^[0-9]{4}- ]] || continue
-            host=$(resolve "$ip")
-            echo "${ts}|${host}|${ip}|${port}|${proto}|${pid_num}|${comm}"
+            # Clean empty host from bpftrace (prints empty string for unset map value)
+            [[ -z "$host" || "$host" == " " ]] && host="-"
+            echo "${ts}|${host}|${ip}|${port}|${proto}|${comm}"
         done >> "$LOG_FILE"
     ) &
 
@@ -145,14 +171,14 @@ show_log() {
         echo "No log file found"
         return
     fi
-    printf "%-19s  %-40s  %-15s  %5s  %-4s  %-6s  %s\n" \
-        "TIMESTAMP" "HOST" "IP" "PORT" "PROTO" "PID" "COMMAND"
-    printf '%0.s-' {1..110}
+    printf "%-19s  %-40s  %-39s  %5s  %-4s  %s\n" \
+        "TIMESTAMP" "HOST" "IP" "PORT" "PROTO" "COMMAND"
+    printf '%0.s-' {1..120}
     echo
     grep -E '^[0-9]{4}-' "$LOG_FILE" | tail -n "$n" | \
-        while IFS='|' read -r ts host ip port proto pid_num comm; do
-            printf "%-19s  %-40s  %-15s  %5s  %-4s  %-6s  %s\n" \
-                "$ts" "$host" "$ip" "$port" "$proto" "$pid_num" "$comm"
+        while IFS='|' read -r ts host ip port proto comm; do
+            printf "%-19s  %-40s  %-39s  %5s  %-4s  %s\n" \
+                "$ts" "$host" "$ip" "$port" "$proto" "$comm"
         done
 }
 
@@ -161,14 +187,14 @@ tail_log() {
         echo "No log file found"
         exit 1
     fi
-    printf "%-19s  %-40s  %-15s  %5s  %-4s  %-6s  %s\n" \
-        "TIMESTAMP" "HOST" "IP" "PORT" "PROTO" "PID" "COMMAND"
-    printf '%0.s-' {1..110}
+    printf "%-19s  %-40s  %-39s  %5s  %-4s  %s\n" \
+        "TIMESTAMP" "HOST" "IP" "PORT" "PROTO" "COMMAND"
+    printf '%0.s-' {1..120}
     echo
-    tail -n 0 -f "$LOG_FILE" | while IFS='|' read -r ts host ip port proto pid_num comm; do
+    tail -n 0 -f "$LOG_FILE" | while IFS='|' read -r ts host ip port proto comm; do
         if [[ "$ts" =~ ^[0-9]{4}- ]]; then
-            printf "%-19s  %-40s  %-15s  %5s  %-4s  %-6s  %s\n" \
-                "$ts" "$host" "$ip" "$port" "$proto" "$pid_num" "$comm"
+            printf "%-19s  %-40s  %-39s  %5s  %-4s  %s\n" \
+                "$ts" "$host" "$ip" "$port" "$proto" "$comm"
         else
             echo "$ts"
         fi
