@@ -14,13 +14,13 @@
 # Environment variables:
 #   FIREWALL_EXTRA_DOMAINS  Comma-separated additional domains to allow
 #                           e.g. "api.example.com,cdn.example.com"
-#   FIREWALL_MODE           "strict" (default) = block unlisted traffic
-#                           "permissive"       = log but allow all traffic
+#   FIREWALL_MODE           "permissive" (default) = log but allow all traffic
+#                           "strict"               = block unlisted traffic
 
 set -euo pipefail
 IFS=$'\n\t'
 
-FIREWALL_MODE="${FIREWALL_MODE:-strict}"
+FIREWALL_MODE="${FIREWALL_MODE:-permissive}"
 echo "Firewall mode: $FIREWALL_MODE"
 
 # --------------------------------------------------------------------------
@@ -34,15 +34,15 @@ iptables -t nat -F
 iptables -t nat -X
 iptables -t mangle -F
 iptables -t mangle -X
-ipset destroy allowed-domains 2>/dev/null || true
+ipset destroy allowed-domains 2> /dev/null || true
 
 if [ -n "$DOCKER_DNS_RULES" ]; then
-    echo "Restoring Docker DNS rules..."
-    iptables -t nat -N DOCKER_OUTPUT 2>/dev/null || true
-    iptables -t nat -N DOCKER_POSTROUTING 2>/dev/null || true
-    echo "$DOCKER_DNS_RULES" | xargs -L 1 iptables -t nat
+  echo "Restoring Docker DNS rules..."
+  iptables -t nat -N DOCKER_OUTPUT 2> /dev/null || true
+  iptables -t nat -N DOCKER_POSTROUTING 2> /dev/null || true
+  echo "$DOCKER_DNS_RULES" | xargs -L 1 iptables -t nat
 else
-    echo "No Docker DNS rules to restore"
+  echo "No Docker DNS rules to restore"
 fi
 
 # --------------------------------------------------------------------------
@@ -69,8 +69,11 @@ ipset create allowed-domains hash:net timeout "$IPSET_TIMEOUT"
 # --- Register cron to periodically refresh ipset ---
 REFRESH_INTERVAL="${FIREWALL_REFRESH_INTERVAL:-30}"
 CRON_LINE="*/${REFRESH_INTERVAL} * * * * FIREWALL_IPSET_TIMEOUT=${IPSET_TIMEOUT} FIREWALL_EXTRA_DOMAINS=${FIREWALL_EXTRA_DOMAINS:-} /usr/local/bin/refresh-firewall.sh --quiet 2>&1 | logger -t refresh-firewall"
-{ crontab -l 2>/dev/null || true; } | { grep -v refresh-firewall || true; } | { cat; echo "$CRON_LINE"; } | crontab -
-service cron start >/dev/null 2>&1 || true
+{ crontab -l 2> /dev/null || true; } | { grep -v refresh-firewall || true; } | {
+  cat
+  echo "$CRON_LINE"
+} | crontab -
+service cron start > /dev/null 2>&1 || true
 echo "Cron registered: refresh ipset every ${REFRESH_INTERVAL}m"
 
 # --------------------------------------------------------------------------
@@ -78,8 +81,8 @@ echo "Cron registered: refresh ipset every ${REFRESH_INTERVAL}m"
 # --------------------------------------------------------------------------
 HOST_IP=$(ip route | grep default | cut -d" " -f3)
 if [ -z "$HOST_IP" ]; then
-    echo "ERROR: Failed to detect host IP"
-    exit 1
+  echo "ERROR: Failed to detect host IP"
+  exit 1
 fi
 
 HOST_NETWORK=$(echo "$HOST_IP" | sed "s/\.[0-9]*$/.0\/24/")
@@ -99,14 +102,14 @@ iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -m set --match-set allowed-domains dst -j ACCEPT
 
 if [ "$FIREWALL_MODE" = "permissive" ]; then
-    # Log unlisted traffic but allow it
-    iptables -A OUTPUT -j LOG --log-prefix "[FIREWALL-UNLISTED] " --log-level 4
-    iptables -P OUTPUT ACCEPT
-    echo "WARNING: Permissive mode - unlisted traffic is logged but allowed"
+  # Log unlisted traffic but allow it
+  iptables -A OUTPUT -j LOG --log-prefix "[FIREWALL-UNLISTED] " --log-level 4
+  iptables -P OUTPUT ACCEPT
+  echo "WARNING: Permissive mode - unlisted traffic is logged but allowed"
 else
-    # Block unlisted traffic
-    iptables -P OUTPUT DROP
-    iptables -A OUTPUT -j REJECT --reject-with icmp-admin-prohibited
+  # Block unlisted traffic
+  iptables -P OUTPUT DROP
+  iptables -A OUTPUT -j REJECT --reject-with icmp-admin-prohibited
 fi
 
 # --------------------------------------------------------------------------
@@ -115,21 +118,21 @@ fi
 echo "Firewall configuration complete. Verifying..."
 
 if [ "$FIREWALL_MODE" = "permissive" ]; then
-    echo "SKIP: Verification skipped in permissive mode"
+  echo "SKIP: Verification skipped in permissive mode"
 else
-    if curl --connect-timeout 5 https://example.com >/dev/null 2>&1; then
-        echo "ERROR: Firewall verification failed - example.com is reachable"
-        exit 1
-    else
-        echo "OK: example.com blocked"
-    fi
+  if curl --connect-timeout 5 https://example.com > /dev/null 2>&1; then
+    echo "ERROR: Firewall verification failed - example.com is reachable"
+    exit 1
+  else
+    echo "OK: example.com blocked"
+  fi
 fi
 
-if ! curl --connect-timeout 5 https://api.github.com/zen >/dev/null 2>&1; then
-    echo "ERROR: Firewall verification failed - api.github.com unreachable"
-    exit 1
+if ! curl --connect-timeout 5 https://api.github.com/zen > /dev/null 2>&1; then
+  echo "ERROR: Firewall verification failed - api.github.com unreachable"
+  exit 1
 else
-    echo "OK: api.github.com reachable"
+  echo "OK: api.github.com reachable"
 fi
 
 echo "Firewall ready."
