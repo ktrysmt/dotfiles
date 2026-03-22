@@ -39,7 +39,7 @@ devcontainer exec --workspace-folder . \
 | ファイル | 役割 |
 |---------|------|
 | `Dockerfile` | ツール群のインストール (バイナリ直DL)。`claude/` と `.gitignore_global` を `~/claude/` に焼き込む |
-| `init-firewall.sh` | ネットワーク制限 (許可ドメインのみ通信可) |
+| `trace-network.sh` | eBPF ネットワークトレーサー (TCP 接続先をログ記録) |
 | `setup-claude.sh` | `~/claude/` の dotfiles を `~/.claude/` にシンボリックリンク。コンテナ用 `settings.json` を生成 |
 | `devcontainer.json` | ランタイム設定 (GHCR イメージ参照、他リポジトリでも利用可) |
 
@@ -52,33 +52,46 @@ devcontainer exec --workspace-folder . \
 
 Claude Code は `postStartCommand` でコンテナ起動のたびに最新版へ自動更新される。
 
-## ファイアウォール
+## ネットワークトレーサー
 
-許可ドメインの追加は `init-firewall.sh` の `ALLOWED_DOMAINS` を編集するか、環境変数で渡す:
+eBPF (bpftrace kprobes on `tcp_v4_connect` / `tcp_v6_connect`) でコンテナからの TCP 接続を自動ログ記録する。
+cgroup フィルタにより自コンテナのトラフィックのみ捕捉。ファイアウォール (ブロック) ではなく可観測性 (トレース) に特化した設計。
 
-```jsonc
-// devcontainer.json の containerEnv に追加
-"FIREWALL_EXTRA_DOMAINS": "api.example.com,cdn.example.com"
-```
-
-### Permissive モード
-
-ブロックせずログだけ記録する。必要なドメインを特定してから strict に切り替える運用向け。
-
-```jsonc
-// devcontainer.json の containerEnv に追加
-"FIREWALL_MODE": "permissive"
-```
-
-許可リスト外へのアクセスを確認 (ホスト側で実行):
+ログフォーマット: `timestamp|host|ip|port|protocol|pid|command`
 
 ```bash
-dmesg -T | grep 'FIREWALL-UNLISTED' | grep -oP 'DST=\K[0-9.]+' | sort -u | \
-  while read -r ip; do
-    domain=$(dig +short -x "$ip" 2>/dev/null | head -1)
-    echo "$ip -> ${domain:-(unknown)}"
-  done
+# ログ確認 (最新50件)
+sudo /usr/local/bin/trace-network.sh --log
+
+# リアルタイム追跡
+sudo /usr/local/bin/trace-network.sh --tail
+
+# ステータス確認
+sudo /usr/local/bin/trace-network.sh --status
+
+# 停止
+sudo /usr/local/bin/trace-network.sh --stop
 ```
+
+### ログの永続化
+
+ログは `~/.claude/networklogs/<folder>/<yyyymmdd-hhmm>-<docker-hash>.log` に保存される。
+`~/.claude` はホスト側 `~/.claude-devcontainer/` にバインドマウントされており、
+セッションログ (`projects/`) と同階層にネットワークログが蓄積される:
+
+```bash
+# ホスト側から一覧
+ls ~/.claude-devcontainer/networklogs/my-app/
+
+# 特定セッションのログ
+cat ~/.claude-devcontainer/networklogs/my-app/20260322-1430-a1b2c3d4e5f6.log
+
+# 全プロジェクトの接続先集計
+cat ~/.claude-devcontainer/networklogs/*/*.log | grep -E '^[0-9]{4}-' | \
+  cut -d'|' -f2,4 | sort | uniq -c | sort -rn
+```
+
+要件: `--cap-add=SYS_ADMIN` (eBPF kprobe アタッチに必要)。`devcontainer.json` で設定済み。
 
 ## GHCR イメージのビルド
 

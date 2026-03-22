@@ -29,7 +29,7 @@ ENV TZ="$TZ"
 # ------------------------------------------------------------------------------
 RUN apt-get update && apt-get install -y --no-install-recommends \
   git sudo jq \
-  iptables ipset iproute2 dnsutils aggregate cron \
+  iproute2 dnsutils bpftrace \
   curl ca-certificates \
   libevent-core-2.1-7t64 libncurses6 libatomic1 \
   && rm -rf /var/lib/apt/lists/*
@@ -46,8 +46,8 @@ RUN mkdir -p /workspace /home/ubuntu/.claude /home/ubuntu/.local/bin && \
   chown ubuntu:ubuntu /workspace /home/ubuntu/.claude && \
   chown -R ubuntu:ubuntu /home/ubuntu/.local
 
-RUN echo "ubuntu ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/ubuntu-firewall && \
-  chmod 0440 /etc/sudoers.d/ubuntu-firewall
+RUN echo "ubuntu ALL=(root) NOPASSWD: /usr/local/bin/trace-network.sh" > /etc/sudoers.d/ubuntu-trace && \
+  chmod 0440 /etc/sudoers.d/ubuntu-trace
 
 WORKDIR /workspace
 
@@ -71,7 +71,7 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/b
 # ------------------------------------------------------------------------------
 # Local files: COPY layers last (before USER) to avoid busting tool layer cache
 # ------------------------------------------------------------------------------
-COPY --chmod=755 .devcontainer/init-firewall.sh .devcontainer/refresh-firewall.sh .devcontainer/setup-claude.sh /usr/local/bin/
+COPY --chmod=755 .devcontainer/trace-network.sh .devcontainer/setup-claude.sh /usr/local/bin/
 COPY --chown=ubuntu:ubuntu claude/ /home/ubuntu/claude/
 COPY --chown=ubuntu:ubuntu .gitignore_global /home/ubuntu/.gitignore_global
 

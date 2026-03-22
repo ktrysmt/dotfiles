@@ -3,7 +3,7 @@
   "image": "ghcr.io/ktrysmt/claude-devcontainer:latest",
   "initializeCommand": "mkdir -p ${HOME}/.claude-devcontainer",
   "runArgs": [
-    "--cap-add=NET_ADMIN",
+    "--cap-add=SYS_ADMIN",
     "--cap-add=NET_RAW"
   ],
   "remoteUser": "ubuntu",
@@ -22,7 +22,7 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
   "workspaceFolder": "/workspace",
   "postStartCommand": {
-    "firewall": "sudo /usr/local/bin/init-firewall.sh",
+    "network-trace": "sudo /usr/local/bin/trace-network.sh",
     "claude-setup": "bash /usr/local/bin/setup-claude.sh"
   },
   "waitFor": "postStartCommand"
