@@ -35,6 +35,7 @@ start_daemon() {
     fi
 
     ensure_tracefs
+    ulimit -l unlimited 2>/dev/null || true
 
     if [ -f "$PID_FILE" ] && kill -0 "$(cat "$PID_FILE" 2>/dev/null)" 2>/dev/null; then
         stop_tracer quiet
@@ -81,7 +82,7 @@ kretprobe:tcp_v6_connect /@sk6[tid]/ {
              (($sk->__sk_common.skc_dport & 0xff) << 8);
     printf("%s|%s|%d|tcp|%d|%s\n",
         strftime("%Y-%m-%d %H:%M:%S", nsecs),
-        ntop(AF_INET6, $sk->__sk_common.skc_v6_daddr.in6_u.u6_addr8),
+        ntop(10, $sk->__sk_common.skc_v6_daddr.in6_u.u6_addr8),
         $dport, pid, comm);
     delete(@sk6[tid]);
 }
