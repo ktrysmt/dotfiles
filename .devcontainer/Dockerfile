@@ -82,6 +82,13 @@ USER ubuntu
 ENV SHELL=/bin/bash
 
 # ------------------------------------------------------------------------------
+# Python (managed by uv)
+# ------------------------------------------------------------------------------
+ARG PYTHON_VERSION=3.13
+RUN uv python install "$PYTHON_VERSION" && \
+  uv python pin --global "$PYTHON_VERSION"
+
+# ------------------------------------------------------------------------------
 # Claude Code (native installer as ubuntu user -> ~/.local/bin/claude)
 # ------------------------------------------------------------------------------
 ARG CLAUDE_CODE_VERSION=latest
