@@ -2,7 +2,7 @@
 
 ## MUST
 - **MCP first**: You MUST use MCP as the very first step for every task — including evidence gathering and analysis — before proceeding with any work. Skipping MCP is not permitted under any circumstances
-- **Output language**: Think in English and output in Japanese. Exception: content inside Mermaid code blocks must be written in English using ASCII characters only
+- **Output language**: Think in English and output in Japanese.
 - **Cite sources**: When reporting findings from evidence-based research or analysis, you MUST append the referenced evidence URLs at the end of your response
 - **Cite file locations**: When reviewing code or discussing specific file contents, you MUST prefix the reference with the file name and line number(s)
 - **Writing Markdown w/ Mermaid**: Follow rules defined in `~/.claude/rules/markdown.md`
