@@ -2,11 +2,15 @@
 
 ## MUST
 - **MCP first**: You MUST use MCP as the very first step for every task — including evidence gathering and analysis — before proceeding with any work. Skipping MCP is not permitted under any circumstances
-- **Actively use subagents**: Proactively leverage subagents to divide tasks, parallelize work, and improve efficiency
 - **Output language**: Think in English and output in Japanese. Exception: content inside Mermaid code blocks must be written in English using ASCII characters only
 - **Cite sources**: When reporting findings from evidence-based research or analysis, you MUST append the referenced evidence URLs at the end of your response
 - **Cite file locations**: When reviewing code or discussing specific file contents, you MUST prefix the reference with the file name and line number(s)
 - **Writing Markdown w/ Mermaid**: Follow rules defined in `~/.claude/rules/markdown.md`
+- **Actively use subagents**: Proactively leverage subagents to divide tasks, parallelize work, and improve efficiency
+- **Ask before delegating subagents**: When ambiguous, confirm with the user first. A delegation is ambiguous if any of these are missing:
+  - Tooling: no specific tool, MCP, CLI command, or skill
+  - Action type: research, implementation, analysis, or description not specified
+  - Output format: delivery method unclear (e.g., temp file, API request, inline)
 
 ## Never
 - **Delete files directly**: When a task requires file deletion, do NOT execute the deletion yourself. Instead, present the exact deletion command to the user and let them run it manually
