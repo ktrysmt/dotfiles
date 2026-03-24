@@ -41,21 +41,7 @@ return {
 
     require("dressing").setup({
       input = {
-        mappings = {
-          n = {
-            ["<Esc>"] = "Close",
-            ["<CR>"] = "Confirm",
-          },
-          i = {
-            ["<Esc>"] = "Close",
-            ["<C-c>"] = "Close",
-            ["<CR>"] = "Confirm",
-            ["<Up>"] = "HistoryPrev",
-            ["<C-k>"] = "HistoryPrev",
-            ["<Down>"] = "HistoryNext",
-            ["<C-j>"] = "HistoryNext",
-          },
-        },
+        enabled = false,
       },
       select = {
         backend = { "builtin" },
