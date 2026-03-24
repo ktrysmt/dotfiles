@@ -43,8 +43,8 @@ COPY --from=tmux-builder /usr/local/bin/tmux /usr/local/bin/tmux
 # ------------------------------------------------------------------------------
 # User setup (use default ubuntu user, UID/GID 1000)
 # ------------------------------------------------------------------------------
-RUN mkdir -p /workspace /home/ubuntu/.claude /home/ubuntu/.local/bin && \
-  chown ubuntu:ubuntu /workspace /home/ubuntu/.claude && \
+RUN mkdir -p /workspace /home/ubuntu/.claude /home/ubuntu/.local/bin /home/ubuntu/dotfiles && \
+  chown ubuntu:ubuntu /workspace /home/ubuntu/.claude /home/ubuntu/dotfiles && \
   chown -R ubuntu:ubuntu /home/ubuntu/.local
 
 RUN echo "ubuntu ALL=(root) NOPASSWD: /usr/local/bin/trace-network.sh" > /etc/sudoers.d/ubuntu-trace && \
@@ -70,11 +70,9 @@ RUN curl -fsSL "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_$
 RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin sh
 
 # ------------------------------------------------------------------------------
-# Local files: COPY layers last (before USER) to avoid busting tool layer cache
+# Local files: scripts that need fixed paths in /usr/local/bin
 # ------------------------------------------------------------------------------
 COPY --chmod=755 .devcontainer/trace-network.sh .devcontainer/setup-claude.sh /usr/local/bin/
-COPY --chown=ubuntu:ubuntu claude/ /home/ubuntu/claude/
-COPY --chown=ubuntu:ubuntu .gitignore_global /home/ubuntu/.gitignore_global
 
 ENV PATH="/home/ubuntu/.local/bin:$PATH"
 
@@ -93,6 +91,12 @@ RUN uv python install "$PYTHON_VERSION" && \
 # ------------------------------------------------------------------------------
 ARG CLAUDE_CODE_VERSION=latest
 RUN curl -fsSL https://claude.ai/install.sh | bash -s -- ${CLAUDE_CODE_VERSION} && \
-  git config --global core.excludesfile ~/.gitignore_global && \
+  git config --global core.excludesfile ~/dotfiles/.gitignore_global && \
   echo 'alias l="ls -lha"' >> ~/.bashrc && \
   echo 'alias cl="claude --dangerously-skip-permissions"' >> ~/.bashrc
+
+# ------------------------------------------------------------------------------
+# Dotfiles: last layer (changes most frequently, avoids busting tool caches)
+# ------------------------------------------------------------------------------
+COPY --chown=ubuntu:ubuntu claude/ /home/ubuntu/dotfiles/claude/
+COPY --chown=ubuntu:ubuntu .gitignore_global /home/ubuntu/dotfiles/.gitignore_global

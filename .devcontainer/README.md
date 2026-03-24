@@ -1,7 +1,7 @@
 # Claude Code Devcontainer
 
 `--dangerously-skip-permissions` を安全に使うためのサンドボックス環境。
-dotfiles の Claude 設定 (`claude/`) と `.gitignore_global` は image の `~/claude/` に焼き込まれており、どの環境でも同じツールチェインが使える。
+dotfiles の Claude 設定 (`claude/`) と `.gitignore_global` は image の `~/dotfiles/` に焼き込まれており、どの環境でも同じツールチェインが使える。
 
 ## 前提
 
@@ -38,9 +38,9 @@ devcontainer exec --workspace-folder . \
 
 | ファイル | 役割 |
 |---------|------|
-| `Dockerfile` | ツール群のインストール (バイナリ直DL)。`claude/` と `.gitignore_global` を `~/claude/` に焼き込む |
+| `Dockerfile` | ツール群のインストール (バイナリ直DL)。`claude/` と `.gitignore_global` を `~/dotfiles/` に焼き込む |
 | `trace-network.sh` | eBPF ネットワークトレーサー (TCP 接続先をログ記録) |
-| `setup-claude.sh` | `~/claude/` の dotfiles を `~/.claude/` にシンボリックリンク。コンテナ用 `settings.json` を生成 |
+| `setup-claude.sh` | `~/dotfiles/claude/` を `~/.claude/` にシンボリックリンク (skills は per-skill)。コンテナ用 `settings.json` を生成 |
 | `devcontainer.json` | ランタイム設定 (GHCR イメージ参照、他リポジトリでも利用可) |
 
 ## セッションログの永続化

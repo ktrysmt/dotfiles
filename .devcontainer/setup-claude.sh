@@ -1,37 +1,25 @@
 #!/bin/bash
-# postStartCommand: inject dotfiles Claude config into container
+# postStartCommand: symlink dotfiles Claude config into ~/.claude
 #
-# Source resolution (first match wins):
-#   1. $HOME/claude             -- baked into self-built image (Dockerfile COPY)
-#   2. /workspace/claude        -- portable image with repo bind-mounted
-#
-# settings.json is regenerated for the container (permissions stripped),
-# not copied from the source.
+# Source: $HOME/dotfiles/claude (baked into image via Dockerfile COPY)
 
 set -euo pipefail
 trap 'echo "ERROR: setup-claude.sh failed at line $LINENO (exit $?): $BASH_COMMAND" >&2' ERR
 
+SRC_DIR="$HOME/dotfiles/claude"
 CLAUDE_DIR="$HOME/.claude"
 mkdir -p "$CLAUDE_DIR"
 
-# --------------------------------------------------------------------------
-# Resolve source directory
-# --------------------------------------------------------------------------
-if [ -d "$HOME/claude" ]; then
-    SRC_DIR="$HOME/claude"
-elif [ -d "/workspace/claude" ]; then
-    SRC_DIR="/workspace/claude"
-else
-    echo "ERROR: No claude config source found." >&2
-    echo "  Checked: \$HOME/claude, /workspace/claude" >&2
+if [ ! -d "$SRC_DIR" ]; then
+    echo "ERROR: Source not found: $SRC_DIR" >&2
     exit 1
 fi
 echo "Using config source: $SRC_DIR"
 
 # --------------------------------------------------------------------------
-# Symlink / copy config files from source
+# Symlink config files from source
 # --------------------------------------------------------------------------
-for name in CLAUDE.md rules skills hooks keybindings.json statusline-command.sh .mcp.json; do
+for name in CLAUDE.md rules hooks keybindings.json statusline-command.sh .mcp.json; do
     src="$SRC_DIR/$name"
     dst="$CLAUDE_DIR/$name"
     if [ -e "$src" ]; then
