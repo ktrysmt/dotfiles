@@ -454,10 +454,6 @@
       }
     }
   },
-  "sandbox": {
-    "enabled": false,
-    "autoAllowBashIfSandboxed": true
-  },
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true
