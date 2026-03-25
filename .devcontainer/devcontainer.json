@@ -27,7 +27,7 @@
   "postStartCommand": {
     "network-trace": "sudo /usr/local/bin/trace-network.sh",
     "claude-setup": "bash /usr/local/bin/setup-claude.sh",
-    "mcp-sync": "for d in /workspace/_*/; do [ -f \"$d/pyproject.toml\" ] && (cd \"$d\" && uv sync --quiet 2>/dev/null); done"
+    "mcp-sync": "for d in /workspace/_*/; do [ -f \"$d/pyproject.toml\" ] && (cd \"$d\" && uv sync --quiet 2>/dev/null); done; true"
   },
   "waitFor": "postStartCommand"
 }
