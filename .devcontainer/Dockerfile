@@ -1,24 +1,3 @@
-# ==============================================================================
-# Builder: tmux (separate stage to keep build deps out of final image)
-# ==============================================================================
-FROM ubuntu:24.04 AS tmux-builder
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  build-essential libevent-dev libncurses-dev bison pkg-config wget ca-certificates \
-  && rm -rf /var/lib/apt/lists/*
-
-ARG TMUX_VERSION=3.6a
-RUN wget -q "https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz" && \
-  tar xzf "tmux-${TMUX_VERSION}.tar.gz" && \
-  cd "tmux-${TMUX_VERSION}" && \
-  ./configure --prefix=/usr/local && \
-  make -j"$(nproc)" && \
-  make install && \
-  cd .. && rm -rf "tmux-${TMUX_VERSION}" "tmux-${TMUX_VERSION}.tar.gz"
-
-# ==============================================================================
-# Final image
-# ==============================================================================
 FROM ubuntu:24.04
 
 ARG TZ=Asia/Tokyo
@@ -32,13 +11,8 @@ RUN apt-get update && \
   git sudo jq tzdata \
   iproute2 dnsutils bpftrace \
   curl ca-certificates \
-  libevent-core-2.1-7t64 libncurses6 libatomic1 \
+  libatomic1 \
   && rm -rf /var/lib/apt/lists/*
-
-# ------------------------------------------------------------------------------
-# tmux (built in separate stage to match host version for socket compatibility)
-# ------------------------------------------------------------------------------
-COPY --from=tmux-builder /usr/local/bin/tmux /usr/local/bin/tmux
 
 # ------------------------------------------------------------------------------
 # User setup (use default ubuntu user, UID/GID 1000)
@@ -55,8 +29,16 @@ WORKDIR /workspace
 # ------------------------------------------------------------------------------
 # Tools: each in its own layer so version bumps only re-pull that layer
 # ------------------------------------------------------------------------------
+ARG TARGETARCH
+
+ARG TMUX_VERSION=3.6a
+RUN TMUX_ARCH=$([ "$TARGETARCH" = "arm64" ] && echo "arm64" || echo "x86_64") && \
+  curl -fsSL "https://github.com/tmux/tmux-builds/releases/download/v${TMUX_VERSION}/tmux-${TMUX_VERSION}-linux-${TMUX_ARCH}.tar.gz" | \
+  tar xz -C /usr/local/bin --no-same-owner
+
 ARG NODE_VERSION=25.8.1
-RUN curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz" | \
+RUN NODE_ARCH=$([ "$TARGETARCH" = "arm64" ] && echo "arm64" || echo "x64") && \
+  curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.gz" | \
   tar xz -C /usr/local --strip-components=1 --no-same-owner && \
   rm -rf /usr/local/include/node /usr/local/share/doc /usr/local/share/man \
   /usr/local/share/systemtap /usr/local/lib/node_modules/corepack \
@@ -64,7 +46,8 @@ RUN curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-l
   /usr/local/LICENSE
 
 ARG GH_VERSION=2.88.1
-RUN curl -fsSL "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz" | \
+RUN GH_ARCH=$([ "$TARGETARCH" = "arm64" ] && echo "arm64" || echo "amd64") && \
+  curl -fsSL "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_${GH_ARCH}.tar.gz" | \
   tar xz -C /usr/local --strip-components=1 --no-same-owner
 
 RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin sh
