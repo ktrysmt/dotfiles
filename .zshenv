@@ -26,6 +26,14 @@ path=("$HOME/.local/bin" "$HOME/.local/share/mise/shims" $path)
 # zmodload zsh/zprof
 # zsh -i -c 'zmodload zsh/zprof; source ~/.zshenv; source ~/.zshrc; zprof'
 
+# tmux socket directory (fixed path for devcontainer bind-mount compatibility)
+# macOS: Docker Desktop cannot resolve /tmp -> /private/tmp symlink for bind mounts
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export TMUX_TMPDIR=/private/tmp/tmux-1000
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+  export TMUX_TMPDIR=/tmp/tmux-1000
+fi
+
 # prevent compinit in /etc/zsh/zshrc (ubuntu)
 skip_global_compinit=1
 export MEMD_THEME=catppuccin-mocha

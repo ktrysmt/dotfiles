@@ -1,7 +1,7 @@
 {
   "name": "Claude Code Sandbox",
   "image": "ghcr.io/ktrysmt/claude-devcontainer:latest",
-  "initializeCommand": "mkdir -p ${HOME}/.claude-devcontainer ${HOME}/.local/share/uv/python ${HOME}/.cache/uv",
+  "initializeCommand": "mkdir -p ${HOME}/.claude-devcontainer ${HOME}/.local/share/uv/python ${HOME}/.cache/uv ${TMUX_TMPDIR:-/tmp/tmux-1000}",
   "runArgs": [
     "--cap-add=SYS_ADMIN",
     "--cap-add=NET_RAW",
