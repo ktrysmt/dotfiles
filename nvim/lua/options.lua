@@ -100,5 +100,26 @@ local ansible_group = vim.api.nvim_create_augroup('ansible_group', { clear = tru
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
   pattern = { "*.yaml.j2", "*.yml.j2" },
   group = ansible_group,
-  command = "setfiletype yaml.ansible"
+  command = "set filetype=yaml.ansible"
+})
+
+-- diffview:// バッファ向けの filetype 検出
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = 'diffview://*',
+  group = ansible_group,
+  callback = function(args)
+    if vim.bo[args.buf].filetype ~= '' and vim.bo[args.buf].filetype ~= 'conf' then return end
+    local name = vim.api.nvim_buf_get_name(args.buf)
+    if name:match('%.yaml%.j2$') or name:match('%.yml%.j2$') then
+      vim.bo[args.buf].filetype = 'yaml.ansible'
+      return
+    end
+    local basename = name:match('[^/]+$')
+    if basename then
+      local ft = vim.filetype.match({ buf = args.buf, filename = basename })
+      if ft then
+        vim.bo[args.buf].filetype = ft
+      end
+    end
+  end,
 })

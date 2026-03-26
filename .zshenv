@@ -31,7 +31,7 @@ path=("$HOME/.local/bin" "$HOME/.local/share/mise/shims" $path)
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export TMUX_TMPDIR=/private/tmp/tmux-1000
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
-  export TMUX_TMPDIR=/tmp/tmux-1000
+  unset TMUX_TMPDIR
 fi
 
 # prevent compinit in /etc/zsh/zshrc (ubuntu)
