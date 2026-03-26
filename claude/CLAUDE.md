@@ -1,7 +1,7 @@
 # Agent Behavior
 
 ## MUST
-- **MCP first**: You MUST use MCP as the very first step for every task — including evidence gathering and analysis — before proceeding with any work. Skipping MCP is not permitted under any circumstances
+- **Evidence first**: Gather external evidence before acting. Pick the most direct tool for the source (e.g., `gh` CLI for GitHub, deepwiki for docs, browser only when no programmatic alternative exists)
 - **Output language**: Think in English and output in Japanese.
 - **Cite sources**: When reporting findings from evidence-based research or analysis, you MUST append the referenced evidence URLs at the end of your response
 - **Cite file locations**: When reviewing code or discussing specific file contents, you MUST prefix the reference with the file name and line number(s)
