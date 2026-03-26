@@ -24,7 +24,7 @@ return {
     })
     vim.api.nvim_set_hl(0, 'DiffAdd',    { bg = '#252a1a' })
     vim.api.nvim_set_hl(0, 'DiffDelete', { bg = '#2d1a1a', fg = '#c47a6a' })
-    vim.api.nvim_set_hl(0, 'DiffChange', { bg = '#1f1a10' })
+    vim.api.nvim_set_hl(0, 'DiffChange', { bg = '#302818' })
     vim.api.nvim_set_hl(0, 'DiffText',   { bg = '#332c1c' })
   end
 }
