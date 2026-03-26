@@ -89,7 +89,7 @@ def configure(keymap):
     keymap_wez["LCtrl-Left"] = ["LCtrl-Left"]
     keymap_wez["LCtrl-Right"] = ["LCtrl-Right"]
 
-    keymap_wez["LShift-Enter"] = ["LCtrl-Enter"]
+    keymap_wez["LShift-Enter"] = ["LCtrl-J"]
 
     def wezterm_ctrl_c():
         keymap.getWindow().setImeStatus(0)
