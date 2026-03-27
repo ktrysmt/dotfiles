@@ -9,7 +9,7 @@ ENV TZ="$TZ"
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   git sudo jq tzdata \
-  iproute2 dnsutils bpftrace \
+  iproute2 dnsutils bpftrace xz-utils \
   curl ca-certificates \
   libatomic1 \
   && rm -rf /var/lib/apt/lists/*

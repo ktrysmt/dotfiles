@@ -8,6 +8,7 @@ input=$(cat)
 
 # ---------- ANSI Colors ----------
 GREEN=$'\e[38;2;151;201;195m'
+BLUE=$'\e[38;2;97;175;239m'
 YELLOW=$'\e[38;2;229;192;123m'
 RED=$'\e[38;2;224;108;117m'
 GRAY=$'\e[38;2;74;88;92m'
@@ -29,6 +30,8 @@ color_for_pct() {
     printf '%s' "$RED"
   elif [ "$ipct" -ge 50 ]; then
     printf '%s' "$YELLOW"
+  elif [ "$ipct" -ge 20 ]; then
+    printf '%s' "$BLUE"
   else
     printf '%s' "$RESET"
   fi

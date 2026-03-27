@@ -68,7 +68,7 @@ uprobe:${libc}:getaddrinfo /cgroup == cgroupid(\"/sys/fs/cgroup\")/ {
 
 kprobe:tcp_v4_connect /cgroup == cgroupid(\"/sys/fs/cgroup\")/ {
     @sk[tid] = arg0;
-    if (@dns[tid]) {
+    if (@dns[tid] != \"\") {
         @host[tid] = @dns[tid];
     }
     delete(@dns[tid]);
@@ -89,7 +89,7 @@ kretprobe:tcp_v4_connect /@sk[tid]/ {
 
 kprobe:tcp_v6_connect /cgroup == cgroupid(\"/sys/fs/cgroup\")/ {
     @sk6[tid] = arg0;
-    if (@dns[tid]) {
+    if (@dns[tid] != \"\") {
         @host6[tid] = @dns[tid];
     }
     delete(@dns[tid]);

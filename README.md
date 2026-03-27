@@ -50,7 +50,7 @@ dotfiles/
 
 ## zsh予備知識
 
-```
+```sh
 読み込み順序（ubuntu）
 
 1.  /etc/zsh/zshenv      ← システム全体。常に最初に読み込み

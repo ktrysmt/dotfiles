@@ -1,7 +1,7 @@
 {
   "name": "Claude Code Sandbox",
   "image": "ghcr.io/ktrysmt/claude-devcontainer:latest",
-  "initializeCommand": "mkdir -p ${HOME}/.claude-devcontainer ${HOME}/.local/share/uv/python ${HOME}/.cache/uv ${TMUX_TMPDIR:-/tmp/tmux-1000}",
+  "initializeCommand": "mkdir -p ${HOME}/.claude-devcontainer ${TMUX_TMPDIR:-/tmp/tmux-1000}",
   "runArgs": [
     "--cap-add=SYS_ADMIN",
     "--cap-add=NET_RAW",
@@ -12,8 +12,8 @@
     "source=${localEnv:HOME}/.claude-devcontainer,target=/home/ubuntu/.claude,type=bind",
     "source=claude-bashhistory-${devcontainerId},target=/commandhistory,type=volume",
     "source=${localEnv:TMUX_TMPDIR:/tmp/tmux-1000},target=${localEnv:TMUX_TMPDIR:/tmp/tmux-1000},type=bind",
-    "source=${localEnv:HOME}/.local/share/uv/python,target=/home/ubuntu/.local/share/uv/python,type=bind",
-    "source=${localEnv:HOME}/.cache/uv,target=/home/ubuntu/.cache/uv,type=bind"
+    "source=claude-uv-python-${devcontainerId},target=/home/ubuntu/.local/share/uv/python,type=volume",
+    "source=claude-uv-cache-${devcontainerId},target=/home/ubuntu/.cache/uv,type=volume"
   ],
   "containerEnv": {
     "NODE_OPTIONS": "--max-old-space-size=4096",
@@ -25,7 +25,7 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
   "workspaceFolder": "/workspace",
   "postStartCommand": {
-    "network-trace": "sudo /usr/local/bin/trace-network.sh",
+    "network-trace": "sudo /usr/local/bin/trace-network.sh || true",
     "claude-setup": "bash /usr/local/bin/setup-claude.sh",
     "mcp-sync": "for d in /workspace/_*/; do [ -f \"$d/pyproject.toml\" ] && (cd \"$d\" && uv sync --quiet 2>/dev/null); done; true"
   },
