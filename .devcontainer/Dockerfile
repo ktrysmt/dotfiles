@@ -9,7 +9,7 @@ ENV TZ="$TZ"
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   git sudo jq tzdata \
-  iproute2 dnsutils bpftrace xz-utils \
+  iproute2 bpftrace \
   curl ca-certificates \
   libatomic1 \
   && rm -rf /var/lib/apt/lists/*
@@ -19,9 +19,8 @@ RUN apt-get update && \
 # ------------------------------------------------------------------------------
 RUN mkdir -p /workspace /home/ubuntu/.claude /home/ubuntu/.local/bin /home/ubuntu/dotfiles && \
   chown ubuntu:ubuntu /workspace /home/ubuntu/.claude /home/ubuntu/dotfiles && \
-  chown -R ubuntu:ubuntu /home/ubuntu/.local
-
-RUN echo "ubuntu ALL=(root) NOPASSWD: /usr/local/bin/trace-network.sh" > /etc/sudoers.d/ubuntu-trace && \
+  chown -R ubuntu:ubuntu /home/ubuntu/.local && \
+  echo "ubuntu ALL=(root) NOPASSWD: /usr/local/bin/trace-network.sh" > /etc/sudoers.d/ubuntu-trace && \
   chmod 0440 /etc/sudoers.d/ubuntu-trace
 
 WORKDIR /workspace
@@ -52,11 +51,6 @@ RUN GH_ARCH=$([ "$TARGETARCH" = "arm64" ] && echo "arm64" || echo "amd64") && \
 
 RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin sh
 
-# ------------------------------------------------------------------------------
-# Local files: scripts that need fixed paths in /usr/local/bin
-# ------------------------------------------------------------------------------
-COPY --chmod=755 .devcontainer/trace-network.sh .devcontainer/setup-claude.sh /usr/local/bin/
-
 ENV PATH="/home/ubuntu/.local/bin:$PATH"
 
 USER ubuntu
@@ -79,7 +73,8 @@ RUN curl -fsSL https://claude.ai/install.sh | bash -s -- ${CLAUDE_CODE_VERSION} 
   echo 'alias cl="claude --dangerously-skip-permissions"' >> ~/.bashrc
 
 # ------------------------------------------------------------------------------
-# Dotfiles: last layer (changes most frequently, avoids busting tool caches)
+# Local files & dotfiles (changes most frequently, avoids busting tool caches)
 # ------------------------------------------------------------------------------
+COPY --chmod=755 .devcontainer/trace-network.sh .devcontainer/setup-claude.sh /usr/local/bin/
 COPY --chown=ubuntu:ubuntu claude/ /home/ubuntu/dotfiles/claude/
 COPY --chown=ubuntu:ubuntu .gitignore_global /home/ubuntu/dotfiles/.gitignore_global

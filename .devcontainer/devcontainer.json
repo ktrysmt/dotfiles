@@ -4,13 +4,11 @@
   "initializeCommand": "mkdir -p ${HOME}/.claude-devcontainer ${TMUX_TMPDIR:-/tmp/tmux-1000}",
   "runArgs": [
     "--cap-add=SYS_ADMIN",
-    "--cap-add=NET_RAW",
     "--ulimit", "memlock=-1:-1"
   ],
   "remoteUser": "ubuntu",
   "mounts": [
     "source=${localEnv:HOME}/.claude-devcontainer,target=/home/ubuntu/.claude,type=bind",
-    "source=claude-bashhistory-${devcontainerId},target=/commandhistory,type=volume",
     "source=${localEnv:TMUX_TMPDIR:/tmp/tmux-1000},target=${localEnv:TMUX_TMPDIR:/tmp/tmux-1000},type=bind",
     "source=claude-uv-python-${devcontainerId},target=/home/ubuntu/.local/share/uv/python,type=volume",
     "source=claude-uv-cache-${devcontainerId},target=/home/ubuntu/.cache/uv,type=volume"
@@ -22,7 +20,7 @@
     "TERM": "xterm-256color",
     "COLORTERM": "truecolor"
   },
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
   "workspaceFolder": "/workspace",
   "postStartCommand": {
     "network-trace": "sudo /usr/local/bin/trace-network.sh || true",
