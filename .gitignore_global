@@ -1,6 +1,8 @@
 .DS_Store
-feature-*
-.serena/project.yml
+.claude/*.lock
 .claude/settings.local.json
+.serena/project.yml
+__pycache__/
+feature-*
 tmux-client-*.log
 tmux-server-*.log
