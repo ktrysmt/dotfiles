@@ -13,7 +13,7 @@ bind -r J resize-pane -D 10
 bind -r K resize-pane -U 10
 bind -r L resize-pane -R 10
 # monitor
-bind C-s run "tmux last-pane || tmux last-window || tmux new-window"
+# bind C-s run "tmux last-pane || tmux last-window || tmux new-window"
 
 #set-window-option -g monitor-activity on
 setw -g mode-keys vi
@@ -125,11 +125,11 @@ bind-key -T edit-mode-vi WheelDownPane send-keys -X scroll-down
 # --------------
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
-# set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-open'
 
-# set -g @resurrect-save 's'
-# set -g @resurrect-restore 'l'
+set -g @resurrect-save 'M-w'
+set -g @resurrect-restore 'M-r'
 
 # set -g @plugin 'tmux-plugins/tmux-continuum'
 # set -g @continuum-restore 'on'

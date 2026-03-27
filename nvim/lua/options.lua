@@ -103,9 +103,9 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
   command = "set filetype=yaml.ansible"
 })
 
--- diffview:// バッファ向けの filetype 検出
+-- diffview:// / octo:// バッファ向けの filetype 検出
 vim.api.nvim_create_autocmd('BufEnter', {
-  pattern = 'diffview://*',
+  pattern = { 'diffview://*', 'octo://*' },
   group = ansible_group,
   callback = function(args)
     if vim.bo[args.buf].filetype ~= '' and vim.bo[args.buf].filetype ~= 'conf' then return end
