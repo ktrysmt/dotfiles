@@ -3,7 +3,7 @@ vim.api.nvim_create_autocmd({ 'VimEnter', 'Colorscheme', 'BufReadPre' }, {
   pattern = "*",
   group = highlight_group,
   command =
-  "hi IdeographicSpace ctermbg=DarkGreen guibg=DarkGreen | hi NormalNC guibg=#171717 | hi User1 guifg=#dddddd | hi @variable guifg=Normal"
+  "hi IdeographicSpace ctermbg=DarkGreen guibg=DarkGreen | hi NormalNC guibg=#101010 | hi User1 guifg=#dddddd | hi @variable guifg=normal"
 })
 vim.api.nvim_create_autocmd({ 'VimEnter', 'WinEnter' }, {
   pattern = "*",
