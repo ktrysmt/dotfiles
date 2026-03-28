@@ -7,6 +7,7 @@ dotfiles の Claude 設定 (`claude/`) と `.gitignore_global` は image の `~/
 
 ```bash
 mise install  # npm:@devcontainers/cli
+brew install socat  # macOS: tmux hook relay (optional)
 ```
 
 ## 認証
@@ -30,7 +31,6 @@ cd ~/projects/target-repo
 devcontainer up --workspace-folder . \
   --config ~/dotfiles/.devcontainer/devcontainer.json
 devcontainer exec --workspace-folder . \
-  env TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" \
   claude --dangerously-skip-permissions
 ```
 

@@ -1,7 +1,10 @@
 {
   "name": "Claude Code Sandbox",
   "image": "ghcr.io/ktrysmt/claude-devcontainer:latest",
-  "initializeCommand": "mkdir -p ${HOME}/.claude-devcontainer ${TMUX_TMPDIR:-/tmp/tmux-1000}",
+  "initializeCommand": {
+    "setup-dirs": "mkdir -p ${HOME}/.claude-devcontainer ${TMUX_SOCK_DIR:-/tmp/tmux-1000}",
+    "tmux-relay": "SOCK=${TMUX%%,*}; command -v socat >/dev/null 2>&1 && [ -S \"$SOCK\" ] && { pkill -f 'socat.*TCP-LISTEN:2489' 2>/dev/null; socat TCP-LISTEN:2489,bind=127.0.0.1,reuseaddr,fork SYSTEM:'read action pane; TMUX_PANE=$pane bash ~/.claude/hooks/tmux-window-claude-status.sh $action' & } || true"
+  },
   "runArgs": [
     "--cap-add=SYS_ADMIN",
     "--ulimit", "memlock=-1:-1"
@@ -9,7 +12,7 @@
   "remoteUser": "ubuntu",
   "mounts": [
     "source=${localEnv:HOME}/.claude-devcontainer,target=/home/ubuntu/.claude,type=bind",
-    "source=${localEnv:TMUX_TMPDIR:/tmp/tmux-1000},target=${localEnv:TMUX_TMPDIR:/tmp/tmux-1000},type=bind",
+    "source=${localEnv:TMUX_SOCK_DIR:/tmp/tmux-1000},target=${localEnv:TMUX_SOCK_DIR:/tmp/tmux-1000},type=bind",
     "source=claude-uv-python-${devcontainerId},target=/home/ubuntu/.local/share/uv/python,type=volume",
     "source=claude-uv-cache-${devcontainerId},target=/home/ubuntu/.cache/uv,type=volume"
   ],
@@ -19,6 +22,10 @@
     "DEVCONTAINER_HOST_PATH": "${localWorkspaceFolder}",
     "TERM": "xterm-256color",
     "COLORTERM": "truecolor"
+  },
+  "remoteEnv": {
+    "TMUX": "${localEnv:TMUX}",
+    "TMUX_PANE": "${localEnv:TMUX_PANE}"
   },
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
   "workspaceFolder": "/workspace",

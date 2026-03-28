@@ -11,7 +11,7 @@ RUN apt-get update && \
   git sudo jq tzdata \
   iproute2 bpftrace \
   curl ca-certificates \
-  libatomic1 \
+  libatomic1 socat \
   && rm -rf /var/lib/apt/lists/*
 
 # ------------------------------------------------------------------------------

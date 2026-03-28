@@ -10,7 +10,6 @@
 # @claude-status option, and the window name aggregates all panes.
 
 command -v tmux &>/dev/null || exit 0
-tmux display-message -p '' 2>/dev/null || exit 0
 
 # Skip when running inside session_summarizer subprocess
 [ "$CLAUDE_SUMMARIZER_RUNNING" = "1" ] && exit 0
@@ -19,6 +18,12 @@ action="$1"
 pane="$TMUX_PANE"
 
 if [ -z "$pane" ]; then
+  exit 0
+fi
+
+# Devcontainer: if direct socket unreachable, relay to host via TCP
+if ! tmux display-message -p '' 2>/dev/null; then
+  [ "$DEVCONTAINER" = "true" ] && { echo "$action $pane" >/dev/tcp/host.docker.internal/2489; } 2>/dev/null
   exit 0
 fi
 
