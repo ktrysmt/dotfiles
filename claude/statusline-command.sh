@@ -72,7 +72,8 @@ if [ -n "$cwd" ]; then
   git_root=$(git -C "$cwd" rev-parse --show-toplevel 2>/dev/null)
   if [ -n "$git_root" ]; then
     repo_name=$(basename "$git_root")
-    rel=$(realpath --relative-to="$git_root" "$cwd" 2>/dev/null || echo "")
+    rel="${cwd#"$git_root"}"
+    rel="${rel#/}"
     if [ -z "$rel" ] || [ "$rel" = "." ]; then
       cwd_display="$repo_name"
     else
