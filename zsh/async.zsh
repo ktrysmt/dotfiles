@@ -82,6 +82,7 @@ alias cl='claude'
 alias cls='claude --model sonnet'
 alias clo='claude --model opus'
 alias clr='claude /rc'
+alias clb='claude --dangerously-skip-permissions'
 
 # k8s
 alias k="kubectl"
