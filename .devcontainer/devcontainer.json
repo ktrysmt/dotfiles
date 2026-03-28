@@ -3,7 +3,7 @@
   "image": "ghcr.io/ktrysmt/claude-devcontainer:latest",
   "initializeCommand": {
     "setup-dirs": "mkdir -p ${HOME}/.claude-devcontainer ${TMUX_SOCK_DIR:-/tmp/tmux-1000}",
-    "tmux-relay": "SOCK=${TMUX%%,*}; command -v socat >/dev/null 2>&1 && [ -S \"$SOCK\" ] && { pkill -f 'socat.*TCP-LISTEN:2489' 2>/dev/null; socat TCP-LISTEN:2489,bind=127.0.0.1,reuseaddr,fork SYSTEM:'read action pane; TMUX_PANE=$pane bash ~/.claude/hooks/tmux-window-claude-status.sh $action' & } || true"
+    "tmux-relay": "[ \"$(uname)\" = \"Darwin\" ] && SOCK=${TMUX%%,*} && command -v socat >/dev/null 2>&1 && [ -S \"$SOCK\" ] && { pkill -f 'socat.*TCP-LISTEN:2489' 2>/dev/null; socat TCP-LISTEN:2489,bind=127.0.0.1,reuseaddr,fork SYSTEM:'read action pane; TMUX_PANE=$pane bash ~/.claude/hooks/tmux-window-claude-status.sh $action' >/dev/null 2>&1 & } || true"
   },
   "runArgs": [
     "--cap-add=SYS_ADMIN",
