@@ -399,6 +399,15 @@
             "command": "bash ~/.claude/hooks/markdown-lint.sh"
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/sandbox-auto-allow.sh"
+          }
+        ]
       }
     ],
     "Notification": [
