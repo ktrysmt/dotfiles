@@ -7,7 +7,7 @@
 set -euo pipefail
 
 SETTINGS="$HOME/.claude/settings.json"
-LOCKFILE="/tmp/claude-sandbox-auto-allow.lock"
+LOCKDIR="/tmp/claude-sandbox-auto-allow.lock"
 INPUT=$(cat)
 
 exit_code=$(printf '%s' "$INPUT" | jq -r '.tool_response.exitCode // 0')
@@ -30,8 +30,9 @@ dial_domains=$(printf '%s' "$combined" | grep -oE 'dial tcp: lookup [^ :]+' | se
 domains=$(printf '%s\n%s' "$domains" "$dial_domains" | grep -v '^$' | sort -u || true)
 [[ -n "$domains" ]] || exit 0
 
-exec 9>"$LOCKFILE"
-flock 9
+cleanup_lock() { rmdir "$LOCKDIR" 2>/dev/null; }
+trap cleanup_lock EXIT
+while ! mkdir "$LOCKDIR" 2>/dev/null; do sleep 0.1; done
 
 for domain in $domains; do
   if jq -e --arg d "$domain" \
@@ -52,6 +53,7 @@ for domain in $domains; do
   fi
 done
 
-exec 9>&-
+cleanup_lock
+trap - EXIT
 
 exit 0
