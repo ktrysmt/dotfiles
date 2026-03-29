@@ -78,10 +78,7 @@ compdef gd0=git-diff
 alias delta='delta --syntax-theme zenburn'
 
 # claude
-alias cl='claude'
-alias cls='claude --model sonnet'
-alias clo='claude --model opus'
-alias clr='claude /rc'
+alias cl='claude --enable-auto-mode'
 alias clb='claude --dangerously-skip-permissions'
 
 # k8s

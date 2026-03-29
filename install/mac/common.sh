@@ -42,42 +42,11 @@ setup_truecolor() {
 }
 
 # ------------------------------------------------------------------------------
-# Kubernetes krew plugin manager
-# ------------------------------------------------------------------------------
-setup_krew() {
-  if has_command kubectl-krew || [[ -d "${KREW_ROOT:-$HOME/.krew}" ]]; then
-    log_success "krew already installed"
-    return 0
-  fi
-
-  log_info "Installing krew..."
-  (
-    set -x
-    cd "$(mktemp -d)"
-    OS="$(uname | tr '[:upper:]' '[:lower:]')"
-    ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/arm64/arm64/')"
-    KREW="krew-${OS}_${ARCH}"
-    curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz"
-    tar zxvf "${KREW}.tar.gz"
-    ./"${KREW}" install krew
-  )
-
-  export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-  # Install common plugins
-  kubectl krew install tree 2> /dev/null || true
-  kubectl krew install open-svc 2> /dev/null || true
-
-  log_success "krew installed"
-}
-
-# ------------------------------------------------------------------------------
 # Main
 # ------------------------------------------------------------------------------
 main() {
   setup_mise_tools
   setup_truecolor
-  setup_krew
 
   # Symlinks run last (apps need to be installed first)
   bash "${SCRIPT_DIR}/symlink.sh"
