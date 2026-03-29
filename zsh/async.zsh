@@ -78,8 +78,7 @@ compdef gd0=git-diff
 alias delta='delta --syntax-theme zenburn'
 
 # claude
-alias cl='claude --enable-auto-mode'
-alias clb='claude --dangerously-skip-permissions'
+alias cl='claude'
 
 # k8s
 alias k="kubectl"
