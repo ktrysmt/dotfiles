@@ -50,7 +50,6 @@ esac
 # --- 2. Collect statuses from all panes in the same window ---
 window=$(tmux display-message -t "$pane" -p '#{window_id}')
 
-symbols=()
 has_thinking=false
 has_notification=false
 has_active=false
@@ -58,42 +57,22 @@ has_active=false
 while IFS= read -r pane_id; do
   status=$(tmux show-options -p -t "$pane_id" -v @claude-status 2> /dev/null)
   case "$status" in
-    start)
-      symbols+=("--")
+    start | done)
       has_active=true
       ;;
     thinking)
-      symbols+=("**")
       has_thinking=true
       has_active=true
       ;;
-    done)
-      symbols+=("==")
-      has_active=true
-      ;;
     notification)
-      symbols+=("??")
       has_notification=true
       has_active=true
       ;;
   esac
 done < <(tmux list-panes -t "$window" -F '#{pane_id}')
 
-# --- 3. Update window name and style ---
+# --- 3. Update window style ---
 if [ "$has_active" = true ]; then
-  # Save original window name before first Claude rename
-  saved=$(tmux show-options -wv -t "$window" @saved-window-name 2>/dev/null)
-  if [ -z "$saved" ]; then
-    saved=$(tmux display-message -t "$window" -p '#W')
-    tmux set-option -w -t "$window" @saved-window-name "$saved"
-  fi
-
-  joined=$(
-    IFS='|'
-    echo "${symbols[*]}"
-  )
-  tmux rename-window -t "$window" "[${joined}]${saved}"
-
   if [ "$has_notification" = true ]; then
     tmux set-option -w -t "$window" window-status-style 'fg=yellow,bold'
   elif [ "$has_thinking" = true ]; then
@@ -102,11 +81,5 @@ if [ "$has_active" = true ]; then
     tmux set-option -w -t "$window" window-status-style 'fg=green,bold'
   fi
 else
-  # All panes inactive: restore saved window name
-  saved=$(tmux show-options -wv -t "$window" @saved-window-name 2>/dev/null)
-  if [ -n "$saved" ]; then
-    tmux rename-window -t "$window" "$saved"
-    tmux set-option -wu -t "$window" @saved-window-name
-  fi
   tmux set-option -wu -t "$window" window-status-style
 fi
