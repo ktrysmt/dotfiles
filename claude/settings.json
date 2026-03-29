@@ -359,7 +359,8 @@
       "Write(/etc/passwd)",
       "Write(/etc/shadow)",
       "Write(/etc/sudoers)"
-    ]
+    ],
+    "defaultMode": "bypassPermissions"
   },
   "hooks": {
     "SessionStart": [
@@ -391,6 +392,10 @@
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh thinking"
+          },
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/markdown-lint.sh"
           }
         ]
       }
@@ -456,6 +461,10 @@
         "repo": "anthropics/claude-plugins-official"
       }
     }
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
