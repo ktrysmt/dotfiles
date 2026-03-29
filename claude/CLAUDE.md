@@ -19,3 +19,4 @@
 - Commit when tests or lint are failing
 - Push directly to main/master
 - Use emojis anywhere
+- Install tools, packages, or runtimes directly: sandbox restricts writes outside the project directory. Present the exact install command to the user and let them run it manually
