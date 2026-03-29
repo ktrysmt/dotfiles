@@ -86,6 +86,7 @@ set-option -g pane-border-format "#[bg=black] #[fg=black,bg=white] #P #[bg=black
 set -g automatic-rename on
 set -g window-status-format         '#I:#{?#{m:#W,zsh},#(basename #{pane_current_path}),#W}#F'
 set -g window-status-current-format '#I:#{?#{m:#W,zsh},#(basename #{pane_current_path}),#W}#F'
+set -g window-status-style fg=colour250
 set -g window-status-current-style fg=white,underscore
 # set-window-option -g allow-rename off
 # set-window-option -g window-status-format " #I: #(basename $PWD) "

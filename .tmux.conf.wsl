@@ -89,6 +89,7 @@ set -g automatic-rename off
 set -g allow-rename off
 set -g window-status-format         '#I:#W#F'
 set -g window-status-current-format '#I:#W#F'
+set -g window-status-style fg=colour250
 set -g window-status-current-style fg=white,underscore
 bind 0 select-window -t '{end}'
 bind , command-prompt -I "#W" "rename-window -- '%%'; set-option -w @manual-rename 1"
