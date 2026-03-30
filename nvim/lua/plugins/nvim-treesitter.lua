@@ -7,8 +7,6 @@ return {
   -- event = { "CursorHold", "CursorMoved" },
   build = ':TSUpdate',
   dependencies = {
-    -- 'LiadOz/nvim-dap-repl-highlights',
-    'JoosepAlviste/nvim-ts-context-commentstring',
     'nvim-treesitter/nvim-treesitter-textobjects',
     'RRethy/nvim-treesitter-textsubjects',
     'andymass/vim-matchup',
