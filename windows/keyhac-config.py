@@ -155,11 +155,11 @@ def configure(keymap):
                 return False
         return False
 
-    def pseudo_cuteExec(exe_name, class_name, exe_path, text):  # クロージャ生成
+    def pseudo_cuteExec(exe_name, class_name, exe_path, text, exe_arg=""):  # クロージャ生成
         def _executer():
             found_wnd = find_window(exe_name, class_name, text)
             if found_wnd == None:
-                shellExecute(None, exe_path, "", "")
+                shellExecute(None, exe_path, exe_arg, "")
             else:
                 if found_wnd != keymap.getWindow():
                     if activate_window(found_wnd):
@@ -171,8 +171,9 @@ def configure(keymap):
         "LAlt-A": (
             "brave.exe",
             "Chrome_WidgetWin_1",
-            r"C:\Users\%s\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe --remote-debugging-port=9222" % username,
+            r"C:\Users\%s\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe" % username,
             "",
+            "--remote-debugging-port=9222",
         ),
         "LAlt-O": (
             "Obsidian.exe",
