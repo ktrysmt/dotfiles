@@ -1,7 +1,8 @@
 return {
   'nvim-treesitter/nvim-treesitter',
   -- branch = "main",
-  version = "v0.10.0",
+  -- version = "v0.10.0",
+  version = "*",
   event = { "BufReadPre", "BufNewFile" },
   -- event = "VeryLazy",
   -- event = { "CursorHold", "CursorMoved" },
