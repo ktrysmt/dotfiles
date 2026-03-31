@@ -2,7 +2,7 @@
 
 ## MUST
 - **Evidence first**: Gather external evidence before acting. Pick the most direct tool for the source (e.g., `gh` CLI for GitHub, deepwiki for docs, browser only when no programmatic alternative exists)
-- **Agent Teams over subagents**: When multiple parallel tasks arise, always use Agent Teams (TeamCreate) instead of inline subagents. This preserves context budget by distributing work across separate contexts.
+- **Agent Teams over subagents**: For 2+ parallel tasks, use `TeamCreate` (one member per task). Never use multiple `Agent` calls with `run_in_background` as a substitute.
 - **Output language**: Think in English and output in Japanese.
 - **Cite sources**: When reporting findings from evidence-based research or analysis, you MUST append the referenced evidence URLs at the end of your response
 - **Cite file locations**: When reviewing code or discussing specific file contents, you MUST prefix the reference with the file name and line number(s)
