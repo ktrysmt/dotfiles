@@ -98,7 +98,11 @@
       "buttons" : {
         "mappings" : [
           {
-            "action" : "missionControl.spaceLeft",
+            "action" : {
+              "keyPress" : [
+                "arrowLeft"
+              ]
+            },
             "button" : 3,
             "command" : false,
             "control" : false,
@@ -106,7 +110,11 @@
             "shift" : false
           },
           {
-            "action" : "missionControl.spaceRight",
+            "action" : {
+              "keyPress" : [
+                "arrowRight"
+              ]
+            },
             "button" : 4,
             "command" : false,
             "control" : false,
