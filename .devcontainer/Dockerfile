@@ -78,3 +78,4 @@ RUN curl -fsSL https://claude.ai/install.sh | bash -s -- ${CLAUDE_CODE_VERSION} 
 COPY --chmod=755 .devcontainer/trace-network.sh .devcontainer/setup-claude.sh /usr/local/bin/
 COPY --chown=ubuntu:ubuntu claude/ /home/ubuntu/dotfiles/claude/
 COPY --chown=ubuntu:ubuntu .gitignore_global /home/ubuntu/dotfiles/.gitignore_global
+ENV LANG=en_US.UTF-8
