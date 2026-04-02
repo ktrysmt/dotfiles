@@ -271,13 +271,16 @@ if [ "$DEVCONTAINER" = "true" ] && [ -n "$DEVCONTAINER_HOST_PATH" ]; then
   cwd_display="*${host_repo}:${cwd_display}(${container_name})"
 fi
 
+# ---------- Timestamp (last interaction time) ----------
+timestamp=$(TZ="Asia/Tokyo" date "+%-m/%-d %-H:%M")
+
 # ---------- Line 1 ----------
 SEP="${GRAY} │ ${RESET}"
 model_color=""
 case "$model_name" in
   *[Ss]onnet*) model_color="$GREEN" ;;
 esac
-line1="${cwd_display:+${cwd_display}${SEP}}${model_color}${model_name}${model_color:+${RESET}}"
+line1="${DIM}${timestamp}${RESET}${SEP}${cwd_display:+${cwd_display}${SEP}}${model_color}${model_name}${model_color:+${RESET}}"
 
 if [ -n "$cost_display" ]; then
   line1+="${SEP}${cost_display}"
