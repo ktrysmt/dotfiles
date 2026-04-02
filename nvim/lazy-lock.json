@@ -59,7 +59,7 @@
   "octo.nvim": { "branch": "master", "commit": "b51e52888e678441a266bfd5ae2dc0a02a21d67e" },
   "outline-ctags-provider.nvim": { "branch": "main", "commit": "d54a26af2cdc3fcd5fea1c0adb1516f1738b9f84" },
   "outline-test-blocks-provider.nvim": { "branch": "main", "commit": "0e5b4327a09c914e981ea9096e961b0dd5fda65f" },
-  "outline-treesitter-provider.nvim": { "branch": "main", "commit": "22dda7329cf608368cbf725effd43daf98c27f32" },
+  "outline-treesitter-provider.nvim": { "branch": "main", "commit": "08d8f520fdf5a4eb795f251fe0a09488c5d8335f" },
   "outline.nvim": { "branch": "main", "commit": "c293eb56db880a0539bf9d85b4a27816960b863e" },
   "pinecone-vim": { "branch": "master", "commit": "bd76ee7742a7f344725f570882ed3042fd0aabe1" },
   "plenary.nvim": { "branch": "master", "commit": "b9fd5226c2f76c951fc8ed5923d85e4de065e509" },
