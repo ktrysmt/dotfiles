@@ -97,7 +97,9 @@ if [[ -n "$BACKSLASH_N_HITS" ]]; then
 fi
 
 if [[ -n "$ERRORS" ]]; then
-  echo "Markdown lint errors in $(basename "$FILE_PATH"):"
+  echo "BLOCKING: You MUST fix the following markdown lint errors in $FILE_PATH before continuing."
+  echo "Re-read the file, fix ALL reported lines, then retry."
+  echo ""
   echo "$ERRORS"
   exit 1
 fi
