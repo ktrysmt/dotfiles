@@ -461,8 +461,7 @@
     "clangd-lsp@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "discord@claude-plugins-official": true
+    "typescript-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -473,8 +472,8 @@
     }
   },
   "sandbox": {
-    "enabled": true,
-    "autoAllowBashIfSandboxed": true,
+    "enabled": false,
+    "autoAllowBashIfSandboxed": false,
     "network": {
       "allowedDomains": [
         "mise.jdx.dev",
