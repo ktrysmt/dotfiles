@@ -85,6 +85,10 @@ set -g status-right \
 # --------------
 set-option -g pane-border-status bottom
 set-option -g pane-border-format "#[bg=black] #[fg=black,bg=white] #P #[bg=black] #(~/dotfiles/bin/tmux-pane-border '#{pane_current_path}')#[bg=black] #[default]"
+set-hook -g after-split-window "set-option -w pane-border-status bottom"
+set-hook -ga after-split-window "set-option -w pane-border-style 'fg=white,bg=black'"
+set-hook -g after-new-window "set-option -w pane-border-status bottom"
+set-hook -ga after-new-window "set-option -w pane-border-style 'fg=white,bg=black'"
 
 # --------------
 # window
