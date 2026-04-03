@@ -71,7 +71,11 @@ while IFS= read -r pane_id; do
   esac
 done < <(tmux list-panes -t "$window" -F '#{pane_id}')
 
-# --- 3. Update window style ---
+# --- 3. Ensure pane-border settings (teammate may override them) ---
+tmux set-option -w -t "$window" pane-border-status bottom
+tmux set-option -w -t "$window" pane-border-style 'fg=white,bg=black'
+
+# --- 4. Update window style ---
 if [ "$has_active" = true ]; then
   if [ "$has_notification" = true ]; then
     tmux set-option -w -t "$window" window-status-style 'fg=yellow,bold'
