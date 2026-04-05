@@ -23,7 +23,10 @@ mise trust ~/.config/mise/config.toml
 log_info "Installing mise tools..."
 mise install --yes
 
-log_info "updating mise tools..."
+log_info "Clearing mise cache..."
+mise cache clear
+
+log_info "Updating mise tools..."
 mise up --yes
 
 # Remove tools not defined in any config
