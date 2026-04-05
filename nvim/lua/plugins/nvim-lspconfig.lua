@@ -103,6 +103,7 @@ return {
       local all_servers = {
         'bashls',
         'clangd',
+        'cssls',
         'dockerls',
         'gopls',
         'lua_ls',
