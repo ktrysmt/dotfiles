@@ -21,6 +21,7 @@ case "$OS_TYPE" in
   mac)
     log_info "Installing macOS packages..."
     brew bundle --file="${DOTFILES_DIR}/Brewfile.mac"
+    brew link util-linux --force 2>/dev/null || true
     ;;
   wsl | vagrant | ubuntu)
     log_info "Installing Ubuntu packages..."
