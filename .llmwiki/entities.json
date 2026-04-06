@@ -1,0 +1,120 @@
+{
+  "services": {
+    "claude-code-config": {
+      "name": "Claude Code Configuration",
+      "aliases": ["claude-code", "claude", "settings.json", "CLAUDE.md", "Claude Code設定"]
+    },
+    "mcp-servers": {
+      "name": "MCP Servers",
+      "aliases": ["MCP", "Model Context Protocol", "aws-docs", "deepwiki", "grep-github", "arxiv", "playwright", "pdf-mcp", "gemini-cli", "MCPサーバー"]
+    },
+    "homebrew": {
+      "name": "Homebrew Package Manager",
+      "aliases": ["brew", "Brewfile", "Homebrew", "ホームブリュー"]
+    },
+    "mise-runtime": {
+      "name": "Mise Runtime Manager",
+      "aliases": ["mise", "runtime manager", "version manager", "ランタイムマネージャー"]
+    }
+  },
+  "environments": {
+    "devcontainer": {
+      "name": "DevContainer Environment",
+      "aliases": ["devcontainer", "Docker container", "sandbox", "開発コンテナ"]
+    },
+    "macos-apps": {
+      "name": "macOS Application Configs",
+      "aliases": ["macOS", "karabiner", "rectangle", "iterm2", "linearmouse", "wezterm", "raycast", "macOSアプリ設定"]
+    },
+    "windows-apps": {
+      "name": "Windows Application Configs",
+      "aliases": ["windows", "keyhac", "WindowsTerminal", "XMBC", "Windowsアプリ設定"]
+    }
+  },
+  "components": {
+    "zsh-shell": {
+      "name": "Zsh Shell Configuration",
+      "aliases": ["zsh", "zshrc", "zshenv", "sync.zsh", "async.zsh", "Zshシェル設定"]
+    },
+    "sheldon-plugins": {
+      "name": "Sheldon Plugin Manager",
+      "aliases": ["sheldon", "sheldon.plugins.toml", "zsh-defer", "zsh-syntax-highlighting", "zsh-completions", "Sheldonプラグインマネージャー"]
+    },
+    "neovim-editor": {
+      "name": "Neovim Editor Configuration",
+      "aliases": ["neovim", "nvim", "init.lua", "options.lua", "keys.lua", "highlight.lua", "lazynvim.lua", "lazy.nvim", "Neovimエディタ設定"]
+    },
+    "nvim-lsp-completion": {
+      "name": "Neovim LSP and Completion",
+      "aliases": ["nvim-lspconfig", "nvim-treesitter", "nvim-cmp", "treesitter", "LSP", "completion", "LSP補完"]
+    },
+    "nvim-plugins-ui": {
+      "name": "Neovim UI Plugins",
+      "aliases": ["lualine", "neo-tree", "hlchunk", "outline", "nvim-scrollbar", "pinecone", "readablefold", "guess-indent", "NvimUIプラグイン"]
+    },
+    "nvim-plugins-editing": {
+      "name": "Neovim Editing Plugins",
+      "aliases": ["format-on-save", "nvim-lint", "comment", "dial", "lexima", "sort", "colorizer", "mini-align", "mini-splitjoin", "undotree", "yanky", "vim-illuminate", "Nvim編集プラグイン"]
+    },
+    "nvim-plugins-git": {
+      "name": "Neovim Git Plugins",
+      "aliases": ["vim-fugitive", "gitsigns", "git-conflict", "diffview", "tig-explorer", "octo", "NvimGitプラグイン"]
+    },
+    "nvim-plugins-ai": {
+      "name": "Neovim AI/LLM Plugins",
+      "aliases": ["claudecode", "copilot", "avante", "cody", "NvimAIプラグイン"]
+    },
+    "nvim-plugins-ft": {
+      "name": "Neovim Filetype Plugins",
+      "aliases": ["nvim-ansible", "rainbow-csv", "vim-astro", "vim-svelte", "vim-terraform", "vim-qfreplace", "typescript-tools", "Nvimファイルタイプ"]
+    },
+    "nvim-plugins-motion": {
+      "name": "Neovim Motion and Text Object Plugins",
+      "aliases": ["vim-easymotion", "leap", "treehopper", "vim-expand-region", "vim-asterisk", "vim-abolish", "vim-camelsnek", "camel-case-motion", "vim-edgemotion", "vim-sandwich", "treesitter-unit", "Nvimモーション"]
+    },
+    "fzf-integration": {
+      "name": "FZF Fuzzy Finder Integration",
+      "aliases": ["fzf", "fzf-vim", "peco", "fuzzy finder", "ファジーファインダー"]
+    },
+    "tmux-config": {
+      "name": "Tmux Configuration",
+      "aliases": ["tmux", "tmux.conf", "terminal multiplexer", "ターミナルマルチプレクサ"]
+    },
+    "git-config": {
+      "name": "Git Configuration",
+      "aliases": ["git", "gitconfig", "git-secrets", "delta", "ghq", "Git設定"]
+    },
+    "claude-code-hooks": {
+      "name": "Claude Code Hooks",
+      "aliases": ["hooks", "session-summarizer", "markdown-lint", "sandbox-auto-allow", "tmux-claude-status", "cleanup-short-sessions", "Claudeフック"]
+    },
+    "bin-scripts": {
+      "name": "Custom Utility Scripts",
+      "aliases": ["bin", "git helpers", "tmux helpers", "k8s helpers", "カスタムスクリプト"]
+    },
+    "chrome-extensions": {
+      "name": "Chrome Extension Configs",
+      "aliases": ["vimium", "ublock", "stylus", "uBlacklist", "siteBlock", "ブラウザ拡張機能"]
+    }
+  },
+  "procedures": {
+    "claude-code-skills": {
+      "name": "Claude Code Skills",
+      "aliases": ["skills", "agent-browser", "teammate-fullstack", "teammate-parallel-review", "teammate-parallel-research", "teammate-parallel-refactor", "teammate-hypothesis-debug", "Claudeスキル"]
+    },
+    "dotfiles-install": {
+      "name": "Dotfiles Installation System",
+      "aliases": ["install", "symlink", "setup", "update", "ドットファイルインストール"]
+    }
+  },
+  "concepts": {
+    "credential-management": {
+      "name": "Credential Management System",
+      "aliases": ["credentials", "GCM", "keychain", "bitwarden", "API keys", "認証情報管理"]
+    },
+    "agent-teams": {
+      "name": "Agent Teams Pattern",
+      "aliases": ["Agent Teams", "parallel agents", "TeamCreate", "teammate", "エージェントチーム"]
+    }
+  }
+}

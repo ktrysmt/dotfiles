@@ -460,13 +460,20 @@
     "clangd-lsp@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true
+    "typescript-lsp@claude-plugins-official": true,
+    "llmwiki@ktrysmt": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
       "source": {
         "source": "github",
         "repo": "anthropics/claude-plugins-official"
+      }
+    },
+    "ktrysmt": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/ktrysmt/claude-plugins.git"
       }
     }
   },
