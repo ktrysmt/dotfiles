@@ -50,7 +50,7 @@
     },
     "nvim-plugins-ui": {
       "name": "Neovim UI Plugins",
-      "aliases": ["lualine", "neo-tree", "hlchunk", "outline", "nvim-scrollbar", "pinecone", "readablefold", "guess-indent", "NvimUIプラグイン"]
+      "aliases": ["lualine", "neo-tree", "hlchunk", "outline", "nvim-scrollbar", "pinecone", "readablefold", "guess-indent", "yazi", "yazi.nvim", "NvimUIプラグイン"]
     },
     "nvim-plugins-editing": {
       "name": "Neovim Editing Plugins",

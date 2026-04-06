@@ -38,6 +38,10 @@ sources:
     source_type: secondary
     sha256: 4187068ed99015537064d7bdac08e9b3be4887a3913624003464b61e4e0aa2c0
     ingested: 2026-04-06
+  - path: /Users/dew/dotfiles/nvim/lua/plugins/yazi.lua
+    source_type: primary
+    sha256: 5a0ae36f14d7f30ad37c4e2740c74bb231818a874144292480247648320c4305
+    ingested: 2026-04-06
 related:
   - neovim-editor
   - nvim-lsp-completion
@@ -48,7 +52,7 @@ updated: 2026-04-06
 # Neovim UI Plugins
 
 ## Overview
-Visual and UI enhancement plugins for Neovim. Lualine provides a customized status line with gruvbox-material theme showing branch, diff, diagnostics, filename with path, and search count. Neo-tree is the file tree explorer with git status integration. Outline provides a sidebar for code structure via treesitter/LSP/ctags. Additional UI plugins handle code chunk highlighting, scrollbar with search results, fold visualization, and auto indent detection. Pinecone is the custom color scheme.
+Visual and UI enhancement plugins for Neovim. Lualine provides a customized status line with gruvbox-material theme showing branch, diff, diagnostics, filename with path, and search count. Neo-tree is the file tree explorer with git status integration. Yazi.nvim integrates the yazi terminal file manager with floating window support. Outline provides a sidebar for code structure via treesitter/LSP/ctags. Additional UI plugins handle code chunk highlighting, scrollbar with search results, fold visualization, and auto indent detection. Pinecone is the custom color scheme.
 
 ## Key Facts
 - lualine: gruvbox-material theme, shows branch/diff/diagnostics/filename/search count
@@ -59,6 +63,7 @@ Visual and UI enhancement plugins for Neovim. Lualine provides a customized stat
 - readablefold: improved fold display readability
 - guess-indent: auto-detect file indentation style
 - pinecone: custom color scheme with priority 1000
+- yazi.nvim: terminal file manager integration (mikavilpas/yazi.nvim); leader+e opens at current file, leader+cw opens at cwd; floating window at 95% scaling; depends on plenary.nvim
 - which-key (DISABLED): keybinding help menu replaced by key-menu
 
 ## Relations
@@ -77,6 +82,8 @@ Visual and UI enhancement plugins for Neovim. Lualine provides a customized stat
 | 2026-04-06 | nvim/lua/plugins/appearance.guess-indent.lua | primary |
 | 2026-04-06 | nvim/lua/plugins/pinecone-vim.lua | primary |
 | 2026-04-06 | nvim/lua/plugins/appearance.which-key.lua_bk | secondary |
+| 2026-04-06 | nvim/lua/plugins/yazi.lua | primary |
 
 ## Changelog
 - 2026-04-06: Initial creation from 9 UI/appearance plugin files
+- 2026-04-06: Added yazi.nvim file manager plugin

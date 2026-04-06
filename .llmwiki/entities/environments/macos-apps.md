@@ -32,7 +32,7 @@ sources:
     ingested: 2026-04-06
   - path: /Users/dew/dotfiles/mac/macgesture.txt
     source_type: secondary
-    sha256: cc25aa5f416f3226e4a8cd051c2ffaaa2f8b9a0e730e46843573650e4b7b54c9
+    sha256: 5586695e54adc936c0e528435a67473a277ac39ec92f75fb548df63e9b84e16b
     ingested: 2026-04-06
   - path: /Users/dew/dotfiles/mac/raycast/browser-debug.sh
     source_type: secondary
@@ -107,3 +107,4 @@ macOS-specific application configurations. Karabiner-Elements for keyboard remap
 
 ## Changelog
 - 2026-04-06: Initial creation from 14 macOS application config files
+- 2026-04-06: Updated macgesture.txt sha256 (SULastCheckTime and other app state changes)
