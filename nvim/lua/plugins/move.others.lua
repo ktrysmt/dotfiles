@@ -40,20 +40,11 @@ return {
     end
   },
   {
-    'mfussenegger/nvim-treehopper',
-    keys = {
-      { "m", mode = { "x", "o" } }, -- operator "'v', 'm' then select a label"
-    },
-    dependencies = {
-      "phaazon/hop.nvim"
-    },
-    config = function()
-      local l = { "1", "2", "3", "4", "5", "6", "7", "8", "9",
-        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-        "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" }
-      require("tsht").config.hint_keys = l
-      vim.keymap.set("o", "m", ":<C-U>lua require('tsht').nodes()<CR>", { remap = true, silent = true })
-      vim.keymap.set("x", "m", ":lua require('tsht').nodes()<CR>", { silent = true })
+    "https://github.com/atusy/treemonkey.nvim",
+    init = function()
+      vim.keymap.set({ "x", "o" }, "m", function()
+        require("treemonkey").select({ ignore_injections = false })
+      end)
     end
   },
   {
