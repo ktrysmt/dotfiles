@@ -5,5 +5,5 @@
 .config/vim/
 .ruff_cache
 __pycache__/
-claude/hooks/session_summarizer.log
+claude/hooks/session_summarizer.log*
 zsh/.keys
