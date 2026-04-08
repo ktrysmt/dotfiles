@@ -1,5 +1,5 @@
 return {
-  'norcalli/nvim-colorizer.lua',
+  'catgoose/nvim-colorizer.lua',
   event = { "CursorHold", "CursorMoved", "ModeChanged" },
   config = function()
     require 'colorizer'.setup({

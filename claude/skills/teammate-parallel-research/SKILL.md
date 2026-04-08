@@ -41,7 +41,7 @@ argument-hint: "<research topic>"
 
 調査軸間でMCPの重複使用を避け、コンテキスト効率を最大化する:
 - Researcher-A: Scite + Arxiv（学術系）
-- Researcher-B: Web Search + HackerNews + DeepWiki（実務系）
+- Researcher-B: Web Search + HackerNews
 - 重複が避けられない場合: 検索クエリを明示的に分離
 
 ## Layer 2: ロール設計

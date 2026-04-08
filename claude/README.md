@@ -1,7 +1,6 @@
 ```sh
 # user
 claude mcp add -s user -t http aws-docs https://knowledge-mcp.global.api.aws
-claude mcp add -s user -t http deepwiki https://mcp.deepwiki.com/mcp
 claude mcp add -s user -t http grep-github https://mcp.grep.app
 
 claude mcp add -s user mcp-think-as -- uv --directory "" run main.py

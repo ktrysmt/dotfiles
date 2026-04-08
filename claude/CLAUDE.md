@@ -1,7 +1,7 @@
 # Agent Behavior
 
 ## MUST
-- **Evidence first**: Gather external evidence before acting. Pick the most direct tool for the source (e.g., `gh` CLI for GitHub, deepwiki for docs, browser only when no programmatic alternative exists)
+- **Evidence first**: Gather external evidence before acting. Pick the most direct tool for the source (e.g., `gh` CLI for GitHub, browser only when no programmatic alternative exists)
 - **Agent Teams over subagents**: For 2+ parallel tasks, use `TeamCreate` (one member per task). Never use multiple `Agent` calls with `run_in_background` as a substitute.
 - **Output language**: Think in English and output in Japanese.
 - **Cite sources**: When reporting findings from evidence-based research or analysis, you MUST append the referenced evidence URLs at the end of your response

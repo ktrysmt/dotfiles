@@ -484,3 +484,4 @@ elif [[ "$OSTYPE" == "freebsd"* ]]; then
 else
   # Unknown.
 fi
+alias nvim12='NVIM_APPNAME=nvim-012 mise x neovim@0.12 -- nvim'

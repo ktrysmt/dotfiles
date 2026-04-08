@@ -284,7 +284,6 @@
       "Write(~/work/**)",
       "mcp__arxiv-mcp-server__*",
       "mcp__context7__*",
-      "mcp__deepwiki__*",
       "mcp__gemini-google-search__*",
       "mcp__mcp-think-as__*",
       "mcp__playwright__*",

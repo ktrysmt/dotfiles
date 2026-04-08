@@ -17,19 +17,6 @@ return {
     },
   },
   {
-    'David-Kunz/treesitter-unit',
-    keys = {
-      { "io", mode = { "x", "o" } },
-      { "ao", mode = { "x", "o" } },
-    },
-    config = function()
-      vim.keymap.set("x", "io", ':lua require"treesitter-unit".select()<cr>')
-      vim.keymap.set("o", "io", ':<c-u>lua require"treesitter-unit".select()<cr>')
-      vim.keymap.set("x", "ao", ':lua require"treesitter-unit".select(true)<cr>')
-      vim.keymap.set("o", "ao", ':<c-u>lua require"treesitter-unit".select(true)<cr>')
-    end
-  },
-  {
     url = 'https://codeberg.org/andyg/leap.nvim',
     keys = {
       { 'f', mode = { "n", "x", "o" } },
@@ -67,6 +54,13 @@ return {
       require("tsht").config.hint_keys = l
       vim.keymap.set("o", "m", ":<C-U>lua require('tsht').nodes()<CR>", { remap = true, silent = true })
       vim.keymap.set("x", "m", ":lua require('tsht').nodes()<CR>", { silent = true })
+    end
+  },
+  {
+    'andymass/vim-matchup',
+    event = 'BufReadPost',
+    init = function()
+      vim.g.matchup_matchparen_offscreen = { method = 'popup' }
     end
   }
 }
