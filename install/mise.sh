@@ -20,8 +20,11 @@ eval "$(mise activate bash)"
 mise trust ~/.config/mise/config.toml
 
 # Install all tools defined in config.toml
+# NOTE: npm tools may fail due to ~/.npmrc minimumReleaseAge; non-fatal to avoid blocking other tools
 log_info "Installing mise tools..."
-mise install --yes
+if ! mise install --yes; then
+  log_warn "Some mise tools failed to install (npm tools may fail due to minimumReleaseAge)"
+fi
 
 log_info "Clearing mise cache..."
 mise cache clear
