@@ -30,11 +30,15 @@ log_info "Clearing mise cache..."
 mise cache clear
 
 log_info "Updating mise tools..."
-mise up --yes
+if ! mise up --yes; then
+  log_warn "Some mise tools failed to update"
+fi
 
 # Remove tools not defined in any config
 log_info "Pruning unused mise tools..."
-mise prune --yes
+if ! mise prune --yes; then
+  log_warn "Some mise tools failed to prune"
+fi
 
 # Setup fzf key bindings (idempotent - checks if already installed)
 if [[ ! -f ~/.fzf.zsh ]]; then
