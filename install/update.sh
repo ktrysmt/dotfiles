@@ -71,6 +71,39 @@ step_sheldon() {
   fi
 }
 
+step_claude() {
+  log_info "=== Step: Claude Plugin Update ==="
+  if ! command -v claude &> /dev/null; then
+    log_warn "Claude CLI not found; skipping plugin update."
+    return 0
+  fi
+  if ! command -v jq &> /dev/null; then
+    log_warn "jq not found; skipping Claude plugin update."
+    return 0
+  fi
+
+  local settings="${DOTFILES_DIR}/claude/settings.json"
+  if [[ ! -f "$settings" ]]; then
+    log_warn "Claude settings.json not found; skipping."
+    return 0
+  fi
+
+  local plugins
+  plugins=$(jq -r '.enabledPlugins // {} | to_entries[] | select(.value == true) | .key' "$settings")
+
+  if [[ -z "$plugins" ]]; then
+    log_info "No enabled Claude plugins found."
+    return 0
+  fi
+
+  while IFS= read -r plugin; do
+    log_info "Updating Claude plugin: $plugin"
+    claude plugin update "$plugin" || log_warn "Failed to update: $plugin"
+  done <<< "$plugins"
+
+  log_success "Claude plugin update complete"
+}
+
 # ------------------------------------------------------------------------------
 # Main
 # ------------------------------------------------------------------------------
@@ -90,6 +123,7 @@ main() {
       step_os_specific
       step_post_install
       step_sheldon
+      step_claude
       ;;
     symlink)
       step_symlink
@@ -106,8 +140,11 @@ main() {
     post)
       step_post_install
       ;;
+    claude)
+      step_claude
+      ;;
     *)
-      echo "Usage: $0 [all|symlink|brew|mise|os|post]"
+      echo "Usage: $0 [all|symlink|brew|mise|os|post|claude]"
       exit 1
       ;;
   esac
