@@ -391,7 +391,7 @@ function trans() {
   fi
 
   prompt="Translate to ${target}. Output ONLY the translation, nothing else:"
-  result=$(echo "$text" | gemini -m gemini-2.5-flash-lite "$prompt" 2>&1)
+  result=$(printf '%s' "$text" | claude -p --model haiku --no-session-persistence "$prompt" 2>&1)
   printf '%s' "$result" | pbcopy
   printf '%s\n' "$result"
 }

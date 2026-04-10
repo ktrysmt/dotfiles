@@ -40,7 +40,6 @@ peco = "latest"
 
 # npm tools
 "npm:diff-so-fancy" = "latest"
-"npm:@google/gemini-cli" = "latest"
 "npm:pnpm" = "latest"
 "npm:memd-cli" = "latest"
 "npm:@devcontainers/cli" = "latest"
