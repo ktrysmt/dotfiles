@@ -396,6 +396,38 @@ function trans() {
   printf '%s\n' "$result"
 }
 
+function howto() {
+  local backend="claude"
+  while [[ "$1" == -* ]]; do
+    case "$1" in
+      -c|--codex)  backend="codex";  shift ;;
+      -g|--gemini) backend="gemini"; shift ;;
+      --claude)    backend="claude"; shift ;;
+      --) shift; break ;;
+      *) break ;;
+    esac
+  done
+
+  local text="${*:-$(cat)}"
+  local result
+  local prompt="Output ONLY a single shell one-liner for ${OSTYPE} (${SHELL##*/}) that accomplishes the task. No explanations, no markdown, no code fences, no comments, no trailing newline. Just the raw command. Task:"
+
+  case "$backend" in
+    claude)
+      result=$(printf '%s' "$text" | claude -p --model sonnet --no-session-persistence "$prompt" 2>&1)
+      ;;
+    codex)
+      result=$(codex exec --model gpt-5-mini --color never "${prompt} ${text}" 2>&1)
+      ;;
+    gemini)
+      result=$(printf '%s' "$text" | gemini -m gemini-2.5-flash -p "$prompt" 2>&1)
+      ;;
+  esac
+
+  printf '%s' "$result" | pbcopy
+  printf '%s\n' "$result"
+}
+
 # --------------
 # git worktree
 # --------------
