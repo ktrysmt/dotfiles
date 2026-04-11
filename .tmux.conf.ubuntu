@@ -17,6 +17,7 @@ bind -r L resize-pane -R 10
 
 #set-window-option -g monitor-activity on
 setw -g mode-keys vi
+set -g status-keys emacs
 bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
 bind-key -T copy-mode-vi v send-keys -X begin-selection
 
