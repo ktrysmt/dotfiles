@@ -6,13 +6,21 @@ return {
     { family = "PleckJP" },
   }),
   font_size = 16,
+  freetype_load_target = "Light",
+  freetype_render_target = "Normal",
+  front_end = "WebGpu",
   color_scheme = 'Ayu Mirage',
   --color_scheme = 'GruvboxDarkHard',
   --color_scheme = 'Gruvbox dark, pale (base16)',
   hide_tab_bar_if_only_one_tab = true,
   colors = {
     foreground = 'white',
-    background = 'black',
+    background = '#08090c',
+  },
+  foreground_text_hsb = {
+    hue = 1.0,
+    saturation = 1.0,
+    brightness = 1.1,
   },
   window_padding = {
     left = 4,
