@@ -78,12 +78,15 @@ tmux set-option -w -t "$window" pane-border-style 'fg=white,bg=black'
 # --- 4. Update window style ---
 if [ "$has_active" = true ]; then
   if [ "$has_notification" = true ]; then
-    tmux set-option -w -t "$window" window-status-style 'fg=yellow,bold'
+    color=yellow
   elif [ "$has_thinking" = true ]; then
-    tmux set-option -w -t "$window" window-status-style 'fg=blue,bold'
+    color=blue
   else
-    tmux set-option -w -t "$window" window-status-style 'fg=green,bold'
+    color=green
   fi
+  tmux set-option -w -t "$window" window-status-style "fg=${color},bold"
+  tmux set-option -w -t "$window" window-status-current-style "fg=${color},bold,reverse"
 else
   tmux set-option -wu -t "$window" window-status-style
+  tmux set-option -wu -t "$window" window-status-current-style
 fi

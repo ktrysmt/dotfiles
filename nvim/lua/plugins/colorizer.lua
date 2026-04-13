@@ -3,12 +3,17 @@ return {
   event = { "CursorHold", "CursorMoved", "ModeChanged" },
   config = function()
     require 'colorizer'.setup({
-      '*',
-      css = {
-        rgb_fn = true,
-        names = true,
-      },
-    }, { names = false })
+      filetypes = { "*" },
+      options = {
+        parsers = {
+          css = true,
+          css_fn = true,
+          names = {
+            enable = false,
+          }
+        }
+      }
+    })
     vim.cmd [[ColorizerAttachToBuffer]]
   end
 }

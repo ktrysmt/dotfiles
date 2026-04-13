@@ -31,6 +31,8 @@ bind h select-pane -L
 bind j select-pane -D
 bind k select-pane -U
 bind l select-pane -R
+# last window
+bind b last-window
 # unzen pane
 bind-key a run "tmux last-pane && tmux resize-pane -Z"
 # setup sub vert pane
@@ -88,7 +90,7 @@ set -g automatic-rename on
 set -g window-status-format         '#I:#{?#{m:#W,zsh},#(basename #{pane_current_path}),#W}#F'
 set -g window-status-current-format '#I:#{?#{m:#W,zsh},#(basename #{pane_current_path}),#W}#F'
 set -g window-status-style fg=colour248
-set -g window-status-current-style fg=white,underscore
+set -g window-status-current-style reverse,bold
 # set-window-option -g allow-rename off
 # set-window-option -g window-status-format " #I: #(basename $PWD) "
 # set-window-option -g window-status-current-format "#[fg=colour255,bg=colour27,bold] #I: #(${HOME}/dotfiles/bin/sh-echo-current-dir) #[default]"
