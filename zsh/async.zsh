@@ -98,6 +98,9 @@ alias vi="nvim"
 alias vim="nvim"
 alias vimf='nvim $(fzf)'
 alias vimdiff='nvim -d'
+
+alias nvim12='NVIM_APPNAME=nvim-012 mise x neovim@0.12 -- nvim'
+
 alias typora='open -a typora'
 alias rs='evcxr'
 alias glow="glow -t -l"
@@ -516,4 +519,3 @@ elif [[ "$OSTYPE" == "freebsd"* ]]; then
 else
   # Unknown.
 fi
-alias nvim12='NVIM_APPNAME=nvim-012 mise x neovim@0.12 -- nvim'
