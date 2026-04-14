@@ -17,7 +17,7 @@
   "format-on-save.nvim": { "branch": "main", "commit": "523256bd71543fd68184f67e82dc3cfd5092cf93" },
   "friendly-snippets": { "branch": "main", "commit": "6cd7280adead7f586db6fccbd15d2cac7e2188b9" },
   "fzf": { "branch": "master", "commit": "06e70570e2088605d61f18b127356e5680f7f599" },
-  "fzf-lua": { "branch": "main", "commit": "1e866cce085cc6df3d3e4fb59f00105fa84cef6c" },
+  "fzf-lua": { "branch": "main", "commit": "4be0a6923a64dc411489b57b77a6bf6f30404e66" },
   "fzf-mru.vim": { "branch": "master", "commit": "5b47c29e66d0546000b2988c4c9dca53f3134f35" },
   "fzf.vim": { "branch": "master", "commit": "b9624aa012ddcbae9e79964bfd30cc1fbe3cf263" },
   "gitsigns.nvim": { "branch": "main", "commit": "8d82c240f190fc33723d48c308ccc1ed8baad69d" },

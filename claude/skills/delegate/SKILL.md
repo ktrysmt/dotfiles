@@ -1,6 +1,6 @@
 ---
 name: delegate
-description: "tmux paneで独立タスクを委譲。「これを別paneでやって」「delegateして」「paneで並行してやって」等のとき使用。"
+description: "Delegate a task to an independent Claude Code session in a tmux pane"
 argument-hint: "<task description>"
 disable-model-invocation: true
 ---
@@ -11,53 +11,28 @@ Spawn an independent Claude Code session in a tmux right-vsplit pane to work on 
 
 ## Workflow
 
-### Step 1: Compose system prompt file
+### Step 1: Escape task string
 
-Summarize the current session's relevant context and write to `/tmp/claude-delegate-sys.md`:
+Set `ESCAPED_TASK` = `$ARGUMENTS` with all single quotes replaced: `'` -> `'\''`
 
-```markdown
-## Context from parent session
+### Step 2: Run tmux command
 
-- Project: {project name and purpose}
-- Key decisions: {relevant decisions made so far}
-- Relevant files: {file paths and their roles, if applicable}
-- Constraints: {any requirements or limitations}
-
-## Final output requirement
-
-When your task is complete, output the following summary as a fenced codeblock in chat:
-
-- What was accomplished
-- Files changed (with paths)
-- Unfinished items (if any)
-```
-
-Guidelines for context:
-- Keep it concise (under 30 lines)
-- Only include context relevant to the delegated task
-- Omit information the delegate does not need
-
-### Step 2: Launch tmux pane
-
-Build and execute a tmux command:
+Execute exactly:
 
 ```bash
-tmux split-window -h "claude --append-system-prompt-file /tmp/claude-delegate-sys.md '<TASK>'"
+tmux split-window -h "claude --continue --fork-session '${ESCAPED_TASK}'"
 ```
 
-Where `<TASK>` is `$ARGUMENTS` with single quotes escaped (`'` -> `'\''`).
+- `--continue` picks the most recent session in CWD (= the running session, since it is actively being written to)
+- `--fork-session` clones history into a new session ID, preventing interleave with the parent
 
-If `$ARGUMENTS` is very long (over 200 chars), write it to `/tmp/claude-delegate-task.md` and launch with:
+### Step 3: Report
 
-```bash
-tmux split-window -h -l 50% "claude --append-system-prompt-file /tmp/claude-delegate-sys.md \"\$(cat /tmp/claude-delegate-task.md)\""
+Print:
+
 ```
-
-### Step 3: Confirm launch
-
-After launching, report to the user:
-- The delegated task summary (1 line)
-- How to access the pane (`Ctrl-b + arrow key` or `tmux select-pane`)
+Delegated: <1-line task summary>
+```
 
 ## Constraints
 
@@ -66,4 +41,4 @@ After launching, report to the user:
 - Never use `-p` (print mode) -- delegate runs interactively
 - Never set up result reporting back to this session (no send-keys, no wait-for)
 - The delegate is fully independent once spawned
-- Do not add `--dangerously-skip-permissions` or `--permission-mode` flags
+- Do not add `--permission-mode` flags
