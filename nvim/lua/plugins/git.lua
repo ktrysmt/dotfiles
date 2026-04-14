@@ -26,6 +26,18 @@ return {
   {
     'tpope/vim-fugitive',
     event = { "CmdlineEnter", "CmdwinEnter" },
+    keys = {
+      { "<Leader>gb", function()
+        vim.cmd("!gh browse %")
+      end, mode = "n", desc = "gh browse current file" },
+    },
+    config = function()
+      -- Remove deprecated stub commands that clutter completion
+      local deprecated = { "Gbrowse", "Gdiff", "Gblame", "Gremove", "Gdelete", "Gmove", "Grename", "Gfetch", "Gpush", "Gpull" }
+      for _, cmd in ipairs(deprecated) do
+        pcall(vim.api.nvim_del_user_command, cmd)
+      end
+    end,
   },
   {
     'lewis6991/gitsigns.nvim',
