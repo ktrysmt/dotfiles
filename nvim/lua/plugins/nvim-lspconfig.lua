@@ -84,7 +84,7 @@ return {
         -- end
         vim.keymap.set('n', 'gv', jump_to_definition_vsplit, opts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-        vim.keymap.set('n', 'KK', vim.lsp.buf.hover, opts)
+        vim.keymap.set('n', 'gD', vim.lsp.buf.hover, opts)
         vim.keymap.set('n', 'I', vim.diagnostic.open_float, opts)
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
         -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
