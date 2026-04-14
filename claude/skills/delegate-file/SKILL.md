@@ -25,7 +25,7 @@ TASK_EOF
 Execute exactly:
 
 ```bash
-tmux split-window -h "claude --continue --fork-session 'Execute the delegated task.' --append-system-prompt-file '$TASK_FILE'; rm -f '$TASK_FILE'"
+tmux split-window -d -h "claude --continue --fork-session 'Execute the delegated task.' --append-system-prompt-file '$TASK_FILE'; rm -f '$TASK_FILE'"
 ```
 
 - `--continue` picks the most recent session in CWD
@@ -44,7 +44,7 @@ Delegated (file): <1-line task summary>
 
 ## Constraints
 
-- Always right vsplit (`split-window -h`)
+- Always right vsplit (`split-window -d -h`), keeping focus on the parent pane
 - One delegate at a time
 - Never use `-p` (print mode) -- delegate runs interactively
 - Never set up result reporting back to this session (no send-keys, no wait-for)

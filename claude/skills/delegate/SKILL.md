@@ -20,7 +20,7 @@ Set `ESCAPED_TASK` = `$ARGUMENTS` with all single quotes replaced: `'` -> `'\''`
 Execute exactly:
 
 ```bash
-tmux split-window -h "claude --continue --fork-session '${ESCAPED_TASK}'"
+tmux split-window -d -h "claude --continue --fork-session '${ESCAPED_TASK}'"
 ```
 
 - `--continue` picks the most recent session in CWD (= the running session, since it is actively being written to)
@@ -36,7 +36,7 @@ Delegated: <1-line task summary>
 
 ## Constraints
 
-- Always right vsplit (`split-window -h`)
+- Always right vsplit (`split-window -d -h`), keeping focus on the parent pane
 - One delegate at a time
 - Never use `-p` (print mode) -- delegate runs interactively
 - Never set up result reporting back to this session (no send-keys, no wait-for)
