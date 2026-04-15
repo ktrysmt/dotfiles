@@ -1,0 +1,11 @@
+#!/bin/sh
+
+WID="$(tmux display -p -F '#{window_id}')"
+[ -z "$WID" ] && exit 1
+
+printf 'Name: '
+IFS= read -r n
+[ -z "$n" ] && exit 0
+
+tmux rename-window -t "$WID" -- "$n"
+tmux set-option -w -t "$WID" @manual-rename 1

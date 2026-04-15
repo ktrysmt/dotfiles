@@ -16,6 +16,7 @@
   - Tooling: no specific tool, MCP, CLI command, or skill
   - Action type: research, implementation, analysis, or description not specified
   - Output format: delivery method unclear (e.g., temp file, API request, inline)
+- **Follow PR/Issue templates**: When creating a PR or Issue, check for `issue_template` and `pull_request_template` (in `.github/`, `docs/`, or repo root). If a template exists, follow its structure
 
 ## Never
 - **Delete files directly**: When a task requires file deletion, do NOT execute the deletion yourself. Instead, present the exact deletion command to the user and let them run it manually

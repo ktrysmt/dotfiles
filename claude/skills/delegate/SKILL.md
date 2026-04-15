@@ -7,38 +7,34 @@ disable-model-invocation: true
 
 # Delegate
 
-Spawn an independent Claude Code session in a tmux right-vsplit pane to work on a delegated task.
+Generate a self-contained task prompt from `$ARGUMENTS` and conversation history, then spawn a new independent Claude Code session in a tmux pane.
 
 ## Workflow
 
-### Step 1: Escape task string
+### Step 1: Generate a self-contained task prompt
 
-Set `ESCAPED_TASK` = `$ARGUMENTS` with all single quotes replaced: `'` -> `'\''`
+Synthesize a prompt from `$ARGUMENTS` and the conversation so far. The delegate session has NO prior context, so the prompt must be fully self-contained:
 
-### Step 2: Run tmux command
+- Goal: what to accomplish
+- Relevant file paths and line numbers
+- Key constraints, decisions, or context from the conversation that the delegate needs
+- Expected output or deliverable
+
+Keep it concise but sufficient -- include only what the delegate actually needs to act.
+
+### Step 2: Pipe task to claude-skill-delegate
 
 Execute exactly:
 
 ```bash
-tmux split-window -d -h "claude --continue --fork-session '${ESCAPED_TASK}'"
+cat <<'EOF' | ~/dotfiles/bin/claude-skill-delegate
+${GENERATED_PROMPT}
+EOF
 ```
 
-- `--continue` picks the most recent session in CWD (= the running session, since it is actively being written to)
-- `--fork-session` clones history into a new session ID, preventing interleave with the parent
-
-### Step 3: Report
-
-Print:
-
-```
-Delegated: <1-line task summary>
-```
+`claude-skill-delegate` starts a brand-new session (no `--continue`/`--fork-session`).
 
 ## Constraints
 
-- Always right vsplit (`split-window -d -h`), keeping focus on the parent pane
 - One delegate at a time
-- Never use `-p` (print mode) -- delegate runs interactively
-- Never set up result reporting back to this session (no send-keys, no wait-for)
-- The delegate is fully independent once spawned
-- Do not add `--permission-mode` flags
+- The delegate is fully independent once spawned -- never set up result reporting back to this session

@@ -43,7 +43,9 @@ bind-key a run "tmux last-pane && tmux resize-pane -Z"
 # setup sub vert pane
 bind-key v split-window -h -p 33 -c "#{pane_current_path}"
 # delegate task to claude code in a right-vsplit pane
-bind-key f command-prompt -p "Delegate:" "split-window -d -h -c '#{pane_current_path}' 'claude --continue --fork-session \"%%\"'"
+bind-key f display-popup -E -w 50% -h 50% -T ' Delegate ' -d '#{pane_current_path}' "~/dotfiles/bin/claude-tmux-delegate"
+# fork claude code session in a right-vsplit pane
+bind-key F split-window -h -p 33 -c "#{pane_current_path}" 'claude --continue --fork-session'
 
 # ---------
 # general
@@ -101,7 +103,7 @@ set -g window-status-current-format '#I:#W#F'
 set -g window-status-style fg=colour248
 set -g window-status-current-style reverse,bold
 bind 0 select-window -t '{end}'
-bind , command-prompt -I "#W" "rename-window -- '%%'; set-option -w @manual-rename 1"
+bind , display-popup -E -w 50 -h 3 -T ' Rename Window ' "~/dotfiles/bin/tmux-rename-window"
 # window switcher
 bind w display-popup -E -w 60% -h 60% \
        "tmux list-windows -F '#{window_index}: #{window_name} #{pane_current_command}' | \

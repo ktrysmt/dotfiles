@@ -39,7 +39,9 @@ bind-key a run "tmux last-pane && tmux resize-pane -Z"
 # bind-key v split-window -h -p 33 \; select-pane -L
 bind-key v split-window -h -p 33 -c "#{pane_current_path}"
 # delegate task to claude code in a right-vsplit pane
-bind-key f command-prompt -p "Delegate:" "split-window -d -h -c '#{pane_current_path}' 'claude --continue --fork-session \"%%\"'"
+bind-key f display-popup -E -w 50% -h 50% -T ' Delegate ' -d '#{pane_current_path}' "~/dotfiles/bin/claude-tmux-delegate"
+# fork claude code session in a right-vsplit pane
+bind-key F split-window -h -p 33 -c "#{pane_current_path}" 'claude --continue --fork-session'
 
 # ---------
 # general
@@ -93,6 +95,7 @@ set -g window-status-format         '#I:#{?#{m:#W,zsh},#(basename #{pane_current
 set -g window-status-current-format '#I:#{?#{m:#W,zsh},#(basename #{pane_current_path}),#W}#F'
 set -g window-status-style fg=colour248
 set -g window-status-current-style reverse,bold
+bind , display-popup -E -w 50 -h 3 -T ' Rename Window ' "~/dotfiles/bin/tmux-rename-window"
 # set-window-option -g allow-rename off
 # set-window-option -g window-status-format " #I: #(basename $PWD) "
 # set-window-option -g window-status-current-format "#[fg=colour255,bg=colour27,bold] #I: #(${HOME}/dotfiles/bin/sh-echo-current-dir) #[default]"
