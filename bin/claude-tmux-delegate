@@ -1,7 +1,11 @@
 #!/bin/bash
 
-printf "Task (Ctrl+D to send):\n"
-task=$(cat)
+tmpfile=$(mktemp /tmp/claude-delegate-XXXXXX)
+trap 'rm -f "$tmpfile"' EXIT
+
+${EDITOR:-vim} -c 'setfiletype markdown' "$tmpfile"
+
+task=$(cat "$tmpfile")
 [ -z "$task" ] && exit 0
 
 tmux set-environment -g __CLAUDE_DELEGATE_TASK "$task"
