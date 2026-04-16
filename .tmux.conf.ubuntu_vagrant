@@ -41,7 +41,7 @@ bind-key v split-window -h -p 33 -c "#{pane_current_path}"
 # delegate task to claude code in a right-vsplit pane
 bind-key f display-popup -E -w 50% -h 50% -T ' Delegate ' -d '#{pane_current_path}' "~/dotfiles/bin/claude-tmux-delegate"
 # fork claude code session in a right-vsplit pane
-bind-key F split-window -h -p 33 -c "#{pane_current_path}" 'claude --continue --fork-session'
+bind-key F split-window -h -p 33 -c "#{pane_current_path}" \; send-keys 'claude --continue --fork-session' Enter
 
 # ---------
 # general

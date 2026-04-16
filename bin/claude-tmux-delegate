@@ -3,11 +3,11 @@
 tmpfile=$(mktemp /tmp/claude-delegate-XXXXXX)
 trap 'rm -f "$tmpfile"' EXIT
 
-${EDITOR:-vim} -c 'setfiletype markdown' "$tmpfile"
+${EDITOR:-vim} -c 'setfiletype markdown' -c 'startinsert' "$tmpfile"
 
 task=$(cat "$tmpfile")
 [ -z "$task" ] && exit 0
 
 tmux set-environment -g __CLAUDE_DELEGATE_TASK "$task"
-tmux split-window -d -h -p 33 -c "$PWD" \
-  'claude --continue --fork-session "$__CLAUDE_DELEGATE_TASK"; tmux set-environment -gu __CLAUDE_DELEGATE_TASK'
+pane=$(tmux split-window -d -h -p 33 -c "$PWD" -P -F '#{pane_id}')
+tmux send-keys -t "$pane" 'claude --continue --fork-session "$__CLAUDE_DELEGATE_TASK"; tmux set-environment -gu __CLAUDE_DELEGATE_TASK' Enter
