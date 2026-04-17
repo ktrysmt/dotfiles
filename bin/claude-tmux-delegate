@@ -9,5 +9,5 @@ task=$(cat "$tmpfile")
 [ -z "$task" ] && exit 0
 
 tmux set-environment -g __CLAUDE_DELEGATE_TASK "$task"
-pane=$(tmux split-window -d -h -p 33 -c "$PWD" -P -F '#{pane_id}')
+pane=$(tmux split-window -d -h -p 45 -c "$PWD" -P -F '#{pane_id}')
 tmux send-keys -t "$pane" 'claude --continue --fork-session "$__CLAUDE_DELEGATE_TASK"; tmux set-environment -gu __CLAUDE_DELEGATE_TASK' Enter
