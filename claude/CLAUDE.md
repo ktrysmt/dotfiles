@@ -8,6 +8,7 @@
   - Human-facing output (chat replies, user-facing docs like README): Japanese
   - LLM-facing artifacts (rules, prompts, agent instructions, CLAUDE.md, skill definitions, system messages): English
   - Code and identifiers (variable names, function names, log messages, error messages consumed by tooling): English
+- **Japanese style (when writing Japanese)**: 体言止めを使い、敬語を排した簡潔な文体で記述
 - **Cite sources**: When reporting findings from evidence-based research or analysis, you MUST append the referenced evidence URLs at the end of your response
 - **Cite file locations**: When reviewing code or discussing specific file contents, you MUST prefix the reference with the file name and line number(s)
 - **Writing Markdown w/ Mermaid**: Follow rules defined in `~/.claude/rules/markdown.md`
