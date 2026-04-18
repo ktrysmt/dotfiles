@@ -100,7 +100,7 @@
   "procedures": {
     "claude-code-skills": {
       "name": "Claude Code Skills",
-      "aliases": ["skills", "agent-browser", "teammate-fullstack", "teammate-parallel-review", "teammate-parallel-research", "teammate-parallel-refactor", "teammate-hypothesis-debug", "Claudeスキル"]
+      "aliases": ["skills", "agent-browser", "teammate-fullstack", "teammate-parallel-review", "teammate-parallel-research", "teammate-parallel-refactor", "teammate-hypothesis-debug", "delegate", "github-to-notion", "claude-skill-delegate", "notion-mcp", "Claudeスキル"]
     },
     "dotfiles-install": {
       "name": "Dotfiles Installation System",

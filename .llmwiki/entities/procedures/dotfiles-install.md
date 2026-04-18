@@ -16,16 +16,16 @@ sources:
     ingested: 2026-04-06
   - path: /Users/dew/dotfiles/install/mise.sh
     source_type: primary
-    sha256: e52c614c4f6064137c9e230b0acce31333ef31760625e31e1b64041db10216d8
-    ingested: 2026-04-06
+    sha256: f691e6e9a85754da11a802785ec404b1d7f0b651f9b4ac942c3911c9d4f5f155
+    ingested: 2026-04-18
   - path: /Users/dew/dotfiles/install/post-install.sh
     source_type: primary
     sha256: d761d54c7a4cf9e502369b2ea67d775e7072f538a8b0dfca1d726cb294c39231
     ingested: 2026-04-06
   - path: /Users/dew/dotfiles/install/update.sh
     source_type: primary
-    sha256: 49b452f7ca1bc31b69a428c5abce701c48b0612ce284ef718a479223b63a6b16
-    ingested: 2026-04-06
+    sha256: 7ce38bff1ba486bb4d811cc4345258866cc80ce2f73c0a1945ff9d5e68c5070a
+    ingested: 2026-04-18
   - path: /Users/dew/dotfiles/install/mac/common.sh
     source_type: primary
     sha256: b5b4917d037210f71f7f5bdc50468915f19f0b49b128591a16eb57b97ec3347c
@@ -74,6 +74,14 @@ sources:
     source_type: secondary
     sha256: ce7e3913c380c82e4da6c19bbe4f1f857102318e4efae38800109f32523175a3
     ingested: 2026-04-06
+  - path: /Users/dew/dotfiles/.gitignore
+    source_type: secondary
+    sha256: ff8c92152a70f624832b3e991a3687dc575aa438a439b3d01c20226b7ff31b47
+    ingested: 2026-04-18
+  - path: /Users/dew/dotfiles/docs/overview.md
+    source_type: derived
+    sha256: 58e36140583d5c71a35bb0c53edeb13e3aa2d687e933cb464b8f286aaac06573
+    ingested: 2026-04-18
 related:
   - homebrew
   - mise-runtime
@@ -81,8 +89,9 @@ related:
   - zsh-shell
   - tmux-config
   - macos-apps
+  - claude-code-config
 created: 2026-04-06
-updated: 2026-04-06
+updated: 2026-04-18
 ---
 
 # Dotfiles Installation System
@@ -91,11 +100,15 @@ updated: 2026-04-06
 Idempotent installation system orchestrated by `install/update.sh`. Execution chain: symlink.sh -> brew.sh -> mise.sh -> OS-specific scripts -> post-install.sh -> sheldon cache rebuild. `lib.sh` provides shared helpers (link_file, ensure_dir, log_*) with automatic OS detection (mac/wsl/vagrant/ubuntu via uname). All scripts are safe to run multiple times without side effects.
 
 ## Key Facts
-- update.sh: master orchestrator running all install steps in order
+- update.sh: master orchestrator running all install steps in order; subcommands: all (default), symlink, brew, mise, os, post, claude [source: update.sh, primary, 2026-04-18]
+- update.sh step order for `all`: symlink -> brew -> mise -> os_specific -> post_install -> sheldon -> claude [source: update.sh, primary, 2026-04-18]
+- update.sh step_claude: reads `enabledPlugins` from claude/settings.json via jq, iterates entries where value==true, runs `claude plugin update <name>` for each; skipped when claude or jq unavailable [source: update.sh, primary, 2026-04-18]
+- update.sh step_sheldon: removes ~/.cache/sheldon.zsh, runs `sheldon lock --update`, regenerates cache via `sheldon source > ~/.cache/sheldon.zsh` [source: update.sh, primary, 2026-04-18]
+- update.sh step_os_specific: mac -> mac/common.sh; wsl -> ubuntu/common.sh + ubuntu/wsl.sh; vagrant -> ubuntu/common.sh + ubuntu/vagrant.sh; ubuntu -> ubuntu/common.sh + link .tmux.conf.ubuntu -> ~/.tmux.conf [source: update.sh, primary, 2026-04-18]
 - lib.sh: shared helpers with platform detection (Darwin=mac, microsoft=wsl, vagrant_box_build_time=vagrant, fallback=ubuntu)
 - symlink.sh: source of truth for all symlinks (shell, nvim, claude, mise, tools)
 - brew.sh: Homebrew bundle install per platform (common + platform-specific)
-- mise.sh: activate mise, set up fzf keybindings, install uv/Python globally
+- mise.sh: activate mise, trust ~/.config/mise/config.toml, run `mise install --yes` (non-fatal on npm failures due to ~/.npmrc minimumReleaseAge), `mise cache clear`, `mise up --yes`, `mise prune --yes`, fzf setup (when ~/.fzf.zsh missing), and Python 3.13 install/pin via `uv python install/pin --global` [source: mise.sh, primary, 2026-04-18]
 - post-install.sh: rustup, go install delve, git-secrets, pynvim via uv
 - mac/common.sh: macOS-specific common setup
 - mac/default.sh: macOS defaults write commands
@@ -105,6 +118,7 @@ Idempotent installation system orchestrated by `install/update.sh`. Execution ch
 - ubuntu/wsl.sh: WSL-specific setup (win32yank, wslu, sandbox-runtime)
 - All operations are idempotent
 - Also manages: .snippet, .ctags, .tigrc, .switch-proxy.osx, .codex/config.toml
+- .gitignore excludes: *.zwc, .DS_Store, .claude/*.lock, .config/vim/, .ruff_cache, __pycache__/, claude/hooks/session_summarizer.log*, zsh/.keys; `!.claude/` re-includes the .claude directory [source: .gitignore, secondary, 2026-04-18]
 
 ## Relations
 - [[homebrew]] -- brew.sh installs Homebrew packages
@@ -113,6 +127,7 @@ Idempotent installation system orchestrated by `install/update.sh`. Execution ch
 - [[zsh-shell]] -- Shell configs symlinked
 - [[tmux-config]] -- Tmux configs symlinked per platform
 - [[macos-apps]] -- macOS app configs symlinked
+- [[claude-code-config]] -- update.sh step_claude keeps enabled Claude plugins current
 
 ## Source Files
 | Date | File | Type |
@@ -120,9 +135,9 @@ Idempotent installation system orchestrated by `install/update.sh`. Execution ch
 | 2026-04-06 | install/symlink.sh | primary |
 | 2026-04-06 | install/lib.sh | primary |
 | 2026-04-06 | install/brew.sh | primary |
-| 2026-04-06 | install/mise.sh | primary |
+| 2026-04-18 | install/mise.sh | primary |
 | 2026-04-06 | install/post-install.sh | primary |
-| 2026-04-06 | install/update.sh | primary |
+| 2026-04-18 | install/update.sh | primary |
 | 2026-04-06 | install/mac/common.sh | primary |
 | 2026-04-06 | install/mac/default.sh | primary |
 | 2026-04-06 | install/mac/symlink.sh | primary |
@@ -135,6 +150,9 @@ Idempotent installation system orchestrated by `install/update.sh`. Execution ch
 | 2026-04-06 | .tigrc | secondary |
 | 2026-04-06 | .switch-proxy.osx | secondary |
 | 2026-04-06 | .codex/config.toml | secondary |
+| 2026-04-18 | .gitignore | secondary |
+| 2026-04-18 | docs/overview.md | derived |
 
 ## Changelog
 - 2026-04-06: Initial creation from 18 installation and configuration files
+- 2026-04-18: update.sh gained step_claude (plugin updater via jq), step_sheldon (cache regen), and `claude` subcommand; mise.sh gained `mise cache clear`, `mise up --yes`, `mise prune --yes`, and `uv python install 3.13` + `uv python pin --global 3.13`; added [[claude-code-config]] relation; registered .gitignore as secondary source and docs/overview.md as derived synthesis (generated 2026-04-06 from 27 llmwiki entities)

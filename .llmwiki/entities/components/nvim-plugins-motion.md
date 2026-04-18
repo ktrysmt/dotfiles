@@ -18,6 +18,7 @@ sources:
     source_type: primary
     sha256: de1449dade8934d9537f7ed346ff491de5cf63efdcd3540c356cd39ca1461b15
     ingested: 2026-04-06
+    status: missing
   - path: /Users/dew/dotfiles/nvim/lua/plugins/vim-expand-region.lua
     source_type: primary
     sha256: 0e263f5d3e8ea5e5e05feb4981e2c15fed966f30e38b5e3b8e3813173c614b7b
@@ -34,28 +35,32 @@ sources:
     source_type: primary
     sha256: dc9440cd71dd2c7424d751d8264ad5af970e0fb94f716ccc3f3ea6f422b380b3
     ingested: 2026-04-06
+  - path: /Users/dew/dotfiles/nvim/lua/plugins/move.others.lua
+    source_type: primary
+    sha256: 61ee8cbdc38c1ce1b510c831ec41bf0c7840b226287a6a42d03b611fe56a77bd
+    ingested: 2026-04-18
 related:
   - neovim-editor
   - nvim-lsp-completion
 created: 2026-04-06
-updated: 2026-04-06
+updated: 2026-04-18
 ---
 
 # Neovim Motion and Text Object Plugins
 
 ## Overview
-Motion and text object plugins enabling fast navigation and smart text selection. EasyMotion provides label-based character jumping (leader: semicolon). CamelCase motion treats camelCase as multiple words. Edge motion jumps to line boundaries. Treesitter-unit enables syntax-aware text objects. Vim-expand-region provides incremental selection. Additional plugins: vim-asterisk (search stay-in-place), vim-abolish/vim-camelsnek (case coercion), plus bundled leap, treehopper, vim-sandwich, and vim-niceblock.
+Motion and text object plugins enabling fast navigation and smart text selection. EasyMotion provides label-based character jumping (leader: semicolon). CamelCase motion treats camelCase as multiple words. Edge motion jumps to line boundaries. Vim-expand-region provides incremental selection. Additional plugins: vim-asterisk (search stay-in-place), vim-abolish/vim-camelsnek (case coercion), plus move.others.lua which bundles vim-sandwich, vim-niceblock, leap.nvim (codeberg mirror), treemonkey, and vim-matchup.
 
 ## Key Facts
 - vim-easymotion: leader ; (semicolon); labels: hjklasdfgyuiopqwertnmzxcvb
 - camel-case-motion: w b e ge for CamelCase-aware word motion
 - vim-edgemotion: gj (down edge), gk (up edge)
-- treesitter-unit: io (inner), ao (outer) in visual/operator modes
+- treesitter-unit: file disappeared on 2026-04-18; historical keys io (inner), ao (outer) in visual/operator modes [source: treesitter-unit.lua, primary, 2026-04-06]
 - vim-expand-region: v (expand), V (shrink) in visual mode
 - vim-asterisk: * # g* g# with keeppos (cursor stays in place)
 - vim-abolish: crs (snake_case), crc (camelCase), crk (kebab-case), cru (UPPER), crm (Mixed)
 - vim-camelsnek: Pascal, Camel, Kebab, Snake, Snakecaps, Snek, Screm commands
-- Bundled: leap (f/F character jump), treehopper (m for treesitter node hop), vim-sandwich (sa/sr/sd surround), vim-niceblock (ip/ap block selection)
+- move.others.lua bundles: vim-sandwich (sa/sr/sd surround + ib/is visual text objects), vim-niceblock (ip/ap in x/o modes), leap.nvim from codeberg.org/andyg/leap.nvim with case_sensitive=false and custom labels 1-9+a-z plus `<space>` as prev_target, treemonkey.nvim (`m` in x/o modes, ignore_injections=false), vim-matchup (BufReadPost, matchparen_offscreen via popup) [source: move.others.lua, primary, 2026-04-18]
 
 ## Relations
 - [[neovim-editor]] -- Core editor providing keymaps
@@ -67,11 +72,13 @@ Motion and text object plugins enabling fast navigation and smart text selection
 | 2026-04-06 | nvim/lua/plugins/move.vim-easymotion.lua | primary |
 | 2026-04-06 | nvim/lua/plugins/move.camel-case-motion.lua | primary |
 | 2026-04-06 | nvim/lua/plugins/move.edge-motion.lua | primary |
-| 2026-04-06 | nvim/lua/plugins/treesitter-unit.lua | primary |
+| 2026-04-06 | nvim/lua/plugins/treesitter-unit.lua | primary (source disappeared 2026-04-18) |
 | 2026-04-06 | nvim/lua/plugins/vim-expand-region.lua | primary |
 | 2026-04-06 | nvim/lua/plugins/vim-asterisk.lua | primary |
 | 2026-04-06 | nvim/lua/plugins/vim-abolish.lua | primary |
 | 2026-04-06 | nvim/lua/plugins/vim-camelsnek.lua | primary |
+| 2026-04-18 | nvim/lua/plugins/move.others.lua | primary |
 
 ## Changelog
 - 2026-04-06: Initial creation from 8 motion/text object plugin files
+- 2026-04-18: Added move.others.lua bundling vim-sandwich, vim-niceblock, leap.nvim (codeberg mirror), treemonkey, vim-matchup; treesitter-unit.lua source disappeared (retained as historical reference)

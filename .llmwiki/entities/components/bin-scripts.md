@@ -62,12 +62,25 @@ sources:
     source_type: secondary
     sha256: deba6e1c6318881f3098bad44a4be438fe7b0fa65bb0810b61cf771603793453
     ingested: 2026-04-06
+  - path: /Users/dew/dotfiles/bin/claude-skill-delegate
+    source_type: primary
+    sha256: afc3b4336cb9512a10eebabd7580d7eaf807d486755f6d5eb1e6f51eab3ec000
+    ingested: 2026-04-18
+  - path: /Users/dew/dotfiles/bin/claude-tmux-delegate
+    source_type: primary
+    sha256: f3e8510600651fe6d9bf27562f91f34b4a979ba62f6b2fba12f899152855fa63
+    ingested: 2026-04-18
+  - path: /Users/dew/dotfiles/bin/tmux-rename-window
+    source_type: primary
+    sha256: 83c5523c7d59e2b75be13ac3ec2295d4c5cc22f3f0e7c185e3adcf0673fad10b
+    ingested: 2026-04-18
 related:
   - git-config
   - tmux-config
   - claude-code-config
+  - claude-code-skills
 created: 2026-04-06
-updated: 2026-04-06
+updated: 2026-04-18
 ---
 
 # Custom Utility Scripts
@@ -91,11 +104,15 @@ Collection of custom utility scripts in `bin/` directory covering git helpers, t
 - 256to24bit.py: RGB color conversion (8-bit to 24-bit)
 - termcolor.pl: terminal ANSI color code generator
 - claude-review-loop.sh: iterative Claude Code review wrapper
+- claude-skill-delegate: spawns a new Claude Code session in a right-split tmux pane (45% width) with task piped via stdin and passed through `__CLAUDE_DELEGATE_TASK` tmux env var; fresh session (no --continue/--fork-session) [source: claude-skill-delegate, primary, 2026-04-18]
+- claude-tmux-delegate: interactive variant -- opens $EDITOR (default vim) on a markdown tempfile for task authoring, then launches `claude --continue --fork-session` in a right-split pane [source: claude-tmux-delegate, primary, 2026-04-18]
+- tmux-rename-window: prompts for a window name on stdin and sets `@manual-rename=1` window option so automated renamers skip the window [source: tmux-rename-window, primary, 2026-04-18]
 
 ## Relations
 - [[git-config]] -- Git helper scripts complement git configuration
-- [[tmux-config]] -- tmux-pane-border and tsk for tmux integration
+- [[tmux-config]] -- tmux-pane-border, tsk, tmux-rename-window, and claude-*-delegate integrate with tmux
 - [[claude-code-config]] -- claude-review-loop.sh for Claude Code workflows
+- [[claude-code-skills]] -- delegate skill invokes claude-skill-delegate
 
 ## Source Files
 | Date | File | Type |
@@ -115,6 +132,10 @@ Collection of custom utility scripts in `bin/` directory covering git helpers, t
 | 2026-04-06 | bin/256to24bit.py | secondary |
 | 2026-04-06 | bin/termcolor.pl | secondary |
 | 2026-04-06 | bin/claude-review-loop.sh | secondary |
+| 2026-04-18 | bin/claude-skill-delegate | primary |
+| 2026-04-18 | bin/claude-tmux-delegate | primary |
+| 2026-04-18 | bin/tmux-rename-window | primary |
 
 ## Changelog
 - 2026-04-06: Initial creation from 15 utility scripts
+- 2026-04-18: Added 3 new scripts: claude-skill-delegate (stdin-driven fresh Claude session in tmux pane), claude-tmux-delegate (editor-driven forked-session variant), tmux-rename-window (manual window rename with @manual-rename lock); added [[claude-code-skills]] bidirectional relation

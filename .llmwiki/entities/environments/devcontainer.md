@@ -50,8 +50,9 @@ related:
   - claude-code-config
   - dotfiles-install
   - mcp-servers
+  - claude-code-hooks
 created: 2026-04-06
-updated: 2026-04-06
+updated: 2026-04-18
 ---
 
 # DevContainer Environment
@@ -75,6 +76,7 @@ Docker-based isolated development environment (sandbox) for Claude Code. Multi-a
 - [[claude-code-config]] -- Claude Code configured inside devcontainer
 - [[dotfiles-install]] -- Devcontainer as alternative deployment target
 - [[mcp-servers]] -- MCP servers set up via setup-claude.sh
+- [[claude-code-hooks]] -- tmux-window-claude-status.sh falls back to TCP relay inside devcontainer
 
 ## Source Files
 | Date | File | Type |
@@ -93,3 +95,4 @@ Docker-based isolated development environment (sandbox) for Claude Code. Multi-a
 
 ## Changelog
 - 2026-04-06: Initial creation from 11 devcontainer and Docker files
+- 2026-04-18: Added bidirectional relation to claude-code-hooks (tmux status hook has devcontainer TCP relay)

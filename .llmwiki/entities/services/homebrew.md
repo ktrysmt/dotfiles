@@ -4,8 +4,8 @@ category: services
 sources:
   - path: /Users/dew/dotfiles/Brewfile.common
     source_type: primary
-    sha256: 3758e80a61c591bd9982aeffe5c78c9307fe77b56e2fd02b2276a021a5bc8313
-    ingested: 2026-04-06
+    sha256: 0af0a2d5f33cb37640c434cb89d8b0094e0db02fb253fe84627f35d7a7641465
+    ingested: 2026-04-18
   - path: /Users/dew/dotfiles/Brewfile.mac
     source_type: primary
     sha256: d3947bcb00d52f43eb29dfeff40ae57cf9b273dc0bff47d5c3b3474b5fc2e38e
@@ -24,7 +24,7 @@ related:
   - zsh-shell
   - macos-apps
 created: 2026-04-06
-updated: 2026-04-06
+updated: 2026-04-18
 ---
 
 # Homebrew Package Manager
@@ -33,7 +33,7 @@ updated: 2026-04-06
 Package manager for macOS and Linux managing system dependencies via Brewfile manifests. Three Brewfile variants: common (cross-platform formulae), mac (macOS-specific casks), and ubuntu (Linux formulae). Installation orchestrated by `install/brew.sh`. PATH configuration handled in `.zshenv` with Apple Silicon and Intel detection.
 
 ## Key Facts
-- Brewfile.common: tig, csvlens, tree, watch, universal-ctags, hyperfine, dufs, git-secrets, and more
+- Brewfile.common: coreutils, curl, git, tree, watch, wget, csvlens, tmux, tree-sitter-cli (core system tools); fzy, git-secrets, llvm, nkf, tig, universal-ctags, hyperfine, dufs (development tools not in mise); mise itself [source: Brewfile.common, primary, 2026-04-18]
 - Brewfile.mac: casks for karabiner-elements, rectangle, raycast, wezterm, linearmouse, alt-tab, clibor, macgesture, wordservice, iterm2
 - Brewfile.ubuntu: Linux-specific formulae
 - install/brew.sh: orchestrates brew bundle install per platform
@@ -48,10 +48,11 @@ Package manager for macOS and Linux managing system dependencies via Brewfile ma
 ## Source Files
 | Date | File | Type |
 |---|---|---|
-| 2026-04-06 | Brewfile.common | primary |
+| 2026-04-18 | Brewfile.common | primary |
 | 2026-04-06 | Brewfile.mac | primary |
 | 2026-04-06 | Brewfile.ubuntu | primary |
 | 2026-04-06 | install/brew.sh | primary |
 
 ## Changelog
 - 2026-04-06: Initial creation from 3 Brewfiles and install/brew.sh
+- 2026-04-18: Brewfile.common reorganized into "Core system tools", "Development tools (not available in mise)", and "mise itself" sections with explicit comments

@@ -32,8 +32,8 @@ sources:
     ingested: 2026-04-06
   - path: /Users/dew/dotfiles/mac/macgesture.txt
     source_type: secondary
-    sha256: 5586695e54adc936c0e528435a67473a277ac39ec92f75fb548df63e9b84e16b
-    ingested: 2026-04-06
+    sha256: 8b33ebaeff692c40cf3d3b64ad9c8fd5916859c7efdb989a80b3e0b7de6e4898
+    ingested: 2026-04-18
   - path: /Users/dew/dotfiles/mac/raycast/browser-debug.sh
     source_type: secondary
     sha256: 5a898b427647aa2509dc4c882ac64ea72e70b38f8f0d7ad7bc25d733af280853
@@ -44,8 +44,8 @@ sources:
     ingested: 2026-04-06
   - path: /Users/dew/dotfiles/mac/wezterm.lua
     source_type: primary
-    sha256: 53a27be813c77eaabd676f85a7aebfe8aa107ccaf7111a6a76b33e2aceecad26
-    ingested: 2026-04-06
+    sha256: 5cc97b2b651ded8c9fc581b7b331d25d9907c5bba7b4cd2419ed3523531f5bc6
+    ingested: 2026-04-18
   - path: /Users/dew/dotfiles/mac/readme.md
     source_type: secondary
     sha256: 072da01d51165c46d1eba38bda2c7fc607029b3e2e29206fb88deb7f39a06ac5
@@ -64,7 +64,7 @@ related:
   - chrome-extensions
   - windows-apps
 created: 2026-04-06
-updated: 2026-04-06
+updated: 2026-04-18
 ---
 
 # macOS Application Configs
@@ -78,8 +78,8 @@ macOS-specific application configurations. Karabiner-Elements for keyboard remap
 - iTerm2: plist config, custom itermkeymap, Google IME key map
 - LinearMouse: disable mouse acceleration; config at ~/.config/linearmouse/linearmouse.json
 - Raycast: custom scripts (browser-debug.sh, trans.sh); stored in ~/Library/Application Support/com.raycast.macos/
-- WezTerm: GPU-accelerated terminal; Lua configuration (mac/wezterm.lua)
-- MacGesture: trackpad gesture recognition config
+- WezTerm: GPU-accelerated terminal; Lua configuration at mac/wezterm.lua; font PleckJP @16pt, freetype Light/Normal, WebGpu front-end, color scheme Ayu Mirage, background #08090c, scrollback 99999, use_ime=true, macos_forward_to_ime_modifier_mask=SHIFT|CTRL; keys Alt+v (Paste), Ctrl+Shift+f (ToggleFullScreen), Shift+Enter -> META+Enter [source: wezterm.lua, primary, 2026-04-18]
+- MacGesture: trackpad gesture recognition config (plist)
 
 ## Relations
 - [[homebrew]] -- macOS casks installed via Brewfile.mac
@@ -97,10 +97,10 @@ macOS-specific application configurations. Karabiner-Elements for keyboard remap
 | 2026-04-06 | mac/customized.itermkeymap | primary |
 | 2026-04-06 | mac/google_imekey_map.txt | secondary |
 | 2026-04-06 | mac/linearmouse/linearmouse.json | primary |
-| 2026-04-06 | mac/macgesture.txt | secondary |
+| 2026-04-18 | mac/macgesture.txt | secondary |
 | 2026-04-06 | mac/raycast/browser-debug.sh | secondary |
 | 2026-04-06 | mac/raycast/trans.sh | secondary |
-| 2026-04-06 | mac/wezterm.lua | primary |
+| 2026-04-18 | mac/wezterm.lua | primary |
 | 2026-04-06 | mac/readme.md | secondary |
 | 2026-04-06 | mac/linearmouse/README.md | secondary |
 | 2026-04-06 | mac/raycast/README.md | secondary |
@@ -108,3 +108,4 @@ macOS-specific application configurations. Karabiner-Elements for keyboard remap
 ## Changelog
 - 2026-04-06: Initial creation from 14 macOS application config files
 - 2026-04-06: Updated macgesture.txt sha256 (SULastCheckTime and other app state changes)
+- 2026-04-18: wezterm.lua details captured (font PleckJP, Ayu Mirage, WebGpu, key bindings); macgesture.txt sha refreshed (plist state update)

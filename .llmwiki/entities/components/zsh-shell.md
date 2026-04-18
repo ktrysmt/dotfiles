@@ -16,8 +16,8 @@ sources:
     ingested: 2026-04-06
   - path: /Users/dew/dotfiles/zsh/async.zsh
     source_type: primary
-    sha256: 947c2c34e38d1c297a966a955b1f67fd3ffa667971c3648e94de6788c12dc010
-    ingested: 2026-04-06
+    sha256: e38579a8cbcfccc45eedb155500cb6c1382d288e952fe02634dff8b9d1bec0c3
+    ingested: 2026-04-18
   - path: /Users/dew/dotfiles/zsh/gcm.zsh
     source_type: secondary
     sha256: 771eee3c62371ccd424a81855b16de00937154a4409c57922e998b9dd7bea444
@@ -43,7 +43,7 @@ related:
   - mise-runtime
   - homebrew
 created: 2026-04-06
-updated: 2026-04-06
+updated: 2026-04-18
 ---
 
 # Zsh Shell Configuration
@@ -59,7 +59,8 @@ Zsh shell configuration system split into synchronous (blocking) and asynchronou
 - History: 100K entries, extended timestamps, multi-session sharing, duplicate suppression
 - Git aliases: gd, gp, gl, gs, gca, gc, gdd, gds, gdt, gdw, glogg, glogo, grebase
 - Kubernetes aliases: k, kg, kgp, kd, krm, klo, kex, kns, kctx
-- Custom functions: powered_cd (directory history), peco-select-snippet, gwa/gwflush (git worktree), trans (Gemini translation), dc (devcontainer)
+- Custom functions: powered_cd (directory history with stale-entry cleanup via `$ZSH_TAC_CMD` fallback), peco-select-snippet, gwa/gwflush (git worktree; gwflush prunes merged feature-* branches), trans (translates via `claude -p --model haiku --no-session-persistence`; ASCII->Japanese, multi-byte->English), howto (one-liner generation via claude/codex/gemini backends), dc (devcontainer up + exec with TMUX/TMUX_PANE env propagation), _tmux_auto_rename + _tmux_initial_rename (rename window to `basename $PWD`, skips when @manual-rename=1 or @saved-window-name set), sheldon wrapper (clears ~/.cache/sheldon.zsh on lock/add/remove), mml/mmh/pmm (memd markdown preview helpers) [source: async.zsh, primary, 2026-04-18]
+- bindkey: `^v` inserts `$(gss | fzf | awk '{print $2}')`; ` ` (space) triggers expand-alias ZLE widget that expands global aliases with a `@@` placeholder cursor-position marker [source: async.zsh, primary, 2026-04-18]
 - Lazy completions: kubectl, helm, eksctl, kind, gh, pnpm
 - Theme: catppuccin-mocha (MEMD_THEME)
 - Global aliases for pipeline: G (grep), L (less), H (head), T (tail), S (sort), W (wc)
@@ -83,7 +84,7 @@ Zsh shell configuration system split into synchronous (blocking) and asynchronou
 | 2026-04-06 | .zshenv | primary |
 | 2026-04-06 | .zshrc | primary |
 | 2026-04-06 | zsh/sync.zsh | primary |
-| 2026-04-06 | zsh/async.zsh | primary |
+| 2026-04-18 | zsh/async.zsh | primary |
 | 2026-04-06 | zsh/gcm.zsh | secondary |
 | 2026-04-06 | zsh/osx.zsh | secondary |
 | 2026-04-06 | zsh/btw.zsh_bk | secondary |
@@ -91,3 +92,4 @@ Zsh shell configuration system split into synchronous (blocking) and asynchronou
 
 ## Changelog
 - 2026-04-06: Initial creation from 8 shell configuration files
+- 2026-04-18: async.zsh gained howto function (claude/codex/gemini backends), sheldon wrapper that invalidates cache on lock/add/remove, dc devcontainer function, refactored powered_cd stale-entry cleanup, global-alias space-expand widget with `@@` cursor placeholder, and explicit @manual-rename / @saved-window-name skip logic in _tmux_auto_rename

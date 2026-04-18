@@ -48,8 +48,32 @@ sources:
     ingested: 2026-04-06
   - path: /Users/dew/dotfiles/nvim/lazy-lock.json
     source_type: secondary
-    sha256: b50e421c5377ef0e83abfa0acc466ff21cdd0103958dd4f9007f4cbc4f4bb66e
-    ingested: 2026-04-06
+    sha256: b191e2eddbec10e6d1405b068e1681accf66e3bf8fa9b098f00be8a719be4d28
+    ingested: 2026-04-18
+  - path: /Users/dew/dotfiles/nvim/lua/plugins/dap.lua_bk
+    source_type: secondary
+    sha256: 246dbcac9ca3b1d4141efc733c2fad76307977528d5cb232845154247f387f49
+    ingested: 2026-04-18
+  - path: /Users/dew/dotfiles/nvim/lua/plugins/dropbar.lua_bk
+    source_type: secondary
+    sha256: 68e645e50664d8c52a92c3172ab058c1fc7b74956bee447409fe50f79609dde2
+    ingested: 2026-04-18
+  - path: /Users/dew/dotfiles/nvim/lua/plugins/mason.lua_bk
+    source_type: secondary
+    sha256: f6bf90d10f5e6f902c4b7dd5ab688f3a62820cf488911e4decd887bfa1485e85
+    ingested: 2026-04-18
+  - path: /Users/dew/dotfiles/nvim/lua/plugins/mini-files.lua_bk
+    source_type: secondary
+    sha256: efa893bc3c489190841f08dd3e12527d964036f46d6c8d14c8dcb3715bed7c20
+    ingested: 2026-04-18
+  - path: /Users/dew/dotfiles/nvim/lua/plugins/oil.lua_bk
+    source_type: secondary
+    sha256: c6051a1ad234cf0e5e64225adc9b28590801c0e8bce513830411c5f3e61a1917
+    ingested: 2026-04-18
+  - path: /Users/dew/dotfiles/nvim/lua/plugins/smart-splits.lua_bk
+    source_type: secondary
+    sha256: 9da95a72330862f8f2252334e4e2f8895c7106aac5c9e4afebdf0dd7afe0718e
+    ingested: 2026-04-18
 related:
   - nvim-lsp-completion
   - nvim-plugins-ui
@@ -60,7 +84,7 @@ related:
   - nvim-plugins-motion
   - fzf-integration
 created: 2026-04-06
-updated: 2026-04-06
+updated: 2026-04-18
 ---
 
 # Neovim Editor Configuration
@@ -84,6 +108,7 @@ Neovim configuration using lazy.nvim as plugin manager. Entry point is `init.lua
 - Autocommands: trailing whitespace trim, paste mode off, quickfix auto-window, terminal insert mode
 - Undo: persistent undo stored in ~/.cache/nvim/undofile
 - ~50 active plugins, 12 disabled (_bk suffix)
+- Tracked disabled backups (_bk): dap (debugging), dropbar (winbar), mason (superseded by lazy-loaded mason in nvim-lspconfig.lua), mini-files, oil (file manager alternatives), smart-splits [source: dap.lua_bk/dropbar.lua_bk/mason.lua_bk/mini-files.lua_bk/oil.lua_bk/smart-splits.lua_bk, secondary, 2026-04-18]
 
 ## Relations
 - [[nvim-lsp-completion]] -- LSP, Treesitter, and completion system
@@ -109,7 +134,14 @@ Neovim configuration using lazy.nvim as plugin manager. Entry point is `init.lua
 | 2026-04-06 | nvim/local.nvim/lua/local/checkhealth.lua | secondary |
 | 2026-04-06 | nvim/local.nvim/lua/local/clipboard.lua | primary |
 | 2026-04-06 | nvim/local.nvim/lua/local/command.lua | primary |
-| 2026-04-06 | nvim/lazy-lock.json | secondary |
+| 2026-04-18 | nvim/lazy-lock.json | secondary |
+| 2026-04-18 | nvim/lua/plugins/dap.lua_bk | secondary |
+| 2026-04-18 | nvim/lua/plugins/dropbar.lua_bk | secondary |
+| 2026-04-18 | nvim/lua/plugins/mason.lua_bk | secondary |
+| 2026-04-18 | nvim/lua/plugins/mini-files.lua_bk | secondary |
+| 2026-04-18 | nvim/lua/plugins/oil.lua_bk | secondary |
+| 2026-04-18 | nvim/lua/plugins/smart-splits.lua_bk | secondary |
 
 ## Changelog
 - 2026-04-06: Initial creation from 12 Neovim configuration files
+- 2026-04-18: lazy-lock.json updated (plugin versions); registered 6 disabled `_bk` backup files as secondary sources (dap, dropbar, mason, mini-files, oil, smart-splits) to eliminate orphan-file lint

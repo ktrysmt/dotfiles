@@ -20,16 +20,16 @@ sources:
     ingested: 2026-04-06
   - path: /Users/dew/dotfiles/nvim/lua/plugins/lexima.lua
     source_type: primary
-    sha256: c9b35512675ed121a1cecdce9d2515bcf1600b94496002c45093f934fcd68ca0
-    ingested: 2026-04-06
+    sha256: c4541827d140ecb9d8069b172dd49da775db4644449c426d9716359876d56c4c
+    ingested: 2026-04-18
   - path: /Users/dew/dotfiles/nvim/lua/plugins/sort.lua
     source_type: primary
     sha256: 5cb18463c1bc9f0b1e16b5340335a3b2535ccc05397c66732ef8d0431189cd4e
     ingested: 2026-04-06
   - path: /Users/dew/dotfiles/nvim/lua/plugins/colorizer.lua
     source_type: primary
-    sha256: 49f989b231ccd13d037c3a42e6077668bb53b5d20afd9f14a79b04076bbba539
-    ingested: 2026-04-06
+    sha256: 6e1096af1a64859bdde52abd11a197ae4dc8b2712f07afbd24bc19e6108f716d
+    ingested: 2026-04-18
   - path: /Users/dew/dotfiles/nvim/lua/plugins/stickybuf.lua
     source_type: primary
     sha256: 3868c2aef736f6be685386dbd865339c02fad5582d8da88c169a4d9a4c644170
@@ -79,7 +79,7 @@ related:
   - nvim-lsp-completion
   - nvim-plugins-ui
 created: 2026-04-06
-updated: 2026-04-06
+updated: 2026-04-18
 ---
 
 # Neovim Editing Plugins
@@ -92,9 +92,9 @@ Editing enhancement plugins covering formatting, linting, commenting, smart brac
 - nvim-lint: eslint when node_modules/.bin/eslint exists; triggers BufWritePre
 - comment: gcc (normal), gb (visual) for comment toggling
 - dial: C-a/C-x for numbers, dates, booleans, logical operators, case conversion
-- lexima: smart brackets + LeximaAlterCommand (rg->Rg, lz->Lazy, dv->DiffviewOpen)
+- lexima: smart brackets + LeximaAlterCommand alias framework (rg->Rg, lz->Lazy, dv/dvc/dvh->Diffview*, g/gp/gb->Git*, oi->Oil, o/or/oa/oq->Octo*, %s/s->s/\v, ww->w !, rr->r !, sortu->Sort u, mdf column; gbr invokes `$MY_BROWSER $(gh browse -n %)` when env set, else `gh browse %`) [source: lexima.lua, primary, 2026-04-18]
 - sort: :Sort command for line sorting
-- colorizer: inline color preview for hex/rgb
+- colorizer: catgoose/nvim-colorizer.lua; css/css_fn parsers enabled, CSS names disabled; filetypes="*"; ColorizerAttachToBuffer on config [source: colorizer.lua, primary, 2026-04-18]
 - stickybuf: terminal buffer pinning; <leader>t (new), <leader>vt (vsplit), <leader>T (tab)
 - linediff-vim: visual line diff with <Leader>li
 - mini-align: text alignment with live preview
@@ -118,9 +118,9 @@ Editing enhancement plugins covering formatting, linting, commenting, smart brac
 | 2026-04-06 | nvim/lua/plugins/nvim-lint.lua | primary |
 | 2026-04-06 | nvim/lua/plugins/comment.lua | primary |
 | 2026-04-06 | nvim/lua/plugins/dial.lua | primary |
-| 2026-04-06 | nvim/lua/plugins/lexima.lua | primary |
+| 2026-04-18 | nvim/lua/plugins/lexima.lua | primary |
 | 2026-04-06 | nvim/lua/plugins/sort.lua | primary |
-| 2026-04-06 | nvim/lua/plugins/colorizer.lua | primary |
+| 2026-04-18 | nvim/lua/plugins/colorizer.lua | primary |
 | 2026-04-06 | nvim/lua/plugins/stickybuf.lua | primary |
 | 2026-04-06 | nvim/lua/plugins/linediff-vim.lua | primary |
 | 2026-04-06 | nvim/lua/plugins/mini-align.lua | primary |
@@ -135,3 +135,4 @@ Editing enhancement plugins covering formatting, linting, commenting, smart brac
 
 ## Changelog
 - 2026-04-06: Initial creation from 18 editing plugin files
+- 2026-04-18: colorizer.lua switched to catgoose/nvim-colorizer.lua with css parsers enabled and names disabled; lexima.lua added Octo/Oil/Diffview/Git aliases, `gbr` browser command with shell-escaped $MY_BROWSER support
