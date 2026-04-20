@@ -112,6 +112,17 @@ bind , display-popup -E -w 50 -h 3 -T ' Rename Window ' "~/dotfiles/bin/tmux-ren
 set -g pane-active-border-style fg=blue,fg=black,bg=cyan
 set -g pane-border-style fg=colour023,fg=white,bg=black
 
+# Highlight pane border when in copy-mode (active pane only)
+set-hook -g pane-mode-changed 'if -F "#{pane_in_mode}" \
+  "set -w pane-active-border-style fg=black,bg=yellow" \
+  "set -w pane-active-border-style fg=blue,fg=black,bg=cyan"'
+set-hook -g after-select-pane 'if -F "#{pane_in_mode}" \
+  "set -w pane-active-border-style fg=black,bg=yellow" \
+  "set -w pane-active-border-style fg=blue,fg=black,bg=cyan"'
+set-hook -g after-select-window 'if -F "#{pane_in_mode}" \
+  "set -w pane-active-border-style fg=black,bg=yellow" \
+  "set -w pane-active-border-style fg=blue,fg=black,bg=cyan"'
+
 # --------------
 # mouse
 # --------------

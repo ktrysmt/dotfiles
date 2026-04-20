@@ -25,7 +25,7 @@ bind-key -T copy-mode-vi y send-keys -X copy-pipe "pbcopy"
 bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-no-clear "bash -c 'content=$(cat); [ -n \"$content\" ] && echo -n \"$content\" | pbcopy'"
 bind-key -T copy-mode-vi p send-keys -X cancel \; run "pbpaste | tmux load-buffer - && tmux paste-buffer"
 bind-key -T copy-mode-vi M-v send-keys -X cancel \; run "pbpaste | tmux load-buffer - && tmux paste-buffer"
-bind-key -T root M-v run "pbpaste | tmux load-buffer - && tmux paste-buffer"
+# bind-key -T root M-v run "pbpaste | tmux load-buffer - && tmux paste-buffer"
 
 bind 'C' new-window -c "#{pane_current_path}" -n "#{b:pane_current_path}";
 bind '%' split-window -h -c "#{pane_current_path}";
@@ -121,6 +121,23 @@ bind w display-popup -E -w 60% -h 60% \
 # --------------
 set -g pane-active-border-style fg=blue,fg=black,bg=cyan
 set -g pane-border-style fg=colour023,fg=white,bg=black
+
+# Highlight pane border when in copy-mode (active pane only)
+set-hook -g pane-mode-changed 'if -F "#{pane_in_mode}" \
+  "set -w pane-active-border-style fg=black,bg=yellow" \
+  "set -w pane-active-border-style fg=blue,fg=black,bg=cyan"'
+set-hook -g after-select-pane 'if -F "#{pane_in_mode}" \
+  "set -w pane-active-border-style fg=black,bg=yellow" \
+  "set -w pane-active-border-style fg=blue,fg=black,bg=cyan"'
+set-hook -g after-select-window 'if -F "#{pane_in_mode}" \
+  "set -w pane-active-border-style fg=black,bg=yellow" \
+  "set -w pane-active-border-style fg=blue,fg=black,bg=cyan"'
+set-hook -ga after-split-window 'if -F "#{pane_in_mode}" \
+  "set -w pane-active-border-style fg=black,bg=yellow" \
+  "set -w pane-active-border-style fg=blue,fg=black,bg=cyan"'
+set-hook -g window-pane-changed 'if -F "#{pane_in_mode}" \
+  "set -w pane-active-border-style fg=black,bg=yellow" \
+  "set -w pane-active-border-style fg=blue,fg=black,bg=cyan"'
 
 # --------------
 # mouse
