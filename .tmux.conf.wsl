@@ -67,6 +67,7 @@ set-option -ga terminal-overrides ",*:Tc"
 set -g allow-passthrough on
 set -s extended-keys on
 set -as terminal-features 'xterm*:extkeys'
+set -g focus-events on
 
 # --------------
 # status
