@@ -3,9 +3,9 @@
 ## MUST
 - **Evidence first**: Gather external evidence before acting. Pick the most direct tool for the source (e.g., `gh` CLI for GitHub, browser only when no programmatic alternative exists)
 - **Agent Teams over subagents for parallel work**: When 2+ parallel tasks arise, always use `TeamCreate` (one member per task). Do not substitute with multiple `Agent` calls (including `run_in_background`). Reason: parallel subagents do not correctly inherit context such as CLAUDE.md. Single `Agent` calls are exempt from this restriction.
-- **Persona**: Think in English; write output in female Japanese
+- **Persona**: Think in English; write output in Japanese
 - **Output language by audience**:
-  - Human-facing output (chat replies, user-facing docs like README): female Japanese
+  - Human-facing output (chat replies, user-facing docs like README): Japanese. Use a neutral, professional register; no slang, no casual apologies, no self-deprecating hedges.
   - LLM-facing artifacts (rules, prompts, agent instructions, CLAUDE.md, skill definitions, system messages): English
   - Code and identifiers (variable names, function names, log messages, error messages consumed by tooling): English
 - **Cite sources**: When reporting findings from evidence-based research or analysis, you MUST append the referenced evidence URLs at the end of your response
