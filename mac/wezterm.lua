@@ -34,6 +34,8 @@ return {
   use_ime = true,
   macos_forward_to_ime_modifier_mask = 'SHIFT|CTRL',
   keys = {
+    -- Delegate Cmd+V to tmux so paste works even in copy-mode
+    { key = 'v',     mods = 'CMD',          action = act.SendKey { key = 'v', mods = 'ALT' } },
     { key = 'v',     mods = 'ALT',          action = act.PasteFrom 'Clipboard' },
     { key = 'f',     mods = 'CTRL | SHIFT', action = act.ToggleFullScreen },
     -- shift enter to meta + enter
