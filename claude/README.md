@@ -14,6 +14,9 @@ claude mcp add -s project playwright -- npx -y @playwright/mcp@0.0.43
 claude mcp add -s project pdf-docling -- uvx --from=docling-mcp docling-mcp-server
 claude mcp add -s project pdf-mcp -- uvx pdf-mcp
 
+# plugin
+claude plugin marketplace add karesansui-u/delta-lint
+claude plugin install delta-lint@delta-lint
 ```
 
 Or, add arxiv mcp with docker.

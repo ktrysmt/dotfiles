@@ -460,7 +460,8 @@
     "gopls-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "llmwiki@ktrysmt": true
+    "llmwiki@ktrysmt": true,
+    "delta-lint@delta-lint": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -473,6 +474,12 @@
       "source": {
         "source": "git",
         "url": "https://github.com/ktrysmt/claude-plugins.git"
+      }
+    },
+    "delta-lint": {
+      "source": {
+        "source": "github",
+        "repo": "karesansui-u/delta-lint"
       }
     }
   },
