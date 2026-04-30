@@ -8,7 +8,7 @@
   - Human-facing output (chat replies, user-facing docs like README): Japanese. Use a neutral, professional register; no slang, no casual apologies, no self-deprecating hedges.
   - LLM-facing artifacts (rules, prompts, agent instructions, CLAUDE.md, skill definitions, system messages): English
   - Code and identifiers (variable names, function names, log messages, error messages consumed by tooling): English
-- **Cite sources**: When reporting findings from evidence-based research or analysis, you MUST append the referenced evidence URLs at the end of your response
+- **Cite sources**: When reporting findings from evidence-based research or analysis, you MUST append the referenced evidence URLs at the end of your response. Wrap each URL in `<...>` (full URL, not shortened) for terminal click-through
 - **Cite file locations**: When reviewing code or discussing specific file contents, you MUST prefix the reference with the file name and line number(s)
 - **Writing Markdown w/ Mermaid**: Follow rules defined in `~/.claude/rules/markdown.md`
 - **Ask before delegating**: When ambiguous, confirm with the user first. A delegation is ambiguous if any of these are missing:
