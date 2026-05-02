@@ -22,6 +22,11 @@ fi
 # mise
 path=("$HOME/.local/bin" "$HOME/.local/share/mise/shims" $path)
 
+# rancher desktop
+if [[ -d "$HOME/.rd/bin" ]]; then
+  path=("$HOME/.rd/bin" $path)
+fi
+
 
 # zmodload zsh/zprof
 # zsh -i -c 'zmodload zsh/zprof; source ~/.zshenv; source ~/.zshrc; zprof'
