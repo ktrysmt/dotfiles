@@ -44,6 +44,29 @@ setup_sandbox() {
 }
 
 # ------------------------------------------------------------------------------
+# im-select.exe (IME switcher on Windows, called from Neovim/WSL)
+# ------------------------------------------------------------------------------
+setup_im_select() {
+  local target_dir="/mnt/c/tools"
+  local target="${target_dir}/im-select.exe"
+  local url="https://github.com/daipeihust/im-select/raw/master/im-select-win/out/x64/im-select.exe"
+
+  if [[ -f "$target" ]]; then
+    log_success "im-select.exe already installed: $target"
+    return 0
+  fi
+
+  log_info "Installing im-select.exe to ${target}..."
+  mkdir -p "$target_dir"
+  if curl -fsSL -o "$target" "$url"; then
+    log_success "Installed im-select.exe"
+  else
+    log_error "Failed to download im-select.exe from ${url}"
+    return 1
+  fi
+}
+
+# ------------------------------------------------------------------------------
 # Symlinks
 # ------------------------------------------------------------------------------
 setup_symlinks() {
@@ -112,6 +135,7 @@ main() {
   setup_wslu
   setup_mise_tools
   setup_symlinks
+  setup_im_select
   setup_private_zshrc
 
   log_success "WSL specific setup complete"

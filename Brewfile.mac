@@ -12,6 +12,7 @@ brew "trash"
 brew "zsh"
 brew "aws-vault"
 brew "jj"
+brew "daipeihust/tap/im-select"
 
 # Casks (GUI applications)
 cask_args appdir: "/Applications"
