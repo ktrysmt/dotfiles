@@ -85,6 +85,36 @@ setup_neovim() {
 }
 
 # ------------------------------------------------------------------------------
+# gh CLI extensions
+# ------------------------------------------------------------------------------
+setup_gh_extensions() {
+  log_info "Setting up gh extensions..."
+
+  if ! has_command gh; then
+    log_warn "gh not installed, skipping gh extensions"
+    return 0
+  fi
+
+  local extensions=(
+    "ktrysmt/gh-reva"
+  )
+
+  local installed
+  installed="$(gh extension list 2> /dev/null || true)"
+
+  for repo in "${extensions[@]}"; do
+    local name="${repo##*/}"
+    if grep -q "$repo" <<< "$installed"; then
+      gh extension upgrade "${name#gh-}" || log_warn "Failed to upgrade: $name"
+    else
+      gh extension install "$repo" || log_warn "Failed to install: $repo"
+    fi
+  done
+
+  log_success "gh extensions setup complete"
+}
+
+# ------------------------------------------------------------------------------
 # Main
 # ------------------------------------------------------------------------------
 main() {
@@ -92,6 +122,7 @@ main() {
   setup_rust
   setup_go
   setup_neovim
+  setup_gh_extensions
 
   log_success "Post-installation complete"
 }
