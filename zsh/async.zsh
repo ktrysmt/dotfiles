@@ -79,6 +79,7 @@ alias delta='delta --syntax-theme zenburn'
 
 # claude
 alias cl='claude'
+alias clc='claude -c'
 
 
 # k8s
