@@ -17,6 +17,10 @@ return {
       ring = {
         history_length = 500,
         storage = 'sqlite',
+        sync_with_numbered_registers = true,
+      },
+      system_clipboard = {
+        sync_with_ring = true,
       },
       highlight = {
         on_put = false,
