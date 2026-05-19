@@ -65,7 +65,7 @@ return {
       local escaped = vim.fn.shellescape(my_browser)
       vim.cmd(string.format([[LeximaAlterCommand gbr !%s<space>$(gh<space>browse<space>-n<space>%%)]], escaped))
     else
-      vim.cmd [[LeximaAlterCommand gbr !gh<space>browse<space>%]]
+      vim.cmd [[LeximaAlterCommand gbr\%[owse] !gh<space>browse<space>%]]
     end
   end
 }
