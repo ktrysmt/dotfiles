@@ -44,19 +44,28 @@ return {
       end
     end
 
+    local function put(plug)
+      return function()
+        sync_system_clipboard_to_ring()
+        local prefix = ""
+        if vim.v.register == "" or vim.v.register == '"' then
+          prefix = '"' .. require("yanky.utils").get_default_register()
+        end
+        vim.api.nvim_feedkeys(
+          prefix .. vim.api.nvim_replace_termcodes(plug, true, false, true),
+          "m",
+          false
+        )
+      end
+    end
+
     vim.keymap.set({ "n" }, "<leader>y", "<cmd>YankyRingHistory<cr>", { silent = true })
     vim.keymap.set({ "n" }, "<c-n>", "<Plug>(YankyCycleForward)")
     vim.keymap.set({ "n" }, "<c-p>", "<Plug>(YankyCycleBackward)")
 
     vim.keymap.set({ "n", "v" }, "y", "<Plug>(YankyYank)")
-    vim.keymap.set({ "n", "v" }, "p", function()
-      sync_system_clipboard_to_ring()
-      return "<Plug>(YankyPutAfter)"
-    end, { expr = true, remap = true })
-    vim.keymap.set({ "n", "v" }, "P", function()
-      sync_system_clipboard_to_ring()
-      return "<Plug>(YankyPutBefore)"
-    end, { expr = true, remap = true })
+    vim.keymap.set({ "n", "x" }, "p", put("<Plug>(YankyPutAfter)"))
+    vim.keymap.set({ "n", "x" }, "P", put("<Plug>(YankyPutBefore)"))
     -- vim.keymap.set({ "n", "v" }, "p", "<Plug>(YankyGPutAfter)")
     -- vim.keymap.set({ "n", "v" }, "P", "<Plug>(YankyGPutBefore)")
     -- vim.keymap.set({ "n", "v" }, "gp", "<Plug>(YankyGPutAfter)")
