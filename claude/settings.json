@@ -472,7 +472,9 @@
     "lua-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "llmwiki@ktrysmt": true,
-    "delta-lint@delta-lint": true
+    "delta-lint@delta-lint": true,
+    "codex@openai-codex": true,
+    "security-guidance@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -491,6 +493,12 @@
       "source": {
         "source": "github",
         "repo": "karesansui-u/delta-lint"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
       }
     }
   },
