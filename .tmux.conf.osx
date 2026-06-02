@@ -157,7 +157,7 @@ bind-key -T edit-mode-vi WheelDownPane send-keys -X scroll-down
 # --------------
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
-set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'ktrysmt/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-open'
 
 set -g @resurrect-save 'M-w'

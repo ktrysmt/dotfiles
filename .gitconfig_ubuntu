@@ -5,6 +5,7 @@
 [core]
 	excludesfile = ~/.gitignore_global
   quotepath = false
+  logAllRefUpdates = true
 
 [user]
   email = kotaro.yoshimatsu@gmail.com
