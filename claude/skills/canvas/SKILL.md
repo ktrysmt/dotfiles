@@ -22,7 +22,7 @@ Use a canvas when the answer is data-dense or spatial and markdown would force l
 
 1. Gather the real data first (run the queries/commands/reads you need). Never invent numbers to fill a chart — show only values you actually have, and label gaps.
 2. Pick a layout: a header (title + one-line context + generation date), a row of stat cards for headline numbers, then sections (tables, charts, diagrams). Arrange non-linearly — most important block top-left.
-3. Decide the output path. Default: `./<slug>.canvas.html` in the current working directory, where `<slug>` is a short kebab-case name of the topic. Compute a timestamp with `date '+%Y-%m-%d %H:%M'` for the header (script context cannot call Date.now()). If writing into a git repo the user may not want tracked, mention the path so they can gitignore it.
+3. Decide the output path. Default: `/tmp/canvas/<slug>.canvas.html`, where `<slug>` is a short kebab-case name of the topic. These files are write-once / read-once scratch artifacts, so they live outside the repo. Run `mkdir -p /tmp/canvas` before writing. Compute a timestamp with `date '+%Y-%m-%d %H:%M'` for the header (script context cannot call Date.now()).
 4. Write the file by adapting the scaffold below — keep its CSS design system, replace the content.
 5. Open it: macOS `open <file>`, Linux `xdg-open <file>`. Opening a local file is safe; do it without asking. Then tell the user the absolute path.
 6. Iterate in place: when the user asks for changes, Read the file and Edit it rather than regenerating from scratch.
