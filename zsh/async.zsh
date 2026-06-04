@@ -435,15 +435,52 @@ function howto() {
 # --------------
 # git worktree
 # --------------
+# gwa <name> [extra git-worktree-add args]
+# Create a worktree on a NEW branch <name> based on the latest remote default
+# branch, place it alongside sibling worktrees, then cd in and uv sync.
+# Works for both bare-repo and normal-repo worktree layouts.
 function gwa() {
-  git worktree add "$@" && {
-    cd "$1" && {
-      if [[ -e uv.lock ]]; then
-        uv sync
-        source .venv/bin/activate
-      fi
-    }
-  };
+  emulate -L zsh
+  local name="$1"
+  if [[ -z "$name" ]]; then
+    echo "usage: gwa <name> [git-worktree-add-args...]" >&2
+    return 1
+  fi
+  shift
+
+  # Resolve the directory under which worktrees live.
+  local common parent
+  common="$(git rev-parse --git-common-dir 2>/dev/null)" || {
+    echo "gwa: not a git repository" >&2
+    return 1
+  }
+  if [[ "$(git rev-parse --is-bare-repository 2>/dev/null)" == "true" ]]; then
+    parent="${common:a}"                       # bare repo: worktrees sit under the bare dir
+  else
+    parent="$PWD"                              # normal repo: create under the current directory
+  fi
+
+  # Always start from the latest remote default branch.
+  git fetch origin || return 1
+  local base
+  base="$(git symbolic-ref -q --short refs/remotes/origin/HEAD)"
+  if [[ -z "$base" ]]; then
+    if git show-ref -q --verify refs/remotes/origin/main; then
+      base="origin/main"
+    elif git show-ref -q --verify refs/remotes/origin/master; then
+      base="origin/master"
+    else
+      echo "gwa: cannot determine remote default branch" >&2
+      return 1
+    fi
+  fi
+
+  git worktree add -b "$name" "$parent/$name" "$base" "$@" || return 1
+
+  cd "$parent/$name" || return 1
+  if [[ -e uv.lock ]]; then
+    uv sync && source .venv/bin/activate
+  fi
 }
 function gwflush() {
   local dry_run=false
