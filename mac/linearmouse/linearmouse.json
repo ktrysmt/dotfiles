@@ -146,6 +146,103 @@
       }
     },
     {
+      "buttons" : {
+        "mappings" : [
+          {
+            "action" : {
+              "keyPress" : [
+                "arrowLeft"
+              ]
+            },
+            "button" : 3,
+            "command" : false,
+            "control" : false,
+            "option" : false,
+            "shift" : false
+          },
+          {
+            "action" : {
+              "keyPress" : [
+                "arrowRight"
+              ]
+            },
+            "button" : 4,
+            "command" : false,
+            "control" : false,
+            "option" : false,
+            "shift" : false
+          }
+        ]
+      },
+      "if" : {
+        "app" : "com.yacreader.YACReader",
+        "device" : {
+          "category" : "mouse",
+          "productID" : "0x27da",
+          "productName" : "Karabiner DriverKit VirtualHIDPointing 1.8.0",
+          "serialNumber" : "pqrs.org:Karabiner-DriverKit-VirtualHIDPointing",
+          "vendorID" : "0x16c0"
+        }
+      },
+      "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "distance" : {
+          "vertical" : "36px"
+        },
+        "speed" : {
+          "vertical" : 0
+        }
+      }
+    },
+    {
+      "if" : {
+        "app" : "com.SequentialX.Sequential",
+        "device" : {
+          "category" : "mouse",
+          "productID" : "0x27da",
+          "productName" : "Karabiner DriverKit VirtualHIDPointing 1.8.0",
+          "serialNumber" : "pqrs.org:Karabiner-DriverKit-VirtualHIDPointing",
+          "vendorID" : "0x16c0"
+        }
+      },
+      "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "distance" : {
+          "vertical" : "104.7px"
+        },
+        "speed" : {
+          "vertical" : 0
+        }
+      }
+    },
+    {
+      "if" : {
+        "app" : "com.ToWatchList.SimpleComic",
+        "device" : {
+          "category" : "mouse",
+          "productID" : "0x27da",
+          "productName" : "Karabiner DriverKit VirtualHIDPointing 1.8.0",
+          "serialNumber" : "pqrs.org:Karabiner-DriverKit-VirtualHIDPointing",
+          "vendorID" : "0x16c0"
+        }
+      },
+      "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "distance" : {
+          "vertical" : 3
+        },
+        "speed" : {
+          "vertical" : 0
+        }
+      }
+    },
+    {
       "if" : {
         "app" : "jp.coo.cooViewer",
         "device" : {
@@ -169,6 +266,54 @@
         "speed" : {
           "vertical" : 0
         }
+      }
+    },
+    {
+      "buttons" : {
+        "mappings" : [
+          {
+            "action" : {
+              "keyPress" : [
+                "arrowRight"
+              ]
+            },
+            "command" : false,
+            "control" : false,
+            "option" : false,
+            "scroll" : "down",
+            "shift" : false
+          },
+          {
+            "action" : {
+              "keyPress" : [
+                "arrowLeft"
+              ]
+            },
+            "command" : false,
+            "control" : false,
+            "option" : false,
+            "scroll" : "up",
+            "shift" : false
+          }
+        ]
+      },
+      "if" : {
+        "app" : "com.dmng.CoverZip",
+        "device" : {
+          "category" : "mouse",
+          "productID" : "0x27da",
+          "productName" : "Karabiner DriverKit VirtualHIDPointing 1.8.0",
+          "serialNumber" : "pqrs.org:Karabiner-DriverKit-VirtualHIDPointing",
+          "vendorID" : "0x16c0"
+        }
+      },
+      "scrolling" : {
+        "acceleration" : 1,
+        "distance" : {
+          "horizontal" : "36px",
+          "vertical" : "128px"
+        },
+        "speed" : 0
       }
     },
     {
