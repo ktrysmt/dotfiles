@@ -510,6 +510,6 @@
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
-  "skipDangerousModePermissionPrompt": true,
-  "tui": "default"
+  "tui": "default",
+  "skipDangerousModePermissionPrompt": true
 }
