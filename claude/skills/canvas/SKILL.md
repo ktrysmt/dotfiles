@@ -2,8 +2,13 @@
 name: canvas
 description: Render analysis, dashboards, audits, reports, comparisons, or architecture diagrams as a single self-contained HTML file (inline SVG charts + CSS, no React, no CDN, works offline) instead of a wall of markdown, then open it in the browser. Triggers: "/canvas", "canvas", "キャンバス", "ダッシュボード", "dashboard", "図解して", "可視化して", "グラフィカルに", "visualize", "make it visual", "render as a page", "レポートにして", or when a result is data-dense (multi-source metrics, table comparisons, dependency/architecture maps, PR review summaries, eval results) and markdown would be hard to scan.
 model: sonnet
-context: fork
 ---
+
+<!-- NOTE: Do NOT add `context: fork` here. This skill visualizes the CURRENT conversation's
+     result (the analysis/findings/metrics already produced above). A forked subagent has NO
+     access to the conversation history (per Claude Code docs), so it would have no data to
+     render and would go hunting the filesystem for unrelated "review"/"findings" files.
+     Keep this skill running inline so it sees the conversation. -->
 
 Produce a graphical, interactive view of a result as ONE self-contained HTML file, then open it. This is the Claude Code analogue of Cursor's Canvas — but the artifact is a portable HTML page, not a React app.
 
@@ -20,7 +25,7 @@ Use a canvas when the answer is data-dense or spatial and markdown would force l
 
 ## Workflow
 
-1. Gather the real data first (run the queries/commands/reads you need). Never invent numbers to fill a chart — show only values you actually have, and label gaps.
+1. The data to visualize is **the current conversation's result** — the analysis, findings, metrics, or comparison already produced above. Use that as the primary source. Do NOT search the filesystem or read unrelated files (e.g. old session summaries / other reviews) to "find" the data; it is already in this conversation. Run a query/command/read ONLY to fill a specific, identified gap in the data this task is about. If the data you need is genuinely not present in the conversation, ask the user rather than guessing or substituting a different file's contents. Never invent numbers to fill a chart — show only values you actually have, and label gaps.
 2. Pick a layout: a header (title + one-line context + generation date), a row of stat cards for headline numbers, then sections (tables, charts, diagrams). Arrange non-linearly — most important block top-left.
 3. Decide the output path. Default: `/tmp/canvas/<slug>.canvas.html`, where `<slug>` is a short kebab-case name of the topic. These files are write-once / read-once scratch artifacts, so they live outside the repo. Run `mkdir -p /tmp/canvas` before writing. Compute a timestamp with `date '+%Y-%m-%d %H:%M'` for the header (script context cannot call Date.now()).
 4. Write the file by adapting the scaffold below — keep its CSS design system, replace the content.

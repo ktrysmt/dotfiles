@@ -472,7 +472,6 @@
     "lua-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "llmwiki@ktrysmt": true,
-    "delta-lint@delta-lint": true,
     "codex@openai-codex": true,
     "security-guidance@claude-plugins-official": true
   },
@@ -487,12 +486,6 @@
       "source": {
         "source": "git",
         "url": "https://github.com/ktrysmt/claude-plugins.git"
-      }
-    },
-    "delta-lint": {
-      "source": {
-        "source": "github",
-        "repo": "karesansui-u/delta-lint"
       }
     },
     "openai-codex": {
@@ -517,5 +510,6 @@
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "tui": "default"
 }
