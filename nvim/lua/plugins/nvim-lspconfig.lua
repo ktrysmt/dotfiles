@@ -121,68 +121,73 @@ return {
       })
 
       --
-      -- lsp each config
-      --
-      -- rust
-      vim.lsp.config('rust_analyzer', {
-        settings = {
-          ['rust-analyzer'] = {},
-        },
-      })
-      vim.lsp.enable('rust_analyzer')
-
-      -- python
-      vim.lsp.config('pylsp', {
-        settings = {
-          pylsp = {
-            plugins = {
-              pycodestyle = {
-                ignore = { 'E501', 'E241', 'E704' },
-                maxLineLength = 200
-              },
-            },
-          },
-        },
-      })
-      vim.lsp.enable('pylsp')
-
-      -- lua
-      vim.lsp.config('lua_ls', {
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { 'vim' }
-            }
-          }
-        }
-      })
-      vim.lsp.enable('lua_ls')
-
-      -- gopls
-      vim.lsp.config('gopls', {
-        settings = {
-          gopls = {
-            staticcheck = true,
-            analyses = {
-              ST1000 = false,
-            },
-          }
-        }
-      })
-      vim.lsp.enable('gopls')
-
-      -- other lsp
-      vim.lsp.enable(all_servers)
-
-      --
       -- attach it
       --
+      -- Register LspAttach before any server is enabled so the callback is in
+      -- place by the time deferred servers attach.
       local lspconfig_group = vim.api.nvim_create_augroup('lspconfig_group', { clear = true })
       vim.api.nvim_create_autocmd("LspAttach", {
         group = lspconfig_group,
         callback = init_lspconfig,
       })
-      -- すべてのLSP floating windowに一括でborderを適用
+
+      --
+      -- lsp each config
+      --
+      -- Defer enabling servers until after the buffer is rendered, so opening a
+      -- file does not feel frozen while LSP clients spin up / index.
+      vim.defer_fn(function()
+        -- rust
+        vim.lsp.config('rust_analyzer', {
+          settings = {
+            ['rust-analyzer'] = {},
+          },
+        })
+        vim.lsp.enable('rust_analyzer')
+
+        -- python
+        vim.lsp.config('pylsp', {
+          settings = {
+            pylsp = {
+              plugins = {
+                pycodestyle = {
+                  ignore = { 'E501', 'E241', 'E704' },
+                  maxLineLength = 200
+                },
+              },
+            },
+          },
+        })
+        vim.lsp.enable('pylsp')
+
+        -- lua
+        vim.lsp.config('lua_ls', {
+          settings = {
+            Lua = {
+              diagnostics = {
+                globals = { 'vim' }
+              }
+            }
+          }
+        })
+        vim.lsp.enable('lua_ls')
+
+        -- gopls
+        vim.lsp.config('gopls', {
+          settings = {
+            gopls = {
+              staticcheck = true,
+              analyses = {
+                ST1000 = false,
+              },
+            }
+          }
+        })
+        vim.lsp.enable('gopls')
+
+        -- other lsp
+        vim.lsp.enable(all_servers)
+      end, 50)      -- すべてのLSP floating windowに一括でborderを適用
       local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
       function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
         opts = opts or {}
