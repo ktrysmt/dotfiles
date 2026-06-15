@@ -63,7 +63,11 @@ eval "$(echo "$input" | jq -r '
   "lines_added=" + (.cost.total_lines_added // 0 | tostring),
   "lines_removed=" + (.cost.total_lines_removed // 0 | tostring),
   "total_cost=" + (.cost.total_cost_usd // 0 | tostring),
-  "cc_version=" + (.version // "0.0.0" | @sh)
+  "cc_version=" + (.version // "0.0.0" | @sh),
+  "rl_5h_pct=" + (.rate_limits.five_hour.used_percentage // empty | tostring),
+  "rl_5h_reset=" + (.rate_limits.five_hour.resets_at // empty | tostring),
+  "rl_7d_pct=" + (.rate_limits.seven_day.used_percentage // empty | tostring),
+  "rl_7d_reset=" + (.rate_limits.seven_day.resets_at // empty | tostring)
 ' 2> /dev/null)"
 
 # ---------- cwd (shorten HOME to ~) ----------
@@ -102,13 +106,44 @@ if [ "$lines_added" -gt 0 ] 2> /dev/null || [ "$lines_removed" -gt 0 ] 2> /dev/n
   git_stats="+${lines_added}/-${lines_removed}"
 fi
 
-# ---------- Rate limit via Haiku probe (cached 360s) ----------
+# ---------- Rate limit ----------
+# Primary source: native stdin rate_limits (Claude Code >= 2.1.x, Pro/Max).
+#   .rate_limits.{five_hour,seven_day}.used_percentage  -> 0-100
+#   .rate_limits.{five_hour,seven_day}.resets_at        -> epoch seconds
+# rate_limits is absent until the first API response of a session, so we keep a
+# last-known cache and fall back to a Haiku header probe when stdin is empty.
 CACHE_FILE="/tmp/claude-usage-cache.json"
 CACHE_TTL=360
-FIVE_HOUR_UTIL=""
+FIVE_HOUR_PCT=""
 FIVE_HOUR_RESET=""
-SEVEN_DAY_UTIL=""
+SEVEN_DAY_PCT=""
 SEVEN_DAY_RESET=""
+
+# Atomic write: write to a temp file then rename, so an interrupted run never
+# leaves a truncated/0-byte cache behind (the root cause of the "--%" bug).
+write_cache() {
+  local tmp="${CACHE_FILE}.$$.tmp"
+  if jq -n \
+      --arg p5 "$1" --arg r5 "$2" --arg p7 "$3" --arg r7 "$4" \
+      '{five_hour_pct: $p5, five_hour_reset: $r5, seven_day_pct: $p7, seven_day_reset: $r7}' \
+      > "$tmp" 2> /dev/null; then
+    mv -f "$tmp" "$CACHE_FILE" 2> /dev/null
+  else
+    rm -f "$tmp" 2> /dev/null
+  fi
+}
+
+# Load cached values; returns non-zero (so callers can fall through) if empty.
+load_cache() {
+  [ -s "$CACHE_FILE" ] || return 1
+  eval "$(jq -r '
+    "FIVE_HOUR_PCT=" + (.five_hour_pct // empty),
+    "FIVE_HOUR_RESET=" + (.five_hour_reset // empty),
+    "SEVEN_DAY_PCT=" + (.seven_day_pct // empty),
+    "SEVEN_DAY_RESET=" + (.seven_day_reset // empty)
+  ' "$CACHE_FILE" 2> /dev/null)"
+  [ -n "$FIVE_HOUR_PCT" ]
+}
 
 fetch_usage() {
   local token
@@ -127,10 +162,9 @@ fetch_usage() {
   fi
   [ -z "$access_token" ] && return 1
 
-  # Tiny Haiku call (max_tokens=1) to get rate limit response headers
-  # -si includes headers in output; -D- writes headers to stdout
-  local full_response
-  full_response=$(curl -sD- --max-time 8 -o /dev/null \
+  # Tiny Haiku call (max_tokens=1); -D- writes response headers to stdout.
+  local headers
+  headers=$(curl -sD- --max-time 5 -o /dev/null \
     -H "Authorization: Bearer ${access_token}" \
     -H "Content-Type: application/json" \
     -H "User-Agent: claude-code/${cc_version:-0.0.0}" \
@@ -138,68 +172,49 @@ fetch_usage() {
     -H "anthropic-version: 2023-06-01" \
     -d '{"model":"claude-haiku-4-5-20251001","max_tokens":1,"messages":[{"role":"user","content":"h"}]}' \
     "https://api.anthropic.com/v1/messages" 2> /dev/null || true)
-  local headers="$full_response"
   [ -z "$headers" ] && return 1
 
-  # Parse rate limit headers
   local h5_util h5_reset h7_util h7_reset
   h5_util=$(echo "$headers" | grep -i 'anthropic-ratelimit-unified-5h-utilization' | tr -d '\r' | awk '{print $2}')
   h5_reset=$(echo "$headers" | grep -i 'anthropic-ratelimit-unified-5h-reset' | tr -d '\r' | awk '{print $2}')
   h7_util=$(echo "$headers" | grep -i 'anthropic-ratelimit-unified-7d-utilization' | tr -d '\r' | awk '{print $2}')
   h7_reset=$(echo "$headers" | grep -i 'anthropic-ratelimit-unified-7d-reset' | tr -d '\r' | awk '{print $2}')
-
   [ -z "$h5_util" ] && return 1
 
-  # Save to cache as JSON
-  jq -n \
-    --arg h5u "$h5_util" --arg h5r "$h5_reset" \
-    --arg h7u "$h7_util" --arg h7r "$h7_reset" \
-    '{five_hour_util: $h5u, five_hour_reset: $h5r, seven_day_util: $h7u, seven_day_reset: $h7r}' \
-    > "$CACHE_FILE"
+  # Headers report utilization as 0.0-1.0; store as 0-100 to match stdin.
+  local p5 p7
+  p5=$(awk "BEGIN{printf \"%.0f\", $h5_util * 100}" 2> /dev/null || echo "")
+  p7=$(awk "BEGIN{printf \"%.0f\", ${h7_util:-0} * 100}" 2> /dev/null || echo "")
+  write_cache "$p5" "$h5_reset" "$p7" "$h7_reset"
   return 0
 }
 
-load_usage() {
-  local data="$1"
-  eval "$(echo "$data" | jq -r '
-    "FIVE_HOUR_UTIL=" + (.five_hour_util // empty),
-    "FIVE_HOUR_RESET=" + (.five_hour_reset // empty),
-    "SEVEN_DAY_UTIL=" + (.seven_day_util // empty),
-    "SEVEN_DAY_RESET=" + (.seven_day_reset // empty)
-  ' 2> /dev/null)"
-}
-
-# Check cache validity
-USE_CACHE=false
-if [ -f "$CACHE_FILE" ]; then
-  cache_age=$(($(date +%s) - $(stat -c '%Y' "$CACHE_FILE" 2> /dev/null || stat -f '%m' "$CACHE_FILE" 2> /dev/null || echo 0)))
-  if [ "$cache_age" -lt "$CACHE_TTL" ]; then
-    USE_CACHE=true
-  fi
-fi
-
-if $USE_CACHE; then
-  load_usage "$(cat "$CACHE_FILE")"
+if [ -n "$rl_5h_pct" ]; then
+  # Native stdin data is authoritative; refresh cache for early-session renders.
+  FIVE_HOUR_PCT="$rl_5h_pct"
+  FIVE_HOUR_RESET="$rl_5h_reset"
+  SEVEN_DAY_PCT="$rl_7d_pct"
+  SEVEN_DAY_RESET="$rl_7d_reset"
+  write_cache "$rl_5h_pct" "$rl_5h_reset" "$rl_7d_pct" "$rl_7d_reset"
 else
-  if fetch_usage; then
-    load_usage "$(cat "$CACHE_FILE")"
-  elif [ -f "$CACHE_FILE" ]; then
-    load_usage "$(cat "$CACHE_FILE")"
+  # No stdin rate_limits yet: use a fresh cache, else probe the API.
+  cache_fresh=false
+  if [ -s "$CACHE_FILE" ]; then
+    cache_age=$(($(date +%s) - $(stat -f '%m' "$CACHE_FILE" 2> /dev/null || stat -c '%Y' "$CACHE_FILE" 2> /dev/null || echo 0)))
+    [ "$cache_age" -lt "$CACHE_TTL" ] && cache_fresh=true
+  fi
+  if $cache_fresh; then
+    load_cache || true
+  elif fetch_usage; then
+    load_cache || true
+  else
+    load_cache || true
   fi
 fi
 
-# Convert utilization (0.0-1.0) to percentage
-to_pct() {
-  local val="$1"
-  if [ -z "$val" ] || [ "$val" = "null" ] || [ "$val" = "0" ]; then
-    echo ""
-    return
-  fi
-  awk "BEGIN{printf \"%.0f\", $val * 100}" 2> /dev/null || echo ""
-}
-
-FIVE_HOUR_PCT=$(to_pct "$FIVE_HOUR_UTIL")
-SEVEN_DAY_PCT=$(to_pct "$SEVEN_DAY_UTIL")
+# Round to integer for display (stdin may carry fractional percentages).
+[ -n "$FIVE_HOUR_PCT" ] && FIVE_HOUR_PCT=$(printf '%.0f' "$FIVE_HOUR_PCT" 2> /dev/null || echo "$FIVE_HOUR_PCT")
+[ -n "$SEVEN_DAY_PCT" ] && SEVEN_DAY_PCT=$(printf '%.0f' "$SEVEN_DAY_PCT" 2> /dev/null || echo "$SEVEN_DAY_PCT")
 
 # ---------- Format reset time (from epoch seconds) ----------
 format_epoch_time() {

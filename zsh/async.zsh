@@ -479,7 +479,7 @@ function gwa() {
 
   cd "$parent/$name" || return 1
   if [[ -e uv.lock ]]; then
-    uv sync && source .venv/bin/activate
+    uv sync --frozen && source .venv/bin/activate
   fi
 }
 function gwflush() {

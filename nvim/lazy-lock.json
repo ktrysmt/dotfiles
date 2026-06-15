@@ -1,7 +1,7 @@
 {
   "CamelCaseMotion": { "branch": "master", "commit": "e69b0024f8f63db10c5d0df26d4920760755d454" },
   "Comment.nvim": { "branch": "master", "commit": "e30b7f2008e52442154b66f7c519bfd2f1e32acb" },
-  "claudecode.nvim": { "branch": "main", "commit": "7c7d47e75d1c8597a676ca20b36a8b85a776ac61" },
+  "claudecode.nvim": { "branch": "main", "commit": "e6c9dd4d4f144910b0066489100ad94b7133821f" },
   "cmp-buffer": { "branch": "main", "commit": "b74fab3656eea9de20a9b8116afa3cfc4ec09657" },
   "cmp-calc": { "branch": "main", "commit": "5947b412da67306c5b68698a02a846760059be2e" },
   "cmp-cmdline": { "branch": "main", "commit": "d126061b624e0af6c3a556428712dd4d4194ec6d" },
@@ -16,7 +16,7 @@
   "dressing.nvim": { "branch": "master", "commit": "2d7c2db2507fa3c4956142ee607431ddb2828639" },
   "format-on-save.nvim": { "branch": "main", "commit": "523256bd71543fd68184f67e82dc3cfd5092cf93" },
   "friendly-snippets": { "branch": "main", "commit": "6cd7280adead7f586db6fccbd15d2cac7e2188b9" },
-  "fzf": { "branch": "master", "commit": "f5fbfd848ec0a5c9771dd103e921e7064445c9ba" },
+  "fzf": { "branch": "master", "commit": "3c9965a61a842ef54e976c7195b985ee43a3e776" },
   "fzf-lua": { "branch": "main", "commit": "988416cc782dfe28bff3f0da9b8c943b236cd86a" },
   "fzf-mru.vim": { "branch": "master", "commit": "5b47c29e66d0546000b2988c4c9dca53f3134f35" },
   "fzf.vim": { "branch": "master", "commit": "d2a59a992a2455f609c0fde2ebd84427ea8f919a" },

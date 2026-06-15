@@ -511,5 +511,6 @@
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "tui": "default",
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "model": "claude-fable-5[1m]"
 }
