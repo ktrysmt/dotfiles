@@ -194,3 +194,5 @@ fd -p 'path/to/[^/]+/dir/aaa\..*\.bbb\.ccc$' | sed 's/.*\/tmpl\.\(.*\)\.yaml\.j2
 fd -t d -d 1 -0 | xargs -0 -I{} echo {};
 gh run list -w devcontainer.yml -L1 --json status,conclusion,displayTitle --jq '.[] | "\(.status) \(.conclusion) \(.displayTitle)"'
 curl -s http://localhost:9222/json/version
+read -rs "DATA?DATA: "; echo; export DATA # read in zsh
+read -rsp "DATA: " DATA; echo; export DATA # read in bash
