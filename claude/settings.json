@@ -511,6 +511,5 @@
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "tui": "default",
-  "skipDangerousModePermissionPrompt": true,
-  "model": "claude-opus-4-7"
+  "skipDangerousModePermissionPrompt": true
 }
