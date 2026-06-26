@@ -473,7 +473,8 @@
     "typescript-lsp@claude-plugins-official": true,
     "llmwiki@ktrysmt": true,
     "codex@openai-codex": true,
-    "security-guidance@claude-plugins-official": true
+    "security-guidance@claude-plugins-official": true,
+    "stop-slop-ja@ktrysmt": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
