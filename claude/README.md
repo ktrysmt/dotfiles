@@ -14,9 +14,23 @@ claude mcp add -s project playwright -- npx -y @playwright/mcp@0.0.43
 claude mcp add -s project pdf-docling -- uvx --from=docling-mcp docling-mcp-server
 claude mcp add -s project pdf-mcp -- uvx pdf-mcp
 
-# plugin
-claude plugin marketplace add karesansui-u/delta-lint
-claude plugin install delta-lint@delta-lint
+# plugin: marketplaces
+claude plugin marketplace add anthropics/claude-plugins-official
+claude plugin marketplace add ktrysmt/claude-plugins
+claude plugin marketplace add openai/codex-plugin-cc
+
+# plugin: install (claude-plugins-official)
+claude plugin install clangd-lsp@claude-plugins-official
+claude plugin install gopls-lsp@claude-plugins-official
+claude plugin install lua-lsp@claude-plugins-official
+claude plugin install typescript-lsp@claude-plugins-official
+claude plugin install security-guidance@claude-plugins-official
+claude plugin install slack@claude-plugins-official      # disabled by default
+
+# plugin: install (others)
+claude plugin install codex@openai-codex
+claude plugin install llmwiki@ktrysmt
+claude plugin install stop-slop-ja@ktrysmt
 ```
 
 Or, add arxiv mcp with docker.
