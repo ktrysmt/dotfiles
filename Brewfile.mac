@@ -3,7 +3,6 @@
 
 # macOS CLI tools
 brew "util-linux", link: :force
-brew "duckdb"
 brew "ncurses"
 brew "openssl"
 brew "reattach-to-user-namespace"
@@ -11,7 +10,6 @@ brew "socat"
 brew "trash"
 brew "zsh"
 brew "aws-vault"
-brew "jj"
 brew "daipeihust/tap/im-select"
 
 # Casks (GUI applications)
@@ -26,7 +24,6 @@ cask "macgesture"
 cask "raycast"
 cask "rectangle"
 cask "visual-studio-code"
-cask "cursor"
 cask "devtoys"
 cask "rancher"
 cask "wezterm"
