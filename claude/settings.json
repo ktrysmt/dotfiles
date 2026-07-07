@@ -285,6 +285,7 @@
       "mcp__arxiv-mcp-server__*",
       "mcp__context7__*",
       "mcp__gemini-google-search__*",
+      "mcp__google-scholar__*",
       "mcp__mcp-think-as__*",
       "mcp__playwright__*",
       "mcp__serena__*",
