@@ -362,6 +362,11 @@
     ],
     "defaultMode": "bypassPermissions"
   },
+  "deniedMcpServers": [
+    { "serverName": "claude.ai Gmail" },
+    { "serverName": "claude.ai Google Calendar" },
+    { "serverName": "claude.ai Google Drive" }
+  ],
   "hooks": {
     "SessionStart": [
       {
