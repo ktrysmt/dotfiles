@@ -8,6 +8,7 @@ brew "wget"
 brew "csvlens"
 brew "tmux"
 brew "tree-sitter-cli"
+brew "yq"
 
 # Development tools (not available in mise)
 brew "fzy"

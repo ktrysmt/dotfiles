@@ -18,6 +18,11 @@
 - **Follow PR/Issue templates**: When creating a PR or Issue, check for `issue_template` and `pull_request_template` (in `.github/`, `docs/`, or repo root). If a template exists, follow its structure
 - **Read full file before editing**: Before writing or editing code, re-read the target file in full with `Read` (no `offset`/`limit`). A range reference like `@<file>#L1-9` indicates the user's focus area, not the file's full scope — never treat it as a substitute for reading the whole file
 - **Re-verify mutable state at point of use**: PR/issue, CFn stack, AWS resource, auth session, branch/HEAD can change mid-session. Don't reuse prior-turn results. Date changes, MCP reconnects, or user state hints ("already merged") invalidate cached facts — re-query before asserting
+- **Grounded claims**: Before reporting progress or completion, audit each claim against a tool result from this session; report unverified work as unverified
+- **Act on sufficiency**: When you have enough information to act, act — do not re-derive settled facts or narrate options you will not pursue
+- **No promissory endings**: Never end a turn on a plan or promise ("I'll now run X") — execute it before ending the turn
+- **Minor-choice autonomy**: For minor reversible choices (naming, defaults, equivalent approaches), pick a reasonable option and note it; still ask for scope changes, destructive actions, and ambiguous delegations (per Ask before delegating)
+- **Long-horizon tasks**: For multi-step work expected to span many tool calls, invoke the `fablish` skill before starting
 
 ## Never
 - **Delete files directly**: When a task requires file deletion, do NOT execute the deletion yourself. Instead, present the exact deletion command to the user and let them run it manually

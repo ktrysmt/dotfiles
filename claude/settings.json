@@ -475,7 +475,8 @@
     "llmwiki@ktrysmt": true,
     "codex@openai-codex": true,
     "security-guidance@claude-plugins-official": true,
-    "stop-slop-ja@ktrysmt": true
+    "stop-slop-ja@ktrysmt": true,
+    "fablish@ktrysmt": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -486,8 +487,8 @@
     },
     "ktrysmt": {
       "source": {
-        "source": "git",
-        "url": "https://github.com/ktrysmt/claude-plugins.git"
+        "source": "github",
+        "repo": "ktrysmt/claude-plugins"
       }
     },
     "openai-codex": {
