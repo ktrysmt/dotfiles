@@ -279,6 +279,24 @@ if [ -n "$used_pct" ] && [ "$used_pct" != "null" ] && [ "$used_pct" != "0" ]; th
   ctx_pct_int=$(printf "%.0f" "$used_pct" 2> /dev/null || echo 0)
 fi
 
+# ---------- AWS identity (cached via hooks/aws-identity.sh, never blocks) ----------
+aws_display=""
+AWS_HELPER="$HOME/.claude/hooks/aws-identity.sh"
+if [ -f "$AWS_HELPER" ]; then
+  aws_json=$(bash "$AWS_HELPER" get 2> /dev/null)
+  if [ -n "$aws_json" ]; then
+    eval "$(echo "$aws_json" | jq -r '
+      "aws_status=" + ((.status // "unknown") | @sh),
+      "aws_profile=" + ((.profile // "default") | @sh),
+      "aws_account=" + ((.account // "") | @sh)
+    ' 2> /dev/null)"
+    case "$aws_status" in
+      ok) aws_display="${DIM}aws:${aws_profile}@${aws_account}${RESET}" ;;
+      expired) aws_display="${RED}aws:${aws_profile} EXPIRED${RESET}" ;;
+    esac
+  fi
+fi
+
 # ---------- Devcontainer: override cwd ----------
 if [ "$DEVCONTAINER" = "true" ] && [ -n "$DEVCONTAINER_HOST_PATH" ]; then
   host_repo=$(basename "$DEVCONTAINER_HOST_PATH")
@@ -303,6 +321,10 @@ fi
 
 ctx_color=$(color_for_pct "$ctx_pct_int")
 line1+="${SEP}${ctx_color}${ctx_pct_int}%${RESET}"
+
+if [ -n "$aws_display" ]; then
+  line1+="${SEP}${aws_display}"
+fi
 
 
 # ---------- Line 2 (5h + 7d side by side) ----------

@@ -363,12 +363,27 @@
     "defaultMode": "bypassPermissions"
   },
   "deniedMcpServers": [
-    { "serverName": "claude.ai Gmail" },
-    { "serverName": "claude.ai Google Calendar" },
-    { "serverName": "claude.ai Google Drive" }
+    {
+      "serverName": "claude.ai Gmail"
+    },
+    {
+      "serverName": "claude.ai Google Calendar"
+    },
+    {
+      "serverName": "claude.ai Google Drive"
+    }
   ],
   "hooks": {
     "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/aws-session-context.sh"
+          }
+        ]
+      },
       {
         "matcher": "",
         "hooks": [
@@ -397,6 +412,15 @@
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh notification"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/aws-precheck.sh"
           }
         ]
       }
