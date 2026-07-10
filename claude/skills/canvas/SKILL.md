@@ -65,30 +65,30 @@ Use a canvas when the answer is data-dense or spatial and markdown would force l
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.5}
-  .wrap{max-width:1100px;margin:0 auto;padding:32px 24px 64px}
-  header h1{margin:0 0 4px;font-size:24px;font-weight:600}
-  header .meta{color:var(--muted);font-size:13px}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6}
+  .wrap{max-width:1240px;margin:0 auto;padding:32px 24px 64px}
+  header h1{margin:0 0 4px;font-size:28px;font-weight:600}
+  header .meta{color:var(--muted);font-size:14px}
   .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:24px 0}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px}
-  .stat .label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
-  .stat .value{font-size:28px;font-weight:600;margin-top:6px}
-  .stat .delta{font-size:12px;margin-top:4px}
+  .stat .label{color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+  .stat .value{font-size:32px;font-weight:600;margin-top:6px}
+  .stat .delta{font-size:13px;margin-top:4px}
   section{margin:28px 0}
-  section h2{font-size:15px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:0 0 12px}
-  table{width:100%;border-collapse:collapse;font-size:14px}
-  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border)}
-  th{color:var(--muted);font-weight:500;font-size:12px}
+  section h2{font-size:17px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:0 0 12px}
+  table{width:100%;border-collapse:collapse;font-size:15px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:500;font-size:13px}
   tbody tr:nth-child(odd){background:var(--surface-2)}
   td.num{text-align:right;font-family:var(--mono)}
   code,.mono{font-family:var(--mono)}
-  .badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;border:1px solid var(--border)}
+  .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:13px;border:1px solid var(--border)}
   .badge.good{color:var(--good);border-color:var(--good)}
   .badge.warn{color:var(--warn);border-color:var(--warn)}
   .badge.bad{color:var(--bad);border-color:var(--bad)}
   svg{display:block;width:100%;height:auto}
   .axis{stroke:var(--grid);stroke-width:1}
-  .axis-label{fill:var(--muted);font-size:11px;font-family:var(--sans)}
+  .axis-label{fill:var(--muted);font-size:12px;font-family:var(--sans)}
   .bar{fill:var(--accent)}
 </style>
 </head>
