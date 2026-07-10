@@ -22,7 +22,6 @@
 - **Act on sufficiency**: When you have enough information to act, act — do not re-derive settled facts or narrate options you will not pursue
 - **No promissory endings**: Never end a turn on a plan or promise ("I'll now run X") — execute it before ending the turn
 - **Minor-choice autonomy**: For minor reversible choices (naming, defaults, equivalent approaches), pick a reasonable option and note it; still ask for scope changes, destructive actions, and ambiguous delegations (per Ask before delegating)
-- **Long-horizon tasks**: For multi-step work expected to span many tool calls, invoke the `fablish` skill before starting
 
 ## Never
 - **Delete files directly**: When a task requires file deletion, do NOT execute the deletion yourself. Instead, present the exact deletion command to the user and let them run it manually

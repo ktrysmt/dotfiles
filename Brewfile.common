@@ -9,6 +9,7 @@ brew "csvlens"
 brew "tmux"
 brew "tree-sitter-cli"
 brew "yq"
+brew "pre-commit"
 
 # Development tools (not available in mise)
 brew "fzy"
