@@ -88,6 +88,9 @@ step_claude() {
     return 0
   fi
 
+  log_info "Updating Claude plugin marketplaces"
+  claude plugin marketplace update || log_warn "Failed to update marketplaces"
+
   local plugins
   plugins=$(jq -r '.enabledPlugins // {} | to_entries[] | select(.value == true) | .key' "$settings")
 
@@ -98,7 +101,7 @@ step_claude() {
 
   while IFS= read -r plugin; do
     log_info "Updating Claude plugin: $plugin"
-    claude plugin update "$plugin" || log_warn "Failed to update: $plugin"
+    claude plugin update "$plugin" || claude plugin install "$plugin" || log_warn "Failed to update/install: $plugin"
   done <<< "$plugins"
 
   log_success "Claude plugin update complete"
