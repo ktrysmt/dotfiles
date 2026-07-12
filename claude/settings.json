@@ -505,7 +505,8 @@
     "codex@openai-codex": true,
     "security-guidance@claude-plugins-official": true,
     "stop-slop-ja@ktrysmt": true,
-    "fablish@ktrysmt": true
+    "fablish@ktrysmt": true,
+    "breakthrough@ktrysmt": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
