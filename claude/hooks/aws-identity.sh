@@ -7,12 +7,17 @@
 #   refresh Query STS and rewrite the cache. Blocking, bounded by CLI timeouts.
 #   check   Refresh synchronously when stale, then print the cache (hooks).
 #
-# Cache JSON: {"status": "ok|expired|none|error|unknown",
+# Cache JSON: {"status": "ok|expired|none|unauthenticated|error|unknown",
 #              "profile": "...", "account": "...", "arn": "...", "ts": 0}
-#   ok      valid credentials
-#   expired credentials exist but the token/SSO session has expired
-#   none    no credentials configured (callers should stay silent)
-#   error   transient failure (network etc.); callers should fail open
+#   ok             valid credentials
+#   expired        credentials exist but the token/SSO session has expired
+#   none           no credentials configured (callers should stay silent)
+#   unauthenticated no session in the environment yet. This helper deliberately
+#                   does NOT query STS in this state, because resolving a
+#                   role/SSO profile would perform sts:AssumeRole -- and whether
+#                   to assume is strictly the user's decision (they use
+#                   aws-vault), never this tooling's.
+#   error          transient failure (network etc.); callers should fail open
 
 CACHE_DIR="/tmp/claude-aws-identity-$(id -u)"
 # Profile resolution: aws-vault sessions export AWS_VAULT (with plain env
@@ -81,6 +86,18 @@ acquire_lock() {
 do_refresh() {
   if ! command -v aws > /dev/null 2>&1; then
     write_cache "none" "" ""
+    return 0
+  fi
+  # Only contact STS when a session already exists in the environment. For a
+  # role/SSO profile without live credentials, `aws sts get-caller-identity`
+  # forces credential resolution, which performs sts:AssumeRole -- an assume the
+  # user never asked for. Whether to assume is strictly the user's decision
+  # (they use aws-vault). When AWS_ACCESS_KEY_ID is already set (aws-vault exec
+  # or static creds), the assume has already happened by the user's action and
+  # get-caller-identity merely reads that existing session back; it does not
+  # trigger a new assume.
+  if [ -z "$AWS_ACCESS_KEY_ID" ]; then
+    write_cache "unauthenticated" "" ""
     return 0
   fi
   acquire_lock || return 0

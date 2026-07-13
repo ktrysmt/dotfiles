@@ -497,9 +497,7 @@
   },
   "enabledPlugins": {
     "slack@claude-plugins-official": false,
-    "clangd-lsp@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "llmwiki@ktrysmt": true,
     "codex@openai-codex": true,

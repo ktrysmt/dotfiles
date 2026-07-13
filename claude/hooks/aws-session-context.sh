@@ -22,6 +22,9 @@ case "$status" in
   expired)
     echo "[aws-identity] AWS credentials for profile '${profile}' are EXPIRED. Do NOT attempt to re-authenticate and do NOT suggest specific login commands -- whether and how to authenticate is strictly the user's decision (they use aws-vault). Report the credential state and wait for the user before running AWS CLI commands."
     ;;
+  unauthenticated)
+    echo "[aws-identity] No active AWS session in this environment. Do NOT run AWS CLI commands that would assume a role or acquire credentials -- whether and when to assume is strictly the user's decision (they use aws-vault). Wait for the user to start a session (e.g. 'aws-vault exec') before running AWS commands."
+    ;;
   *)
     # none/error/unknown: stay silent to avoid noise in non-AWS projects.
     exit 0
