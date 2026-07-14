@@ -478,12 +478,8 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "slack@claude-plugins-official": false,
-    "gopls-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
     "llmwiki@ktrysmt": true,
-    "codex@openai-codex": true,
-    "security-guidance@claude-plugins-official": true,
+    "codex@openai-codex": false,
     "stop-slop-ja@ktrysmt": true,
     "fablish@ktrysmt": true,
     "breakthrough@ktrysmt": true
@@ -524,6 +520,5 @@
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "tui": "default",
-  "skipDangerousModePermissionPrompt": true,
-  "model": "claude-fable-5[1m]"
+  "skipDangerousModePermissionPrompt": true
 }
