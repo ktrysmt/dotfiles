@@ -380,15 +380,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ~/.claude/hooks/aws-session-context.sh"
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
             "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh start"
           }
         ]
@@ -412,15 +403,6 @@
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh notification"
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/aws-precheck.sh"
           }
         ]
       }
