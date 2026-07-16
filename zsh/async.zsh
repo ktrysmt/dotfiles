@@ -435,18 +435,17 @@ function howto() {
 # --------------
 # git worktree
 # --------------
-# gwa <name> [extra git-worktree-add args]
-# Create a worktree on a NEW branch <name> based on the latest remote default
-# branch, place it alongside sibling worktrees, then cd in and uv sync.
+# gwa <pr-number>
+# Create a throwaway worktree tmp-<pr-number> alongside sibling worktrees, cd in,
+# check out the PR with `gh pr checkout`, then `uv sync --frozen`.
 # Works for both bare-repo and normal-repo worktree layouts.
 function gwa() {
   emulate -L zsh
-  local name="$1"
-  if [[ -z "$name" ]]; then
-    echo "usage: gwa <name> [git-worktree-add-args...]" >&2
+  local num="$1"
+  if [[ -z "$num" || "$num" != <-> ]]; then
+    echo "usage: gwa <pr-number>" >&2
     return 1
   fi
-  shift
 
   # Resolve the directory under which worktrees live.
   local common parent
@@ -460,24 +459,12 @@ function gwa() {
     parent="$PWD"                              # normal repo: create under the current directory
   fi
 
-  # Always start from the latest remote default branch.
-  git fetch origin || return 1
-  local base
-  base="$(git symbolic-ref -q --short refs/remotes/origin/HEAD)"
-  if [[ -z "$base" ]]; then
-    if git show-ref -q --verify refs/remotes/origin/main; then
-      base="origin/main"
-    elif git show-ref -q --verify refs/remotes/origin/master; then
-      base="origin/master"
-    else
-      echo "gwa: cannot determine remote default branch" >&2
-      return 1
-    fi
-  fi
+  # Create a detached worktree; `gh pr checkout` sets the PR branch afterwards.
+  local wt="$parent/tmp-$num"
+  git worktree add --detach "$wt" || return 1
 
-  git worktree add -b "$name" "$parent/$name" "$base" "$@" || return 1
-
-  cd "$parent/$name" || return 1
+  cd "$wt" || return 1
+  gh pr checkout "$num" || return 1
   if [[ -e uv.lock ]]; then
     uv sync --frozen && source .venv/bin/activate
   fi
