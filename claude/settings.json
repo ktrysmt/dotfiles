@@ -340,6 +340,17 @@
             "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh notification"
           }
         ]
+      },
+      {
+        "matcher": "Bash|WebFetch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/agent-browser-domains.sh",
+            "timeout": 10,
+            "statusMessage": "Checking bot-walled domains..."
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -413,7 +424,7 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "llmwiki@ktrysmt": true,
+    "llmwiki@ktrysmt": false,
     "codex@openai-codex": false,
     "stop-slop-ja@ktrysmt": true,
     "fablish@ktrysmt": true,

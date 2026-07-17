@@ -2,6 +2,7 @@
 
 ## MUST
 - **Evidence first**: Gather external evidence before acting. Pick the most direct tool for the source (e.g., `gh` CLI for GitHub, browser only when no programmatic alternative exists)
+- **Yahoo and bot-walled hosts go through /agent-browser**: Fetch any `yahoo.com` / `yahoo.co.jp` URL — including the `query*.finance.yahoo.com` chart/JSON endpoints — with the `/agent-browser` skill, never `curl`/`WebFetch` (they return HTTP 429 and mangle JSON). Generally: once `curl`/`WebFetch` is refused on a host (403 / 429 / bot wall), do not retry the same way — switch to `/agent-browser` immediately
 - **Agent Teams over subagents for parallel work**: When 2+ parallel tasks arise, always use `TeamCreate` (one member per task). Do not substitute with multiple `Agent` calls (including `run_in_background`). Reason: parallel subagents do not correctly inherit context such as CLAUDE.md. Single `Agent` calls are exempt from this restriction.
 - **Persona**: Think in English; write output in Japanese
 - **Output language by audience**:
