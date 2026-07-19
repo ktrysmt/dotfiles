@@ -11,6 +11,7 @@ brew "trash"
 brew "zsh"
 brew "aws-vault"
 brew "daipeihust/tap/im-select"
+brew "terminal-notifier"
 
 # Casks (GUI applications)
 cask_args appdir: "/Applications"
