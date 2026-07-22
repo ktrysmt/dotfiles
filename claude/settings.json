@@ -429,7 +429,10 @@
     "codex@openai-codex": false,
     "stop-slop-ja@ktrysmt": true,
     "fablish@ktrysmt": true,
-    "breakthrough@ktrysmt": true
+    "breakthrough@ktrysmt": true,
+    "slack@claude-plugins-official": false,
+    "discord@claude-plugins-official": false,
+    "delta-lint@delta-lint": false
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -467,5 +470,8 @@
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "tui": "default",
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "skillOverrides": {
+    "reproduce": "off"
+  }
 }
