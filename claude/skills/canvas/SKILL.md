@@ -1,6 +1,6 @@
 ---
 name: canvas
-description: Render analysis, dashboards, audits, reports, comparisons, or architecture diagrams as a single self-contained HTML file (inline SVG charts + CSS, no React, no CDN, works offline) instead of a wall of markdown, then open it in the browser. Triggers: "/canvas", "canvas", "キャンバス", "ダッシュボード", "dashboard", "図解して", "可視化して", "グラフィカルに", "visualize", "make it visual", "render as a page", "レポートにして", or when a result is data-dense (multi-source metrics, table comparisons, dependency/architecture maps, PR review summaries, eval results) and markdown would be hard to scan.
+description: Render analysis, dashboards, audits, reports, comparisons, or architecture diagrams as a single HTML file (inline SVG charts + CSS, no React, no build step; optional Mermaid diagrams via a pinned CDN) instead of a wall of markdown, then open it in the browser. Triggers: "/canvas", "canvas", "キャンバス", "ダッシュボード", "dashboard", "図解して", "可視化して", "グラフィカルに", "visualize", "make it visual", "render as a page", "レポートにして", or when a result is data-dense (multi-source metrics, table comparisons, dependency/architecture maps, PR review summaries, eval results) and markdown would be hard to scan.
 model: sonnet
 ---
 
@@ -10,7 +10,7 @@ model: sonnet
      render and would go hunting the filesystem for unrelated "review"/"findings" files.
      Keep this skill running inline so it sees the conversation. -->
 
-Produce a graphical, interactive view of a result as ONE self-contained HTML file, then open it. This is the Claude Code analogue of Cursor's Canvas — but the artifact is a portable HTML page, not a React app.
+Produce a graphical, interactive view of a result as ONE HTML file (self-contained apart from the optional Mermaid runtime), then open it. This is the Claude Code analogue of Cursor's Canvas — but the artifact is a portable HTML page, not a React app.
 
 ## When to reach for it
 
@@ -18,8 +18,8 @@ Use a canvas when the answer is data-dense or spatial and markdown would force l
 
 ## Output contract (non-negotiable)
 
-- Exactly one `.html` file, fully self-contained. No external `<script src>`, no `<link href>` to CDNs, no web fonts, no network calls. It must render identically offline and when shared as a single file.
-- No React / Vue / build step. Plain HTML + inline `<style>` + inline `<svg>`. Add a small inline `<script>` ONLY for genuine interactivity (tab switching, filtering, collapsibles); the page must still be readable with JS disabled.
+- Exactly one `.html` file, self-contained except for Mermaid. No `<link href>` to CDNs, no web fonts, no data fetched over the network. The SOLE permitted external resource is the Mermaid runtime, loaded from a pinned CDN (`https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs`), and ONLY on pages that actually contain a Mermaid diagram. A page with no diagram loads no external script and renders identically offline.
+- No React / Vue / build step. Plain HTML + inline `<style>` + inline `<svg>`. Add a small inline `<script>` ONLY for genuine interactivity (tab switching, filtering, collapsibles) or the Mermaid init module (see below); the rest of the page must still be readable with JS disabled.
 - All data is baked into the file at write time — never fetch it live. If the data came from a tool/command in this session, inline the actual values.
 - System font stack only: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif` and `ui-monospace, SFMono-Regular, Menlo, monospace`.
 
@@ -44,8 +44,18 @@ Use a canvas when the answer is data-dense or spatial and markdown would force l
 - Bar chart: map each value to a `<rect>` height against a computed max; include axis labels and value labels.
 - Line/area chart: build a `<polyline>`/`<path>` from points scaled to the viewBox.
 - Donut/progress: an SVG `<circle>` with `stroke-dasharray`/`stroke-dashoffset`.
-- Diagrams/flows: position `<rect>`+`<text>` nodes and connect with `<line>`/`<path>` + a marker arrowhead. For complex graphs prefer an inline `<svg>` you lay out by hand; only use a Mermaid block if rendering to HTML is not required.
+- Diagrams/flows: for anything past a couple of nodes (architecture maps, dependency graphs, sequence/state flows, decision trees) prefer a Mermaid diagram — see the Mermaid section below. Keep hand-drawn `<rect>`+`<text>`+`<line>` SVG only for tiny 2–3 node sketches where Mermaid is overkill.
 - Always set `viewBox` and `preserveAspectRatio` so charts scale; never hardcode pixel-only sizes.
+
+## Mermaid diagrams
+
+Use Mermaid for structural diagrams (flows, graphs, sequences, state, ER). Include the runtime ONLY when the page has at least one diagram.
+
+- Put each diagram in `<pre class="mermaid">…</pre>`, with the diagram source flush-left (no leading indentation on the first line — leading whitespace breaks parsing).
+- Follow `~/.claude/rules/markdown.md`: top-to-bottom layout (`flowchart TB` / `graph TD`), Japanese node labels, ONE node definition per source line, `<br>` for multi-line labels, and muted low-saturation colors for any custom fills.
+- Add the init module ONCE, just before `</body>` (see scaffold). It is the only external script the page loads, and the reason the page needs network + JS to render diagrams.
+- Theme: initialize with `theme:'base'` and `themeVariables` bound to the canvas palette, so diagrams sit on the dark surface instead of a white box.
+- If the page has no diagram, omit BOTH the `<pre class="mermaid">` blocks and the init module.
 
 ## Scaffold (copy, then replace the content — keep the design system)
 
@@ -66,7 +76,7 @@ Use a canvas when the answer is data-dense or spatial and markdown would force l
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6}
-  .wrap{max-width:1240px;margin:0 auto;padding:32px 24px 64px}
+  .wrap{max-width:1440px;margin:0 auto;padding:32px 24px 64px}
   header h1{margin:0 0 4px;font-size:28px;font-weight:600}
   header .meta{color:var(--muted);font-size:14px}
   .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:24px 0}
@@ -90,6 +100,9 @@ Use a canvas when the answer is data-dense or spatial and markdown would force l
   .axis{stroke:var(--grid);stroke-width:1}
   .axis-label{fill:var(--muted);font-size:12px;font-family:var(--sans)}
   .bar{fill:var(--accent)}
+  /* Mermaid: center the rendered diagram; override the global svg{width:100%} so small graphs don't over-stretch */
+  .mermaid{margin:0;text-align:center;background:var(--surface-2);border-radius:8px;padding:16px}
+  .mermaid svg{width:auto;max-width:100%;height:auto;margin:0 auto}
 </style>
 </head>
 <body>
@@ -129,7 +142,44 @@ Use a canvas when the answer is data-dense or spatial and markdown would force l
       </svg>
     </div>
   </section>
+
+  <section>
+    <h2>Diagram</h2>
+    <div class="card">
+      <!-- Mermaid: TB layout, Japanese labels, ONE node per line (per ~/.claude/rules/markdown.md).
+           Keep the source flush-left inside <pre>. Delete this section AND the init module
+           below if the page has no diagram. -->
+      <pre class="mermaid">
+flowchart TB
+  A["入力データ"] --> B["変換処理"]
+  B --> C{"検証"}
+  C -->|OK| D["保存"]
+  C -->|NG| E["エラー通知"]
+      </pre>
+    </div>
+  </section>
 </div>
+
+<!-- Mermaid init module: include ONLY when the page has a <pre class="mermaid"> diagram.
+     This is the one external script the page loads. -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      background: '#0f1115',
+      primaryColor: '#1e222b',
+      primaryBorderColor: '#2a2f3a',
+      primaryTextColor: '#e6e8ee',
+      secondaryColor: '#171a21',
+      tertiaryColor: '#171a21',
+      lineColor: '#9aa3b2',
+      textColor: '#e6e8ee',
+      fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif',
+    },
+  });
+</script>
 </body>
 </html>
 ```
