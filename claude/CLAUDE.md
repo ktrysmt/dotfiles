@@ -32,3 +32,5 @@
 - Push directly to main/master
 - Use emojis anywhere
 - Install tools, packages, or runtimes directly: sandbox restricts writes outside the project directory. Present the exact install command to the user and let them run it manually
+- **Fill-in-the-blank placeholders in scripts**: Never leave a value for a human to fill in (`NAME=<...>`), especially in bash. Derive it deterministically instead: `NAME=$(command ...)`
+- **Markdown in the scratchpad**: Never save generated Markdown to the scratchpad directory. Write it under the project root (`./`), or ask the user where it belongs
