@@ -297,7 +297,6 @@
     ],
     "defaultMode": "bypassPermissions"
   },
-  "model": "opus[1m]",
   "deniedMcpServers": [
     {
       "serverName": "claude.ai Gmail"
