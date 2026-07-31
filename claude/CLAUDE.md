@@ -10,6 +10,7 @@
   - LLM-facing artifacts (rules, prompts, agent instructions, CLAUDE.md, skill definitions, system messages): English
   - Code and identifiers (variable names, function names, log messages, error messages consumed by tooling): English
 - **Cite sources**: When reporting findings from evidence-based research or analysis, you MUST append the referenced evidence URLs at the end of your response. Wrap each URL in `<...>` (full URL, not shortened) for terminal click-through
+- **Search results are leads, not evidence**: In fact-checking, corroboration, or evidence research, never treat WebSearch summaries/snippets as verified facts. Open the primary source (WebFetch, `gh`, `/agent-browser`) to confirm the claim before reporting it, and always present the supporting URLs per Cite sources
 - **Cite file locations**: When reviewing code or discussing specific file contents, you MUST prefix the reference with the file name and line number(s)
 - **Writing Markdown w/ Mermaid**: Follow rules defined in `~/.claude/rules/markdown.md`
 - **Ask before delegating**: When ambiguous, confirm with the user first. A delegation is ambiguous if any of these are missing:
