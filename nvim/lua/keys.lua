@@ -28,9 +28,18 @@ end)
 vim.keymap.set('n', '<Leader>p', '"0p', { silent = true })
 vim.keymap.set('v', '<Leader>p', '"0p', { silent = true })
 
--- customized esc
-vim.keymap.set('t', '<Esc>', '<c-\\><c-n><Plug>(wait)')
-vim.keymap.set('n', '<Plug>(wait)<ESC>', 'i<ESC>')
+-- customized esc: single <Esc> goes to the terminal immediately, <Esc><Esc> leaves terminal mode
+local term_esc_timer = nil
+local term_esc_threshold = 250
+vim.keymap.set('t', '<Esc>', function()
+  term_esc_timer = term_esc_timer or (vim.uv or vim.loop).new_timer()
+  if term_esc_timer:is_active() then
+    term_esc_timer:stop()
+    return '<C-\\><C-n>'
+  end
+  term_esc_timer:start(term_esc_threshold, 0, function() end)
+  return '<Esc>'
+end, { expr = true })
 
 -- terminal mode
 vim.keymap.set('t', '<C-W>w', '<cmd>wincmd w<cr>')
