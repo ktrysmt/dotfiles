@@ -301,6 +301,9 @@
   "disableClaudeAiConnectors": true,
   "deniedMcpServers": [
     {
+      "serverName": "claude-in-chrome"
+    },
+    {
       "serverName": "claude.ai Gmail"
     },
     {
