@@ -297,6 +297,8 @@
     ],
     "defaultMode": "bypassPermissions"
   },
+  "model": "opus[1m]",
+  "disableClaudeAiConnectors": true,
   "deniedMcpServers": [
     {
       "serverName": "claude.ai Gmail"
@@ -428,18 +430,9 @@
     "codex@openai-codex": false,
     "stop-slop-ja@ktrysmt": true,
     "fablish@ktrysmt": true,
-    "breakthrough@ktrysmt": true,
-    "slack@claude-plugins-official": false,
-    "discord@claude-plugins-official": false,
-    "delta-lint@delta-lint": false
+    "breakthrough@ktrysmt": true
   },
   "extraKnownMarketplaces": {
-    "claude-plugins-official": {
-      "source": {
-        "source": "github",
-        "repo": "anthropics/claude-plugins-official"
-      }
-    },
     "ktrysmt": {
       "source": {
         "source": "github",
@@ -466,9 +459,9 @@
       ]
     }
   },
+  "disableBundledSkills": true,
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "tui": "default",
-  "skipDangerousModePermissionPrompt": true,
-  "model": "claude-fable-5[1m]"
+  "skipDangerousModePermissionPrompt": true
 }
