@@ -469,35 +469,195 @@ function gwa() {
     uv sync --frozen && source .venv/bin/activate
   fi
 }
+# gwflush [-n|--dry-run]
+# Sweep the throwaway worktrees created by `gwa`. A worktree is removed only when
+# GitHub reports its pull request as MERGED or CLOSED; anything else is skipped or
+# reported, never deleted. Requires an authenticated `gh`: when the PR state cannot
+# be fetched the worktree is left alone. Uses `git worktree remove` / `git branch -d`
+# only -- never `rm -rf`, never `git branch -D`.
 function gwflush() {
-  local dry_run=false
-  [[ "$1" == "-n" || "$1" == "--dry-run" ]] && dry_run=true
+  emulate -L zsh
 
-  local branch wt count=0
+  local dry_run=false arg
+  for arg in "$@"; do
+    case "$arg" in
+      -n|--dry-run) dry_run=true ;;
+      -h|--help)    print -r -- "usage: gwflush [-n|--dry-run]"; return 0 ;;
+      *)            print -r -- "gwflush: unknown argument: $arg" >&2
+                    print -r -- "usage: gwflush [-n|--dry-run]" >&2
+                    return 1 ;;
+    esac
+  done
 
-  git branch --merged master | sed 's/^[+* ]*//' | grep '^feature-' | while read branch; do
-  wt=$(git worktree list --porcelain \
-    | grep -B2 "branch refs/heads/$branch" \
-    | grep '^worktree ' \
-    | sed 's/^worktree //')
+  git rev-parse --git-common-dir >/dev/null 2>&1 || {
+    print -r -- "gwflush: not a git repository" >&2
+    return 1
+  }
 
-  [[ -z "$wt" ]] && continue
+  local JQ='[.state,(.number|tostring),.url,.headRefName]|@tsv'
 
-  if [[ -n "$(git -C "$wt" status --porcelain)" ]]; then
-    echo "SKIP  $branch  (未コミットの変更あり)"
-    continue
-  fi
+  # --- collect every worktree (process substitution: no subshell, counters survive)
+  local -a records
+  local line wtpath wtbranch wtflags
+  wtpath="" wtbranch="" wtflags=""
+  while IFS= read -r line; do
+    case "$line" in
+      "worktree "*) wtpath="${line#worktree }" ;;
+      "branch "*)   wtbranch="${line#branch refs/heads/}" ;;
+      detached)     wtflags+="detached," ;;
+      bare)         wtflags+="bare," ;;
+      locked*)      wtflags+="locked," ;;
+      prunable*)    wtflags+="prunable," ;;
+      "")           [[ -n "$wtpath" ]] && records+=("${wtpath}"$'\t'"${wtbranch}"$'\t'"${wtflags}")
+                    wtpath="" wtbranch="" wtflags="" ;;
+    esac
+  done < <(git worktree list --porcelain)
+  [[ -n "$wtpath" ]] && records+=("${wtpath}"$'\t'"${wtbranch}"$'\t'"${wtflags}")
 
+  (( ${#records} )) || { print -r -- "gwflush: worktree が見つからない"; return 0 }
+
+  # git always lists the main (or bare) worktree first: never a deletion target.
+  local main_wt="${${records[1]}%%$'\t'*}"
+  local here="${PWD:A}"
+
+  local -i deleted=0 skipped=0 warned=0 idx=0 stash_hit=0
+  local rec wt branch flags name last pr_raw cand pr_state pr_num pr_url ahead upstream stash_msg
+  local -a fields
+
+  for rec in "${records[@]}"; do
+    (( idx++ ))
+    fields=("${(@ps:\t:)rec}")
+    wt="${fields[1]}"; branch="${fields[2]}"; flags="${fields[3]}"
+    name="${wt:t}"
+
+    (( idx == 1 )) && continue
+    [[ "$flags" == *bare* ]] && continue
+    [[ "${wt:A}" == "${main_wt:A}" ]] && continue
+
+    if [[ "$flags" == *prunable* ]]; then
+      printf '%-7s %-26s %s\n' WARN "$name" "作業ディレクトリが消えている (最後に git worktree prune で回収)"
+      (( warned++ )); continue
+    fi
+
+    # guard 4: never touch the worktree the shell is standing in
+    if [[ "$here" == "${wt:A}" || "$here" == "${wt:A}"/* ]]; then
+      printf '%-7s %-26s %s\n' SKIP "$name" "現在このworktree内にいる"
+      (( skipped++ )); continue
+    fi
+
+    last="$(git -C "$wt" log -1 --format=%cs 2>/dev/null)"
+
+    # guard 5: detached HEAD has no branch to reason about -- warn only
+    if [[ "$flags" == *detached* || -z "$branch" ]]; then
+      printf '%-7s %-26s %s\n' WARN "$name" "detached HEAD のため判定不能 (最終コミット ${last:-不明})"
+      (( warned++ )); continue
+    fi
+
+    if [[ "$flags" == *locked* ]]; then
+      printf '%-7s %-26s %s\n' SKIP "$name" "worktree が locked"
+      (( skipped++ )); continue
+    fi
+
+    # --- PR state is the sole deletion criterion ---------------------------
+    # The branch is the ground truth. `cd -q` keeps chpwd hooks quiet; gh needs the
+    # worktree as cwd because it resolves the repository from the working directory.
+    pr_raw="$(cd -q -- "$wt" 2>/dev/null && gh pr view "$branch" --json state,number,url,headRefName --jq "$JQ" 2>/dev/null)"
+
+    # Merged PRs usually have their head branch deleted upstream, so the lookup above
+    # fails. Fall back to the PR number encoded in the `gwa` directory name, and accept
+    # it only when the PR's head branch is exactly the branch checked out here.
+    if [[ -z "$pr_raw" && "$name" == tmp-<-> ]]; then
+      cand="$(cd -q -- "$wt" 2>/dev/null && gh pr view "${name#tmp-}" --json state,number,url,headRefName --jq "$JQ" 2>/dev/null)"
+      [[ -n "$cand" && "${cand##*$'\t'}" == "$branch" ]] && pr_raw="$cand"
+    fi
+
+    if [[ -z "$pr_raw" ]]; then
+      local note=""
+      [[ -n "$(git -C "$wt" status --porcelain 2>/dev/null)" ]] && note=" / 未コミットの変更あり"
+      printf '%-7s %-26s %s\n' WARN "$name" "PRが引けない: ${branch} (最終コミット ${last:-不明}${note}) 手動確認が必要"
+      (( warned++ )); continue
+    fi
+
+    fields=("${(@ps:\t:)pr_raw}")
+    pr_state="${fields[1]}"; pr_num="${fields[2]}"; pr_url="${fields[3]}"
+
+    if [[ "$pr_state" != "MERGED" && "$pr_state" != "CLOSED" ]]; then
+      printf '%-7s %-26s %s\n' SKIP "$name" "PR #${pr_num} は ${pr_state} (${pr_url})"
+      (( skipped++ )); continue
+    fi
+
+    # --- safety guards, applied only to deletion candidates ----------------
+    # guard 1: uncommitted changes
+    if [[ -n "$(git -C "$wt" status --porcelain 2>/dev/null)" ]]; then
+      printf '%-7s %-26s %s\n' SKIP "$name" "PR #${pr_num} は ${pr_state} だが未コミットの変更あり"
+      (( skipped++ )); continue
+    fi
+
+    # guard 3: stash entries left on this worktree's branch.
+    # refs/stash lives in the *common* git dir, so `git -C "$wt" stash list` returns the
+    # identical repo-wide list for every worktree. Testing it unfiltered would skip every
+    # candidate as soon as a single unrelated stash existed anywhere in the repository,
+    # and would blame the wrong worktree for it. Attribute each entry with the branch
+    # recorded in its reflog subject ("WIP on <branch>:" / "On <branch>:") instead.
+    stash_hit=0
+    for stash_msg in ${(f)"$(git -C "$wt" stash list --format='%gs' 2>/dev/null)"}; do
+      if [[ "$stash_msg" == "WIP on ${branch}:"* || "$stash_msg" == "On ${branch}:"* ]]; then
+        stash_hit=1; break
+      fi
+    done
+    if (( stash_hit )); then
+      printf '%-7s %-26s %s\n' SKIP "$name" "PR #${pr_num} は ${pr_state} だが ${branch} の stash が残っている"
+      (( skipped++ )); continue
+    fi
+
+    # guard 2: unpushed commits (an unresolvable upstream counts as unknown -> skip).
+    # `git rev-parse` echoes the literal "@{upstream}" back on stdout and exits non-zero
+    # when the upstream is configured but its remote-tracking ref is gone -- the usual
+    # state after a merged branch is deleted upstream and `git fetch --prune` runs. Test
+    # the exit status, not the emptiness of stdout, or that case silently falls through
+    # to the "解決できない" branch below and reports "@{upstream}" as the upstream name.
+    upstream="$(git -C "$wt" rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' 2>/dev/null)" || upstream=""
+    if [[ -z "$upstream" ]]; then
+      printf '%-7s %-26s %s\n' SKIP "$name" "PR #${pr_num} は ${pr_state} だが upstream なし (push未確認)"
+      (( skipped++ )); continue
+    fi
+    ahead="$(git -C "$wt" rev-list --count "${upstream}..HEAD" 2>/dev/null)"
+    if [[ -z "$ahead" ]]; then
+      printf '%-7s %-26s %s\n' SKIP "$name" "PR #${pr_num} は ${pr_state} だが upstream ${upstream} を解決できない"
+      (( skipped++ )); continue
+    fi
+    if (( ahead > 0 )); then
+      printf '%-7s %-26s %s\n' SKIP "$name" "PR #${pr_num} は ${pr_state} だが未pushのコミット ${ahead} 件"
+      (( skipped++ )); continue
+    fi
+
+    # --- delete ------------------------------------------------------------
+    if $dry_run; then
+      printf '%-7s %-26s %s\n' DELETE "$name" "(dry-run) PR #${pr_num} ${pr_state} / ${branch} -> ${wt}"
+      (( deleted++ )); continue
+    fi
+
+    if ! git worktree remove -- "$wt"; then
+      printf '%-7s %-26s %s\n' WARN "$name" "git worktree remove に失敗したため残置"
+      (( warned++ )); continue
+    fi
+    if git branch -d -- "$branch" >/dev/null 2>&1; then
+      printf '%-7s %-26s %s\n' DELETE "$name" "PR #${pr_num} ${pr_state} / worktree とブランチ ${branch} を削除"
+    else
+      printf '%-7s %-26s %s\n' DELETE "$name" "PR #${pr_num} ${pr_state} / worktree のみ削除 (ブランチ ${branch} は -d で消せず残置)"
+    fi
+    (( deleted++ ))
+  done
+
+  # once, at the end -- and never in dry-run, which must stay read-only
+  $dry_run || git worktree prune
+
+  print -r -- ""
   if $dry_run; then
-    echo "DELETE (dry-run)  $branch  ($wt)"
+    print -r -- "削除予定 ${deleted} 本 / スキップ ${skipped} 本 / 警告 ${warned} 本 (dry-run のため実際には削除していない)"
   else
-    git worktree remove "$wt" && git branch -d "$branch" \
-      && echo "DELETED  $branch  ($wt)"
+    print -r -- "削除 ${deleted} 本 / スキップ ${skipped} 本 / 警告 ${warned} 本"
   fi
-  (( count++ ))
-done
-
-echo "\n${count} worktree(s) ${dry_run:+would be }removed."
 }
 
 
