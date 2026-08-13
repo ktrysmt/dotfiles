@@ -1,8 +1,7 @@
 #!/bin/bash
 # Claude Code statusline script
 # Line 1: Model | Context% | +added/-removed | git branch
-# Line 2: 5h rate limit progress bar
-# Line 3: 7d rate limit progress bar
+# Line 2: usage limits -- 5h + 7d windows (subscription) or monthly credits (seat)
 
 input=$(cat)
 
@@ -106,26 +105,35 @@ if [ "$lines_added" -gt 0 ] 2> /dev/null || [ "$lines_removed" -gt 0 ] 2> /dev/n
   git_stats="+${lines_added}/-${lines_removed}"
 fi
 
-# ---------- Rate limit ----------
-# Primary source: native stdin rate_limits (Claude Code >= 2.1.x, Pro/Max).
-#   .rate_limits.{five_hour,seven_day}.used_percentage  -> 0-100
-#   .rate_limits.{five_hour,seven_day}.resets_at        -> epoch seconds
-# rate_limits is absent until the first API response of a session, so we keep a
-# last-known cache and fall back to a Haiku header probe when stdin is empty.
+# ---------- Usage limits ----------
+# Line 2 has two slots. What fills them depends on the account:
+#   Claude.ai subscription -> A = 5h session window, B = 7d window
+#   Enterprise/Team seat   -> A = monthly usage credits, B = used/limit in dollars
+# A seat has no 5h/7d windows at all, so the subscription-only sources below stay
+# empty for it -- that is what produced the "--%" placeholder on both slots.
+#
+# Sources, in order of preference:
+#   1. stdin .rate_limits.{five_hour,seven_day} -- subscribers only, and only after
+#      the session's first API response
+#   2. cache file, while younger than CACHE_TTL
+#   3. GET /api/oauth/usage -- free (no inference); the only source that reports a
+#      seat's monthly credit spend
+#   4. Haiku header probe -- anthropic-ratelimit-unified-{5h,7d}-* for subscribers
+#      whose session has not populated stdin yet
 CACHE_FILE="/tmp/claude-usage-cache.json"
 CACHE_TTL=360
-FIVE_HOUR_PCT=""
-FIVE_HOUR_RESET=""
-SEVEN_DAY_PCT=""
-SEVEN_DAY_RESET=""
+A_KIND=""; A_PCT=""; A_RESET=""
+B_KIND=""; B_PCT=""; B_RESET=""; B_TEXT=""
 
 # Atomic write: write to a temp file then rename, so an interrupted run never
 # leaves a truncated/0-byte cache behind (the root cause of the "--%" bug).
 write_cache() {
   local tmp="${CACHE_FILE}.$$.tmp"
   if jq -n \
-      --arg p5 "$1" --arg r5 "$2" --arg p7 "$3" --arg r7 "$4" \
-      '{five_hour_pct: $p5, five_hour_reset: $r5, seven_day_pct: $p7, seven_day_reset: $r7}' \
+      --arg ak "$A_KIND" --arg ap "$A_PCT" --arg ar "$A_RESET" \
+      --arg bk "$B_KIND" --arg bp "$B_PCT" --arg br "$B_RESET" --arg bt "$B_TEXT" \
+      '{a_kind: $ak, a_pct: $ap, a_reset: $ar,
+        b_kind: $bk, b_pct: $bp, b_reset: $br, b_text: $bt}' \
       > "$tmp" 2> /dev/null; then
     mv -f "$tmp" "$CACHE_FILE" 2> /dev/null
   else
@@ -133,19 +141,23 @@ write_cache() {
   fi
 }
 
-# Load cached values; returns non-zero (so callers can fall through) if empty.
+# Load cached values; returns non-zero (so callers can fall through) if empty or
+# written by an older schema.
 load_cache() {
   [ -s "$CACHE_FILE" ] || return 1
   eval "$(jq -r '
-    "FIVE_HOUR_PCT=" + (.five_hour_pct // empty),
-    "FIVE_HOUR_RESET=" + (.five_hour_reset // empty),
-    "SEVEN_DAY_PCT=" + (.seven_day_pct // empty),
-    "SEVEN_DAY_RESET=" + (.seven_day_reset // empty)
+    "A_KIND="  + ((.a_kind  // "") | @sh),
+    "A_PCT="   + ((.a_pct   // "") | @sh),
+    "A_RESET=" + ((.a_reset // "") | @sh),
+    "B_KIND="  + ((.b_kind  // "") | @sh),
+    "B_PCT="   + ((.b_pct   // "") | @sh),
+    "B_RESET=" + ((.b_reset // "") | @sh),
+    "B_TEXT="  + ((.b_text  // "") | @sh)
   ' "$CACHE_FILE" 2> /dev/null)"
-  [ -n "$FIVE_HOUR_PCT" ]
+  [ -n "$A_PCT" ]
 }
 
-fetch_usage() {
+access_token() {
   local token
   token=$(security find-generic-password -s "Claude Code-credentials" -w 2> /dev/null || true)
   # Linux fallback: read from ~/.claude/.credentials.json
@@ -153,19 +165,62 @@ fetch_usage() {
     token=$(cat ~/.claude/.credentials.json 2> /dev/null || true)
   fi
   [ -z "$token" ] && return 1
-
-  local access_token
   if echo "$token" | jq -e . > /dev/null 2>&1; then
-    access_token=$(echo "$token" | jq -r '.claudeAiOauth.accessToken // empty' 2> /dev/null)
+    echo "$token" | jq -r '.claudeAiOauth.accessToken // empty' 2> /dev/null
   else
-    access_token="$token"
+    printf '%s' "$token"
   fi
-  [ -z "$access_token" ] && return 1
+}
 
-  # Tiny Haiku call (max_tokens=1); -D- writes response headers to stdout.
-  local headers
+# Credit allowances roll over on the 1st at 00:00 UTC. /api/oauth/usage does not
+# carry that timestamp -- only the anthropic-ratelimit-unified-overage-reset
+# response header does -- so derive the boundary instead of paying for a request.
+next_month_epoch() {
+  date -u -v1d -v+1m -v0H -v0M -v0S +%s 2> /dev/null \
+    || date -u -d "$(date -u +%Y-%m-01) +1 month" +%s 2> /dev/null \
+    || echo ""
+}
+
+# Monthly credit spend for accounts with no session windows (Enterprise/Team).
+# Bails out when .five_hour exists so a subscriber keeps the 5h/7d display.
+fetch_usage_api() {
+  local token body
+  token=$(access_token) || return 1
+  [ -z "$token" ] && return 1
+
+  body=$(curl -s --max-time 5 \
+    -H "Authorization: Bearer ${token}" \
+    -H "User-Agent: claude-code/${cc_version:-0.0.0}" \
+    -H "anthropic-beta: oauth-2025-04-20" \
+    "https://api.anthropic.com/api/oauth/usage" 2> /dev/null || true)
+  [ -z "$body" ] && return 1
+
+  echo "$body" | jq -e '
+    .five_hour == null and .spend.enabled == true and .spend.percent != null
+  ' > /dev/null 2>&1 || return 1
+
+  local spend_pct="" spend_used="" spend_limit=""
+  eval "$(echo "$body" | jq -r '
+    "spend_pct="   + (.spend.percent | tostring),
+    "spend_used="  + (((.spend.used.amount_minor  // 0) / pow(10; .spend.used.exponent  // 0)) | floor | tostring),
+    "spend_limit=" + (((.spend.limit.amount_minor // 0) / pow(10; .spend.limit.exponent // 0)) | floor | tostring)
+  ' 2> /dev/null)"
+  [ -z "$spend_pct" ] && return 1
+
+  A_KIND="mo"; A_PCT="$spend_pct"; A_RESET=$(next_month_epoch)
+  B_KIND="spend"; B_PCT=""; B_RESET=""; B_TEXT="\$${spend_used}/\$${spend_limit}"
+  return 0
+}
+
+# 5h/7d windows straight off the response headers of a tiny Haiku call.
+fetch_usage_headers() {
+  local token headers
+  token=$(access_token) || return 1
+  [ -z "$token" ] && return 1
+
+  # max_tokens=1 keeps the call trivial; -D- writes response headers to stdout.
   headers=$(curl -sD- --max-time 5 -o /dev/null \
-    -H "Authorization: Bearer ${access_token}" \
+    -H "Authorization: Bearer ${token}" \
     -H "Content-Type: application/json" \
     -H "User-Agent: claude-code/${cc_version:-0.0.0}" \
     -H "anthropic-beta: oauth-2025-04-20" \
@@ -182,20 +237,21 @@ fetch_usage() {
   [ -z "$h5_util" ] && return 1
 
   # Headers report utilization as 0.0-1.0; store as 0-100 to match stdin.
-  local p5 p7
-  p5=$(awk "BEGIN{printf \"%.0f\", $h5_util * 100}" 2> /dev/null || echo "")
-  p7=$(awk "BEGIN{printf \"%.0f\", ${h7_util:-0} * 100}" 2> /dev/null || echo "")
-  write_cache "$p5" "$h5_reset" "$p7" "$h7_reset"
+  A_KIND="5h"
+  A_PCT=$(awk "BEGIN{printf \"%.0f\", $h5_util * 100}" 2> /dev/null || echo "")
+  A_RESET="$h5_reset"
+  B_KIND="7d"
+  B_PCT=$(awk "BEGIN{printf \"%.0f\", ${h7_util:-0} * 100}" 2> /dev/null || echo "")
+  B_RESET="$h7_reset"
+  B_TEXT=""
   return 0
 }
 
 if [ -n "$rl_5h_pct" ]; then
   # Native stdin data is authoritative; refresh cache for early-session renders.
-  FIVE_HOUR_PCT="$rl_5h_pct"
-  FIVE_HOUR_RESET="$rl_5h_reset"
-  SEVEN_DAY_PCT="$rl_7d_pct"
-  SEVEN_DAY_RESET="$rl_7d_reset"
-  write_cache "$rl_5h_pct" "$rl_5h_reset" "$rl_7d_pct" "$rl_7d_reset"
+  A_KIND="5h"; A_PCT="$rl_5h_pct"; A_RESET="$rl_5h_reset"
+  B_KIND="7d"; B_PCT="$rl_7d_pct"; B_RESET="$rl_7d_reset"
+  write_cache
 else
   # No stdin rate_limits yet: use a fresh cache, else probe the API.
   cache_fresh=false
@@ -205,52 +261,31 @@ else
   fi
   if $cache_fresh; then
     load_cache || true
-  elif fetch_usage; then
-    load_cache || true
+  elif fetch_usage_api || fetch_usage_headers; then
+    write_cache
   else
     load_cache || true
   fi
 fi
 
+# Nothing resolved: keep the 5h/7d placeholder rather than an empty line.
+if [ -z "$A_KIND" ] && [ -z "$B_KIND" ]; then
+  A_KIND="5h"
+  B_KIND="7d"
+fi
+
 # Round to integer for display (stdin may carry fractional percentages).
-[ -n "$FIVE_HOUR_PCT" ] && FIVE_HOUR_PCT=$(printf '%.0f' "$FIVE_HOUR_PCT" 2> /dev/null || echo "$FIVE_HOUR_PCT")
-[ -n "$SEVEN_DAY_PCT" ] && SEVEN_DAY_PCT=$(printf '%.0f' "$SEVEN_DAY_PCT" 2> /dev/null || echo "$SEVEN_DAY_PCT")
+[ -n "$A_PCT" ] && A_PCT=$(printf '%.0f' "$A_PCT" 2> /dev/null || echo "$A_PCT")
+[ -n "$B_PCT" ] && B_PCT=$(printf '%.0f' "$B_PCT" 2> /dev/null || echo "$B_PCT")
 
-# ---------- Format reset time (from epoch seconds) ----------
-format_epoch_time() {
-  local epoch="$1"
-  local format="$2"
-  [ -z "$epoch" ] || [ "$epoch" = "0" ] && echo "" && return
-  local result
-  result=$(TZ="Asia/Tokyo" date -j -f "%s" "$epoch" "$format" 2> /dev/null \
-    || TZ="Asia/Tokyo" date -d "@${epoch}" "$format" 2> /dev/null || echo "")
-  echo "$result" | sed 's/AM/am/;s/PM/pm/'
-}
-
-five_reset_display=""
-if [ -n "$FIVE_HOUR_RESET" ] && [ "$FIVE_HOUR_RESET" != "0" ]; then
-  five_reset_display="Resets $(format_epoch_time "$FIVE_HOUR_RESET" "+%-I%p") (Asia/Tokyo)"
-fi
-
-seven_reset_display=""
-if [ -n "$SEVEN_DAY_RESET" ] && [ "$SEVEN_DAY_RESET" != "0" ]; then
-  seven_reset_display="Resets $(format_epoch_time "$SEVEN_DAY_RESET" "+%b %-d at %-I%p") (Asia/Tokyo)"
-fi
-
-# ---------- Remaining time label ----------
+# ---------- Remaining time until reset ----------
 remaining_label() {
-  local reset_epoch="$1" fallback="$2"
-  if [ -z "$reset_epoch" ] || [ "$reset_epoch" = "0" ]; then
-    echo "$fallback"
-    return
-  fi
+  local reset_epoch="$1"
+  [ -z "$reset_epoch" ] || [ "$reset_epoch" = "0" ] && return
   local now remaining_secs
   now=$(date +%s)
   remaining_secs=$((reset_epoch - now))
-  if [ "$remaining_secs" -le 0 ]; then
-    echo "$fallback"
-    return
-  fi
+  [ "$remaining_secs" -le 0 ] && return
   local days hours
   days=$((remaining_secs / 86400))
   hours=$(( (remaining_secs % 86400) / 3600 ))
@@ -264,14 +299,34 @@ remaining_label() {
     if [ "$hours" -gt 0 ]; then
       echo "${hours}h"
     else
-      local mins=$(( (remaining_secs % 3600) / 60 ))
-      echo "${mins}m"
+      echo "$(( (remaining_secs % 3600) / 60 ))m"
     fi
   fi
 }
 
-five_label=$(remaining_label "$FIVE_HOUR_RESET" "5h")
-seven_label=$(remaining_label "$SEVEN_DAY_RESET" "7d")
+# Render one slot: "<label> <bar> <pct>%", or the raw text for the spend slot.
+slot_text() {
+  local kind="$1" pct="$2" reset="$3" text="$4"
+  case "$kind" in
+    "") return ;;
+    spend)
+      printf '%s' "$text"
+      return
+      ;;
+  esac
+  local rem label
+  rem=$(remaining_label "$reset")
+  if [ "$kind" = "mo" ]; then
+    label="mo${rem:+ $rem}"
+  else
+    label="${rem:-$kind}"
+  fi
+  if [ -n "$pct" ]; then
+    printf '%s %s %s%%' "$label" "$(progress_bar "$pct")" "$pct"
+  else
+    printf '%s ▱▱▱▱▱▱▱▱▱▱ --%%' "$label"
+  fi
+}
 
 # ---------- Format context used% ----------
 ctx_pct_int=0
@@ -304,24 +359,15 @@ fi
 ctx_color=$(color_for_pct "$ctx_pct_int")
 line1+="${SEP}${ctx_color}${ctx_pct_int}%${RESET}"
 
-# ---------- Line 2 (5h + 7d side by side) ----------
-part5=""
-if [ -n "$FIVE_HOUR_PCT" ]; then
-  bar5=$(progress_bar "$FIVE_HOUR_PCT")
-  part5="${GRAY_5H}${five_label} ${bar5} ${FIVE_HOUR_PCT}%${RESET}"
-else
-  part5="${GRAY_5H}${five_label} ▱▱▱▱▱▱▱▱▱▱ --%${RESET}"
-fi
+# ---------- Line 2 (two usage slots side by side) ----------
+part_a=$(slot_text "$A_KIND" "$A_PCT" "$A_RESET" "")
+part_b=$(slot_text "$B_KIND" "$B_PCT" "$B_RESET" "$B_TEXT")
 
-part7=""
-if [ -n "$SEVEN_DAY_PCT" ]; then
-  bar7=$(progress_bar "$SEVEN_DAY_PCT")
-  part7="${GRAY_7D}${seven_label} ${bar7} ${SEVEN_DAY_PCT}%${RESET}"
-else
-  part7="${GRAY_7D}${seven_label} ▱▱▱▱▱▱▱▱▱▱ --%${RESET}"
+line2=""
+[ -n "$part_a" ] && line2="${GRAY_5H}${part_a}${RESET}"
+if [ -n "$part_b" ]; then
+  line2+="${line2:+${SEP}}${GRAY_7D}${part_b}${RESET}"
 fi
-
-line2="${part5}${SEP}${part7}"
 
 # ---------- Output ----------
 printf '%s\n' "$line1"
