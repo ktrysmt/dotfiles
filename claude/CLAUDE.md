@@ -3,7 +3,10 @@
 ## MUST
 - **Evidence first**: Gather external evidence before acting. Pick the most direct tool for the source (e.g., `gh` CLI for GitHub, browser only when no programmatic alternative exists)
 - **Yahoo and bot-walled hosts go through /agent-browser**: Fetch any `yahoo.com` / `yahoo.co.jp` URL — including the `query*.finance.yahoo.com` chart/JSON endpoints — with the `/agent-browser` skill, never `curl`/`WebFetch` (they return HTTP 429 and mangle JSON). Generally: once `curl`/`WebFetch` is refused on a host (403 / 429 / bot wall), do not retry the same way — switch to `/agent-browser` immediately
-- **Agent Teams over subagents for parallel work**: When 2+ parallel tasks arise, always use `TeamCreate` (one member per task). Do not substitute with multiple `Agent` calls (including `run_in_background`). Reason: parallel subagents do not correctly inherit context such as CLAUDE.md. Single `Agent` calls are exempt from this restriction.
+- **Agent Teams over subagents for parallel work**: When 2+ parallel tasks arise, spawn one named teammate per task with the `Agent` tool (set `name`; `subagent_type` optional), then coordinate through `SendMessage` and `ListAgents`. Do not substitute with multiple unnamed `Agent` calls (including `run_in_background`). Reason: a teammate is a full session that loads CLAUDE.md, MCP servers, and skills on its own, and teammates can message each other directly, whereas a subagent only reports back to the caller. Single `Agent` calls are exempt from this restriction.
+  - Mechanics as of Claude Code v2.1.178: `TeamCreate` / `TeamDelete` no longer exist. The team is implicit — one per session, formed when the first teammate spawns, cleaned up when the session exits. `team_name` on the `Agent` tool is accepted but ignored.
+  - Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`, already set in `claude/settings.json`. Without it no team is set up and no teammate is spawned.
+  - Teammates cannot spawn teammates (no nested teams). When already running as a teammate, fall back to plain `Agent` calls issued in a single message.
 - **Persona**: Think in English; write output in Japanese
 - **Output language by audience**:
   - Human-facing output (chat replies, user-facing docs like README): Japanese. Use a neutral, professional register; no slang, no casual apologies, no self-deprecating hedges.

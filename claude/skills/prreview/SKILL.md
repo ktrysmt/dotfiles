@@ -211,10 +211,15 @@ copy its 既出の指摘 / 確定した設計判断 / 他レビュアの指摘 s
 scratchpad file. With `--no-cache` there is no dedup context, and the agents are
 told so explicitly.
 
-Fan the four axes out to four parallel workers, one per axis. `TeamCreate` with
-one member per axis is the default: two or more parallel tasks must go through
-Agent Teams, and `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` is set in this
-environment (`claude/settings.json`). Only if Agent Teams is unavailable, fall
+Fan the four axes out to four parallel workers, one per axis. One named teammate
+per axis is the default: two or more parallel tasks must go through Agent Teams,
+and `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` is set in this environment
+(`claude/settings.json`). Spawn each teammate with the `Agent` tool and a `name`
+that identifies its axis (`axis1-security`, `axis2-consistency`,
+`axis3-robustness`, `axis4-ops`) so it stays addressable through `SendMessage`.
+There is no separate team-creation step: as of Claude Code v2.1.178 the team is
+implicit and `TeamCreate` no longer exists. Only if Agent Teams is unavailable —
+the env var is unset, or this session is itself a teammate and cannot nest — fall
 back to four `Agent` (`subagent_type: general-purpose`) launches issued in a
 single message.
 
@@ -289,9 +294,9 @@ be computed from the diff.
 ### Step 5b: Two-stage refutation (for 解釈依存 candidates)
 
 One independent worker per candidate. Two or more candidates means two or more
-parallel tasks, so use `TeamCreate` with one member per candidate; a single
-candidate may go to a single `Agent` call. Pass the candidate, the diff path, the
-PR identifier, and the cache path.
+parallel tasks, so spawn one named teammate per candidate with the `Agent` tool,
+named `refute-<finding id>`; a single candidate may go to a single `Agent` call.
+Pass the candidate, the diff path, the PR identifier, and the cache path.
 
 The worker runs two stages in this order and reports them separately. Keeping
 them separate is the point: a single blended verdict with "treat ambiguity as
