@@ -46,3 +46,13 @@ fi
 # prevent compinit in /etc/zsh/zshrc (ubuntu)
 skip_global_compinit=1
 export MEMD_THEME=catppuccin-mocha
+
+# claude code
+# Kept here rather than in claude/settings.json: Claude Code rewrites the whole
+# user settings file from a stale in-process cache on any in-app settings change,
+# which silently drops hand-added keys. Env vars survive that.
+# Truthiness check is `||`, so any non-empty value enables -- unset to turn off.
+# Note: these only reach sessions launched from a shell, not ClaudeCode.app.
+export CLAUDE_CODE_DISABLE_BUNDLED_SKILLS=1
+export CLAUDE_CODE_DISABLE_AUTO_MEMORY=1
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1

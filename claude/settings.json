@@ -1,8 +1,4 @@
 {
-  "env": {
-    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
-  },
   "permissions": {
     "allow": [
       "Bash(/compact)",
@@ -299,6 +295,7 @@
   },
   "model": "opus[1m]",
   "disableClaudeAiConnectors": true,
+  "disableBundledSkills": true,
   "deniedMcpServers": [
     {
       "serverName": "claude-in-chrome"
@@ -462,7 +459,6 @@
       ]
     }
   },
-  "disableBundledSkills": true,
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "tui": "default",
