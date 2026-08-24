@@ -32,6 +32,9 @@ link_file "${DOTFILES_DIR}/.config/peco/config.json" ~/.config/peco/config.json
 link_file "${DOTFILES_DIR}/zsh/sheldon.plugins.toml" ~/.config/sheldon/plugins.toml
 link_file "${DOTFILES_DIR}/.gitignore_global" ~/.gitignore_global
 
+# Git hook templates (applied by git at `git init` / `git clone`)
+link_file "${DOTFILES_DIR}/git-templates" ~/.git-templates
+
 # mise
 link_file "${DOTFILES_DIR}/mise/config.toml" ~/.config/mise/config.toml
 

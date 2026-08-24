@@ -12,11 +12,14 @@ source "${SCRIPT_DIR}/lib.sh"
 setup_git() {
   log_info "Setting up git..."
 
-  # git-secrets (template install only; static config lives in .gitconfig_* files)
+  # git-secrets (static config lives in .gitconfig_* files)
+  # The hook templates are dotfiles-managed and symlinked by install/symlink.sh.
+  # `git secrets --install` would overwrite them, so it runs only as a fallback
+  # when that link is missing.
   if has_command git-secrets; then
     git secrets --register-aws --global 2>/dev/null || true
 
-    if [[ ! -d ~/.git-templates/git-secrets ]]; then
+    if [[ ! -e ~/.git-templates/git-secrets/hooks/pre-commit ]]; then
       git secrets --install ~/.git-templates/git-secrets
     fi
   fi

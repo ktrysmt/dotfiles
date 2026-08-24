@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# git-secrets pre-commit hook (dotfiles-managed; see dotfiles/install/symlink.sh)
+#
+# Upstream `git secrets --pre_commit_hook` collects the staged paths with
+#   git diff-index --diff-filter 'ACMU' --name-only --cached <rev> --
+# and hands them to scan(). When that list is empty, scan() treats "no files"
+# as "scan the whole repository" and git-greps the entire index. That fallback
+# exists for a manual `git secrets --scan --cached`; reaching it from the hook
+# is accidental.
+#
+# The empty-list cases are deletion-only commits, message-only `--amend`, and
+# `--allow-empty` -- none of which introduce content. So skip the scan instead
+# of paying for a full-index git-grep, which costs ~30s on a large repo and
+# blocks the commit editor from opening.
+#
+# Renames are safe: diff-index performs no rename detection, so a rename is
+# reported as D + A and the added path is scanned as usual.
+
+rev=4b825dc642cb6eb9a060e54bf8d69288fbee4904 # empty tree
+git rev-parse --verify HEAD > /dev/null 2>&1 && rev=HEAD
+
+if [ -z "$(git diff-index --diff-filter 'ACMU' --name-only --cached "$rev" --)" ]; then
+  exit 0
+fi
+
+git secrets --pre_commit_hook -- "$@"
