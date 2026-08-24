@@ -23,8 +23,7 @@ fi
 path=("$HOME/.local/bin" "$HOME/.local/share/mise/shims" $path)
 
 # rancher desktop
-if [[ -d "$HOME/.rd/bin" ]]; then
-  path=("$HOME/.rd/bin" $path)
+if [[ -d "$HOME/.rd/bin" ]]; then path=("$HOME/.rd/bin" $path)
 fi
 
 
@@ -56,3 +55,4 @@ export MEMD_THEME=catppuccin-mocha
 export CLAUDE_CODE_DISABLE_BUNDLED_SKILLS=1
 export CLAUDE_CODE_DISABLE_AUTO_MEMORY=1
 export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
+export CLAUDE_CODE_USE_POWERSHELL_TOOL=0
