@@ -16,6 +16,7 @@ brew "terminal-notifier"
 # Casks (GUI applications)
 cask_args appdir: "/Applications"
 
+cask "adrafinil"
 cask "alt-tab"
 cask "appcleaner"
 cask "clibor"
