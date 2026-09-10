@@ -68,3 +68,10 @@
 
 [credential]
   helper = osxkeychain
+# 認証が切れたときは gh auth refresh --hostname github.com
+[credential "https://github.com"]
+	helper =
+	helper = !$HOME/.local/share/mise/shims/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !$HOME/.local/share/mise/shims/gh auth git-credential

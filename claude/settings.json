@@ -1,4 +1,226 @@
 {
+  "agentPushNotifEnabled": true,
+  "alwaysThinkingEnabled": true,
+  "autoCompactEnabled": false,
+  "deniedMcpServers": [
+    {
+      "serverName": "claude-in-chrome"
+    },
+    {
+      "serverName": "claude.ai Gmail"
+    },
+    {
+      "serverName": "claude.ai Google Calendar"
+    },
+    {
+      "serverName": "claude.ai Google Drive"
+    }
+  ],
+  "disableBundledSkills": true,
+  "disableClaudeAiConnectors": true,
+  "effortLevel": "xhigh",
+  "enabledPlugins": {
+    "breakthrough@ktrysmt": true,
+    "codex@openai-codex": false,
+    "eli5@claude-community": true,
+    "fablish@ktrysmt": true,
+    "llmwiki@ktrysmt": false,
+    "stop-slop-ja@ktrysmt": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-community": {
+      "source": {
+        "repo": "anthropics/claude-plugins-community",
+        "source": "github"
+      }
+    },
+    "ktrysmt": {
+      "source": {
+        "repo": "ktrysmt/claude-plugins",
+        "source": "github"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "repo": "openai/codex-plugin-cc",
+        "source": "github"
+      }
+    }
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh notification",
+            "type": "command"
+          }
+        ],
+        "matcher": "permission_prompt"
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/adrafinil.sh release $CLAUDE_CODE_SESSION_ID --tool claude-code"
+          }
+        ],
+        "matcher": "idle_prompt"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh thinking",
+            "type": "command"
+          },
+          {
+            "command": "bash ~/.claude/hooks/markdown-lint.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      },
+      {
+        "hooks": [
+          {
+            "command": "bash ~/.claude/hooks/sandbox-auto-allow.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh notification",
+            "type": "command"
+          }
+        ],
+        "matcher": "AskUserQuestion"
+      },
+      {
+        "hooks": [
+          {
+            "command": "bash ~/.claude/hooks/agent-browser-domains.sh",
+            "statusMessage": "Checking bot-walled domains...",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash|WebFetch"
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh reset",
+            "type": "command"
+          },
+          {
+            "command": "bash ~/.claude/hooks/cleanup-short-sessions.sh",
+            "type": "command"
+          },
+          {
+            "command": "bash ~/.claude/hooks/session_summarizer_wrapper.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/adrafinil.sh release $CLAUDE_CODE_SESSION_ID --tool claude-code"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh start",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/adrafinil.sh acquire $CLAUDE_CODE_SESSION_ID --tool claude-code"
+          }
+        ],
+        "matcher": "clear"
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh done",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/adrafinil.sh release $CLAUDE_CODE_SESSION_ID --tool claude-code"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh thinking",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/adrafinil.sh acquire $CLAUDE_CODE_SESSION_ID --tool claude-code"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/adrafinil.sh acquire --tool claude-code --subagent"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/adrafinil.sh release --tool claude-code --subagent"
+          }
+        ]
+      }
+    ]
+  },
+  "model": "opus[1m]",
   "permissions": {
     "allow": [
       "Bash(/compact)",
@@ -242,6 +464,7 @@
       "mcp__codex__*",
       "mcp__aws-docs__*"
     ],
+    "defaultMode": "bypassPermissions",
     "deny": [
       "Bash(rm -rf /)",
       "Bash(rm -rf ~)",
@@ -290,171 +513,11 @@
       "Edit(/etc/passwd)",
       "Edit(/etc/shadow)",
       "Edit(/etc/sudoers)"
-    ],
-    "defaultMode": "bypassPermissions"
-  },
-  "disableClaudeAiConnectors": true,
-  "disableBundledSkills": true,
-  "deniedMcpServers": [
-    {
-      "serverName": "claude-in-chrome"
-    },
-    {
-      "serverName": "claude.ai Gmail"
-    },
-    {
-      "serverName": "claude.ai Google Calendar"
-    },
-    {
-      "serverName": "claude.ai Google Drive"
-    }
-  ],
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh start"
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh thinking"
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "AskUserQuestion",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh notification"
-          }
-        ]
-      },
-      {
-        "matcher": "Bash|WebFetch",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/agent-browser-domains.sh",
-            "timeout": 10,
-            "statusMessage": "Checking bot-walled domains..."
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh thinking"
-          },
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/markdown-lint.sh"
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/sandbox-auto-allow.sh"
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "matcher": "permission_prompt",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh notification"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh done"
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh reset"
-          },
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/cleanup-short-sessions.sh"
-          },
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/session_summarizer_wrapper.sh"
-          }
-        ]
-      }
     ]
   },
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
-  "enabledPlugins": {
-    "llmwiki@ktrysmt": false,
-    "codex@openai-codex": false,
-    "stop-slop-ja@ktrysmt": true,
-    "fablish@ktrysmt": true,
-    "breakthrough@ktrysmt": true,
-    "eli5@claude-community": true
-  },
-  "extraKnownMarketplaces": {
-    "ktrysmt": {
-      "source": {
-        "source": "github",
-        "repo": "ktrysmt/claude-plugins"
-      }
-    },
-    "openai-codex": {
-      "source": {
-        "source": "github",
-        "repo": "openai/codex-plugin-cc"
-      }
-    },
-    "claude-community": {
-      "source": {
-        "source": "github",
-        "repo": "anthropics/claude-plugins-community"
-      }
-    }
-  },
   "sandbox": {
-    "enabled": false,
     "autoAllowBashIfSandboxed": false,
+    "enabled": false,
     "network": {
       "allowedDomains": [
         "mise.jdx.dev",
@@ -465,10 +528,10 @@
       ]
     }
   },
-  "alwaysThinkingEnabled": true,
-  "effortLevel": "xhigh",
-  "tui": "default",
   "skipDangerousModePermissionPrompt": true,
-  "autoCompactEnabled": false,
-  "agentPushNotifEnabled": true
+  "statusLine": {
+    "command": "bash ~/.claude/statusline-command.sh",
+    "type": "command"
+  },
+  "tui": "default"
 }
