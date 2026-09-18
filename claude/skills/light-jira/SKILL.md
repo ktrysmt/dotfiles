@@ -32,6 +32,15 @@ may pull an issue blob into the conversation. If a required piece of
 information is missing and the conversation does not supply it (issue key,
 project key, issue type, body text), do NOT guess — ask for that one thing.
 
+Scope: this skill runs INLINE, inside the caller's own turn, and governs ONLY
+the Jira operation named in $ARGUMENTS. It is a step, not a persona and not an
+ending. Do not restate the caller's task as Jira I/O, do not switch the output
+language the session was already using, and do not treat the Jira report as
+the turn's final answer: as soon as it is reported, continue with whatever
+else the caller had pending. The `allowed-tools` list above only pre-approves
+those tools for this turn and does not remove any other tools. Tool discipline
+here is enforced by the rules below, not by limiting the available tool pool.
+
 All Jira access goes through the bundled helper:
 
     ~/.claude/skills/light-jira/jira.sh <command> [args]

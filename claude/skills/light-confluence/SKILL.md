@@ -11,6 +11,8 @@ description: >-
   URLs, IDs, file paths, and a short digest. Jira is out of scope. Triggers:
   "Confluenceのページを読んで", "Confluenceに投稿して", "ページを更新して",
   "CQLで検索して", "publish this to Confluence".
+context: fork
+background: false
 model: sonnet
 argument-hint: "<operation> <page URL|ID|CQL> [--in <content-file>] [--out <save-file>]"
 allowed-tools:
@@ -31,6 +33,15 @@ conversation history: everything you know is in $ARGUMENTS. If a required
 piece of information is missing (space key, parent page, target ID, content
 file path), do NOT guess — stop and return a single question listing exactly
 what is missing.
+
+Scope: this skill governs ONLY the Confluence operation named in $ARGUMENTS.
+It never becomes the caller's persona and never ends the caller's work. If it
+is ever loaded WITHOUT the fork (i.e. directly into the caller's own session),
+read every rule below as applying to the Confluence step alone: "final
+response" means "the Confluence report", the report is one step inside the
+caller's turn rather than the end of it, the caller's output language and
+pending tasks are untouched, and the surrounding work resumes immediately
+after the report.
 
 Follow the procedures below literally. Do NOT improvise a shorter path,
 especially for writes: the steps exist because deviating from them has
