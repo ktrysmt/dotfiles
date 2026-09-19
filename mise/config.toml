@@ -28,6 +28,8 @@ xh = "latest"
 buf = "latest"
 pinact = "latest"
 peco = "latest"
+terraform = "latest"
+
 
 # CLI tools (aqua/github backend)
 "aqua:Wilfred/difftastic" = "latest"
@@ -44,3 +46,6 @@ peco = "latest"
 "npm:@devcontainers/cli" = "latest"
 "npm:@anthropic-ai/sandbox-runtime" = "latest"
 "npm:agent-browser" = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = ["terraform"]
