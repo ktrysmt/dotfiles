@@ -294,21 +294,9 @@
     "defaultMode": "bypassPermissions"
   },
   "model": "opus[1m]",
-  "disableClaudeAiConnectors": true,
-  "disableBundledSkills": true,
+  "disableClaudeAiConnectors": false,
+  "disableBundledSkills": false,
   "deniedMcpServers": [
-    {
-      "serverName": "claude-in-chrome"
-    },
-    {
-      "serverName": "claude.ai Gmail"
-    },
-    {
-      "serverName": "claude.ai Google Calendar"
-    },
-    {
-      "serverName": "claude.ai Google Drive"
-    }
   ],
   "hooks": {
     "Notification": [
