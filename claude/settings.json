@@ -296,8 +296,7 @@
   "model": "opus[1m]",
   "disableClaudeAiConnectors": false,
   "disableBundledSkills": false,
-  "deniedMcpServers": [
-  ],
+  "deniedMcpServers": [],
   "hooks": {
     "Notification": [
       {
@@ -476,9 +475,9 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "breakthrough@ktrysmt": true,
+    "breakthrough@ktrysmt": false,
     "codex@openai-codex": false,
-    "eli5@claude-community": true,
+    "eli5@claude-community": false,
     "fablish@ktrysmt": true,
     "llmwiki@ktrysmt": false,
     "stop-slop-ja@ktrysmt": true
@@ -521,5 +520,9 @@
   "tui": "default",
   "skipDangerousModePermissionPrompt": true,
   "autoCompactEnabled": false,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "skillOverrides": {
+    "light-drawio": "off",
+    "spec-sync": "off"
+  }
 }

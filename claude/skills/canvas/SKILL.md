@@ -1,6 +1,7 @@
 ---
 name: canvas
-description: Render analysis, dashboards, audits, reports, comparisons, or architecture diagrams as a single HTML file (inline SVG charts + CSS, no React, no build step; optional Mermaid diagrams via a pinned CDN) instead of a wall of markdown, then open it in the browser. Triggers: "/canvas", "canvas", "キャンバス", "ダッシュボード", "dashboard", "図解して", "可視化して", "グラフィカルに", "visualize", "make it visual", "render as a page", "レポートにして", or when a result is data-dense (multi-source metrics, table comparisons, dependency/architecture maps, PR review summaries, eval results) and markdown would be hard to scan.
+description: >-
+  Render analysis, dashboards, audits, reports, comparisons, or architecture diagrams as a single HTML file (inline SVG charts + CSS, no React, no build step; optional Mermaid diagrams via a pinned CDN) instead of a wall of markdown, then open it in the browser. Triggers: "/canvas", "canvas", "キャンバス", "ダッシュボード", "dashboard", "図解して", "可視化して", "グラフィカルに", "visualize", "make it visual", "render as a page", "レポートにして", or when a result is data-dense (multi-source metrics, table comparisons, dependency/architecture maps, PR review summaries, eval results) and markdown would be hard to scan.
 model: sonnet
 ---
 
