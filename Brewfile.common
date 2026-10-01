@@ -11,6 +11,8 @@ brew "tmux"
 brew "tree-sitter-cli"
 brew "yq"
 brew "pre-commit"
+# gh is not managed by mise: its shim resolved "latest" through the GitHub API on every call
+brew "gh"
 
 # Development tools (not available in mise)
 brew "fzy"

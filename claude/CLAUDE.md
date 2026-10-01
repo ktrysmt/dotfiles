@@ -28,6 +28,11 @@
 - **Act on sufficiency**: When you have enough information to act, act — do not re-derive settled facts or narrate options you will not pursue
 - **No promissory endings**: Never end a turn on a plan or promise ("I'll now run X") — execute it before ending the turn
 - **Minor-choice autonomy**: For minor reversible choices (naming, defaults, equivalent approaches), pick a reasonable option and note it; still ask for scope changes, destructive actions, and ambiguous delegations (per Ask before delegating)
+- **Irreversible side effects need explicit consent**: Before running any operation that can make data unrecoverable — not only delete commands, but also applies, updates, syncs, overwrites and migrations whose side effects remove or replace a resource — stop and ask the user. This applies even when the user approved the overall plan, because approving a plan is not approving the loss of specific data.
+  - Inspect the effect first: read the change set / plan / dry-run (`describe-change-set`, `terraform plan`, `--dryrun`, `git push --dry-run`) and list every resource that is removed, replaced or overwritten.
+  - Data-bearing resources are: secrets and parameters, log groups, buckets and objects, databases and snapshots, KMS keys, volumes, queues/streams with retained messages, git refs and history, and any file or value that exists only in the target. Treat an unknown type as data-bearing.
+  - For each such resource, state in the question: (1) what is lost, (2) whether it can be recovered and how (e.g. CloudFormation deletes `AWS::SecretsManager::Secret` with ForceDeleteWithoutRecovery by default — no recovery window), and (3) the non-destructive alternative (DeletionPolicy Retain + resource import, snapshot/export first, backup copy). Recommend the non-destructive path unless the user says the data is disposable.
+  - "Re-enter the value later" is not a recovery plan: a value the agent did not create (credentials, webhook URLs, logs) may exist nowhere else.
 
 ## Never
 - **Delete files directly**: When a task requires file deletion, do NOT execute the deletion yourself. Instead, present the exact deletion command to the user and let them run it manually

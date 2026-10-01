@@ -19,7 +19,6 @@ ripgrep = "latest"
 fzf = "latest"
 fd  = "10.3"
 bat = "latest"
-gh = "latest"
 ghq = "latest"
 delta = "latest"
 jq = "latest"
@@ -49,3 +48,6 @@ terraform = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["terraform"]
+# Resolve "latest" from the local cache instead of querying GitHub on every shim
+# call. The unauthenticated queries hit the per-IP rate limit. Update with mise upgrade.
+prefer_offline = true
