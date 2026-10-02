@@ -673,6 +673,17 @@ sheldon() {
   return $ret
 }
 
+# ------
+# mise wrapper: pass gh's token only to mise itself (anonymous GitHub API is 60 req/h)
+# ------
+mise() {
+  if [[ -z "${MISE_GITHUB_TOKEN:-}${GITHUB_TOKEN:-}" ]] && (( $+commands[gh] )); then
+    MISE_GITHUB_TOKEN="$(command gh auth token 2>/dev/null)" command mise "$@"
+  else
+    command mise "$@"
+  fi
+}
+
 
 # --------
 # os type

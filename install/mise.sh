@@ -16,6 +16,16 @@ fi
 # Activate mise for current session
 eval "$(mise activate bash)"
 
+# Authenticate GitHub API calls to avoid the 60 req/h anonymous rate limit
+if [[ -z "${MISE_GITHUB_TOKEN:-}${GITHUB_TOKEN:-}" ]] && has_command gh; then
+  if MISE_GITHUB_TOKEN="$(gh auth token 2> /dev/null)"; then
+    export MISE_GITHUB_TOKEN
+  else
+    unset MISE_GITHUB_TOKEN
+    log_warn "gh is not authenticated; mise will use anonymous GitHub API (60 req/h)"
+  fi
+fi
+
 # Trust config file (required on first run; idempotent)
 mise trust ~/.config/mise/config.toml
 
