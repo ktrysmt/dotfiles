@@ -295,6 +295,10 @@
   },
   "model": "opus[1m]",
   "disableClaudeAiConnectors": false,
+  "skillOverrides": {
+    "light-drawio": "off",
+    "spec-sync": "off"
+  },
   "disableBundledSkills": false,
   "deniedMcpServers": [],
   "hooks": {
@@ -480,7 +484,8 @@
     "eli5@claude-community": false,
     "fablish@ktrysmt": true,
     "llmwiki@ktrysmt": false,
-    "stop-slop-ja@ktrysmt": true
+    "stop-slop-ja@ktrysmt": true,
+    "drawio@drawio": true
   },
   "extraKnownMarketplaces": {
     "claude-community": {
@@ -499,6 +504,12 @@
       "source": {
         "source": "github",
         "repo": "openai/codex-plugin-cc"
+      }
+    },
+    "drawio": {
+      "source": {
+        "source": "github",
+        "repo": "jgraph/drawio-mcp"
       }
     }
   },
@@ -520,9 +531,5 @@
   "tui": "default",
   "skipDangerousModePermissionPrompt": true,
   "autoCompactEnabled": false,
-  "agentPushNotifEnabled": true,
-  "skillOverrides": {
-    "light-drawio": "off",
-    "spec-sync": "off"
-  }
+  "agentPushNotifEnabled": true
 }
