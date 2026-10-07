@@ -8,6 +8,12 @@
 #
 # Auth: ATLASSIAN_API_KEY (required) + account email.
 #   ATLASSIAN_EMAIL overrides the email, JIRA_SITE overrides the host.
+#
+# This script is the only place that touches the key, and it never lets it
+# out: curl gets the credentials through a config file descriptor instead of
+# argv (so they are not in the process list), `raw` accepts only a fixed set
+# of curl options (so -v / --trace cannot print the Authorization header), and
+# everything printed passes through redact() on its way out.
 set -euo pipefail
 
 : "${ATLASSIAN_API_KEY:?ATLASSIAN_API_KEY is not set}"
@@ -41,7 +47,7 @@ resolve() { # accepts SRE-1234, .../browse/SRE-1234[?...], ...?selectedIssue=SRE
 api() { # api <METHOD> <path> [curl args...] -- surfaces Jira error messages, not curl exit codes
   local m="$1" p="$2"; shift 2
   local out rc=0
-  out=$(curl -s --fail-with-body -u "$EMAIL:$ATLASSIAN_API_KEY" \
+  out=$(curl -s --fail-with-body -K <(printf 'user = "%s:%s"\n' "$EMAIL" "$ATLASSIAN_API_KEY") \
     -H 'Accept: application/json' -X "$m" "https://$(site)/rest/api/2${p}" "$@") || rc=$?
   if [[ $rc -ne 0 ]]; then
     { printf '%s' "$out" | jq -r '((.errorMessages // []) + ((.errors // {}) | to_entries | map("\(.key): \(.value)")))[]' 2>/dev/null \
@@ -279,10 +285,21 @@ cmd_types() {
     | jq -r '.projects[0].issuetypes[] | "\(.name)\tsubtask=\(.subtask)"'
 }
 
-cmd_raw() { # escape hatch: raw <METHOD> <path> [curl args...]
+cmd_raw() { # escape hatch: raw <METHOD> <path> [-G] [--data-urlencode K=V]... [--data-file FILE]
   local m="${1:-GET}" p="${2:-}"; shift 2 || true
   [[ -n "$p" ]] || die "raw needs a path, e.g. /issue/ABC-1/worklog"
-  api "$m" "$p" "$@"
+  [[ "$m" =~ ^(GET|POST|PUT)$ ]] || die "raw supports GET, POST and PUT only"
+  local -a args=()
+  while [[ $# -gt 0 ]]; do # a fixed set: -v, --trace, -w and friends would print the auth
+    case "$1" in
+      -G) args+=(-G); shift ;;
+      --data-urlencode) [[ $# -ge 2 ]] || die "--data-urlencode needs a value"; args+=(--data-urlencode "$2"); shift 2 ;;
+      --data-file) [[ -s "${2:-}" ]] || die "--data-file needs a non-empty file"
+                   args+=(-H 'Content-Type: application/json' --data-binary "@$2"); shift 2 ;;
+      *) die "raw does not accept the option: $1" ;;
+    esac
+  done
+  api "$m" "$p" ${args[@]+"${args[@]}"}
 }
 
 usage() {
@@ -302,15 +319,28 @@ jira.sh <command> [args]
   link        <KEY> <type> <KEY>
   linktypes
   types       <PROJECT>
-  raw         <METHOD> <path> [curl args...]
+  raw         <GET|POST|PUT> <path> [-G] [--data-urlencode K=V]... [--data-file FILE]
 
 Bodies (description, comment) are Jira wiki markup, passed in via a file only.
 USAGE
 }
 
+redact() { # the key and its Basic auth form never leave this script, whatever a response echoes
+  LJ_EMAIL="$EMAIL" python3 -I -c '
+import base64, os, re, sys
+k = os.environ.get("ATLASSIAN_API_KEY", "")
+subs = [k, base64.b64encode((os.environ["LJ_EMAIL"] + ":" + k).encode()).decode()] if k else []
+tok = re.compile(r"ATATT[A-Za-z0-9_\-=]{8,}")
+for line in sys.stdin:
+    for s in subs:
+        line = line.replace(s, "<redacted>")
+    sys.stdout.write(tok.sub("<redacted>", line)); sys.stdout.flush()
+'
+}
+
 case "${1:-}" in
   me|get|search|comments|comment|edit|create|assign|transitions|transition|link|linktypes|types|raw)
-    c="$1"; shift; "cmd_$c" "$@" ;;
+    c="$1"; shift; "cmd_$c" "$@" 2>&1 | redact ;;
   ""|-h|--help|help) usage ;;
   *) usage >&2; exit 2 ;;
 esac

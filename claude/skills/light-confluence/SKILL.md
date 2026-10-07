@@ -19,7 +19,7 @@ allowed-tools:
   - Read
   - Write
   - Bash(mkdir:*)
-  - Bash(curl:*)
+  - Bash(~/.claude/skills/light-confluence/confluence.py:*)
   - Bash(python3:*)
   - Bash(jq:*)
   - Bash(wc:*)
@@ -56,6 +56,33 @@ corrupted live pages.
   the final response carries paths, URLs, IDs, and short digests only.
 - Report errors briefly and verbatim (first error line), not as full dumps.
 
+## Credentials — read this before any command
+
+The Atlassian API key has leaked into session transcripts repeatedly, every
+time through shell an executor wrote on the spot: `env | grep ATLASSIAN` with
+a `sed` mask that did not match, `curl $A` with the auth in an unsplit
+variable, a `-v` flag. A tool result is stored and sent to the model the
+moment it exists, so a leak cannot be undone afterwards. Therefore:
+
+- NEVER read, test, list or print a credential variable in any form: no
+  `env`, `printenv`, `set`, `export -p`, `echo $ATLASSIAN_*`, `${VAR:+...}`,
+  `[ -n "$VAR" ]`, `os.environ` dumps, and no masking with `sed`/`cut`. You
+  do not need to know whether the key is set.
+- NEVER call `curl` (or any HTTP client) against Atlassian yourself, and
+  never put the key or `$ATLASSIAN_API_KEY` in a command line.
+- All direct REST access goes through the bundled helper, which resolves the
+  site, email and key internally and redacts everything it prints:
+
+      ~/.claude/skills/light-confluence/confluence.py check
+      ~/.claude/skills/light-confluence/confluence.py get  <path> --out FILE
+      ~/.claude/skills/light-confluence/confluence.py put  <path> --data-file FILE [--out FILE]
+      ~/.claude/skills/light-confluence/confluence.py post <path> --data-file FILE [--out FILE]
+
+  `<path>` is e.g. `/wiki/api/v2/pages/<id>?body-format=storage`. Responses go
+  to `--out` files only; read them with python3 or `Read`, never `cat` a whole
+  response. `check` is the only way to test credentials. If the helper reports
+  a credential problem, stop and return that one line to the caller.
+
 ## Preconditions (resolve yourself; never ask the caller)
 
 - cloudId / site: resolve via mcp__confluence__getAccessibleAtlassianResources.
@@ -64,11 +91,9 @@ corrupted live pages.
   Confluence storage XHTML), never view / export_view / atlas_doc_format.
   Different representations differ in length by tens of percent; comparing
   across representations produces false "data loss" alarms.
-- Direct REST access (needed for reliable writes, see below): use the
-  $ATLASSIAN_API_KEY credential from the environment against
-  `https://<site>/wiki/api/v2/...`, Atlassian Cloud basic auth
-  (`-u "<account-email>:$ATLASSIAN_API_KEY"`). Resolve the site and account
-  email from getAccessibleAtlassianResources / the environment.
+- Direct REST access (needed for storage reads and reliable writes, see
+  below): only through `confluence.py` (see Credentials). It already knows the
+  site and the account email; do not look them up.
 
 ## Operations
 
@@ -76,7 +101,10 @@ Resolve page URLs to IDs first when needed (getConfluencePage accepts IDs;
 extract the ID from the URL path).
 
 1. Read a page
-   - Fetch with mcp__confluence__getConfluencePage.
+   - Fetch with mcp__confluence__getConfluencePage. When the caller asks for
+     storage format, use `confluence.py get
+     '/wiki/api/v2/pages/<id>?body-format=storage' --out <file>.json` and
+     extract `.body.storage.value` / `.version.number` / `.title` with python3.
    - Write the full body as markdown to the `--out` file. Default:
      `/tmp/light-confluence/<pageId>.md` (run `mkdir -p /tmp/light-confluence`
      first).
@@ -118,8 +146,9 @@ or a temp-file path). Always drive the body through files, guard before
 writing, and verify after. Never write a body you did not read from a file
 this run; never write a filename, path, or placeholder as the body.
 
-1. Fetch current storage → file. Get the page in STORAGE representation and
-   save it to `cur.xhtml`. Record the current version number V and the
+1. Fetch current storage → file. Get the page in STORAGE representation
+   with `confluence.py get '/wiki/api/v2/pages/<id>?body-format=storage' --out
+   cur.json` and save `.body.storage.value` to `cur.xhtml`. Record the current version number V and the
    character length L0 of the storage value. (For a brand-new create, there
    is no cur; set L0 from your intended body.)
 2. Produce `new.xhtml`.
@@ -143,14 +172,14 @@ this run; never write a filename, path, or placeholder as the body.
      title, spaceId as the API requires).
    - Assert `payload.json` is large / proportional to `new.xhtml`
      (`wc -c payload.json`); if it is tiny, ABORT — the body did not get in.
-   - PUT with curl using `--data-binary @payload.json` (the `@` sends file
-     CONTENTS) against `https://<site>/wiki/api/v2/pages/<id>` with
-     `--fail-with-body` and the auth from Preconditions. NEVER pass a path or
-     filename as the body value.
+   - PUT with `confluence.py put /wiki/api/v2/pages/<id> --data-file
+     payload.json --out put-result.json` (the helper sends the file CONTENTS
+     and refuses an empty payload). NEVER pass a path or filename as the body
+     value.
    - On HTTP 409 (version conflict): re-fetch the current version and retry
      once with the new V+1.
 5. Post-write round-trip verification — re-fetch the page fresh in STORAGE
-   format and assert ALL of:
+   format (`confluence.py get ... --out after.json`) and assert ALL of:
    - every intended NEW string is present;
    - every removed OLD string is absent;
    - no sentinel string (`PLACEHOLDER`, `file://`) is present;

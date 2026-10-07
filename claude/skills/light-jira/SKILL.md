@@ -49,8 +49,29 @@ Run it with no arguments for the exact usage. Never hand-roll curl against
 `/rest/api/*`, and never call an `mcp__*` Jira tool: the helper already
 resolves the site and credentials, filters every response down to a few lines,
 and refuses the failure modes listed under Guardrails. Its only escape hatch is
-`jira.sh raw <METHOD> <path>` for an endpoint it does not wrap — pipe that
-through `jq` yourself and never paste its raw JSON into the conversation.
+`jira.sh raw <GET|POST|PUT> <path> [-G] [--data-urlencode K=V]...
+[--data-file FILE]` for an endpoint it does not wrap; it accepts no other curl
+option. Pipe its output through `jq` yourself and never paste its raw JSON
+into the conversation.
+
+## Credentials — read this before any command
+
+The Atlassian API key has leaked into session transcripts repeatedly, every
+time through shell written on the spot: `env | grep ATLASSIAN` with a `sed`
+mask that did not match, `curl $A` with the auth in an unsplit variable, a
+`-v` flag. A tool result is stored and sent to the model the moment it
+exists, so a leak cannot be undone afterwards. Therefore:
+
+- NEVER read, test, list or print a credential variable in any form: no
+  `env`, `printenv`, `set`, `export -p`, `echo $ATLASSIAN_*`, `${VAR:+...}`,
+  `[ -n "$VAR" ]`, `os.environ` dumps, and no masking with `sed`/`cut`. You
+  do not need to know whether the key is set: `jira.sh me` is the only
+  credential test, and it says so when the key is missing.
+- NEVER put the key or `$ATLASSIAN_API_KEY` in a command line, never run the
+  helper under `bash -x` / `set -x`, and never call curl against Atlassian
+  yourself. `jira.sh` keeps the key out of argv and redacts its own output.
+- If the helper reports a credential problem, stop and tell the caller that
+  one line; do not investigate the environment.
 
 ## Hard output rules
 
@@ -64,11 +85,10 @@ through `jq` yourself and never paste its raw JSON into the conversation.
 
 ## Preconditions (resolve yourself; never ask the caller)
 
-- Credentials: `$ATLASSIAN_API_KEY` from the environment. The account email
-  falls back to `git config --global user.email`, the site to
-  `<first label of the email domain>.atlassian.net`. Override with
-  `$ATLASSIAN_EMAIL` / `$JIRA_SITE`. Never ask the caller for any of this, and
-  never print the token.
+- Credentials: resolved inside `jira.sh` (key from the environment, email
+  from `git config --global user.email`, site from the email domain). Never
+  ask the caller for any of this, and never look at it yourself (see
+  Credentials).
 - An issue is addressable by key (`ABC-123`) or by any browse / board URL —
   the helper extracts the key and the site from the URL, so pass the URL
   through as given.
