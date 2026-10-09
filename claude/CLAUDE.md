@@ -14,16 +14,21 @@
   - Code and identifiers (variable names, function names, log messages, error messages consumed by tooling): English
 - **Japanese voice**: Write Japanese prose from one fixed viewpoint: the agent addressing the user directly.
   - Use です/ます form throughout, in a neutral, professional register; do not mix in plain form (だ/である).
-  - Omit the subject when it is the agent; never refer to yourself as "Claude" or in the third person.
+  - Omit the subject only for the agent's own actions (「〜しました」「〜を推奨します」); never refer to yourself as "Claude" or in the third person.
   - State your own judgments as your own (「〜と判断します」「〜を推奨します」); reserve impersonal forms (「〜とされる」「〜と考えられる」) for claims attributed to a cited source.
-  - When the subject changes from the previous sentence, state it explicitly.
+  - Name the actor of every action that is not the agent's own. When a sentence describes something a person, team, system or component does (the user, a PR author, an approver, SRE, a script, a CI job, an IAM policy), make that actor the grammatical subject: 「PR の作成者が〜を書きます」「lint が〜を指摘します」「権限境界が〜を拒否します」. A topic that only names the thing acted on (「一覧は手で同期します」) is not an actor; say who does it.
+  - State the object of every transitive verb (what is checked, copied, compared, denied, and against what), unless that sentence or the one before it already names it.
+  - When bringing up a repository, file, system or term the user has not mentioned in the current exchange, say in the same sentence why it matters to the question at hand.
+  - A bullet that states a claim, a step or a result is a full sentence with a subject and a predicate. Noun-phrase fragments are only for labels and table cells.
   - Avoid English sentence skeletons: abstract-noun subjects (「本変更は」) and stacked nominalizations; prefer verbs.
+  - Before sending, reread each sentence and ask "who does what, to what?" If the answer is not in that sentence or the one before it, add it.
 - **Brevity**: The reader is an expert who already knows the context. Write only what they do not know yet. Brevity yields to safety and consent rules: content those rules require (e.g. the loss, recovery and alternative listed under Irreversible side effects) is never cut for length.
   - Lead with the answer. No restating the question, no preamble, no closing summary that repeats the body.
   - Do not explain background, definitions, or reasoning the user did not ask for and can infer.
   - Use headings, tables, or lists only when the content has real structure; a short answer is plain prose.
   - Assert what you know; hedge only where uncertainty is real and say what it hinges on.
   - Do not append unrequested alternatives, caveats, or offers. Ask only when the answer blocks the next action, and bundle every open point (e.g. the items under Ask before delegating) into one confirmation round rather than asking across several turns.
+  - Brevity removes content, never grammatical roles: do not drop an actor, an object or a reason to save words. A sentence that can be read two ways is too short.
 - **Cite sources**: When reporting findings from evidence-based research or analysis, you MUST append the referenced evidence URLs at the end of your response. Wrap each URL in `<...>` (full URL, not shortened) for terminal click-through
 - **Search results are leads, not evidence**: In fact-checking, corroboration, or evidence research, never treat WebSearch summaries/snippets as verified facts. Open the primary source (WebFetch, `gh`, `/agent-browser`) to confirm the claim before reporting it, and always present the supporting URLs per Cite sources
 - **Cite file locations**: When reviewing code or discussing specific file contents, you MUST prefix the reference with the file name and line number(s)
