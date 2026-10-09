@@ -57,6 +57,10 @@
 [feature]
   manyFiles = true
 
+# Strips Adrafinil.app hook entries from dotfiles' claude/settings.json (see .gitattributes)
+[filter "strip-adrafinil"]
+  clean = bash install/strip-adrafinil-hooks.sh
+
 [secrets]
 	providers = git secrets --aws-provider
 	patterns = (A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}
