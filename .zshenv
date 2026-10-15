@@ -46,6 +46,11 @@ fi
 skip_global_compinit=1
 export MEMD_THEME=catppuccin-mocha
 
+# uv: verify TLS via the OS trust store instead of bundled Mozilla roots, so the
+# Netskope CA in the keychain is trusted even when SSL_CERT_FILE is not set.
+# (Python-side Netskope workaround: install/sitecustomize.py)
+export UV_SYSTEM_CERTS=1
+
 # claude code
 # Kept here rather than in claude/settings.json: Claude Code rewrites the whole
 # user settings file from a stale in-process cache on any in-app settings change,

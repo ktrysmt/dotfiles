@@ -13,6 +13,7 @@
     "eli5@claude-community": false,
     "fablish@ktrysmt": true,
     "llmwiki@ktrysmt": false,
+    "mcp-jobcan-kintai@cc-skills": true,
     "stop-slop-ja@ktrysmt": true
   },
   "extraKnownMarketplaces": {
@@ -97,6 +98,17 @@
           }
         ],
         "matcher": "Bash|WebFetch"
+      },
+      {
+        "hooks": [
+          {
+            "command": "bash ~/.claude/hooks/gh-metadata-confirm.sh",
+            "statusMessage": "Checking gh tracker metadata...",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
       }
     ],
     "SessionEnd": [
