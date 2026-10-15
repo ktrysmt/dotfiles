@@ -48,7 +48,6 @@ export MEMD_THEME=catppuccin-mocha
 
 # uv: verify TLS via the OS trust store instead of bundled Mozilla roots, so the
 # Netskope CA in the keychain is trusted even when SSL_CERT_FILE is not set.
-# (Python-side Netskope workaround: install/sitecustomize.py)
 export UV_SYSTEM_CERTS=1
 
 # claude code

@@ -65,30 +65,6 @@ if has_command uv; then
   log_info "Setting up uv python..."
   uv python install 3.13
   uv python pin --global 3.13
-
-  # Netskope workaround (see install/sitecustomize.py): relink after every
-  # `uv python install/upgrade`, since each patch release lands in a new directory.
-  # Self-cleaning: once the root CA marks Basic Constraints critical (or Netskope
-  # is gone), our links are removed. After one such run, this block and
-  # install/sitecustomize.py can be deleted.
-  netskope_ca="/Library/Application Support/Netskope/STAgent/data/nscacert.pem"
-  netskope_fix=false
-  if [[ -f "$netskope_ca" ]] \
-    && ! openssl x509 -in "$netskope_ca" -noout -ext basicConstraints 2> /dev/null | grep -q critical; then
-    netskope_fix=true
-  fi
-  for stdlib in "$(uv python dir)"/cpython-*/lib/python3.*/; do
-    # Skip minor-version aliases (cpython-3.13-...) that symlink to a patch dir
-    [[ -L "${stdlib%/lib/python3.*/}" ]] && continue
-    dst="${stdlib}sitecustomize.py"
-    if [[ "$netskope_fix" == true ]]; then
-      link_file "${DOTFILES_DIR}/install/sitecustomize.py" "$dst"
-    elif [[ -L "$dst" ]] && [[ "$(readlink "$dst")" == "${DOTFILES_DIR}/install/sitecustomize.py" ]]; then
-      rm "$dst"
-      log_success "Unlinked (Netskope CA no longer needs workaround): $dst"
-    fi
-  done
-  unset netskope_ca netskope_fix stdlib dst
 fi
 
 log_success "mise setup complete"
