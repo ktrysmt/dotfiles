@@ -24,6 +24,10 @@ setup_git() {
     fi
   fi
 
+  # Register the clean filter named in .gitattributes in the repo-local config,
+  # since ~/.gitconfig is a per-machine copy that may lack it
+  git -C "$DOTFILES_DIR" config filter.strip-adrafinil.clean "bash install/strip-adrafinil-hooks.sh"
+
   log_success "Git configuration complete"
 }
 

@@ -1,37 +1,24 @@
 return {
   'petertriho/nvim-scrollbar',
+  -- TODO: remove after 2026-11-16, when v2 replaces v1 on main (petertriho/nvim-scrollbar#121)
+  branch = "refactor/v2",
   event = { "VeryLazy" },
-  dependencies = {
-    {
-      'kevinhwang91/nvim-hlslens',
-    },
-  },
   config = function()
-    require("hlslens").setup()
     require("scrollbar").setup({
-      excluded_buftypes = {
-        'nofile',
-      },
-      excluded_filetypes = {
-        "cmp_docs",
-        "cmp_menu",
-        "prompt",
+      exclude = {
+        buftypes = {
+          'nofile',
+        },
+        filetypes = {
+          "cmp_docs",
+          "cmp_menu",
+          "prompt",
+        },
       },
       set_highlights = true,
-      handlers = {
-        cursor = true,
-        diagnostic = true,
-        handle = true,
-        search = true,
+      marks = {
+        Search = { highlight = { fg = "gray" } },
       },
     })
-    require("scrollbar.handlers.search").setup({
-      override_lens = function() end,
-    })
-
-    vim.cmd [[
-    :hi ScrollbarSearchHandle guifg=gray
-    :hi ScrollbarSearch guifg=gray
-    ]]
   end,
 }
