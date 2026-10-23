@@ -1,0 +1,12 @@
+{
+  "name": "claude-japanese-lint",
+  "private": true,
+  "description": "textlint rules run by ~/.claude/hooks/japanese-lint.sh",
+  "dependencies": {
+    "textlint": "15.8.0",
+    "textlint-rule-max-ten": "5.0.0",
+    "textlint-rule-no-doubled-joshi": "5.1.1",
+    "textlint-rule-no-mix-dearu-desumasu": "6.0.4",
+    "textlint-rule-sentence-length": "5.2.1"
+  }
+}

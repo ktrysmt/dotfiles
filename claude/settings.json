@@ -147,6 +147,17 @@
           {
             "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh done",
             "type": "command"
+          },
+          {
+            "command": "bash ~/.claude/hooks/japanese-lint.sh",
+            "statusMessage": "Linting Japanese prose...",
+            "timeout": 30,
+            "type": "command"
+          },
+          {
+            "prompt": "You review the Japanese prose of an assistant reply. Hook input: $ARGUMENTS\n\nIf stop_hook_active is true, or last_assistant_message contains no Japanese prose, respond {\"ok\": true}.\n\nOtherwise check only the prose; ignore fenced code, inline code, URLs, file paths and table cells. Flag only clear violations of these rules:\n1. Omitted actor: a sentence describes an action by someone other than the assistant (the user, a person, a team, a script, a CI job, a tool, a system) without naming who does it, so it can be read two ways.\n2. Omitted object: a transitive verb (check, compare, copy, deny, apply, etc.) has no stated object, and neither that sentence nor the previous one names it.\n3. Term collision: a katakana word that is also the name of a Claude Code feature or tool (エージェント, スキル, タスク, フック, プラン, チーム, メモリ, ワークフロー, アーティファクト) is written without backticks, so the reader cannot tell whether the feature or the general concept is meant; or the same word is used in both senses in one reply.\n4. Calque: an English common noun translated word for word into technical-sounding Japanese (表面, 着地, 所有, figurative 経路), or a business idiom or metaphor.\nWhen unsure, allow.\n\nIf nothing is flagged, respond {\"ok\": true}. Otherwise respond {\"ok\": false, \"reason\": \"...\"}. Begin the reason with: The user has already read the reply, so do not repeat it; send only the corrected sentences, with no apology and no comment about this review. Then, for each violation, quote the sentence, name the rule number, and give a rewritten sentence.",
+            "timeout": 30,
+            "type": "prompt"
           }
         ],
         "matcher": ""

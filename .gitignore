@@ -6,5 +6,6 @@
 .ruff_cache
 __pycache__/
 claude/hooks/session_summarizer.log*
+claude/hooks/textlint/node_modules/
 claude/skills/synced/
 zsh/.keys
