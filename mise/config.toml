@@ -3,7 +3,7 @@
 # Apply with: mise install
 
 [tools]
-go = "1.25"
+go = "1.26"
 bun = "latest"
 node = "latest"
 

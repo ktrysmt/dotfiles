@@ -64,6 +64,8 @@ fi
 if has_command uv; then
   log_info "Setting up uv python..."
   uv python install 3.13
+  # Pick up new patch builds (install alone keeps an existing 3.13.x)
+  uv python upgrade 3.13
   uv python pin --global 3.13
 fi
 

@@ -7,6 +7,8 @@
 #   ./update.sh symlink  # Only update symlinks
 #   ./update.sh brew     # Only update brew packages
 #   ./update.sh mise     # Only update mise tools
+#   ./update.sh --force  # Bypass release-age holds (e.g. urgent security fixes)
+#   ./update.sh mise --force
 
 set -euo pipefail
 
@@ -111,8 +113,21 @@ step_claude() {
 # Main
 # ------------------------------------------------------------------------------
 
+enable_force() {
+  log_warn "Force mode: bypassing release-age holds"
+  # mise hides releases newer than ~/.npmrc min-release-age; 0 lifts the hold
+  export MISE_MINIMUM_RELEASE_AGE=0
+}
+
 main() {
-  local cmd="${1:-all}"
+  local cmd="all"
+  local arg
+  for arg in "$@"; do
+    case "$arg" in
+      --force) enable_force ;;
+      *) cmd="$arg" ;;
+    esac
+  done
 
   log_info "Detected OS: ${OS_TYPE}"
   log_info "Dotfiles dir: ${DOTFILES_DIR}"
@@ -147,7 +162,7 @@ main() {
       step_claude
       ;;
     *)
-      echo "Usage: $0 [all|symlink|brew|mise|os|post|claude]"
+      echo "Usage: $0 [all|symlink|brew|mise|os|post|claude] [--force]"
       exit 1
       ;;
   esac
