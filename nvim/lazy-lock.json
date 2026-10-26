@@ -43,7 +43,7 @@
   "nvim-colorizer.lua": { "branch": "master", "commit": "72a05f62c52241bc7441c820eb53946f92b2e6a4" },
   "nvim-echo-diagnostics": { "branch": "master", "commit": "14679e54d3b9a9fc0a79249adcb736ae09250947" },
   "nvim-lint": { "branch": "master", "commit": "f6230a5c06ba59e6059c14637f1dbe29a7978b9b" },
-  "nvim-lsp-file-operations": { "branch": "master", "commit": "cab4c48a69d8b11301a8326013effc2f382144c0" },
+  "nvim-lsp-file-operations": { "branch": "master", "commit": "1303184f03e5e1d1af511d1bd43accb3d823a82c" },
   "nvim-lsp-smag": { "branch": "master", "commit": "add830cb376ebe3daac3f63b7f4349c499090918" },
   "nvim-lspconfig": { "branch": "master", "commit": "77b7432d4770d23b277d37923e5a08a442d8bb07" },
   "nvim-scrollbar": { "branch": "refactor/v2", "commit": "d6d5031e92b26d3a5b1343a3bcddee4e26612abc" },
