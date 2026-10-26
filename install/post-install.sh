@@ -122,25 +122,6 @@ setup_gh_extensions() {
 }
 
 # ------------------------------------------------------------------------------
-# Claude Code hooks
-# ------------------------------------------------------------------------------
-setup_claude_hooks() {
-  log_info "Setting up Claude Code hook dependencies..."
-
-  if ! has_command mise; then
-    log_warn "mise not installed, skipping Claude Code hook dependencies"
-    return 0
-  fi
-
-  # textlint for claude/hooks/japanese-lint.sh, pinned by package-lock.json
-  local textlint_dir="${DOTFILES_DIR}/claude/hooks/textlint"
-  mise trust "${textlint_dir}/mise.toml"
-  mise -C "$textlint_dir" deps install npm || log_warn "Failed to install textlint deps"
-
-  log_success "Claude Code hook dependencies setup complete"
-}
-
-# ------------------------------------------------------------------------------
 # Main
 # ------------------------------------------------------------------------------
 main() {
@@ -149,7 +130,6 @@ main() {
   setup_go
   setup_neovim
   setup_gh_extensions
-  setup_claude_hooks
 
   log_success "Post-installation complete"
 }

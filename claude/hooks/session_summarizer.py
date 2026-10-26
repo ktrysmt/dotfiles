@@ -58,7 +58,7 @@ def call_claude_cli(prompt: str) -> str | None:
         env = os.environ.copy()
         env["CLAUDE_SUMMARIZER_RUNNING"] = "1"
         result = subprocess.run(
-            ["claude", "-p", prompt, "--model", CLAUDE_MODEL, "--output-format", "text", "--no-session-persistence"],
+            ["claude", "-p", prompt, "--model", CLAUDE_MODEL, "--output-format", "text", "--no-session-persistence", "--strict-mcp-config"],
             capture_output=True,
             text=True,
             timeout=120,

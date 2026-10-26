@@ -108,6 +108,19 @@
           }
         ],
         "matcher": "Bash"
+      },
+      {
+        "hooks": [
+          {
+            "continueOnBlock": true,
+            "if": "Edit(//**/*.md)",
+            "prompt": "You review Japanese prose that the assistant is about to write to a file. Hook input: $ARGUMENTS\n\nThe text being written is tool_input.content for Write, tool_input.new_string for Edit, and every tool_input.edits[].new_string for MultiEdit. If that text contains no Japanese prose, respond {\"ok\": true}.\n\nOtherwise check only the prose; ignore fenced code, inline code, URLs, file paths, and text inside 「」 that is quoted as an example. The goal is text a reader understands in one pass. Flag only clear problems of these kinds:\n1. Missing role: a sentence omits its actor or the object of a transitive verb, unless the actor is the assistant itself or the object is named in the same or the previous sentence; or a pronoun or bare count has no referent in the same or the previous sentence.\n2. Term collision: a katakana word that is also the name of a Claude Code feature (エージェント, スキル, タスク, フック, プラン, チーム, メモリ, ワークフロー, アーティファクト) is used for the general concept; the fix is a plain Japanese word (作業, 計画).\n3. Calque or idiom: an English common noun translated word for word (表面, 着地, 所有, figurative 経路), or a business idiom or metaphor (筋が良い, 腹落ち, 刺さる, 寄せる, 握る).\n4. Padding: a sentence or phrase that can be removed without changing the meaning, or a point stated twice.\nWhen unsure, allow.\n\nIf nothing is flagged, respond {\"ok\": true}. Otherwise respond {\"ok\": false, \"reason\": \"...\"}. Begin the reason with: The file was not written. Rewrite the flagged sentences and retry the same tool call. Then, for each violation, quote the sentence, name the rule number, and state in one sentence what is wrong and which fix the rule calls for. Do not write a rewritten sentence; the assistant rewrites it following ~/.claude/rules/japanese.md.",
+            "statusMessage": "Reviewing Japanese prose...",
+            "timeout": 30,
+            "type": "prompt"
+          }
+        ],
+        "matcher": "Write|Edit|MultiEdit"
       }
     ],
     "SessionEnd": [
@@ -146,17 +159,6 @@
           {
             "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh done",
             "type": "command"
-          },
-          {
-            "command": "bash ~/.claude/hooks/japanese-lint.sh",
-            "statusMessage": "Linting Japanese prose...",
-            "timeout": 30,
-            "type": "command"
-          },
-          {
-            "prompt": "You review the Japanese prose of an assistant reply. Hook input: $ARGUMENTS\n\nIf stop_hook_active is true, or last_assistant_message contains no Japanese prose, respond {\"ok\": true}.\n\nOtherwise check only the prose; ignore fenced code, inline code, URLs, file paths and table cells. Flag only clear violations of these rules:\n1. Omitted actor: a sentence describes an action by someone other than the assistant (the user, a person, a team, a script, a CI job, a tool, a system) without naming who does it, so it can be read two ways.\n2. Omitted object: a transitive verb (check, compare, copy, deny, apply, etc.) has no stated object, and neither that sentence nor the previous one names it.\n3. Term collision: a katakana word that is also the name of a Claude Code feature or tool (エージェント, スキル, タスク, フック, プラン, チーム, メモリ, ワークフロー, アーティファクト) is written without backticks, so the reader cannot tell whether the feature or the general concept is meant; or the same word is used in both senses in one reply.\n4. Calque: an English common noun translated word for word into technical-sounding Japanese (表面, 着地, 所有, figurative 経路), or a business idiom or metaphor.\nWhen unsure, allow.\n\nIf nothing is flagged, respond {\"ok\": true}. Otherwise respond {\"ok\": false, \"reason\": \"...\"}. Begin the reason with: The user has already read the reply, so do not repeat it; send only the corrected sentences, with no apology and no comment about this review. Then, for each violation, quote the sentence, name the rule number, and give a rewritten sentence.",
-            "timeout": 30,
-            "type": "prompt"
           }
         ],
         "matcher": ""
@@ -167,6 +169,11 @@
         "hooks": [
           {
             "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh thinking",
+            "type": "command"
+          },
+          {
+            "command": "bash ~/.claude/hooks/japanese-reminder.sh",
+            "timeout": 10,
             "type": "command"
           }
         ],

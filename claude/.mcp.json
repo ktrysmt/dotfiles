@@ -22,11 +22,6 @@
       "args": ["--directory", "", "run", "main.py"],
       "scope": "project"
     },
-    "serena": {
-      "command": "uvx",
-      "args": ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--enable-web-dashboard=false"],
-      "scope": "project"
-    },
     "o3-search": {
       "command": "npx",
       "args": ["o3-search-mcp"],

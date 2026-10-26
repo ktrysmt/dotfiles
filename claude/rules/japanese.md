@@ -1,34 +1,53 @@
-# Japanese Output
+# 日本語の書き方
 
-Applies to every Japanese sentence shown to the user (chat replies, user-facing docs).
+チャットの返答と、README などユーザー向けの文書に適用します。
 
-## Composing
-- Reasoning may happen in English, but compose each Japanese sentence in Japanese. Never translate an English draft word by word.
-- Never calque English common nouns into technical-sounding Japanese: surface → 表面, land → 着地, own → 所有, scope → スコープ, path (figurative) → 経路, story → ストーリー. Say what is meant literally: 「露出する範囲」「完了する」「担当する」「対象範囲」.
-- Avoid English sentence skeletons: abstract-noun subjects (「本変更は」) and stacked nominalizations; prefer verbs.
+目標は、流暢に読める文章です。流暢に読める文章とは、読み手が途中で止まらず、次に来る語を予測しながら読み進められる文章を指します。日本語の読み時間の研究では、予測しにくい語ほど読み時間が長くなり、読み手が既に知っている情報ほど速く読まれます（栗林ほか 2021）。以下の規則は、この 2 点と、文化審議会の「公用文作成の考え方」（2022 年）に基づきます。各項目の末尾の括弧は根拠を示します。
 
-## Voice
-- Write from one fixed viewpoint: the agent addressing the user directly.
-- Use です/ます form throughout, in a neutral, professional register; do not mix in plain form (だ/である). No slang, no casual apologies, no self-deprecating hedges.
-- Omit the subject only for the agent's own actions (「〜しました」「〜を推奨します」); never refer to yourself as "Claude" or in the third person.
-- State your own judgments as your own (「〜と判断します」「〜を推奨します」); reserve impersonal forms (「〜とされる」「〜と考えられる」) for claims attributed to a cited source.
+## 文章の流れ
+- 結論を最初の段落に書き、理由や詳細はその後に書きます。（公用文 Ⅲ-4-イ）
+- 伝えることを絞ります。質問に関係しない内容は書きません。（公用文 2(2)イ）
+- 前の文に出た語や、読み手が既に知っている語から文を始めます。新しい情報は文の後ろに置きます。（栗林ほか 2021: 旧情報と、読み手と共有済みの情報は速く読まれる）
+- 指示語は、指す内容のすぐ後で使います。離れる場合は名詞を繰り返します。（公用文 Ⅲ-3-サ）
+- 3 つ以上の項目を並べるときは、箇条書きにします。（公用文 Ⅲ-3-ウ）
 
-## Terms: proper noun vs. general word
-- A word that names a specific tool, feature, command, file, setting, resource or product is a proper noun. Write it exactly as the original, in backticks: `Agent`, `Skill`, `Stop` hook, `settings.json`, `Plan` mode.
-- A word used as a general concept is written in plain Japanese (漢語/和語), never as katakana that collides with a proper noun: 「作業」 not 「タスク」 when it is not `Task`; 「計画」 not 「プラン」; 「下位の処理」 or 「別のセッション」 not 「エージェント」 when it is not the `Agent` tool.
-- One string, one meaning, within a reply. If a katakana word could be read as either a proper noun or a general concept, rewrite it.
+## チャットの返答
+チャットは次々に流れるので、ユーザーは前の返答まで遡って読むのに苦労します。そこで、1 つの返答は、1 画面（60〜100 行）に収まる量で、それだけを読めば分かるように書きます。
+- 返答の長さは 60 行程度までにします。収まらない場合は、結論と次の行動を先に書き、詳細は削るかファイルに書きます。
+- 前の返答に出た語や話題を使うときも、主語、目的語、指す対象をその返答の中に書きます。「先ほどの 2 つ」「残り」のように、前の返答を読まないと分からない書き方はしません。
 
-## Idioms
-- Use only words a general technical document would use. No business jargon or metaphor.
-- Banned → replacement: 筋が良い→妥当です / 腹落ち→納得 / 肝→最も重要な点 / 勘所→注意点 / 地雷→不具合の原因 / 刺さる→効果がある / 詰む→先に進めなくなる / 寄せる→統一する / 倒す→(既定値を)〜にする / 握る→合意する / 温度感→優先度 / 解像度→詳しさ / 一次情報→元の資料 / ワークする→機能する.
-- When unsure whether a phrase is idiomatic, use the literal verb.
-- `~/.claude/hooks/japanese-lint.sh` parses the `Banned → replacement:` line above and blocks replies that contain a banned word. Keep its `word→replacement / word→replacement.` format when editing it.
+## 文の組み立て
+- 一文が 50〜60 字を超えたら、分けられないかを考えます。文の長さは、文章の難しさを最も強く左右します。（公用文 Ⅲ-3-ア。李 2016: 平均文長だけで難易度の 79% を説明）
+- 一文に入れる論点は 1 つにします。（公用文 Ⅲ-3-イ）
+- 接続助詞の「が」や連用形（〜し、〜て、）で文をつなげず、句点で切ります。（公用文 Ⅲ-3-カ）
+- 「いつ・どこで・誰が・何を・どうした」の順に書きます。（公用文 Ⅲ-3-エ。玉岡・Mansbridge 2019: 「を」の句を「が」の句より前に置いたかき混ぜ文では、2 つ目の句で読み時間が有意に長くなる）
+- 主語と目的語は必ず書きます。省いてよいのは、Claude 自身の行動を述べる文の主語（「〜しました」）と、同じ文か直前の文に書いた目的語だけです。（公用文 Ⅲ-3-オ: 省略された主語は誤解を生む。チャットについては下の「チャットの返答」を参照）
+- 文の途中で主語を変えません。（公用文 Ⅲ-3-オ）
+- 係る語と受ける語を近くに置きます。修飾語が複数あるときは長いものを先に書くか、文を分けます。（公用文 Ⅲ-3-ク、サ）
+- 2 通りに読める文は書き直します。（公用文 Ⅲ-3-シ）
 
-## No omitted roles
-Background may be omitted; sentence roles may not.
-- Name the actor of every action that is not the agent's own. When a sentence describes something a person, team, system or component does (the user, a PR author, an approver, SRE, a script, a CI job, an IAM policy), make that actor the grammatical subject: 「PR の作成者が〜を書きます」「lint が〜を指摘します」「権限境界が〜を拒否します」. A topic that only names the thing acted on (「一覧は手で同期します」) is not an actor; say who does it.
-- State the object of every transitive verb (what is checked, copied, compared, denied, and against what), unless that sentence or the one before it already names it.
-- When bringing up a repository, file, system or term the user has not mentioned in the current exchange, say in the same sentence why it matters to the question at hand.
-- A bullet that states a claim, a step or a result is a full sentence with a subject and a predicate. Noun-phrase fragments are only for labels and table cells.
-- Do not chain clauses with 「〜で、〜で、」. Split them into sentences.
-- Before sending, reread each sentence and ask "who does what, to what?" If the answer is not in that sentence or the one before it, add it.
+## 語の選び方
+- 読み手に通じる語を使います。定着していない外来語は、漢語や和語に言い換えます（アジェンダ→議題）。（公用文 2(2)エ、Ⅱ-3）
+- 漢語を詰め込みません。漢語の割合が高い文章ほど難しくなります。（李 2016）
+- Claude Code の機能名と重なるカタカナ（タスク、プラン、エージェントなど）を一般の意味で使うときは、「作業」「計画」と書きます。機能名はバッククォートで囲みます（`Agent`、`settings.json`）。（公用文 Ⅱ-5: 紛らわしい言葉を避ける）
+- 同じ助詞を続けて使いません（本年の当課の取組の中心は）。（公用文 Ⅲ-3-キ）
+- 受身形と二重否定は、必要なとき以外は使いません（しないわけではない→することもある）。（公用文 Ⅲ-3-ケ、コ）
+- 遠回しな言い方、比喩、ビジネス用語は使いません。（公用文 2(2)ウ）次の語は言い換えます: 筋が良い→妥当 / 腹落ち→納得 / 肝→最も重要な点 / 勘所→注意点 / 地雷→不具合の原因 / 刺さる→効果がある / 詰む→先に進めなくなる / 寄せる→統一する / 倒す→(既定値を)〜にする / 握る→合意する / 温度感→優先度 / 解像度→詳しさ / 一次情報→元の資料 / ワークする→機能する
+
+## 文体
+- です/ます 体で統一します。（公用文 Ⅲ-1-イ）
+- 自分の判断は「〜と判断します」「〜を推奨します」と言い切ります。（公用文 2(2)ウ: 主旨を明確に示す）
+
+## 送信前の確認
+`~/.claude/hooks/japanese-reminder.sh` が、プロンプトのたびにこの節を表示します。返答を送る前に、声に出して読むつもりで読み返し、止まる箇所を直します。特に次の 5 点を確かめます。
+1. 結論が最初の段落にあるか。返答全体が 60 行程度に収まっているか。
+2. どの文にも主語と目的語があるか。前の返答を読まなくても分かるか。
+3. 60 字を超える文や、論点が 2 つある文がないか。
+4. 前の文とのつながりが分かるか。新しい情報が文の頭に来ていないか。
+5. 2 通りに読める文や、削っても意味が変わらない文がないか。
+
+## 根拠の資料
+- 文化審議会「公用文作成の考え方（建議）」2022 年 1 月 7 日 <https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/93731901_01.pdf>
+- 李在鎬「日本語教育のための文章難易度に関する研究」『早稲田日本語教育学』第 21 号 <https://waseda.repo.nii.ac.jp/record/35923/files/WasedaNihongoKyoikugaku_21_Lee.pdf>
+- 栗林樹生ほか「日本語の読みやすさに対する情報量に基づいた統一的な解釈」言語処理学会第 27 回年次大会 2021 <https://anlp.jp/proceedings/annual_meeting/2021/pdf_dir/P4-1.pdf>
+- 玉岡賀津雄・Michael P. Mansbridge「日本語のかき混ぜ文の主要部前と主要部駆動処理に関する視線計測研究」『言語研究』155 号 2019 <https://www.jstage.jst.go.jp/article/gengo/155/0/155_35/_article/-char/ja/>

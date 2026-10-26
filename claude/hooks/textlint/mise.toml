@@ -1,7 +1,0 @@
-# textlint toolchain for ~/.claude/hooks/japanese-lint.sh
-# node comes from the global mise config; this file only declares the npm deps
-# Install: mise trust && mise deps install npm
-[settings]
-experimental = true
-
-[deps.npm]
