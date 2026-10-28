@@ -7,7 +7,7 @@ description: >-
   ends, unverified assumptions, and a resume command. Saves to
   ~/.claude/handoffs/<date>-<slug>.md and ALSO prints the same body as a code
   block so it can be pasted straight into the next session. Every line must
-  trace back to a tool result observed in this session; anything else is
+  trace back to a tool result or user message in this session; anything else is
   labelled unverified. Use when context is running low, when work moves to
   another session, machine, or person, or when a task is parked for later.
   Triggers: "申し送りを書いて", "引き継ぎを作って", "引き継ぎ資料をまとめて",
@@ -83,11 +83,18 @@ Default path: `~/.claude/handoffs/<YYYY-MM-DD>-<slug>.md`, using the date from
 
 ## Step 3 — Factuality gate (apply per line, before writing it)
 
-- Every fact must trace to a tool result observed in THIS session. If it cannot,
+- Every fact must trace to a tool result observed in THIS session. A user decision
+  traces to the user's message in this session instead. If neither applies,
   either move it to `## 未確認事項` or prefix it inline with `(未確認)`.
 - Write "完了" only for items whose success output (test run, command exit, gh
   response) you actually saw this session. Otherwise it is an open task.
 - Never infer file contents, branch names, PR numbers, or command results.
+- Label every decision with its provenance: user-decided, agreed elsewhere (cite the
+  URL), or agent-drafted. Only the first two go under `## 確定済みの決定`. List every
+  agent-drafted proposal (code, trees, splits, options the agent offered) under
+  `## 未レビューの下書き`, never under settled decisions, even if the user did not object.
+  The two "not settled" sections differ by kind: `## 未レビューの下書き` holds proposals
+  (what to do); `## 未確認事項` holds factual claims (what is true).
 - Cite code as `path:line`. Wrap every URL in `<...>`, full URL, never shortened.
 - The dead ends in `## 落とし穴・既知の失敗` are the highest-value section: they are
   the only part the next session cannot rediscover cheaply. Record what was tried,
@@ -114,7 +121,11 @@ commands, and command output stay verbatim.
 
 ## 確定済みの決定
 蒸し返し禁止。各項目に決めた理由を1行。
-1. <決定> — 理由: <なぜそう決めたか>
+1. <決定> — 出所: <ユーザー決定 / 合意文書の URL> — 理由: <なぜそう決めたか>
+
+## 未レビューの下書き
+Claude が作り、ユーザーがまだ判断していない案。比較の基準にしない。要件と合意文書から目標を導き直すこと。
+- <案> — 作成箇所: <path:line または会話中の提示>
 
 ## 未完タスク
 優先度順。
@@ -149,7 +160,9 @@ gh pr checkout <番号>   # または git checkout <branch>
 1. Unless `--stdout-only`, write the body to the resolved path with Write.
 2. Print the SAME body to chat inside a fenced code block, so it can be copied into
    the next session in one action. The body itself contains a bash code fence, so the
-   chat output must be wrapped in a four-backtick fence.
+   chat output must be wrapped in a four-backtick fence. This code block is exempt
+   from the ~100-line reply limit in `~/.claude/rules/japanese.md`: the user asked for
+   the full body to copy, and the body is capped by Size limits below.
 3. Close with a Japanese report of at most 3 lines: the absolute saved path, the
    generation number, and the count of open tasks plus unverified items. No emoji.
 

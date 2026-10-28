@@ -181,7 +181,7 @@
       }
     ]
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "permissions": {
     "allow": [
       "Bash(/compact)",

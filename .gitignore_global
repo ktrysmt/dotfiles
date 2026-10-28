@@ -1,5 +1,6 @@
 .DS_Store
 .claude/*.lock
+.claude/CLAUDE.md
 .claude/settings.local.json
 .serena/project.yml
 __pycache__/
