@@ -24,6 +24,11 @@ bindkey -e # general
 bindkey '^X^M' peco-select-snippet # snip
 
 # export
+# History limits must be set synchronously: until they are, /etc/zshrc's SAVEHIST=1000
+# applies, and a shell that gets input before zsh-defer runs trims HISTFILE to 1000 entries.
+export HISTFILE=${HOME}/.zsh_history
+export HISTSIZE=100000
+export SAVEHIST=100000
 export PROMPT='[%*]%B%F{green}%b %F{cyan}%c%f %(?.%F{green}.%F{red})%B%(!.#.$)%b%f '
 
 export DIRSTACKSIZE=100

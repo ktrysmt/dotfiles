@@ -186,9 +186,6 @@ bindkey -M main ' ' expand-alias
 # zsh
 export EDITOR='nvim'
 export HIST_STAMPS="yyyy/mm/dd"
-export HISTFILE=${HOME}/.zsh_history
-export HISTSIZE=100000
-export SAVEHIST=100000
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 # go
 export GOPATH=$HOME/go
