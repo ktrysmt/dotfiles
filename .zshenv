@@ -60,3 +60,12 @@ export CLAUDE_CODE_DISABLE_BUNDLED_SKILLS=1
 export CLAUDE_CODE_DISABLE_AUTO_MEMORY=1
 export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 export CLAUDE_CODE_USE_POWERSHELL_TOOL=0
+# Pin model and effort for every session, whatever /model or /effort saved into
+# settings.json (a top-level effortLevel there does not count for Opus 5.5).
+# ANTHROPIC_MODEL outranks the settings `model` key; /model and --model still
+# switch the current session. `opus` is the alias for the latest Opus.
+# CLAUDE_CODE_EFFORT_LEVEL outranks /effort, --effort and saved settings.
+# https://code.claude.com/docs/en/model-config#setting-your-model
+# https://code.claude.com/docs/en/model-config#adjust-effort-level
+export ANTHROPIC_MODEL=opus
+export CLAUDE_CODE_EFFORT_LEVEL=xhigh

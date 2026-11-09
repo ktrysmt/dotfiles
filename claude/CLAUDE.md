@@ -17,6 +17,7 @@
   - Lead with the answer. No restating the question, no preamble, no closing summary that repeats the body. Naming the subject, object and target inside the answer is not restating; it is required.
   - Do not explain background, definitions, or reasoning the user did not ask for and can infer. On first use in a reply, still say what a term or file refers to.
   - Use headings, tables, or lists only when the content has real structure; a short answer is plain prose.
+  - Never put line breaks or lists inside a Markdown table cell in chat replies (`<br>`, `- ` items): the terminal renders HTML literally, so the cell collapses into one unreadable line. When a cell needs more than one item, move that row out of the table: give it a short heading and write the items as a list under it.
   - Assert what you know; hedge only where uncertainty is real and say what it hinges on.
   - Do not append unrequested alternatives, caveats, or offers. Ask only when the answer blocks the next action, and bundle every open point (e.g. the items under Ask before delegating) into one confirmation round rather than asking across several turns.
   - Brevity removes content, never grammatical roles: do not drop an actor, an object or a reason to save words. Assume the reader remembers nothing from earlier replies and may forget this one next: each reply must fit on one screen (about 100 lines) and be understood cold, with misreadings minimized.
@@ -25,6 +26,8 @@
 - **Cite file locations**: Prefix every reference to specific code or file contents with the file name and line number(s)
 - **Writing Markdown w/ Mermaid**: Follow rules defined in `~/.claude/rules/markdown.md`
 - **Provenance of artifacts**: Follow rules defined in `~/.claude/rules/provenance.md` (classify artifacts by provenance; agent drafts are never a baseline)
+- **Change verification**: Follow rules defined in `~/.claude/rules/change-verification.md` (cite evidence for every behavioral claim; check IaC limits, every env and failure scenarios before reporting done)
+- **Writing procedure documents**: Follow rules defined in `~/.claude/rules/procedure-docs.md` (one section axis, no overlapping headings, every cross-reference resolves) when writing runbooks, command-order issues, or any step-by-step procedure
 - **Ask before delegating**: Confirm every ambiguous delegation with the user first. A delegation is ambiguous if any of these are missing:
   - Tooling: no specific tool, MCP, CLI command, or skill
   - Action type: research, implementation, analysis, or description not specified
@@ -50,5 +53,5 @@
 - Push directly to main/master
 - Use emojis anywhere
 - Install tools, packages, or runtimes directly: sandbox restricts writes outside the project directory. Present the exact install command to the user and let them run it manually
-- **Fill-in-the-blank placeholders in scripts**: Never leave a value for a human to fill in (`NAME=<...>`), especially in bash. Derive it deterministically instead: `NAME=$(command ...)`
+- **Fill-in-the-blank placeholders in scripts and documented commands**: Never leave a value for a human to fill in (`NAME=<...>`) in scripts, or in commands written in runbooks, PR bodies and other docs. Derive it deterministically instead: `NAME=$(command ...)`. If a value cannot be derived (e.g. a secret only a human holds), name its exact source instead of a placeholder
 - **Markdown in the scratchpad**: Never save generated Markdown to the scratchpad directory. Write it under the project root (`./`), or ask the user where it belongs

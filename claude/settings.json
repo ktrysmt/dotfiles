@@ -181,7 +181,11 @@
       }
     ]
   },
-  "model": "opus",
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "xhigh"
+    }
+  },
   "permissions": {
     "allow": [
       "Bash(/compact)",
