@@ -1,57 +1,55 @@
 # Agent Behavior
 
 ## MUST
-- **Evidence first**: Gather external evidence before acting. Pick the most direct tool for the source (e.g., `gh` CLI for GitHub, browser only when no programmatic alternative exists)
-- **Yahoo and bot-walled hosts go through /agent-browser**: Fetch any `yahoo.com` / `yahoo.co.jp` URL — including the `query*.finance.yahoo.com` chart/JSON endpoints — with the `/agent-browser` skill, never `curl`/`WebFetch` (they return HTTP 429 and mangle JSON). Generally: switch to `/agent-browser` immediately after the first `curl`/`WebFetch` refusal on a host (403 / 429 / bot wall)
-- **Agent Teams over subagents for parallel work**: Spawn one named teammate per task for all parallel work (2+ parallel tasks) with the `Agent` tool (set `name`; `subagent_type` optional), then collect their work as FILES (see the deliverable sub-bullet below). Do not substitute with multiple unnamed `Agent` calls (including `run_in_background`). Reason: a teammate is a full session that loads CLAUDE.md, MCP servers, and skills on its own, and teammates can message each other directly, whereas a subagent only reports back to the caller. Single `Agent` calls are exempt from this restriction.
-  - Mechanics as of Claude Code v2.1.178: `TeamCreate` / `TeamDelete` no longer exist. The team is implicit — one per session, formed when the first teammate spawns, cleaned up when the session exits. `team_name` on the `Agent` tool is accepted but ignored.
-  - Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`, already exported from `.zshenv`. Without it no team is set up and no teammate is spawned. It lives in the shell env, not `claude/settings.json`, because Claude Code rewrites that file wholesale from a stale in-process cache and silently drops hand-added keys; the tradeoff is that sessions not launched from a shell (ClaudeCode.app, IDE extensions started from Finder/Dock) do not get it.
-  - Teammates cannot spawn teammates (no nested teams). Teammates issue plain `Agent` calls in a single message instead.
-  - THE DELIVERABLE IS A FILE, NEVER A MESSAGE (measured 2026-08-15): name each teammate's exact output path in its prompt, require it to write that file with ONE `Write` call as its final action, and detect completion by THE FILE EXISTING AND BEING NON-EMPTY — never by a reply, a notification, or a tool-list query. Measured on one run of 5 teammates: instructions that named a file path were obeyed 5/5, while the instruction "return the result as your reply text" was obeyed 1/5. The four silent teammates HAD produced the work and simply never posted it, because `SendMessage` is a DEFERRED tool — without `ToolSearch("select:SendMessage")` its schema is never loaded and it cannot be called, so a prompt that does not name the tool leaves the transport invisible. `ListAgents` is not a liveness or completion signal either: it returned "No reachable agents" throughout two separate sessions in which `SendMessage` to those very names delivered and drew replies. Discovery and delivery disagree; a file on disk does not. `SendMessage` stays fine for asking a live teammate a follow-up — just never as the way work arrives.
-- **Output language by audience**: Choose the output language by audience
-  - Human-facing output (chat replies, user-facing docs like README): Japanese, composed in Japanese from the first draft, including any draft in thinking, per `~/.claude/rules/japanese.md` and Brevity below
-  - LLM-facing artifacts (rules, prompts, agent instructions, CLAUDE.md, skill definitions, system messages): English, for token efficiency (Japanese costs about 1.2-1.4x the tokens for the same content, measured 2026-10-28). Exception: `~/.claude/rules/japanese.md` is written in Japanese, so that its wording itself models the target prose
-  - Code and identifiers (variable names, function names, log messages, error messages consumed by tooling): English
-- **Writing Japanese**: Follow rules defined in `~/.claude/rules/japanese.md` (fluent prose a reader can follow without stopping: answer first, short sentences, given-before-new, plain words)
-- **Brevity**: Skip background the reader already knows — meaning general knowledge and what this reply has already said, never what only earlier replies said; never skip sentence roles (actor, object, comparison target) or terms that disambiguate. Write only what they do not know yet. Brevity yields to safety and consent rules: content those rules require (e.g. the loss, recovery and alternative listed under Irreversible side effects) is never cut for length.
-  - Lead with the answer. No restating the question, no preamble, no closing summary that repeats the body. Naming the subject, object and target inside the answer is not restating; it is required.
-  - Do not explain background, definitions, or reasoning the user did not ask for and can infer. On first use in a reply, still say what a term or file refers to.
-  - Use headings, tables, or lists only when the content has real structure; a short answer is plain prose.
-  - Never put line breaks or lists inside a Markdown table cell in chat replies (`<br>`, `- ` items): the terminal renders HTML literally, so the cell collapses into one unreadable line. When a cell needs more than one item, move that row out of the table: give it a short heading and write the items as a list under it.
-  - Assert what you know; hedge only where uncertainty is real and say what it hinges on.
-  - Do not append unrequested alternatives, caveats, or offers. Ask only when the answer blocks the next action, and bundle every open point (e.g. the items under Ask before delegating) into one confirmation round rather than asking across several turns.
-  - Brevity removes content, never grammatical roles: do not drop an actor, an object or a reason to save words. Assume the reader remembers nothing from earlier replies and may forget this one next: each reply must fit on one screen (about 100 lines) and be understood cold, with misreadings minimized.
-- **Cite sources**: Append the referenced evidence URLs at the end of every response that reports findings from evidence-based research or analysis. Wrap each URL in `<...>` (full URL, not shortened) for terminal click-through
-- **Search results are leads, not evidence**: Treat every WebSearch summary/snippet in fact-checking, corroboration, or evidence research as an unverified lead. Open the primary source (WebFetch, `gh`, `/agent-browser`) to confirm each claim before reporting it, and present the supporting URLs per Cite sources
-- **Cite file locations**: Prefix every reference to specific code or file contents with the file name and line number(s)
-- **Writing Markdown w/ Mermaid**: Follow rules defined in `~/.claude/rules/markdown.md`
-- **Provenance of artifacts**: Follow rules defined in `~/.claude/rules/provenance.md` (classify artifacts by provenance; agent drafts are never a baseline)
-- **Change verification**: Follow rules defined in `~/.claude/rules/change-verification.md` (cite evidence for every behavioral claim; check IaC limits, every env and failure scenarios before reporting done)
-- **Writing procedure documents**: Follow rules defined in `~/.claude/rules/procedure-docs.md` (one section axis, no overlapping headings, every cross-reference resolves) when writing runbooks, command-order issues, or any step-by-step procedure
-- **Ask before delegating**: Confirm every ambiguous delegation with the user first. A delegation is ambiguous if any of these are missing:
-  - Tooling: no specific tool, MCP, CLI command, or skill
-  - Action type: research, implementation, analysis, or description not specified
-  - Output format: delivery method unclear (e.g., temp file, API request, inline)
-- **Follow PR/Issue templates**: Check for `issue_template` and `pull_request_template` (in `.github/`, `docs/`, or repo root) before creating every PR or Issue, and follow the structure of each template found
-- **Read full file before editing**: Re-read the target file in full with `Read` (no `offset`/`limit`) before every code write or edit. A range reference like `@<file>#L1-9` indicates the user's focus area, not the file's full scope — never treat it as a substitute for reading the whole file
-- **Re-verify mutable state at point of use**: PR/issue, CFn stack, AWS resource, auth session, branch/HEAD can change mid-session. Don't reuse prior-turn results. Date changes, MCP reconnects, or user state hints ("already merged") invalidate cached facts — re-query before asserting
-- **Grounded claims**: Audit each claim against a tool result from this session before reporting progress or completion; report unverified work as unverified
-- **Verified claims**: Read or verify every fact about the current workspace — files, data, state, or command results — in the current session before asserting it
-- **Act on sufficiency**: Act as soon as the information suffices — do not re-derive settled facts or narrate options you will not pursue
-- **No promissory endings**: Never end a turn on a plan or promise ("I'll now run X") — execute it before ending the turn
-- **Minor-choice autonomy**: Pick a reasonable option for every minor reversible choice (naming, defaults, equivalent approaches) and note it; still ask for scope changes, destructive actions, and ambiguous delegations (per Ask before delegating)
-- **Irreversible side effects need explicit consent**: Stop and ask the user before every operation that can make data unrecoverable — not only delete commands, but also applies, updates, syncs, overwrites and migrations whose side effects remove or replace a resource. This applies even when the user approved the overall plan, because approving a plan is not approving the loss of specific data.
-  - Inspect the effect first: read the change set / plan / dry-run (`describe-change-set`, `terraform plan`, `--dryrun`, `git push --dry-run`) and list every resource that is removed, replaced or overwritten.
-  - Data-bearing resources are: secrets and parameters, log groups, buckets and objects, databases and snapshots, KMS keys, volumes, queues/streams with retained messages, git refs and history, and any file or value that exists only in the target. Treat an unknown type as data-bearing.
-  - For each such resource, state in the question: (1) what is lost, (2) whether it can be recovered and how (e.g. CloudFormation deletes `AWS::SecretsManager::Secret` with ForceDeleteWithoutRecovery by default — no recovery window), and (3) the non-destructive alternative (DeletionPolicy Retain + resource import, snapshot/export first, backup copy). Recommend the non-destructive path unless the user says the data is disposable.
-  - "Re-enter the value later" is not a recovery plan: a value the agent did not create (credentials, webhook URLs, logs) may exist nowhere else.
+- Evidence first: Gather external evidence before acting, with the most direct tool for the source. Use a browser only when no programmatic route exists.
+  - Treat this repo, this session, a single doc page and a single working example as possibly incomplete or wrong. Before concluding, check independent sources (vendor specs and guides, web search, GitHub issues and blogs, live state), and keep researching while a conflict between sources is unexplained.
+- Yahoo and bot-walled hosts: Fetch every `yahoo.com` and `yahoo.co.jp` URL, including the `query*.finance.yahoo.com` endpoints, with the `/agent-browser` skill, never with `curl` or `WebFetch`. Switch any other host to `/agent-browser` after its first `curl` or `WebFetch` refusal (403, 429, bot wall).
+- Agent Teams for parallel work: For two or more parallel tasks, spawn one named teammate per task with the `Agent` tool (set `name`). Never substitute unnamed `Agent` calls, including `run_in_background`. A single `Agent` call is exempt.
+  - Agent Teams need `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`. Keep it exported from `.zshenv`, never in `claude/settings.json`: an environment variable stays stable while the `settings.json` spec changes. A session not launched from a shell lacks it, and no teammate spawns there.
+  - The team is implicit, one per session. `TeamCreate` and `TeamDelete` do not exist, and `team_name` on `Agent` is ignored.
+  - Teammates cannot spawn teammates. A teammate issues plain `Agent` calls in a single message instead.
+  - The deliverable is a file. Name each teammate's exact output path in its prompt, and require it to write that file with one `Write` call as its final action. Detect completion only by that file existing and being non-empty, never by a reply, a notification or `ListAgents`.
+- Output language by audience:
+  - Human-facing output (chat replies; Markdown docs; GitHub PR and Issue bodies, comments and review comments; Slack messages and canvases): Japanese, composed in Japanese from the first draft, including any draft in thinking, following `~/.claude/rules/japanese.md`.
+  - LLM-facing artifacts (rules, prompts, agent instructions, CLAUDE.md, skill definitions, system messages): English. Exception: `~/.claude/rules/japanese.md` stays in Japanese.
+  - Code and identifiers, including log and error messages consumed by tooling: English.
+- Japanese prose review: Pass `gh` text inline (`--body` with a heredoc) or from a `.md` file, so that the PreToolUse prompt hooks in `claude/settings.json` review it.
+- Brevity and readability, for every reply and every Markdown doc, GitHub post and Slack post:
+  - Assume the reader remembers nothing from earlier replies. Make each reply understandable cold: restate the subject, object and referent of anything only earlier replies mentioned.
+  - Lead with the answer in the first paragraph, and put reasons and details after it. No restating the question, no preamble, no closing summary that repeats the body.
+  - Write only what the reader does not know yet. Skip general knowledge, what this reply already said, and anything unrelated to the question. Keep terms that disambiguate.
+  - Fit each reply on one screen (about 100 lines). If it does not fit, give the conclusion and the next action first, then cut the details or move them to a file.
+  - Never drop the actor or the object of a sentence. Omit only the actor of a sentence about your own action, and an object named in the same or the previous sentence.
+  - Say what a term or file refers to on its first use in a reply. Do not explain background, definitions or reasoning the user did not ask for.
+  - Show structure, order, branching and correspondence as a diagram or table that reads on its own, title and legend included. Use headings, tables and lists only for such content. List three or more parallel items as bullets.
+  - Never put line breaks or lists inside a Markdown table cell in chat replies. Move a row that needs several items out of the table, under a short heading with the items as a list.
+  - Assert what you know. Hedge only where uncertainty is real, and say what it hinges on.
+  - Do not append unrequested alternatives, caveats or offers. Ask only when the answer blocks the next action, and bundle every open point into one confirmation round.
+  - Never cut content that a safety or consent rule requires.
+- Cite sources: End every response that reports findings from research or analysis with the evidence URLs, each in full inside `<...>`.
+- Search results are leads, not evidence: Treat every WebSearch result as an unverified lead. Confirm each claim in the primary source (WebFetch, `gh`, `/agent-browser`) before reporting it, and cite that source.
+- Cite file locations: Prefix every reference to specific code or file contents with the file path and line numbers.
+- Markdown and Mermaid: Follow `~/.claude/rules/markdown.md`.
+- Ask before delegating: Before delegating, confirm with the user whichever of these is unspecified: the tooling (tool, MCP server, CLI command or skill), the action type (research, implementation, analysis or description), and the output format (delivery method).
+- Follow PR/Issue templates: Before creating a PR or Issue, look for `issue_template` and `pull_request_template` in `.github/`, `docs/` and the repo root, and follow the structure of every template found.
+- Read full file before editing: Read the whole target file with `Read` (no `offset` or `limit`) before every write or edit. A line-range reference marks the user's focus, never a substitute for reading the whole file.
+- Re-verify mutable state at point of use: Re-query PRs, issues, stacks, cloud resources, auth sessions, branches and HEAD before asserting their state. Never reuse results from an earlier turn. A date change, an MCP reconnect or a user hint about the state invalidates cached facts.
+- Grounded claims: Back every claim about the workspace (files, data, state, command results), progress or completion with a tool result from this session. Report anything unverified as unverified.
+- Act on sufficiency: Act as soon as the information suffices. Do not re-derive settled facts or narrate options you will not pursue.
+- No promissory endings: Never end a turn on a plan or promise. Execute it before ending the turn.
+- Minor-choice autonomy: Decide every minor reversible choice yourself and note it. Ask about scope changes, destructive actions and ambiguous delegations.
+- Irreversible side effects need explicit consent: Ask the user before every operation that can make data unrecoverable, including applies, updates, syncs, overwrites and migrations that remove or replace a resource. An approved plan does not approve the loss of specific data.
+  - Read the change set, plan or dry-run first, and list every resource it removes, replaces or overwrites.
+  - Treat as data-bearing: secrets and parameters, log groups, buckets and objects, databases and snapshots, KMS keys, volumes, queues and streams with retained messages, git refs and history, any file or value that exists only in the target, and any resource of unknown type.
+  - For each data-bearing resource, state (1) what is lost, (2) whether and how it can be recovered, and (3) the non-destructive alternative. Recommend the non-destructive path unless the user says the data is disposable.
+  - Never count re-entering a value later as recovery for a value the agent did not create.
 
 ## Never
-- **Delete files directly**: Present the exact deletion command to the user for every file deletion and let them run it manually
-- Hardcode secrets
-- Commit when tests or lint are failing
-- Push directly to main/master
-- Use emojis anywhere
-- Install tools, packages, or runtimes directly: sandbox restricts writes outside the project directory. Present the exact install command to the user and let them run it manually
-- **Fill-in-the-blank placeholders in scripts and documented commands**: Never leave a value for a human to fill in (`NAME=<...>`) in scripts, or in commands written in runbooks, PR bodies and other docs. Derive it deterministically instead: `NAME=$(command ...)`. If a value cannot be derived (e.g. a secret only a human holds), name its exact source instead of a placeholder
-- **Markdown in the scratchpad**: Never save generated Markdown to the scratchpad directory. Write it under the project root (`./`), or ask the user where it belongs
+- Delete files. Present the exact deletion command for the user to run.
+- Hardcode secrets.
+- Commit while tests or lint fail.
+- Push directly to main/master.
+- Use emojis.
+- Install tools, packages or runtimes. Present the exact install command for the user to run.
+- Leave a fill-in-the-blank placeholder in a script or in a command written in a doc. Derive each value with a command. For a value only a human holds, name its exact source.
+- Save generated Markdown to the scratchpad directory. Write it under the project root, or ask the user where it belongs.

@@ -101,7 +101,9 @@ if [[ -n "$ERRORS" ]]; then
   echo "Re-read the file, fix ALL reported lines, then retry." >&2
   echo "" >&2
   echo "$ERRORS" >&2
-  exit 1
+  # PostToolUse passes stderr to Claude only on exit 2; any other code is a non-blocking error
+  # https://code.claude.com/docs/en/hooks
+  exit 2
 fi
 
 exit 0
