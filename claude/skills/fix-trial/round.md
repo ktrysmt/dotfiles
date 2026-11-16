@@ -1,26 +1,31 @@
-# fix-trial: one round of a trial
+# fix-trial: the rounds of a trial
 
-You run one round of a fix trial for one review finding, inside the trial
-worktree your prompt names. Round 0 reproduces the finding's consequence on the
-base revision. Round k (k >= 1) applies fix iteration k, observes it and
-re-reviews it. Other agents ran the earlier rounds of this trial; everything you
-need from them is in the worktree and in the previous round's state file. Do
-not look for their transcripts.
+You run one fix trial for one review finding, inside the trial worktree your
+prompt names. A trial is a sequence of rounds that you run in order in this one
+session: round 0 reproduces the finding's consequence on the base revision, and
+round k (k >= 1) applies fix iteration k, observes it and re-reviews it. After
+round 0, run round 1, 2, and so on, until a round's decision is anything other
+than `continue`.
 
 | Round | Steps run, in order |
 |---|---|
 | 0 | 1, 2, then 8 if step 2 stops the trial, then 9 |
-| k >= 1 | 1, 3, 4, 5, 6, 7, then 8 if step 7 stops the trial, then 9 |
+| k >= 1 | 1, 3, 4 (again after each repair), 5, 6, 7, then 8 if step 7 stops the trial, then 9 |
 
 Your prompt gives the finding, the sibling context path, the context file, the
 base sha, the run directory, the baseline file `<run dir>/baseline.json`,
-`--max-iter`, whether `--allow-setup` was given, the previous round's state file
-(round k >= 1 only), this round's state file path, and the trial's result file
+`--max-iter`, whether `--allow-setup` was given, and the trial's result file
 path.
+
+You keep your own context from round to round. The round record and the state
+file that step 9 writes are not your memory; they are where another agent
+resumes the trial if you are interrupted (see Resuming). If your context has
+been compacted and no longer holds an earlier round's details, Read the latest
+state file as Resuming describes.
 
 ## Rules
 
-The Hard rules of fix-trial's SKILL.md bind you. The ones that apply to a round
+The Hard rules of fix-trial's SKILL.md bind you. The ones that apply to a trial
 are repeated here, so you need not read that file.
 
 - Read the context file first. It holds what the change is meant to do, the
@@ -111,23 +116,14 @@ byproduct. Exit code 1 from `--no-index` means "differences found".
 ## Steps
 
 1. Start the round.
-   - Confirm `git rev-parse HEAD` equals the base sha.
-   - Round 0: confirm `git status --porcelain` is empty.
-   - Round k >= 1: Read the previous state file. It holds the chain so far, the
-     issue ledger, and, in `next`, what this round must address. Read an
-     earlier round record only when the state does not settle a question you
-     face.
-   - Round k >= 1: build the cumulative patch into
-     `<run dir>/<finding id>.fix.<k>.start.patch` and compare it with the
-     previous state's `patch` using `cmp`. A difference means the worktree
-     changed between rounds. If your prompt says this round is resumed, the
-     difference is your own unfinished work: continue from the first unfinished
-     step. Otherwise record the difference, set `decision` to
-     `worktree-changed`, and go to step 8.
-   - Round k >= 1: Read the baseline file. It holds, per check and scope, the
+   - Round 0: confirm `git rev-parse HEAD` equals the base sha, and
+     `git status --porcelain` is empty.
+   - Round 1: Read the baseline file. It holds, per check and scope, the
      command to run, its condition, whether it is usable, and the failures it
      reports on base. Step 0 of the main session ran every check on base once;
      never run one on base again, except as step 4 allows.
+   - Round k >= 1: the previous round's `next` says what this round must
+     address.
 
 2. Reproduce on base (round 0). Write the reproduction as a trial check that
    shows the claimed consequence. Reproduce the consequence, not the condition:
@@ -165,7 +161,7 @@ byproduct. Exit code 1 from `--no-index` means "differences found".
 
 3. Apply the fix. In round 1, implement `fix`, or 試行者の案 when there is none,
    with the smallest change that does it. In later rounds, first add a trial
-   check for each still-present path in the previous state's `next`, and
+   check for each still-present path in the previous round's `next`, and
    confirm that it fails on the current state; then revise the fix as `next`
    says. Save the cumulative patch to `<run dir>/<finding id>.fix.<k>.patch`.
 
@@ -177,7 +173,7 @@ byproduct. Exit code 1 from `--no-index` means "differences found".
      reports (test name, rule and file), not by raw text, because paths differ
      between worktrees. List the new failures; each one is an issue for step 6.
    - A scope or condition the fix reaches that the baseline file lacks: look in
-     the previous state's `extra_baselines`. If it is not there either, run the
+     the `extra_baselines` of earlier rounds. If it is not there either, run the
      check once against a base extract
      (`git archive <base sha> | tar -x -C <run dir>/<finding id>.observe.<k>.base/`),
      and add the result to `extra_baselines`.
@@ -185,10 +181,26 @@ byproduct. Exit code 1 from `--no-index` means "differences found".
      (`git diff --name-status <base sha>`, statuses M, D, R). For each one that is
      a test or check definition by the repository's own naming convention (state
      the command that shows the convention), show the hunk. A deleted test, a
-     removed assertion, or a loosened expectation fails the round and is
-     reported as such; it is never a way to make a check pass.
+     removed assertion, or a loosened expectation is a failure of the fix and
+     is reported as such; it is never a way to make a check pass.
    - A changed expectation that the fix genuinely requires is a behaviour change.
      Record it as an issue caused by the fix, not as a passing check.
+   - Repair before the re-review. A failing trial check, a new check failure
+     outside the trial check files, or a weakened test means the post-change
+     state is already known to be broken, and a re-review of it is spent on a
+     state the next change replaces. Then do not go to step 5 yet:
+     - Change the fix with the smallest change that removes those failures and
+       keeps the fix's intent. Never edit a trial check or loosen a
+       pre-existing test to do it.
+     - Save the cumulative patch to
+       `<run dir>/<finding id>.fix.<k>.repair<n>.patch`, and run this step
+       again, with `.repair<n>` appended to each output's label.
+     - At most two repairs per round. A repair does not count toward
+       `--max-iter`. Failures left after the second repair go on to step 5,
+       and to step 6 as issues.
+     - Each failure a repair removed still goes into the ledger as a
+       caused-by-fix issue, closed in this round, because it shows what the fix
+       as first written broke. Step 7 does not count it as open.
 
 5. Re-review the post-change state. Invoke the `change-review` skill. If the
    `Skill` tool is unavailable, Read `~/.claude/skills/change-review/SKILL.md`
@@ -202,7 +214,7 @@ byproduct. Exit code 1 from `--no-index` means "differences found".
    - `context:` the context file path from your prompt
    - `axes:` round 1 — omit, so all four canonical axes run, because the first
      round is the one most likely to surface what the original review missed.
-     Later rounds — the `axes` in the previous state's `next`.
+     Later rounds — the `axes` in the previous round's `next`.
    - `findings:` `<run dir>/<finding id>.review.<k>.known.json`, which you write
      first: the sibling context, the original finding, and every entry of the
      issue ledger, so none is raised again as new
@@ -226,10 +238,11 @@ byproduct. Exit code 1 from `--no-index` means "differences found".
    because a teammate cannot spawn teammates. Wait for the `output:` file.
 
 6. Classify every issue: the re-review's findings and the new check failures
-   from step 4. Classify the issue, not the path it travels: whether this
-   issue holds on base decides, whatever label change-review gave it. Check it
-   on base by reading the cited lines with `git show <base sha>:<path>`, or by
-   running its reproduction against a base extract.
+   that no repair in step 4 removed. Classify the issue, not the path it
+   travels: whether this issue holds on base decides, whatever label
+   change-review gave it. Check it on base by reading the cited lines with
+   `git show <base sha>:<path>`, or by running its reproduction against a base
+   extract.
    - still-present: the original consequence still occurs, through a path that
      also exists on base. Record the path.
    - caused-by-fix: the issue does not hold on base and holds after the fix.
@@ -274,9 +287,7 @@ byproduct. Exit code 1 from `--no-index` means "differences found".
    different approach that the evidence points to.
    Any decision other than `continue` goes to step 8; `continue` goes to step 9.
 
-8. Set the verdict. A trial stopped by `worktree-changed` is 未確認: the
-   deciding fact is what changed the worktree between rounds, and the user
-   holds it; skip Parts A and B. Otherwise set it in two parts.
+8. Set the verdict, in two parts.
 
    Part A, does the consequence matter? Evaluated first; the first match wins.
 
@@ -310,46 +321,26 @@ byproduct. Exit code 1 from `--no-index` means "differences found".
 
 9. Write the round's files in this order, each with one `Write` call. Write no
    drafts or intermediate copies. Details go into the round record, which is
-   written once and never copied; the state file carries only what the next
-   round needs and cites the records by path.
+   written once and never copied; the state file carries only what a resuming
+   agent needs and cites the records by path.
    - The round record `<run dir>/<finding id>.round.<k>.json`: what this round
      did and saw.
      - Round 0: the reproduction (command, exit code, output path, last link
        reached, first link not materialized) and `path_search` (the commands,
        their output files, the number of call sites and entry points).
      - Round k >= 1: the patch path, the trial check results, the check
-       results against the baseline, the weakening findings, the review path,
-       the classification path, and this round's hook messages and
-       hand-generated files.
-   - When `decision` is anything other than `continue`, the result file. Build
-     it from the state and this round's record; do not read earlier round
-     records for it. A JSON object with:
-     - `id`, `base`, `worktree` (path), `verdict`, `verdict_part_b` (for
-       未確認), `severity`, `severity_reason`, `residual`
-     - `reproduction`: the step 2 command, exit code, last link reached, and
-       the number of call sites and entry points
-     - `trial_checks`: path, location kind and hash of each, with any
-       replacement
-     - `chain`: `first_observation`, `fixes_tried` (array, empty when stopped at
-       step 2), `what_happened` (array, round 0 first), `revised_understanding`
-     - `unmaterialized_links`: each with the deciding fact and who holds it
-     - `iterations`: the paths of the round records, round 0 first
-     - `residual_issues` (残課題), `adoption_conditions` (rollout and
-       outside-worktree issues), `adoption_notes` (trial-artifact issues),
-       `pre_existing`: from the ledger, each with its location, one-line claim
-       and evidence path
-     - `checks_not_run`: each 実行できず check from the baseline file, with the
-       error and setup command
-     - `hand_generated`, `hook_messages`, `byproducts` (the file path)
-     - `final_patch`: the path of the last cumulative patch, or null
-   - Last, as your final action, this round's state file. The next round starts
-     from it with no other memory of this round. Copy the previous state
-     forward, extend it, and never drop an entry an earlier round wrote. It
-     holds these keys and no others:
+       results against the baseline, the weakening findings, the repairs (per
+       repair: the failures it addressed, its patch path and its observation
+       outputs), the review path, the classification path, and this round's
+       hook messages and hand-generated files.
+   - This round's state file `<run dir>/<finding id>.state.<k>.json`. A
+     resuming agent starts from it with no other memory of the trial. Copy the
+     previous state forward, extend it, and never drop an entry an earlier
+     round wrote. It holds these keys and no others:
      - `round`: k
      - `decision`: `continue`, `withdrawn`, `converged`, `oscillation`,
-       `max-iter`, `not-closable` or `worktree-changed`
-     - `patch`: the cumulative patch saved in step 2 or step 3
+       `max-iter` or `not-closable`
+     - `patch`: the last cumulative patch saved in step 2, 3 or 4
      - `rounds`: the round record paths so far
      - `reproduction`: one line with the command, exit code, last link reached,
        and the call-site and entry-point counts
@@ -369,3 +360,43 @@ byproduct. Exit code 1 from `--no-index` means "differences found".
      - `next`, for `continue` only
      A state file past about 15 KB is carrying details that belong in a round
      record.
+   - When `decision` is anything other than `continue`, the result file, as the
+     trial's final action. Build it from the state and this round's record; do
+     not read earlier round records for it. A JSON object with:
+     - `id`, `base`, `worktree` (path), `verdict`, `verdict_part_b` (for
+       未確認), `severity`, `severity_reason`, `residual`
+     - `reproduction`: the step 2 command, exit code, last link reached, and
+       the number of call sites and entry points
+     - `trial_checks`: path, location kind and hash of each, with any
+       replacement
+     - `chain`: `first_observation`, `fixes_tried` (array, empty when stopped at
+       step 2), `what_happened` (array, round 0 first), `revised_understanding`
+     - `unmaterialized_links`: each with the deciding fact and who holds it
+     - `iterations`: the paths of the round records, round 0 first
+     - `residual_issues` (残課題), `adoption_conditions` (rollout and
+       outside-worktree issues), `adoption_notes` (trial-artifact issues),
+       `pre_existing`: from the ledger, each with its location, one-line claim
+       and evidence path
+     - `checks_not_run`: each 実行できず check from the baseline file, with the
+       error and setup command
+     - `hand_generated`, `hook_messages`, `byproducts` (the file path)
+     - `final_patch`: the path of the last cumulative patch, or null
+   When `decision` is `continue`, start round k+1 at step 1.
+
+## Resuming
+
+Your prompt says the trial is resumed when you take over from an agent that
+stopped. Then do the following in place of step 1 of the round you resume at,
+because that round's work may already have changed the worktree:
+
+- Confirm `git rev-parse HEAD` equals the base sha.
+- Read the latest state file, `<run dir>/<finding id>.state.<j>.json` with the
+  highest j present. It holds the chain so far, the issue ledger, and, in
+  `next`, what round j+1 must address. Read an earlier round record only when
+  the state does not settle a question you face. With no state file, resume at
+  round 0.
+- Resuming at round 1 or later: Read the baseline file, as step 1 says for
+  round 1.
+- Resume at round j+1. Artifacts of that round that already exist are the
+  stopped agent's unfinished work: continue from the first step whose artifact
+  is missing, and relaunch only workers whose output file is missing or empty.

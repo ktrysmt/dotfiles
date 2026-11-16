@@ -5,8 +5,9 @@ description: >-
   instead of imagining them. For each finding, in its own git worktree: show
   the claimed consequence on the base revision, apply the proposed fix, check
   mechanically that the reproduction now passes, existing checks still pass and
-  no existing test was weakened, then re-review the post-change state with the
-  change-review skill in local mode. Every new issue is classified (caused by
+  no existing test was weakened (repairing the fix first when they do not),
+  then re-review the post-change state with the change-review skill in local
+  mode. Every new issue is classified (caused by
   the fix, still present, pre-existing, rollout-only, outside the worktree,
   trial artifact, noise), and the loop repeats until no fix-caused issue
   remains, the fixes oscillate, or the iteration limit is reached. Returns a
@@ -39,15 +40,16 @@ the state that results. The chain has four directions, and a trial covers each:
 | Sideways | Does the same consequence arise through another path? | round.md step 2 path search, re-review question 1 |
 | Backward | Why is the code the way it is; which constraint does it satisfy? | Re-review question 3 (round.md step 5) |
 
-A trial runs as a sequence of rounds, each a new agent: round 0 reproduces the
-finding on base, and round k applies and reviews fix iteration k. No agent
-carries the transcript of an earlier round; the worktree and a state file in the
-run directory carry what the next round needs. This file is the main session's
-procedure. Each round reads only `~/.claude/skills/fix-trial/round.md`.
+A trial runs as one agent that works through a sequence of rounds: round 0
+reproduces the finding on base, and round k applies and reviews fix iteration
+k. At the end of every round the agent writes a round record and a state file
+to the run directory, so that an interrupted trial can be resumed from files.
+This file is the main session's procedure. Each trial reads only
+`~/.claude/skills/fix-trial/round.md`.
 
 ## Hard rules
 
-These bind the main session. round.md repeats the ones that bind a round; change
+These bind the main session. round.md repeats the ones that bind a trial; change
 both files together.
 
 - The user's working tree is never touched. Every edit happens inside a trial
@@ -94,7 +96,7 @@ both files together.
 | PR URL or number | The findings are about that PR: the base is its head sha. |
 | `--limit N` | Trial at most N findings (default 3). |
 | `--max-iter N` | Fix rounds per finding before stopping (default 3). |
-| `--parallel N` | Rounds running at once (default 3). One finding never has two rounds running. |
+| `--parallel N` | Trials running at once (default 3). |
 | `--allow-setup` | See Hard rules. |
 | `siblings: <path>` | Set by change-review's deep trial: every surviving finding of the originating review, used as dedup context. |
 | `context: <path>` | Set by change-review's deep trial: its context file. Otherwise Step 0 writes one. |
@@ -171,63 +173,42 @@ labelled 試行者の案.
    output path, the baseline failures, and for 実行できず the error and the
    setup command.
 
-## Step 1: Run the rounds (main session)
+## Step 1: Run the trials (main session)
 
-Each gated finding runs as a sequence of rounds in the worktree Step 0 created
-for it: round 0, then rounds 1, 2, and so on up to `--max-iter`. Each round is a
-new agent, so no agent's context grows with the length of the trial. The rounds
-of one finding run one after another; rounds of different findings run in
-parallel.
+Each gated finding runs as one trial, in the worktree Step 0 created for it.
+Launch each trial as a named teammate with the `Agent` tool, without
+`isolation`, named `trial-<finding id>`. If the name is already taken in this
+session, append the run id. Keep at most `--parallel` trials running; when one
+finishes, launch the next waiting finding. If Agent Teams is unavailable
+(`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` unset), run the trials one at a time as
+single `Agent` calls.
 
-Launch each round as a named teammate with the `Agent` tool, without
-`isolation`, named after what the round does:
+Each trial's prompt carries:
 
-| Round | Name | What it does |
-|---|---|---|
-| 0 | `<finding id>-reproduce` | Reproduces the claimed consequence on base |
-| k >= 1 | `<finding id>-fix<k>` | Applies fix k, observes it, and re-reviews the result |
-
-A finding that needs three fixes therefore shows up as four agents, for
-example `F-B-reproduce`, `F-B-fix1`, `F-B-fix2` and `F-B-fix3`. Keep at most
-`--parallel` rounds running. If a name is already taken in this session, append
-the run id.
-If Agent Teams is unavailable (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` unset),
-run the rounds one at a time as single `Agent` calls.
-
-Each round's prompt carries:
-
-- "Read `~/.claude/skills/fix-trial/round.md` in full and run round <k> of the
-  trial below. Your trial worktree is <path>. Run every command as
-  `cd <path> && ...`, and never write outside it except under the run
-  directory."
+- "Read `~/.claude/skills/fix-trial/round.md` in full and run the trial below,
+  from round 0 until a round decides anything other than `continue`. Your trial
+  worktree is <path>. Run every command as `cd <path> && ...`, and never write
+  outside it except under the run directory."
 - The finding object, verbatim, and the sibling context path.
 - The base sha, the baseline file `<run dir>/baseline.json`, `--max-iter`, and
   whether `--allow-setup` was given.
-- The run directory; for round k >= 1, the previous state file
-  `<run dir>/<finding id>.state.<k-1>.json`; this round's state file
-  `<run dir>/<finding id>.state.<k>.json`, written with one `Write` call as the
-  final action; and the result file `<run dir>/<finding id>.json`, written just
-  before it when the round ends the trial.
+- The run directory, and the result file `<run dir>/<finding id>.json`,
+  written with one `Write` call as the trial's final action.
 - The context file path, with the instruction to read it first and to pass it
   to change-review in step 5.
 
-Detect a round's completion only by its state file existing and being
-non-empty. Then print only its `decision` value with one command, not the whole
-file:
+Detect a trial's completion only by its result file existing and being
+non-empty.
 
-- `continue`: launch round k+1 of that finding.
-- Any other value: the trial is done, and its result file must exist; if it
-  does not, treat the round as interrupted. The freed slot goes to the next
-  waiting finding's round 0.
-
-Interruptions: a round can stop before writing its state file, for example when
-a usage limit is reached. Resume it with `SendMessage` to its name: tell it that
-the round is resumed, to read its own artifacts for this round in the run
-directory and the worktree state, to continue from the first unfinished step,
-and to relaunch only workers whose output file is missing or empty. A round that
-cannot be resumed is relaunched as a new agent with the same prompt plus that
-instruction. A finding whose round never completes is reported as 未確認 with
-the reason 試行が完了しなかった; never fill in its result.
+Interruptions: a trial can stop before writing its result file, for example
+when a usage limit is reached. Resume it with `SendMessage` to its name: tell
+it that the trial is resumed, to continue from the first unfinished step of its
+current round, and to relaunch only workers whose output file is missing or
+empty. A trial that cannot be resumed this way is relaunched as a new agent
+with the same prompt plus the instruction that the trial is resumed and to
+follow round.md's Resuming section. A finding whose trial never completes is
+reported as 未確認 with the reason 試行が完了しなかった; never fill in its
+result.
 
 ## Step 2: Collect (main session)
 
@@ -248,7 +229,7 @@ Then one section per trialed finding, as its chain:
 - 最初の観察
 - 試した修正 — in order, each with its patch path
 - 起きたこと — per round: the trial check results, the new check failures,
-  and the classified issues
+  the repairs made before the re-review, and the classified issues
 - 改めた理解と推奨 — the verdict, the final severity and why. For 未確認, the
   deciding fact and who holds it, then the fix outcome. List 残課題, the
   adoption conditions and the adoption notes.
