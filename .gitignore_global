@@ -9,3 +9,5 @@ tmux-client-*.log
 tmux-server-*.log
 
 **/.claude/.cc-writes/
+
+**/.claude/settings.local.json

@@ -259,9 +259,9 @@ With `--apply`:
 - If the PR is closed, merged, or has been force-pushed since you read it,
   re-run `gh pr view` before writing anything.
 
-## Relation to prreview
+## Relation to change-review
 
-Reviewing the implementation PR itself belongs to the `prreview` skill; this
-skill only compares it against the spec, and prreview's "docs との整合性"
-perspective may call it.
+Reviewing the implementation PR itself belongs to the `change-review` skill;
+this skill only compares it against the spec, and change-review's
+"docs との整合性" perspective may call it.
 
