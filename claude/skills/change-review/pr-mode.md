@@ -60,7 +60,7 @@ status vocabulary (fixed, do not invent new values):
 - open — raised, not yet addressed
 - resolved — fixed in a later commit
 - withdrawn — retracted by us: the facts did not hold (Step 5a did not reproduce
-  it, Step 5b Stage 1 refuted it, or fix-trial showed the consequence does not
+  it, Step 5b Stage 1 refuted it, or the lookahead showed the consequence does not
   occur). Put the refuting evidence in 要旨.
 - out-of-scope — the facts hold, but it is a repository-wide gap rather than a
   defect of this PR (Step 5b Stage 2). Never raise it on this PR again; it stays
@@ -105,7 +105,11 @@ the durable record, so write it so it stands on its own.
 2. Compare `headRefOid` with the cache's `last_reviewed_head_sha`.
    - Equal, and no comment newer than the `last_seen_*_id` values: report
      "前回レビュー時点から差分なし" together with the cache's open findings, and
-     skip the full diff fetch entirely. Do not re-read the PR diff.
+     skip the full diff fetch entirely. Do not re-read the PR diff. Then, if any
+     `open` finding of 既出の指摘 has no row in 修正の試行, write SKILL.md Step
+     4's context file and run SKILL.md Step 6b on exactly those findings, as
+     with `trial:`; the lookahead's base is `headRefOid`. Otherwise go to
+     Step 9.
    - Different: fetch the PR head first, so the sha resolves locally even for a
      fork PR: `git fetch origin "pull/<number>/head"`. Then write only the
      incremental diff:
