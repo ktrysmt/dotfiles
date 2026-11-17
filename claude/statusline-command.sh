@@ -1,6 +1,6 @@
 #!/bin/bash
 # Claude Code statusline script
-# Line 1: Model | Context% | +added/-removed | git branch
+# Line 1: time | turn clock (request time, elapsed) | cwd | model | cost | context%
 # Line 2: usage limits -- 5h + 7d windows (subscription) or monthly credits (seat)
 
 input=$(cat)
@@ -56,6 +56,7 @@ progress_bar() {
 
 # ---------- Parse stdin (single jq call) ----------
 eval "$(echo "$input" | jq -r '
+  "session_id=" + (.session_id // "" | @sh),
   "model_name=" + (.model.display_name // "Unknown" | @sh),
   "used_pct=" + (.context_window.used_percentage // 0 | tostring),
   "cwd=" + (.cwd // "" | @sh),
@@ -341,8 +342,44 @@ if [ "$DEVCONTAINER" = "true" ] && [ -n "$DEVCONTAINER_HOST_PATH" ]; then
   cwd_display="*${host_repo}:${cwd_display}(${container_name})"
 fi
 
-# ---------- Timestamp (last interaction time) ----------
+# ---------- Timestamp (current time; statusLine.refreshInterval keeps it live) ----------
 timestamp=$(TZ="Asia/Tokyo" date "+%-m/%-d %-H:%M")
+
+# ---------- Turn clock (request time and elapsed) ----------
+# hooks/turn-clock.sh records "<start> <end, 0 while running> <offset>" per
+# session from the UserPromptSubmit, Stop, StopFailure and SessionStart hooks.
+format_duration() {
+  local secs="$1"
+  if [ "$secs" -lt 60 ]; then
+    printf '%ds' "$secs"
+  elif [ "$secs" -lt 3600 ]; then
+    printf '%dm%02ds' $((secs / 60)) $((secs % 60))
+  else
+    printf '%dh%02dm' $((secs / 3600)) $((secs % 3600 / 60))
+  fi
+}
+
+epoch_to_hm() {
+  TZ="Asia/Tokyo" date -r "$1" "+%-H:%M" 2> /dev/null \
+    || TZ="Asia/Tokyo" date -d "@$1" "+%-H:%M" 2> /dev/null
+}
+
+turn_display=""
+turn_file="${CLAUDE_TURN_CLOCK_DIR:-/tmp/claude-turn-clock}/${session_id}"
+case "$session_id" in
+  "" | *[!A-Za-z0-9_-]*) turn_file="" ;;
+esac
+if [ -n "$turn_file" ] && [ -s "$turn_file" ]; then
+  read -r turn_start turn_end _ < "$turn_file"
+  if [[ "$turn_start" =~ ^[1-9][0-9]*$ ]] && [[ "$turn_end" =~ ^[0-9]+$ ]]; then
+    turn_at=$(epoch_to_hm "$turn_start")
+    if [ "$turn_end" -ge "$turn_start" ]; then
+      turn_display="依頼 ${turn_at} 所要 $(format_duration $((turn_end - turn_start)))"
+    else
+      turn_display="${BLUE}依頼 ${turn_at} 経過 $(format_duration $(($(date +%s) - turn_start)))${RESET}"
+    fi
+  fi
+fi
 
 # ---------- Line 1 ----------
 SEP="${GRAY} │ ${RESET}"
@@ -350,7 +387,7 @@ model_color=""
 case "$model_name" in
   *[Ss]onnet*) model_color="$GREEN" ;;
 esac
-line1="${DIM}${timestamp}${RESET}${SEP}${cwd_display:+${cwd_display}${SEP}}${model_color}${model_name}${model_color:+${RESET}}"
+line1="${DIM}${timestamp}${RESET}${SEP}${turn_display:+${turn_display}${SEP}}${cwd_display:+${cwd_display}${SEP}}${model_color}${model_name}${model_color:+${RESET}}"
 
 if [ -n "$cost_display" ]; then
   line1+="${SEP}${cost_display}"

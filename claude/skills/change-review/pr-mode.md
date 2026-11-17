@@ -60,11 +60,15 @@ status vocabulary (fixed, do not invent new values):
 - open — raised, not yet addressed
 - resolved — fixed in a later commit
 - withdrawn — retracted by us: the facts did not hold (Step 5a did not reproduce
-  it, Step 5b Stage 1 refuted it, or the lookahead showed the consequence does not
-  occur). Put the refuting evidence in 要旨.
+  it, or Step 5b Stage 1 refuted it). Put the refuting evidence in 要旨.
 - out-of-scope — the facts hold, but it is a repository-wide gap rather than a
   defect of this PR (Step 5b Stage 2). Never raise it on this PR again; it stays
   as a follow-up candidate. Put the repo-wide grep count in 要旨.
+- nits — the facts hold and it belongs to this PR, but no harm occurs now, or
+  the harm is negligible (SKILL.md Severity and Step 5c). It is not a finding:
+  never posted, never fixed. Raise it again only when a later change makes the
+  harm real, as a new finding. Put the reason the harm is absent or negligible
+  in 要旨.
 - accepted-tradeoff — the author deliberately chose this; never raise it again
 - superseded — replaced by another finding; put the successor id in 要旨
 
@@ -84,11 +88,13 @@ status vocabulary (fixed, do not invent new values):
 
 | trial | finding | 回数 | 判定 | 連鎖(1行) | 記録 |
 |---|---|---|---|---|---|
-| T-001 | F-002 | 2 | 残す | 修正で X の前提が崩れ、Y に直して収束 | <results.json のパス> |
+| T-001 | F-002 | 1 | 修正案を直す | 修正で X の前提が崩れる。修正のレビューが副作用として指摘 | <results.json のパス> |
 
-判定 vocabulary (fixed): 残す | 取り下げ | 修正案を直す | 人に返す | 設計の問題 | 未確認
-The 記録 path points into the scratchpad and may be gone later; the 連鎖 cell is
-the durable record, so write it so it stands on its own.
+判定 vocabulary (fixed): 残す | 修正案を直す | 人に返す (lookahead.md Step L4).
+回数 is 1 for every new row. Rows written by the earlier, multi-round lookahead
+may hold a larger 回数 and the 判定 取り下げ, 設計の問題 or 未確認; keep them as
+they are. The 記録 path points into the scratchpad and may be gone later; the
+連鎖 cell is the durable record, so write it so it stands on its own.
 
 ## 未解決の疑問
 
@@ -152,6 +158,10 @@ Do not post anything unless the user asked in this session. When asked:
 - Summary comment: `gh pr comment <number> --repo <owner>/<repo> --body-file <file>`.
 - Inline comments: `gh api` POST to `repos/<owner>/<repo>/pulls/<number>/comments`
   with path, line, side and the body.
+- Post findings only. A candidate rated nits (status `nits`) is never posted,
+  even when the user asks to post the findings or the review; post one only
+  when the user names that candidate. Tell the user how many nits were left
+  out.
 - Show the user what will be posted before posting when the finding count
   exceeds 5.
 - After posting, set 提出 to `posted` in the cache for each finding sent.
@@ -166,7 +176,8 @@ from then on.
 Update: `last_reviewed_head_sha` to the head sha just reviewed,
 `last_reviewed_at`, the three `last_seen_*_id` values, the status of every
 existing finding (fixed in this push becomes `resolved`, facts refuted becomes
-`withdrawn`, scope-only rejection becomes `out-of-scope`), the new findings
+`withdrawn`, scope-only rejection becomes `out-of-scope`, a rating of no
+present harm becomes `nits`), the new findings and the new nits
 appended with fresh ids, any new entries under 確定した設計判断 and
 他レビュアの指摘, the 修正の試行 rows from Step 6b, and 未解決の疑問.
 

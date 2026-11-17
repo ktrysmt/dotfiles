@@ -186,6 +186,10 @@
           {
             "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh start",
             "type": "command"
+          },
+          {
+            "command": "bash ~/.claude/hooks/turn-clock.sh reset",
+            "type": "command"
           }
         ],
         "matcher": ""
@@ -197,6 +201,21 @@
           {
             "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh done",
             "type": "command"
+          },
+          {
+            "command": "bash ~/.claude/hooks/turn-clock.sh stop",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ],
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "command": "bash ~/.claude/hooks/turn-clock.sh stop",
+            "type": "command"
           }
         ],
         "matcher": ""
@@ -207,6 +226,10 @@
         "hooks": [
           {
             "command": "bash ~/.claude/hooks/tmux-window-claude-status.sh thinking",
+            "type": "command"
+          },
+          {
+            "command": "bash ~/.claude/hooks/turn-clock.sh start",
             "type": "command"
           },
           {
@@ -538,6 +561,7 @@
   "skipDangerousModePermissionPrompt": true,
   "statusLine": {
     "command": "bash ~/.claude/statusline-command.sh",
+    "refreshInterval": 5,
     "type": "command"
   },
   "tui": "default"
