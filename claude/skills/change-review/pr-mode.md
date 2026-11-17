@@ -66,9 +66,9 @@ status vocabulary (fixed, do not invent new values):
   as a follow-up candidate. Put the repo-wide grep count in 要旨.
 - nits — the facts hold and it belongs to this PR, but no harm occurs now, or
   the harm is negligible (SKILL.md Severity and Step 5c). It is not a finding:
-  never posted, never fixed. Raise it again only when a later change makes the
-  harm real, as a new finding. Put the reason the harm is absent or negligible
-  in 要旨.
+  never fixed, and posted only on request (Step 8). Raise it again only when a
+  later change makes the harm real, as a new finding. Put its nit line without
+  `path:line`, `<指摘> / <否定理由>` (SKILL.md Step 7), in 要旨.
 - accepted-tradeoff — the author deliberately chose this; never raise it again
 - superseded — replaced by another finding; put the successor id in 要旨
 
@@ -158,13 +158,18 @@ Do not post anything unless the user asked in this session. When asked:
 - Summary comment: `gh pr comment <number> --repo <owner>/<repo> --body-file <file>`.
 - Inline comments: `gh api` POST to `repos/<owner>/<repo>/pulls/<number>/comments`
   with path, line, side and the body.
-- Post findings only. A candidate rated nits (status `nits`) is never posted,
-  even when the user asks to post the findings or the review; post one only
-  when the user names that candidate. Tell the user how many nits were left
-  out.
+- A candidate rated nits (status `nits`) is left out when the user asks to
+  post the findings or the review. Post a nit only when the user names it or
+  asks for the nits. Tell the user how many nits were left out.
+- Post a nit as its nit line (SKILL.md Step 7) and nothing else. As an inline
+  comment, the body is `nits: <指摘> / <否定理由>`; the comment's position
+  carries the `path:line`. In a summary comment, list the nits after the
+  findings under the heading `nits`, one nit line each. A posted nit carries
+  no impact scenario, no evidence section and no fix.
 - Show the user what will be posted before posting when the finding count
   exceeds 5.
-- After posting, set 提出 to `posted` in the cache for each finding sent.
+- After posting, set 提出 to `posted` in the cache for each finding and each
+  nit sent.
 
 ## Step 9: Write the cache back
 

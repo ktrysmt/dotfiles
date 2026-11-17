@@ -11,8 +11,9 @@ description: >-
   and new comments and never repeats a settled finding. Axis workers run in
   parallel, and every candidate is verified by a command or a staged
   refutation, then rated by its present harm: one whose facts hold but that
-  does no harm now, or negligible harm, is a nit, not a finding, and is never
-  fixed or posted. Then the lookahead runs on every review: every surviving finding
+  does no harm now, or negligible harm, is a nit, not a finding: never fixed,
+  posted only on request, always in one line with the reason it is a nit.
+  Then the lookahead runs on every review: every surviving finding
   is fixed once by its own fixer, all in parallel, the fixes are merged
   three-way into one worktree, and reviewers who did not write the fixes
   review the fixed state once along the same axes; the final report merges
@@ -276,10 +277,11 @@ Typical nits:
 A nit is not a finding. Nothing raises it as a 指摘事項:
 
 - It is not verified beyond what settles its rating, not fixed by the
-  lookahead, not counted among the findings, and never posted (pr-mode.md
-  Step 8).
-- The report lists it once, in one line, in the closing section nits, with the
-  reason the harm is absent or negligible, so that nothing is dropped silently.
+  lookahead, not counted among the findings, and posted only when the user
+  asks for it (pr-mode.md Step 8).
+- The report lists it once, as one nit line `<指摘> / <否定理由>` in the
+  closing section nits (Step 7), so that nothing is dropped silently. The
+  否定理由 is why the harm is absent or negligible.
 - PR mode caches it with status `nits`, so that no later run raises it again.
   A later change that makes the harm real makes it a new finding.
 
@@ -743,9 +745,16 @@ After the axes, the closing sections:
   the separate work. These are not noise; they are true findings deliberately
   not filed against this change or this code.
 - nits — every candidate rated nits, from this review and from the review of
-  the fixes: one line each with `path:line`, the point, and why the harm is
-  absent or negligible. Mark as 未検証 the ones only a worker labelled. They are
-  not findings: no evidence chapter, no fix, no posting.
+  the fixes, one nit line each: `- <path:line> <指摘> / <否定理由>`. 指摘 says
+  what is off. 否定理由 says why it is a nit: why the harm is absent or
+  negligible now, taken from the Stage 3 reason, the Step 5c reason, or the
+  worker's 実害. Write each half as one short Japanese sentence; a nit needs
+  no impact scenario, no evidence chapter and no fix. For the import
+  Automation nit of PR #3857 (Severity), the halves read
+  `描画できない対象では、import Automation が bundle 段階で失敗します / 失敗は状態を変える前に起きるため、実害はありません`.
+  Append `(未検証)` to a nit only a worker labelled, and `(修正のレビュー)` to
+  one the review of the fixes raised. Nits are not findings, and are posted
+  only as pr-mode.md Step 8 allows.
 - 未深掘り — every candidate the lookahead did not fix, and why.
 - 未解決の疑問 — including any candidate that could not be verified at all, named
   explicitly as 未検証 rather than folded in with the verified ones.
