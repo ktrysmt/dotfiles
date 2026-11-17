@@ -3,12 +3,17 @@
 # Usage: turn-clock.sh <action>
 #   action: start | stop | reset
 #
-# Called from Claude Code hooks to record when the current turn started and
-# ended, per session; statusline-command.sh reads the record to show the
-# request time and the elapsed time.
+# Called from Claude Code hooks to record when the person's current request
+# started and ended, per session; statusline-command.sh reads the record to
+# show the request time and the elapsed time.
 #   UserPromptSubmit       -> start
 #   Stop, StopFailure      -> stop
 #   SessionStart           -> reset
+#
+# A request runs from a prompt the person typed to the parent session's last
+# Stop. Turns that a background task's or a teammate's report starts in the
+# parent session belong to the request in progress, and hooks that fire inside
+# a subagent or an in-process teammate never touch the record.
 #
 # Record: $CLAUDE_TURN_CLOCK_DIR/<session_id> (default /tmp/claude-turn-clock),
 # one line: "<start epoch> <end epoch, 0 while running> <transcript bytes at start>"
@@ -21,9 +26,16 @@ input=$(cat)
 
 eval "$(jq -r '
   "session_id=" + (.session_id // "" | @sh),
+  "agent_id=" + (.agent_id // "" | @sh),
   "source=" + (.source // "" | @sh),
+  "prompt_head=" + (.prompt // "" | .[0:32] | @sh),
   "transcript=" + (.transcript_path // "" | @sh)
 ' <<< "$input" 2> /dev/null)"
+
+# agent_id is set only when the hook fires inside a subagent or an in-process
+# teammate, which share the parent's session_id.
+# https://code.claude.com/docs/en/hooks (common input fields)
+[ -n "$agent_id" ] && exit 0
 
 # session_id becomes a file name: accept a plain id only.
 case "$session_id" in
@@ -58,12 +70,23 @@ transcript_size() {
 
 case "$action" in
   start)
-    # Only a prompt the person typed starts a turn. `source` is absent on
-    # builds that do not send it yet; treat that as typed.
+    # A turn Claude Code starts on its own continues the request in progress.
+    # `source` names who wrote the prompt, but builds up to at least 2.1.326
+    # leave it out, so a background task's report is also recognized by the
+    # <task-notification> envelope it arrives in.
+    machine=0
     case "$source" in
       "" | user) ;;
-      *) exit 0 ;;
+      *) machine=1 ;;
     esac
+    case "$prompt_head" in
+      "<task-notification>"*) machine=1 ;;
+    esac
+    if [ "$machine" -eq 1 ]; then
+      # Reopen the request so the status line counts on from its start.
+      [ "$start" -gt 0 ] && [ "$end" -gt 0 ] && write_record "$start" 0 "$offset"
+      exit 0
+    fi
     if [ "$start" -gt 0 ] && [ "$end" -eq 0 ]; then
       # A turn is running, so this is a message typed mid-turn: keep the
       # turn's start. An interrupted turn fires no Stop hook and leaves a
@@ -78,9 +101,9 @@ case "$action" in
     write_record "$(date +%s)" 0 "$(transcript_size)"
     ;;
   stop)
-    # Keep the first end: a turn the person did not start (a background
-    # task's report) must not stretch the duration of the one they did.
-    [ "$start" -gt 0 ] && [ "$end" -eq 0 ] || exit 0
+    # The latest Stop ends the request: a turn that a report reopened ran
+    # for the same request.
+    [ "$start" -gt 0 ] || exit 0
     write_record "$start" "$(date +%s)" "$offset"
     ;;
   reset)
