@@ -1,6 +1,7 @@
 # change-review: lookahead (Step 6b)
 
-change-review sends you here on every run except a nested review: Step 4 starts
+change-review sends you here on every run except a nested review or a `--fast`
+run: Step 4 starts
 Step L0 as soon as it has launched the axis workers, and Step 4b starts Step L1
 for each candidate as it arrives. Every rule in SKILL.md still applies; the
 rules below add to them. A fixer reads only the Rules and the Fixer section of

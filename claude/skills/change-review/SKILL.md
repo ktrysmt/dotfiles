@@ -13,7 +13,7 @@ description: >-
   refutation, then rated by its present harm: one whose facts hold but that
   does no harm now, or negligible harm, is a nit, not a finding: never fixed,
   posted only on request, always in one line with the reason it is a nit.
-  Then the lookahead runs on every review: every surviving finding
+  Then the lookahead runs on every review unless `--fast` is given: every surviving finding
   is fixed once by its own fixer, all in parallel, the fixes are merged
   three-way into one worktree, and reviewers who did not write the fixes
   review the fixed state once along the same axes; the final report merges
@@ -29,7 +29,7 @@ description: >-
   "指摘を実際に直して確かめて", "次のレビューを先読みして",
   "このレビューコメントは直す価値があるか試して", "review this PR",
   "review this diff", "review this code".
-argument-hint: "<PR URL|番号> [設計書URL...] [--fresh] [--no-cache] [--allow-setup]"
+argument-hint: "<PR URL|番号> [設計書URL...] [--fresh] [--no-cache] [--allow-setup] [--fast]"
 ---
 
 You execute a change review. The invocation arguments are:
@@ -54,11 +54,11 @@ only when they apply:
 | File | Read by, when | Holds |
 |---|---|---|
 | `~/.claude/skills/change-review/pr-mode.md` | The main session, when Step 0 resolves PR mode | The GitHub rules, the cache (Step 1 and its schema), the PR fetch (Step 2), posting (Step 8), the cache write-back (Step 9) |
-| `~/.claude/skills/change-review/lookahead.md` | The main session, right after Step 4 launches the axis workers, on every run except a nested review; each fixer it starts reads its Rules and Fixer section | The lookahead: per-finding fixers, the three-way merge, the review of the fixes, the integration |
+| `~/.claude/skills/change-review/lookahead.md` | The main session, right after Step 4 launches the axis workers, on every run except a nested review or a `--fast` run; each fixer it starts reads its Rules and Fixer section | The lookahead: per-finding fixers, the three-way merge, the review of the fixes, the integration |
 
 A nested review is a run marked `invoked-by: lookahead`: the lookahead runs it
 to review its own fixes. It is local mode, skips Step 6b, and reads neither
-file.
+file. A run with `--fast` also skips Step 6b and never reads lookahead.md.
 
 Follow the steps below literally and in order. Do not improvise a shorter path.
 This skill exists to prevent three expensive failures: re-fetching a PR's
@@ -67,10 +67,13 @@ answered, and reporting a first observation as if its consequences had been
 followed. The third one is not solved by asking reviewers to think harder; a
 reviewer that only reads code stops at the first link of the causal chain, the
 author fixes what it saw, and the next round finds what the fixes broke. Step 6b
-follows the chain one link further on every run: it applies every fix in one
-worktree and has reviewers who did not write the fixes review what they
-actually changed. It costs one fixer per finding plus one review of the fixes,
-in a single pass, overlapped with the review itself (Step 4b).
+follows the chain one link further on every run without `--fast`: it applies
+every fix in one worktree and has reviewers who did not write the fixes review
+what they actually changed. It costs one fixer per finding plus one review of
+the fixes, in a single pass, overlapped with the review itself (Step 4b).
+`--fast` gives this up for time: every finding is still verified and rated,
+but its 修正案 stays untested and the report carries no forecast of the next
+round.
 
 ## Hard rules
 
@@ -135,6 +138,7 @@ in a single pass, overlapped with the review itself (Step 4b).
 | `--fresh` | PR mode. Ignore the existing cache, refetch everything, rebuild the cache. |
 | `--no-cache` | PR mode. Neither read nor write the cache for this run. |
 | `--allow-setup` | Lets the lookahead run the repository's own documented setup command inside the worktrees it created (lookahead.md). |
+| `--fast` | Any mode. Skips Step 6b, the lookahead: no fixer, no merge, no check run, no review of the fixes, and none of the lookahead's worktrees (`wt-base`, `wt-fix`, `wt-<id>`). The read-only `<work dir>/tree` of PR mode and code mode is still created. Steps 3 to 6 run unchanged. `--allow-setup` has nothing to act on. Not combinable with `trial:` (Step 0). |
 | `trial:` | A JSON file of findings, or findings written in the prompt, from outside this review (another reviewer's comments, another tool). Steps 3 to 6 are skipped, and Step 6b runs the lookahead on these findings against the resolved target. Format: the candidate shape of lookahead.md Step L1, item 1. |
 
 Local mode reads these fields from the prompt, one per line:
@@ -197,8 +201,10 @@ Code mode reads these fields from the prompt, one per line. `axes:`,
    under the work directory, except the PR cache.
 7. PR mode: Read `~/.claude/skills/change-review/pr-mode.md` in full now. Its
    Steps 1 and 2 replace Step 2 below, and its Steps 8 and 9 run after Step 7.
-8. With `trial:`, run Step 2 (or pr-mode.md's Steps 1 and 2) and Step 4's
-   context file, then go to Step 6b.
+8. With both `trial:` and `--fast`, stop and ask the user which one to drop:
+   `trial:` runs only the lookahead, and `--fast` skips it. With `trial:`
+   alone, run Step 2 (or pr-mode.md's Steps 1 and 2) and Step 4's context
+   file, then go to Step 6b.
 
 ## Step 2: Build what is reviewed (local mode, code mode)
 
@@ -349,10 +355,10 @@ Each worker's deliverable is a file: `<work dir>/axis<N>.txt`, written with one
 `Write` call as its final action. Detect completion only by that file existing
 and being non-empty, never by a reply or a notification.
 
-On a run that reaches Step 6b (every run except a nested review), Read
-`~/.claude/skills/change-review/lookahead.md` in full as soon as the workers
-are launched, and start its Step L0. Then go to Step 4b. Do not wait for the
-workers.
+On a run that reaches Step 6b (every run except a nested review or a `--fast`
+run), Read `~/.claude/skills/change-review/lookahead.md` in full as soon as
+the workers are launched, and start its Step L0. Then go to Step 4b. Do not
+wait for the workers.
 
 Each worker's prompt carries, verbatim:
 
@@ -466,16 +472,16 @@ For each new axis file:
    it (Severity).
 4. Dispatch every remaining candidate, all in one message where agents are
    launched: its verification (Step 5a by you, or a Step 5b refuter), and, on
-   a run that reaches Step 6b, its fixer (lookahead.md Step L1). The first
-   candidate dispatched in the run also starts lookahead.md Step L1b.
+   a run that reaches Step 6b, its fixer (lookahead.md Step L1). On such a
+   run, the first candidate dispatched also starts lookahead.md Step L1b.
 
-When a verification ends, record its verdict. A REFUTED, OUT-OF-SCOPE or NITS
-candidate's fixer is stopped and discarded (lookahead.md Step L1). Step 6b's
-merge (lookahead.md Step L2) takes each candidate as soon as it is verified and
-its fixer is done.
+When a verification ends, record its verdict. On a run that reaches Step 6b,
+a REFUTED, OUT-OF-SCOPE or NITS candidate's fixer is stopped and discarded
+(lookahead.md Step L1), and Step 6b's merge (lookahead.md Step L2) takes each
+candidate as soon as it is verified and its fixer is done.
 
-A nested review runs this step too, without fixers: its candidates are verified
-as each axis reports. In a nested review, a candidate whose 元の帰結 names a
+A nested review and a `--fast` run both go through this step without fixers:
+their candidates are verified as each axis reports. In a nested review, a candidate whose 元の帰結 names a
 `findings:` entry is never suppressed by item 2: it says that a fix left that
 finding's consequence in place, and an earlier result about the base revision
 says nothing about the fixed state. Every other nested candidate that item 2
@@ -627,7 +633,7 @@ is not enough: a true fact that hurts no one now is a nit (Severity).
   prove harm. Ask what the reproduced behaviour does to whom, now: a template
   that fails to render before any state change, for a target the tool was not
   meant to serve, is a reproduced fact and a nit.
-- A rating of nits makes the candidate NITS: stop its fixer, list it under
+- A rating of nits makes the candidate NITS: stop its fixer if it has one, list it under
   nits, and, in PR mode, cache it as `nits`.
 - A rating of high, medium or low replaces the worker's provisional severity.
 
@@ -660,10 +666,13 @@ same defect moves lines between pushes.
   fix in the fixes file. A match with any other entry is not new and is
   suppressed, because a finding with no applied fix is expected to hold.
 
-## Step 6b: Lookahead (every run)
+## Step 6b: Lookahead (every run except a nested review or `--fast`)
 
 Runs on every run except a nested review, because a nested review is the
-lookahead reviewing its own fixes and a second lookahead inside it would loop.
+lookahead reviewing its own fixes and a second lookahead inside it would loop,
+and except a run with `--fast`, because the user traded the lookahead for time.
+A `--fast` run starts no fixer, creates none of the lookahead's worktrees, and
+goes from Step 6 straight to Step 7.
 It is not a separate phase: Step 4 already read
 `~/.claude/skills/change-review/lookahead.md` and started its Step L0, and
 Step 4b started its fixers. Follow lookahead.md to its end. With `trial:`, or
@@ -713,7 +722,8 @@ per-axis chapters.
 
 In local mode the third line is `対象: <repo> <base 短縮>..<target>`. In code
 mode it is `対象: <repo> <rev 短縮> <paths>`. With `trial:`, the first line is
-omitted and the findings are grouped by source instead of by axis.
+omitted and the findings are grouped by source instead of by axis. With
+`--fast`, the second line is `先読み: 省略 (--fast)`.
 
 Then, per axis: each finding as `path:line`, severity, the point, the evidence
 URL in `<...>`, the concrete impact scenario, and its 実害. State how each was verified —
@@ -733,6 +743,9 @@ A finding that the lookahead fixed is reported with what its fix showed:
 
 The misses of the original review that the review of the fixes found are
 reported as new findings, with the source 修正のレビュー.
+
+On a `--fast` run no finding was fixed: report each finding's 修正案 as its
+worker wrote it, labelled 未試行, or 無し.
 
 After the axes, the closing sections:
 
@@ -762,6 +775,11 @@ After the axes, the closing sections:
   error and the exact setup command for the user.
 - 後片付け — every worktree this run created, what it holds, and the exact
   removal command for the user to run (lookahead.md Step L5).
+
+On a `--fast` run, 全修正後の見通し, 未深掘り and 実行できなかった確認 are
+replaced by the one line `先読みは --fast により省略しました。修正案は試していません。`,
+and 後片付け lists only `<work dir>/tree` in PR mode and code mode; local mode
+has nothing to list there.
 
 Close with the design-document alignment result.
 

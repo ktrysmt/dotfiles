@@ -111,11 +111,11 @@ they are. The 記録 path points into the scratchpad and may be gone later; the
 2. Compare `headRefOid` with the cache's `last_reviewed_head_sha`.
    - Equal, and no comment newer than the `last_seen_*_id` values: report
      "前回レビュー時点から差分なし" together with the cache's open findings, and
-     skip the full diff fetch entirely. Do not re-read the PR diff. Then, if any
-     `open` finding of 既出の指摘 has no row in 修正の試行, write SKILL.md Step
-     4's context file and run SKILL.md Step 6b on exactly those findings, as
-     with `trial:`; the lookahead's base is `headRefOid`. Otherwise go to
-     Step 9.
+     skip the full diff fetch entirely. Do not re-read the PR diff. Then,
+     without `--fast`, if any `open` finding of 既出の指摘 has no row in
+     修正の試行, write SKILL.md Step 4's context file and run SKILL.md Step 6b
+     on exactly those findings, as with `trial:`; the lookahead's base is
+     `headRefOid`. Otherwise, or with `--fast`, go to Step 9.
    - Different: fetch the PR head first, so the sha resolves locally even for a
      fork PR: `git fetch origin "pull/<number>/head"`. Then write only the
      incremental diff:
@@ -185,6 +185,8 @@ existing finding (fixed in this push becomes `resolved`, facts refuted becomes
 present harm becomes `nits`), the new findings and the new nits
 appended with fresh ids, any new entries under 確定した設計判断 and
 他レビュアの指摘, the 修正の試行 rows from Step 6b, and 未解決の疑問.
+A `--fast` run writes no 修正の試行 row, so a later run without `--fast` on
+the same head runs the lookahead on its `open` findings (Step 2).
 
 Recording the rejections is the highest-value part of this step, not bookkeeping.
 A `withdrawn` row with its refuting evidence is what stops the next run from
