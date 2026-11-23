@@ -8,4 +8,4 @@
 - For env-conditional output, bundle and inspect every env.
 - Before reporting done, list failure scenarios: concurrency, stale or duplicate input, per-principal permissions, env differences. Answer each with a test or a citation. Put the list in the PR body or the open items, not in the chat reply.
 - Fix a gap you notice in the same change when it is within the agreed scope. Otherwise list it as an open item.
-- Run project tools in non-mutating mode, and check `git status` afterwards.
+- Run project tools in non-mutating mode, and check `git status --short -- .` afterwards. Scope it to the working directory: a bare `git status` covers the whole repository, so from a subdirectory it also prints untracked paths outside it, and those file names enter the context.
