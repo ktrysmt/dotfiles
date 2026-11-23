@@ -68,7 +68,10 @@ status vocabulary (fixed, do not invent new values):
   the harm is negligible (SKILL.md Severity and Step 5c). It is not a finding:
   never fixed, and posted only on request (Step 8). Raise it again only when a
   later change makes the harm real, as a new finding. Put its nit line without
-  `path:line`, `<指摘> / <否定理由>` (SKILL.md Step 7), in 要旨.
+  `path:line`, `<指摘> / <否定理由>` (SKILL.md Step 7), in 要旨, and
+  `論拠: <...> / 否定の根拠: <...>` in 根拠URL. A `nits` row whose 根拠URL lacks
+  `否定の根拠:` was cached unverified by an earlier version of the skill; it
+  suppresses nothing (SKILL.md Step 6).
 - accepted-tradeoff — the author deliberately chose this; never raise it again
 - superseded — replaced by another finding; put the successor id in 要旨
 
@@ -161,11 +164,12 @@ Do not post anything unless the user asked in this session. When asked:
 - A candidate rated nits (status `nits`) is left out when the user asks to
   post the findings or the review. Post a nit only when the user names it or
   asks for the nits. Tell the user how many nits were left out.
-- Post a nit as its nit line (SKILL.md Step 7) and nothing else. As an inline
-  comment, the body is `nits: <指摘> / <否定理由>`; the comment's position
-  carries the `path:line`. In a summary comment, list the nits after the
-  findings under the heading `nits`, one nit line each. A posted nit carries
-  no impact scenario, no evidence section and no fix.
+- Post a nit as its nit line and its two evidence lines (SKILL.md Step 7),
+  and nothing else. As an inline comment, the body is
+  `nits: <指摘> / <否定理由>` followed by the 論拠 and 否定の根拠 lines; the
+  comment's position carries the `path:line`. In a summary comment, list the
+  nits after the findings under the heading `nits`, each with its two
+  evidence lines. A posted nit carries no impact scenario and no fix.
 - Show the user what will be posted before posting when the finding count
   exceeds 5.
 - After posting, set 提出 to `posted` in the cache for each finding and each
@@ -185,6 +189,9 @@ existing finding (fixed in this push becomes `resolved`, facts refuted becomes
 present harm becomes `nits`), the new findings and the new nits
 appended with fresh ids, any new entries under 確定した設計判断 and
 他レビュアの指摘, the 修正の試行 rows from Step 6b, and 未解決の疑問.
+An unverified `nits` row (SKILL.md Step 6) that a candidate of this run
+matched is rewritten with that candidate's outcome. A candidate dropped as
+根拠不足 (SKILL.md Step 4b) gets no row.
 A `--fast` run writes no 修正の試行 row, so a later run without `--fast` on
 the same head runs the lookahead on its `open` findings (Step 2).
 

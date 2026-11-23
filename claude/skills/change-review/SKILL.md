@@ -9,10 +9,12 @@ description: >-
   operational cost; a prompt may supply its own. PR mode keeps a per-PR cache
   under ~/.claude/pr-context, so a re-review fetches only the incremental diff
   and new comments and never repeats a settled finding. Axis workers run in
-  parallel, and every candidate is verified by a command or a staged
-  refutation, then rated by its present harm: one whose facts hold but that
-  does no harm now, or negligible harm, is a nit, not a finding: never fixed,
-  posted only on request, always in one line with the reason it is a nit.
+  parallel, and every candidate, including one a worker already labelled a
+  nit, is verified by a command or a staged refutation, then rated by its
+  present harm: one whose facts hold but that does no harm now, or negligible
+  harm, is a nit, not a finding: never fixed, posted only on request, listed
+  with the evidence that its facts hold and the evidence that its harm is
+  absent.
   Then the lookahead runs on every review unless `--fast` is given: every surviving finding
   is fixed once by its own fixer, all in parallel, the fixes are merged
   three-way into one worktree, and reviewers who did not write the fixes
@@ -282,12 +284,19 @@ Typical nits:
 
 A nit is not a finding. Nothing raises it as a 指摘事項:
 
-- It is not verified beyond what settles its rating, not fixed by the
-  lookahead, not counted among the findings, and posted only when the user
-  asks for it (pr-mode.md Step 8).
-- The report lists it once, as one nit line `<指摘> / <否定理由>` in the
-  closing section nits (Step 7), so that nothing is dropped silently. The
-  否定理由 is why the harm is absent or negligible.
+- It is verified like any candidate (Step 5), whoever first rated it nits. A
+  worker's nits label is a claim about harm, and an unverified claim settles
+  nothing: listed on a worker's word alone, a nit is noise the reader can
+  trust neither way, and the PR cache would suppress it for good on that word.
+  Only a candidate whose verification ends NITS is a nit. One whose facts are
+  refuted is dropped like any refuted candidate; one whose harm the
+  verification finds real is a finding.
+- It is not fixed by the lookahead, not counted among the findings, and posted
+  only when the user asks for it (pr-mode.md Step 8).
+- The report lists it once, in the closing section nits (Step 7), as a nit
+  line `<指摘> / <否定理由>` with two evidence lines: 論拠, the evidence that
+  its facts hold, and 否定の根拠, the evidence that its harm is absent or
+  negligible now. A candidate lacking either is not listed as a nit.
 - PR mode caches it with status `nits`, so that no later run raises it again.
   A later change that makes the harm real makes it a new finding.
 
@@ -424,7 +433,17 @@ Each worker's prompt carries, verbatim:
   in 実害: what goes wrong, for whom, under which condition that exists now,
   with its evidence. When the facts are correct but no harm occurs now, or the
   harm is negligible, label it nits and write in 実害 why. Do not inflate a nit
-  to low."
+  to low. A nits label exempts nothing from verification: ground a nit like
+  any finding, the facts in 根拠 and the absence of harm in 実害, each with
+  a command, `path:line` or URL. An observation you cannot ground is neither a
+  finding nor a nit; do not report it."
+- "根拠 is what decides whether an issue is worth verifying at all. Give the
+  primary source that establishes the facts, and quote it: `path:line` with
+  the exact code or text found there, `<URL>` with the exact sentence relied
+  on, or a command with the output line that shows it. A URL, a file name, a
+  best practice or general knowledge without a quote is not a 根拠. The main
+  session drops, unverified and unreported, every issue whose 根拠 carries no
+  such quote (Step 4b), so ground an issue before you write it."
 - In a nested review: "For each finding, state in 基点で成立 whether the same
   issue already holds at the base revision (はい, いいえ or 不明), with the
   command or `path:line` that shows it. State in 元の帰結 whether the finding
@@ -440,7 +459,7 @@ Each worker writes a list of findings in this shape, and nothing else:
 - file:line — <path:line>
   severity — high|medium|low|nits
   要旨 — <one line>
-  根拠URL — <...>
+  根拠 — <path:line, <URL> or command, each with the exact quoted text or output line that establishes the facts>
   影響シナリオ — <concrete trigger or failure path>
   実害 — <what goes wrong, for whom, under which present condition, with evidence; for nits, why there is none or it is negligible>
   検証区分 — 機械検証可能 (<command>) | 解釈依存
@@ -467,13 +486,25 @@ For each new axis file:
 2. Run Step 6 on each new candidate against the dedup context. A candidate
    that Step 6 suppresses, or reports as a reminder of an `open` entry, stops
    here: nothing is spent verifying or fixing it.
-3. A candidate its worker labelled nits stops here too: record it for the
-   report's nits section, marked 未検証, and spend nothing verifying or fixing
-   it (Severity).
-4. Dispatch every remaining candidate, all in one message where agents are
+3. Gate on 根拠, yourself, by reading the candidate; no agent and no command.
+   A candidate passes when its 根拠 names a primary source (`path:line`,
+   `<URL>` or a command) and quotes the text or output line there that
+   establishes the facts. A candidate that fails is dropped as 根拠不足: it is
+   neither verified nor fixed nor reported, only counted in the summary line
+   and recorded with its 要旨 in `<work dir>/ungrounded.json`. PR mode does
+   not cache it, so that a grounded raise of the same point in a later run is
+   not suppressed. This gate is what keeps verifying every candidate cheap: a
+   refuter starts from the quote (Step 5b), and an issue with nothing to start
+   from would cost a refuter a search of its own.
+4. Dispatch every candidate that passed, all in one message where agents are
    launched: its verification (Step 5a by you, or a Step 5b refuter), and, on
    a run that reaches Step 6b, its fixer (lookahead.md Step L1). On such a
-   run, the first candidate dispatched also starts lookahead.md Step L1b.
+   run, the first fixer started also starts lookahead.md Step L1b.
+5. A candidate its worker labelled nits is dispatched like any other: it is
+   verified (Severity), but gets no fixer at dispatch. When its verification
+   rates it high, medium or low, start its fixer then, on a run that reaches
+   Step 6b. When it ends NITS, list it under nits. When it ends REFUTED or
+   OUT-OF-SCOPE, handle it as Step 5b's verdict table says.
 
 When a verification ends, record its verdict. On a run that reaches Step 6b,
 a REFUTED, OUT-OF-SCOPE or NITS candidate's fixer is stopped and discarded
@@ -484,8 +515,8 @@ A nested review and a `--fast` run both go through this step without fixers:
 their candidates are verified as each axis reports. In a nested review, a candidate whose 元の帰結 names a
 `findings:` entry is never suppressed by item 2: it says that a fix left that
 finding's consequence in place, and an earlier result about the base revision
-says nothing about the fixed state. Every other nested candidate that item 2
-keeps is verified, including one whose 基点で成立 is はい; the lookahead reports
+says nothing about the fixed state. Every other nested candidate that items 2
+and 3 keep is verified, including one whose 基点で成立 is はい; the lookahead reports
 it as a miss of the original review.
 
 Step 7 starts only when every axis file is handled and every dispatched
@@ -494,9 +525,10 @@ is done).
 
 ## Step 5: Verification phase
 
-No finding reaches the report unverified, and none reaches it without a rating
-of its present harm (Step 5c); the only unverified entries are the nits a worker
-labelled, listed as 未検証 in the nits section. This phase is not optional; it is the
+No finding and no nit reaches the report unverified, and none reaches it
+without a rating of its present harm (Step 5c). A worker's nits label is a
+provisional severity like any other, and goes through this step like any
+other. This phase is not optional; it is the
 part of the review the user actually asks for. But do not spawn one refuter per
 candidate blindly — twenty candidates would mean twenty agents, and for a large
 share of them an agent is the weaker instrument. Route each candidate by the
@@ -563,7 +595,10 @@ everything. The same holds for harm: whether a finding is true, whether it
 belongs to this change, and whether it hurts anyone now are three questions.
 The Severity section goes into each refuter's prompt verbatim.
 
-Stage 1 — refute the facts. "Attack the claim itself. Is the quoted
+Stage 1 — refute the facts. "Start from the candidate's 根拠: confirm that the
+quoted text is at the cited place and says what the claim says, then attack
+the step from it to the claim. Reuse what holds; look up only what the claim
+relies on beyond the quote. Attack the claim itself. Is the quoted
 documentation real and does it say what the finding claims? Are the cited
 `path:line` locations what the finding says they are? Does the causal chain hold,
 or does some property in the template break it? Is the premise proven, or assumed?
@@ -595,7 +630,7 @@ Verdicts and what to do with each:
 |---|---|---|---|---|
 | refuted | not run | not run | REFUTED | Drop. Cache as `withdrawn` with the refuting evidence, so no future run raises it. |
 | survived | PR-specific, or in the code under review | high, medium or low | SURVIVES | Report it with the Stage 3 severity. Attach the refutation attempt's evidence to strengthen the write-up. |
-| survived | PR-specific, or in the code under review | nits | NITS | Not a finding. List it under nits with the Stage 3 reason; cache as `nits`. |
+| survived | PR-specific, or in the code under review | nits | NITS | Not a finding. List it under nits with the Stage 3 reason, `stage1_証拠` as its 論拠 and `stage3_証拠` as its 否定の根拠; cache as `nits`. |
 | survived | repo-wide, outside the code under review, or already settled | not run | OUT-OF-SCOPE | Do NOT drop. Cache as `out-of-scope` and report it under 別作業候補 with the evidence that put it there. |
 
 A finding whose facts hold is never discarded merely for being broader than this
@@ -607,10 +642,12 @@ Each worker writes exactly:
 ```
 stage1_facts — REFUTED | SURVIVES
 stage1_理由 — <2-4 lines, Japanese>
+stage1_証拠 — <path:line, <URL> or command with its output line, quoting the exact text that confirms or refutes the facts>
 stage2_scope — PR固有 | 対象コード内 | リポジトリ横断 | 対象コード外 | 既決着 | 未実施
 stage2_理由 — <2-4 lines, Japanese; include the repo-wide grep command and count>
 stage3_harm — high | medium | low | nits | 未実施
 stage3_理由 — <2-4 lines, Japanese: what goes wrong, for whom, under which present condition, with evidence; for nits, why there is no harm or it is negligible>
+stage3_証拠 — <path:line, <URL> or command with its output line, quoting the exact text that shows the harm or its absence; 未実施 when Stage 3 did not run>
 verdict — REFUTED | SURVIVES | NITS | OUT-OF-SCOPE
 決定的な証拠 — <path:line or <URL>, quoting the exact text relied on>
 残余 — <narrower true point if any, else 無し>
@@ -634,8 +671,13 @@ is not enough: a true fact that hurts no one now is a nit (Severity).
   that fails to render before any state change, for a target the tool was not
   meant to serve, is a reproduced fact and a nit.
 - A rating of nits makes the candidate NITS: stop its fixer if it has one, list it under
-  nits, and, in PR mode, cache it as `nits`.
+  nits, and, in PR mode, cache it as `nits`. For a Step 5a candidate, its
+  論拠 is the reproduction command with the output line that settles it, and
+  its 否定の根拠 is the command, `path:line` or URL that shows the harm absent
+  or negligible; a rating you cannot back with such evidence is not nits.
 - A rating of high, medium or low replaces the worker's provisional severity.
+  For a candidate its worker labelled nits, it also starts its fixer on a run
+  that reaches Step 6b (Step 4b).
 
 ## Step 6: Deduplication
 
@@ -647,6 +689,11 @@ mode and code mode it is the `findings:` file. When the context file's
 `settled` is not null, also match against the decisions it holds. Match on
 `file:line` plus semantic equivalence of the 要旨, not string equality — the
 same defect moves lines between pushes.
+
+A PR-cache `nits` row whose 根拠URL cell lacks `否定の根拠:` was cached by an
+earlier version of this skill on a worker's word, unverified. It suppresses
+nothing: a candidate matching it goes on to Step 4b's gate and verification,
+and Step 9 rewrites the row with the outcome.
 
 - Matches an `open` entry: not new. Report it as a reminder in the 既出 section,
   do not restate it as a fresh finding.
@@ -691,7 +738,7 @@ is one object. Each object has these keys:
 | `location` | file:line |
 | `severity` | high, medium, low or nits, as Step 5c rated it |
 | `claim` | 要旨 |
-| `evidence` | 根拠URL |
+| `evidence` | 根拠 |
 | `impact` | 影響シナリオ |
 | `verification_kind` | 機械検証可能 or 解釈依存 |
 | `fix` | 修正案 |
@@ -702,6 +749,7 @@ is one object. Each object has these keys:
 | `base_holds` | 基点で成立: はい, いいえ or 不明, with its evidence |
 | `original_consequence` | 元の帰結: the `findings:` entry id, or null |
 | `verification` | The reproduction command, or `段階反証` |
+| `nit_evidence` | For verdict NITS, `{"論拠": ..., "否定の根拠": ...}` as Step 5b's table or Step 5c defines them; otherwise null |
 | `fix_ids` | 対象の修正: with `fixes:`, the array of finding ids whose fixes the issue concerns (several for an issue that arises from fixes together), or `[]` for 無し; otherwise null |
 
 Do not write the Japanese report in that case.
@@ -712,7 +760,7 @@ instead of writing from the start. Open with the summary lines, then one
 chapter per axis.
 
 ```
-新規 N件 / nits X件 / 既出につき抑制 M件 / 反証により却下 K件 / 別作業候補 S件 / 未深掘り U件
+新規 N件 / nits X件 / 既出につき抑制 M件 / 根拠不足で不採用 G件 / 反証により却下 K件 / 別作業候補 S件 / 未深掘り U件
 先読み T件: 残す a / 修正案を直す c / 人に返す d / 修正のレビューで見つかった見落とし m件
 対象: <owner>/<repo>#<number> <head sha 短縮> (前回レビュー: <sha 短縮> / <日付>)
 ```
@@ -757,17 +805,25 @@ After the axes, the closing sections:
   out of scope (with the grep command and count), and the suggested scope of
   the separate work. These are not noise; they are true findings deliberately
   not filed against this change or this code.
-- nits — every candidate rated nits, from this review and from the review of
-  the fixes, one nit line each: `- <path:line> <指摘> / <否定理由>`. 指摘 says
-  what is off. 否定理由 says why it is a nit: why the harm is absent or
-  negligible now, taken from the Stage 3 reason, the Step 5c reason, or the
-  worker's 実害. Write each half as one short Japanese sentence; a nit needs
-  no impact scenario, no evidence chapter and no fix. For the import
-  Automation nit of PR #3857 (Severity), the halves read
+- nits — every candidate whose verification ended NITS, from this review and
+  from the review of the fixes, as a nit line and its two evidence lines:
+
+  ```
+  - <path:line> <指摘> / <否定理由>
+    論拠 — <the evidence that the facts hold>
+    否定の根拠 — <the evidence that the harm is absent or negligible now>
+  ```
+
+  指摘 says what is off. 否定理由 says why it is a nit: why the harm is absent
+  or negligible now, taken from the Stage 3 reason or the Step 5c reason,
+  never from the worker's 実害 alone. Write each half as one short Japanese
+  sentence. 論拠 and 否定の根拠 come from Step 5b's table or Step 5c; each
+  quotes its source (`path:line` with the text, `<URL>` with the sentence, or
+  a command with its output line). A nit needs no impact scenario and no fix.
+  For the import Automation nit of PR #3857 (Severity), the halves read
   `描画できない対象では、import Automation が bundle 段階で失敗します / 失敗は状態を変える前に起きるため、実害はありません`.
-  Append `(未検証)` to a nit only a worker labelled, and `(修正のレビュー)` to
-  one the review of the fixes raised. Nits are not findings, and are posted
-  only as pr-mode.md Step 8 allows.
+  Append `(修正のレビュー)` to a nit the review of the fixes raised. Nits are
+  not findings, and are posted only as pr-mode.md Step 8 allows.
 - 未深掘り — every candidate the lookahead did not fix, and why.
 - 未解決の疑問 — including any candidate that could not be verified at all, named
   explicitly as 未検証 rather than folded in with the verified ones.

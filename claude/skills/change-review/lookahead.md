@@ -22,7 +22,9 @@ These choices are deliberate:
 - Every surviving finding is fixed; there is no count limit. A candidate rated
   nits (SKILL.md Severity) is not a finding and is never fixed: its fixer is
   stopped as soon as the rating is known, like a refuted candidate's. On
-  PR #3857, 7 of 21 fixed findings would have been nits.
+  PR #3857, 7 of 21 fixed findings would have been nits. A candidate its
+  worker already labelled nits gets no fixer at dispatch; its fixer starts
+  only if its verification finds real harm (SKILL.md Step 4b).
 - One pass, no loop. What the review of the fixes raises is reported as notes
   for the fix, never fixed again. On PR #3857, the per-finding rounds of an
   earlier design were projected at about 4 of the run's 5 hours.
@@ -49,8 +51,8 @@ These choices are deliberate:
 | Step | Starts when | Who | What |
 |---|---|---|---|
 | L0 | Step 4 has launched the axis workers | Main session | Base, run directory, outer change, checks, baseline, the combined worktree |
-| L1 | Step 4b dispatches a candidate | One fixer per candidate | Fix it from base in its own worktree |
-| L1b | Step 4b dispatches the first candidate | Four new reviewers | Read the change ahead of the review of the fixes |
+| L1 | Step 4b starts a candidate's fixer | One fixer per candidate | Fix it from base in its own worktree |
+| L1b | Step 4b starts the first fixer | Four new reviewers | Read the change ahead of the review of the fixes |
 | L2 | A candidate is verified and its fixer is done | Main session, one candidate at a time | Merge its fix into the combined worktree; a conflicting fix is redone by its fixer |
 | L2b | Every candidate is verified and merged or redone | Main session | Run the checks once on the combined state |
 | L3 | L2b is done | Main session, as a nested review | Review the fixed state along the same axes, verified like any review |
@@ -161,14 +163,16 @@ arrive, in between the items below.
 
 ## Step L1: Start a fixer (main session, per candidate)
 
-Step 4b dispatches each candidate that survives deduplication; dispatch starts
-its verification and, at the same moment, its fixer. All candidates of one
-axis output are started in a single message.
+Step 4b dispatches each candidate that survives deduplication and the 根拠
+gate; dispatch starts its verification and, at the same moment, its fixer.
+All candidates of one axis output are started in a single message. A
+candidate its worker labelled nits is the exception: its fixer starts only
+when its verification rates it high, medium or low (SKILL.md Step 4b).
 
 1. Record the candidate in `<run dir>/input.json`, a JSON array rewritten with
    every candidate so far: `id`, `location` (`path:line`), `claim` (要旨),
    `impact` (影響シナリオ), `fix` (修正案, or null for 無し), `axes`,
-   `severity`, `evidence` (根拠URL), `source` (`change-review`, or the origin
+   `severity`, `evidence` (根拠), `source` (`change-review`, or the origin
    of a `trial:` finding, with the commenter for a PR review comment). Only
    `id`, `location` and `claim` are required.
 2. Create `git -C <repo> worktree add --detach <run dir>/wt-<id> <base sha>`.
@@ -202,8 +206,8 @@ reason 修正が完了しなかった; never fill in a fix.
 
 ## Step L1b: Start the reviewers of the fixes early (main session, once)
 
-When Step 4b dispatches the first candidate of this run, or Step L0 item 7
-starts the first one, launch the nested review's four axis workers, all in a
+When Step 4b starts the first fixer of this run, or Step L0 item 7 starts
+the first one, launch the nested review's four axis workers, all in a
 single message, with `model: "sonnet"` (SKILL.md Hard rules), as named
 teammates `la-axis1-security`, `la-axis2-consistency`,
 `la-axis3-robustness` and `la-axis4-ops` (append the run id if a name is
@@ -337,12 +341,12 @@ every surviving candidate is merged, redone, or `not-fixed`.
    counterparts, each check's result against the baseline, the new failures
    with their candidates, the weakening, and the byproducts path.
 6. Write `<run dir>/known.json`, the nested review's `findings:` file: every
-   surviving finding of this review, merged or not, and every candidate rated
-   nits, with its rating, in the candidate shape. In PR mode, add every entry
+   surviving finding of this review, merged or not, and every candidate whose
+   verification ended NITS, with its rating, in the candidate shape. In PR mode, add every entry
    of the cache's 既出の指摘, whatever its status.
 7. Write `<run dir>/fixes.json`, the nested review's `fixes:` file: per merged
    candidate, its `id`, `location`, `claim`, `patch` (from `merges.json`), and
-   `evidence`: what this review already established for it — its 根拠URL, its
+   `evidence`: what this review already established for it — its 根拠, its
    Step 5a command and output path, or its refuter's output file. Nothing from
    the notes files goes into it.
 

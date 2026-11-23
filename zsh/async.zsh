@@ -681,6 +681,56 @@ mise() {
   fi
 }
 
+# ------
+# servant: hourly pass over my Jira issues in a Claude Code background session
+# (claude/skills/servant). The session re-runs /servant every hour by itself.
+# It runs in dontAsk mode, not the bypassPermissions default of my settings, and
+# its settings.json hooks in guard.py, which blocks every tool call a pass does
+# not need: the session reads text other people wrote, with my credentials.
+# servant [start|restart|status|open|stop]
+# ------
+function servant() {
+  emulate -L zsh
+  local dir="$HOME/.local/state/servant"
+  local settings="$HOME/.claude/skills/servant/settings.json"
+  local live id
+  live=$(claude agents --json 2>/dev/null \
+    | jq -r '.[] | select(.kind == "background" and .name == "servant" and .state != "stopped" and .state != "failed") | .id')
+  case "${1:-start}" in
+    start)
+      if [[ -n "$live" ]]; then
+        print -r -- "servant: already running (${(j: :)${(f)live}}). Use 'servant restart' to start over."
+        return 0
+      fi
+      mkdir -p -- "$dir" || return 1
+      ( builtin cd -q -- "$dir" && claude --bg --name servant --model sonnet --effort low \
+          --permission-mode dontAsk --settings "$settings" "/servant" )
+      ;;
+    restart)
+      for id in ${(f)live}; do claude stop "$id"; done
+      servant start
+      ;;
+    status)
+      claude agents --json --all 2>/dev/null \
+        | jq -r '.[] | select(.kind == "background" and .name == "servant") | [.id, .state, (.status // "-")] | @tsv'
+      [[ -f "$dir/lock.json" ]] && jq -r '"last pass: \(.state) since \(.since)"' "$dir/lock.json"
+      [[ -f "$dir/canvas.html" ]] && print -r -- "canvas: $dir/canvas.html"
+      ;;
+    open)
+      [[ -f "$dir/canvas.html" ]] || { print -r -- "servant: no canvas yet: $dir/canvas.html" >&2; return 1; }
+      open "$dir/canvas.html"
+      ;;
+    stop)
+      [[ -n "$live" ]] || { print -r -- "servant: not running"; return 0; }
+      for id in ${(f)live}; do claude stop "$id"; done
+      ;;
+    *)
+      print -r -- "usage: servant [start|restart|status|open|stop]" >&2
+      return 1
+      ;;
+  esac
+}
+
 
 # --------
 # os type
