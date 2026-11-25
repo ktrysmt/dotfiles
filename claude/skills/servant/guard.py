@@ -11,11 +11,13 @@ fails or times out, so a broken guard blocks rather than allows.
 Allowed:
   - reading tools, tool search, skills, and the session's own cron tools
   - mcp__slack__slack_read_thread
-  - Bash: servant.py, `gh pr view` and `gh issue view`, as one plain command
+  - Bash: servant.py, run directly or as `python3 [-I] servant.py`, as one plain command
   - Edit, Write and MultiEdit on a file under the state directory's worktrees/ or drafts/
 
 The two Jira writes the user allowed go through `servant.py apply`, which derives them
-from Jira and GitHub itself, so no Jira command is allowed here.
+from Jira and GitHub itself, so no Jira command is allowed here. GitHub reads go through
+servant.py too (`servant.py view`), because it stops a call that a sleep of the Mac or a
+Wi-Fi drop left hanging, and a bare gh would wait forever.
 """
 import json
 import os
@@ -31,8 +33,8 @@ SERVANT_PY = HOME / ".claude/skills/servant/servant.py"
 TOOLS = {"Read", "Glob", "Grep", "ToolSearch", "Skill", "CronCreate", "CronList", "CronDelete",
          "mcp__slack__slack_read_thread"}
 FILE_TOOLS = {"Edit", "Write", "MultiEdit"}
-COMMANDS = ([str(SERVANT_PY)], ["~/.claude/skills/servant/servant.py"],
-            ["gh", "pr", "view"], ["gh", "issue", "view"])
+SCRIPTS = (str(SERVANT_PY), "~/.claude/skills/servant/servant.py")
+PYTHONS = (["python3"], ["python3", "-I"])
 # Expansion, substitution and line continuation would let one allowed word run another
 # command, so a command that contains any of these is blocked outright.
 UNSAFE_CHARS = "$`\\\n\r"
@@ -50,8 +52,9 @@ def bash_verdict(command):
         return f"it does not parse: {e}"
     if any(w and set(w) <= OPERATOR_CHARS for w in words):
         return "it chains commands, redirects or opens a subshell"
-    if not any(words[:len(p)] == p for p in COMMANDS):
-        return "only servant.py, `gh pr view` and `gh issue view` run in a servant pass"
+    starts = [0] + [len(p) for p in PYTHONS if words[:len(p)] == p]
+    if not any(words[i:i + 1] and words[i] in SCRIPTS for i in starts):
+        return "only servant.py runs in a servant pass"
     return None
 
 

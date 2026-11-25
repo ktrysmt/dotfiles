@@ -1,5 +1,8 @@
 {
   "permissions": {
+    "allow": [
+      "Skill(servant)"
+    ],
     "deny": [
       "Bash(git push *)",
       "Bash(git * push *)",
@@ -37,6 +40,18 @@
             "command": "python3 -I ~/.claude/skills/servant/guard.py",
             "timeout": 10,
             "onFailure": "block"
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -I ~/.claude/skills/servant/servant.py halted",
+            "timeout": 30
           }
         ]
       }

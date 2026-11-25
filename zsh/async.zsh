@@ -682,11 +682,12 @@ mise() {
 }
 
 # ------
-# servant: hourly pass over my Jira issues in a Claude Code background session
-# (claude/skills/servant). The session re-runs /servant every hour by itself.
+# servant: a pass over my Jira issues every 20 minutes in a Claude Code background
+# session (claude/skills/servant). The session re-runs /servant by itself.
 # It runs in dontAsk mode, not the bypassPermissions default of my settings, and
 # its settings.json hooks in guard.py, which blocks every tool call a pass does
 # not need: the session reads text other people wrote, with my credentials.
+# stop (and restart) also ends servant.py commands left running in the background.
 # servant [start|restart|status|open|stop]
 # ------
 function servant() {
@@ -694,8 +695,9 @@ function servant() {
   local dir="$HOME/.local/state/servant"
   local settings="$HOME/.claude/skills/servant/settings.json"
   local live id
+  # A stopped session can stay listed as "working"; only a live one has a pid.
   live=$(claude agents --json 2>/dev/null \
-    | jq -r '.[] | select(.kind == "background" and .name == "servant" and .state != "stopped" and .state != "failed") | .id')
+    | jq -r '.[] | select(.kind == "background" and .name == "servant" and .pid != null and .state != "stopped" and .state != "failed") | .id')
   case "${1:-start}" in
     start)
       if [[ -n "$live" ]]; then
@@ -707,13 +709,18 @@ function servant() {
           --permission-mode dontAsk --settings "$settings" "/servant" )
       ;;
     restart)
-      for id in ${(f)live}; do claude stop "$id"; done
+      servant stop
       servant start
       ;;
     status)
       claude agents --json --all 2>/dev/null \
         | jq -r '.[] | select(.kind == "background" and .name == "servant") | [.id, .state, (.status // "-")] | @tsv'
       [[ -f "$dir/lock.json" ]] && jq -r '"last pass: \(.state) since \(.since)"' "$dir/lock.json"
+      # Written by the session's StopFailure hook (servant.py halted); the next pass clears it.
+      [[ -f "$dir/halt.json" ]] && jq -r 'select(.active) | "halted: \(.error) since \(.since)"
+        + (if .resets_at != "" then ", limit resets \(.resets_at)" else "" end)
+        + ", resumes on the next scheduled pass"
+        + (if .message != "" then "\n  \(.message)" else "" end)' "$dir/halt.json"
       [[ -f "$dir/canvas.html" ]] && print -r -- "canvas: $dir/canvas.html"
       ;;
     open)
@@ -721,8 +728,12 @@ function servant() {
       open "$dir/canvas.html"
       ;;
     stop)
-      [[ -n "$live" ]] || { print -r -- "servant: not running"; return 0; }
-      for id in ${(f)live}; do claude stop "$id"; done
+      if [[ -n "$live" ]]; then
+        for id in ${(f)live}; do claude stop "$id"; done
+      else
+        print -r -- "servant: not running"
+      fi
+      "$HOME/.claude/skills/servant/servant.py" drain
       ;;
     *)
       print -r -- "usage: servant [start|restart|status|open|stop]" >&2

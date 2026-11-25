@@ -9,11 +9,12 @@ prefix, REVIEW-OK). It derives each from Jira and GitHub as they are at that mom
 never from the model's arguments or the state files, and writes fixed values only.
 It never writes to GitHub or Slack, and it never commits or pushes.
 
-  servant.py lock | unlock | context
+  servant.py lock | unlock | context | drain
   servant.py scan
   servant.py apply KEY add_review_prefix|transition_review_ok
   servant.py ticket KEY
   servant.py feedback KEY
+  servant.py view GITHUB_URL
   servant.py note KEY [--summary TEXT --next TEXT]
                       [--handled ID --how fix|draft|none [--path P] [--draft F] [--memo TEXT]]
                       [--slack-seen URL TS] [--proposal TEXT [--evidence URL]]
@@ -21,8 +22,15 @@ It never writes to GitHub or Slack, and it never commits or pushes.
   servant.py meta [--cron-job ID]
   servant.py worktree PR_URL
   servant.py render [--open]
+  servant.py halted   (the session's StopFailure hook; reads the hook input on stdin)
 
 State lives in $SERVANT_STATE_DIR, default ~/.local/state/servant.
+
+Every network call ends on time (see run()), and exit status 5 means the network did
+not answer: the Mac slept or the Wi-Fi dropped. Nothing is saved then; the next pass
+retries. `lock` and `drain` stop servant.py commands that earlier passes left running.
+When a turn of the session ends on an API error, such as a usage limit, `halted`
+records it for the canvas; the next pass that gets through clears it.
 """
 import argparse
 import datetime as dt
@@ -31,8 +39,10 @@ import html
 import json
 import os
 import re
+import signal
 import subprocess
 import sys
+import time
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
@@ -42,6 +52,7 @@ JIRA_SH = HOME / ".claude/skills/light-jira/jira.sh"
 SNAPSHOT = STATE / "snapshot.json"
 NOTES = STATE / "notes.json"
 LOCK = STATE / "lock.json"
+HALT = STATE / "halt.json"
 ACTIONS = STATE / "actions.jsonl"
 CANVAS = STATE / "canvas.html"
 DESC = STATE / "desc"
@@ -58,9 +69,29 @@ KEY_RE = re.compile(r"^[A-Z][A-Z0-9_]*-\d+$")
 MAX_AUTO = 5
 MAX_FEEDBACK_TICKETS = 3
 MAX_SUMMARIES = 10
-LOCK_TTL = dt.timedelta(minutes=50)
+# The session's job: every 20 minutes, off the hour. An evenly spaced job runs late by a
+# fixed amount of up to half its gap, here 10 minutes (docs: scheduled-tasks, jitter).
+CRON = "7,27,47 * * * *"
+CRON_JA = "20 分ごと（毎時 7・27・47 分から最大 10 分遅れ）"
+# Shorter than the 20-minute gap, so a lock left by a dead turn delays no pass.
+LOCK_TTL = dt.timedelta(minutes=15)
 FAIL_SUPPRESS = dt.timedelta(hours=24)
 CRON_RENEW = dt.timedelta(days=6)
+
+# Time limits, in seconds. gh, and curl inside jira.sh, wait forever on a connection that
+# died while the Mac slept or the Wi-Fi dropped. The Bash tool does not kill a command
+# that outlives its timeout (120 s by default): it moves it to the background, where such
+# a scan used to wait for days. So each call, and each servant.py command, ends on time.
+CALL_TIMEOUT = 45
+DEFAULT_BUDGET = 90
+WORKTREE_BUDGET = 240  # clone, fetch and checkout of a large repository
+BUDGET = {"worktree": WORKTREE_BUDGET}
+EXIT_NETWORK = 5
+DRAIN_MIN_AGE = 10  # a younger servant.py belongs to the pass that is starting
+VIEW_LIMIT = 4000
+SERVANT_PROC_RE = re.compile(r"^\S*[Pp]ython[\d.]*(?:\s+-\S+)*\s+\S*/skills/servant/servant\.py(?:\s|$)")
+_STARTED = (time.time(), time.monotonic())
+_budget = DEFAULT_BUDGET
 
 GH_RE = re.compile(r"^https?://github\.com/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)/(pull|issues)/(\d+)")
 SLACK_RE = re.compile(r"^https?://([a-z0-9-]+)\.slack\.com/archives/([A-Z0-9]+)/p(\d{16})")
@@ -106,9 +137,51 @@ def save(path, obj):
     os.replace(tmp, path)
 
 
-def run(cmd, cwd=None):
-    p = subprocess.run(cmd, capture_output=True, text=True, cwd=cwd)
-    return p.returncode, p.stdout, p.stderr
+def elapsed():
+    """Seconds since this command started. Wall-clock time also counts the time the Mac
+    slept, so a call that was in flight when the lid closed ends right after wake."""
+    return max(time.time() - _STARTED[0], time.monotonic() - _STARTED[1])
+
+
+def stop_group(p):
+    """Stop a call and everything it started. TERM first, so that git clone removes its
+    partial directory (git: builtin/clone.c, remove_junk_on_signal), then KILL the rest."""
+    for sig in (signal.SIGTERM, signal.SIGKILL):
+        try:
+            os.killpg(p.pid, sig)
+        except OSError:
+            return  # the whole group is gone
+        try:
+            p.wait(timeout=3)
+        except subprocess.TimeoutExpired:
+            pass
+
+
+def run(cmd, cwd=None, timeout=CALL_TIMEOUT):
+    """Run cmd and return (exit code, stdout, stderr).
+
+    The call runs in its own session, so stopping it also stops what it started (curl
+    under jira.sh, git under gh). It ends after `timeout` seconds or when this command's
+    budget is spent, whichever comes first; the command then exits EXIT_NETWORK without
+    saving anything."""
+    start = elapsed()
+    p = subprocess.Popen(cmd, cwd=cwd, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE, text=True, start_new_session=True)
+    while True:
+        left = min(start + timeout, _budget) - elapsed()
+        if left <= 0:
+            waited = round(elapsed() - start)
+            stop_group(p)
+            what = " ".join(Path(c).name for c in cmd[:3])
+            die(f"`{what}` got no answer in {waited} s (the Mac slept or the "
+                f"network dropped); stopped it with its child processes, nothing was saved",
+                EXIT_NETWORK)
+        try:
+            # Retrying communicate() after TimeoutExpired loses no output (subprocess docs).
+            out, err = p.communicate(timeout=min(left, 1))
+            return p.returncode, out, err
+        except subprocess.TimeoutExpired:
+            pass
 
 
 def first_line(s):
@@ -613,6 +686,24 @@ def cmd_ticket(a):
         print(f"noted   : {n['summary']} / next: {n.get('next', '-')}")
 
 
+def cmd_view(a):
+    """Title and body of a GitHub pull request or issue, read for a work summary."""
+    m = GH_RE.match(a.url)
+    if not m:
+        die("view needs a GitHub pull request or issue URL")
+    owner, repo, typ, number = m.groups()
+    kind = "pr" if typ == "pull" else "issue"
+    rc, out, err = run(["gh", kind, "view", f"https://github.com/{owner}/{repo}/{typ}/{number}",
+                        "--json", "title,body"])
+    if rc:
+        die(f"gh {kind} view failed: {first_line(err or out)}")
+    doc = json.loads(out)
+    body = doc.get("body") or ""
+    print(f"title: {doc.get('title') or ''}\n{body[:VIEW_LIMIT]}")
+    if len(body) > VIEW_LIMIT:
+        print(f"(body cut at {VIEW_LIMIT} of {len(body)} characters)")
+
+
 def cmd_feedback(a):
     _, t = find_ticket(a.key)
     if not t["feedback"]:
@@ -744,17 +835,86 @@ def cmd_meta(a):
     notes = load_notes()
     meta = notes["meta"]
     if a.cron_job:
-        meta["cron"] = {"job_id": a.cron_job, "created_at": iso()}
+        meta["cron"] = {"job_id": a.cron_job, "created_at": iso(), "schedule": CRON}
         save(NOTES, notes)
         print(f"cron job {a.cron_job} recorded")
         return
     cron = meta.get("cron") or {}
     created = parse_iso(cron.get("created_at", ""))
-    renew = created is None or now() - created > CRON_RENEW
+    # A job made for another schedule is renewed too, so a change of CRON reaches a running session.
+    renew = created is None or now() - created > CRON_RENEW or cron.get("schedule") != CRON
     print(f"cron job: {cron.get('job_id', '-')}  created_at: {cron.get('created_at', '-')}  "
-          f"renew: {'yes' if renew else 'no'}")
+          f"renew: {'yes' if renew else 'no'}  schedule: {CRON}")
     last = meta.get("run") or {}
     print(f"last pass: started {last.get('started', '-')}  finished {last.get('finished', '-')}")
+
+
+def etime_seconds(s):
+    """Seconds in a ps etime value, [[dd-]hh:]mm:ss."""
+    days, _, rest = s.rpartition("-")
+    parts = [int(x) for x in rest.split(":")]
+    h, m, sec = [0] * (3 - len(parts)) + parts
+    return int(days or 0) * 86400 + h * 3600 + m * 60 + sec
+
+
+def drain():
+    """Stop every servant.py command an earlier pass left running, with all its descendants.
+
+    Before run() had time limits, the Bash tool moved scans stuck on a dead connection to
+    the background, where they stayed for days. Returns (commands, processes) stopped."""
+    _, out, _ = run(["ps", "-axo", "pid=,ppid=,etime=,command="])
+    parent, age, command, children = {}, {}, {}, {}
+    for line in out.splitlines():
+        f = line.split(None, 3)
+        if len(f) < 4 or not f[0].isdigit():
+            continue
+        pid = int(f[0])
+        parent[pid], age[pid], command[pid] = int(f[1]), etime_seconds(f[2]), f[3]
+        children.setdefault(int(f[1]), []).append(pid)
+    spared, pid = set(), os.getpid()
+    while pid > 1 and pid not in spared:  # this command and the shell and session above it
+        spared.add(pid)
+        pid = parent.get(pid, 0)
+    roots = [p for p in command if p not in spared and age[p] >= DRAIN_MIN_AGE
+             and SERVANT_PROC_RE.match(command[p])]
+    victims, todo = set(), list(roots)
+    while todo:
+        p = todo.pop()
+        if p not in victims and p not in spared:
+            victims.add(p)
+            todo += children.get(p, [])
+    # Every pid is collected before the first signal: a parent killed first would orphan
+    # its children to launchd, out of reach of this tree walk.
+    for sig in (signal.SIGTERM, signal.SIGKILL):
+        alive = []
+        for p in victims:
+            try:
+                os.kill(p, sig)
+                alive.append(p)
+            except OSError:
+                pass
+        deadline = time.monotonic() + 3
+        while alive and time.monotonic() < deadline:
+            time.sleep(0.1)
+            alive = [p for p in alive if pid_alive(p)]
+        if not alive:
+            break
+    return len(roots), len(victims)
+
+
+def pid_alive(pid):
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except OSError:
+        pass
+    return True
+
+
+def cmd_drain(_):
+    commands, procs = drain()
+    print(f"drained {commands} leftover servant.py commands ({procs} processes)")
 
 
 def cmd_lock(_):
@@ -764,10 +924,18 @@ def cmd_lock(_):
     if cur.get("state") == "running" and since and now() - since < LOCK_TTL:
         print(f"locked: a pass has been running since {cur['since']}")
         sys.exit(3)
+    # This pass owns the state directory now, so any other servant.py is a leftover.
+    commands, procs = drain()
+    if commands:
+        print(f"drained {commands} leftover servant.py commands ({procs} processes)")
     save(LOCK, {"state": "running", "since": iso()})
     notes = load_notes()
     notes["meta"]["run"] = {"started": iso(), "actions": []}
     save(NOTES, notes)
+    halt = load(HALT, {})
+    if halt.get("active"):  # the API answers again, so the stop is over
+        save(HALT, {**halt, "active": False, "resumed_at": iso()})
+        print(f"resumed: passes had stopped on {halt.get('error')} since {halt.get('since')}")
     print("locked")
 
 
@@ -782,6 +950,66 @@ def cmd_unlock(_):
 def cmd_context(_):
     # Claude Code sets CLAUDE_JOB_DIR in every background session.
     print("background" if os.environ.get("CLAUDE_JOB_DIR") else "interactive")
+
+
+def limit_reset(transcript_path, error):
+    """When the usage limit behind this error lifts, as an ISO time, or "" when unknown.
+
+    The StopFailure input has no reset time, but Claude Code writes the API error into the
+    session transcript with quotaLimits.resetsAt. The transcript is not a documented
+    format, so a missing or changed field only drops the time from the canvas."""
+    try:
+        with open(transcript_path, "rb") as fh:
+            fh.seek(0, os.SEEK_END)
+            fh.seek(max(0, fh.tell() - 262144))
+            lines = fh.read().decode("utf-8", "replace").splitlines()
+    except OSError:
+        return ""
+    recent = now() - dt.timedelta(minutes=10)
+    for line in reversed(lines):
+        try:
+            entry = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(entry, dict) or not entry.get("isApiErrorMessage"):
+            continue
+        at = parse_iso(entry.get("timestamp", ""))
+        if entry.get("error") != error or not at or at < recent:
+            return ""  # the latest API error is another one, or an old one
+        resets = (entry.get("quotaLimits") or {}).get("resetsAt")
+        return iso(dt.datetime.fromtimestamp(resets).astimezone()) if isinstance(resets, (int, float)) else ""
+    return ""
+
+
+def cmd_halted(_):
+    """StopFailure hook of the servant session (settings.json): a turn ended on an API error.
+
+    Claude Code ignores this hook's output and exit code (docs: hooks, StopFailure). The
+    hook records the error for the canvas and `servant status`, releases the lock the dead
+    turn may hold, stops the servant.py commands it left, and re-renders the canvas.
+    Nothing restarts a pass here: the session's scheduled job does, and the next `lock`
+    clears the record. A usage limit thus costs nothing while it lasts."""
+    try:
+        event = json.loads(sys.stdin.read() or "{}")
+    except json.JSONDecodeError:
+        event = {}
+    error = str(event.get("error") or "unknown")
+    prev = load(HALT, {})
+    ongoing = bool(prev.get("active"))
+    stamp = iso()
+    resets = limit_reset(event.get("transcript_path") or "", error) if error == "rate_limit" else ""
+    if not resets and ongoing and prev.get("error") == error:
+        resets = prev.get("resets_at") or ""
+    save(HALT, {"active": True, "since": prev.get("since") if ongoing else stamp,
+                "at": stamp, "error": error,
+                "details": str(event.get("error_details") or "")[:300],
+                "message": str(event.get("last_assistant_message") or "")[:300],
+                "resets_at": resets})
+    if load(LOCK, {}).get("state") == "running":  # the turn that held it has ended
+        save(LOCK, {"state": "idle", "since": stamp})
+    drain()
+    if SNAPSHOT.exists():
+        cmd_render(argparse.Namespace(open=False))
 
 
 # ---------------------------------------------------------------- local worktree
@@ -804,10 +1032,11 @@ def cmd_worktree(a):
     if not (clone / ".git").exists():
         clone.parent.mkdir(parents=True, exist_ok=True)
         rc, _, err = run(["gh", "repo", "clone", f"{owner}/{repo}", str(clone), "--",
-                          "--filter=blob:none", "--no-checkout"])
+                          "--filter=blob:none", "--no-checkout"], timeout=WORKTREE_BUDGET)
         if rc:
             die(f"clone failed: {first_line(err)}")
-    rc, _, err = run(["git", "-C", str(clone), "fetch", "origin", f"+refs/heads/{head}:refs/remotes/origin/{head}"])
+    rc, _, err = run(["git", "-C", str(clone), "fetch", "origin", f"+refs/heads/{head}:refs/remotes/origin/{head}"],
+                     timeout=WORKTREE_BUDGET)
     if rc:
         die(f"git fetch failed: {first_line(err)}")
     wt = WORKTREES / f"{owner}-{repo}-{number}"
@@ -816,7 +1045,7 @@ def cmd_worktree(a):
         has_branch = run(["git", "-C", str(clone), "rev-parse", "--verify", "--quiet", f"refs/heads/{head}"])[0] == 0
         cmd = (["git", "-C", str(clone), "worktree", "add", str(wt), head] if has_branch else
                ["git", "-C", str(clone), "worktree", "add", "--track", "-b", head, str(wt), f"origin/{head}"])
-        rc, _, err = run(cmd)
+        rc, _, err = run(cmd, timeout=WORKTREE_BUDGET)  # a blob:none clone fetches blobs here
         if rc:
             die(f"git worktree add failed: {first_line(err)}")
         state = "created"
@@ -883,10 +1112,12 @@ GUIDE = """<details class="guide"><summary>見方</summary><ul>
 
 STALE_SCRIPT = """<script>
 (function(){var g=Date.parse(document.body.dataset.generated);
-if(!isNaN(g)&&Date.now()-g>90*60*1000){document.getElementById('stale').hidden=false;}})();
+if(!isNaN(g)&&Date.now()-g>60*60*1000){document.getElementById('stale').hidden=false;}})();
 </script>"""
 
 STATUS_CLASS = {DONE: "good", "レビュー中": "accent", "進行中": "warn"}
+# StopFailure error types that only the user can clear (docs: hooks, StopFailure matcher).
+USER_ACTION_ERRORS = {"authentication_failed", "oauth_org_not_allowed", "account_on_hold", "billing_error"}
 KIND_CLASS = {"完了の提案": "good", "確認": "warn", "未処理の指摘": "bad", "ローカル修正": "accent",
               "返信案": "accent", "自動更新待ち": "warn"}
 
@@ -914,6 +1145,29 @@ def link_cell(t):
                 link["kind"], urlparse(link["url"]).netloc)
             parts.append(anchor(link["url"], label))
     return "<br>".join(parts) or '<span class="muted">なし</span>'
+
+
+def when(s):
+    t = parse_iso(s or "")
+    return t.astimezone().strftime("%m/%d %H:%M") if t else "-"
+
+
+def halt_banner(h):
+    """Why passes stop and when they resume, from halt.json, which `halted` writes."""
+    err = h.get("error") or "unknown"
+    if err == "rate_limit":
+        text = f"利用上限のため、{when(h.get('since'))} から巡回が止まっています。"
+        resets = parse_iso(h.get("resets_at") or "")
+        if resets and resets > now():  # a past time means another limit holds now
+            text += f"上限は {when(h['resets_at'])} に戻る見込みです。"
+        text += "戻ったあとの最初の定期実行で、自動的に再開します。"
+    elif err in USER_ACTION_ERRORS:
+        text = (f"API エラー（{err}）のため、{when(h.get('since'))} から巡回が止まっています。"
+                "Claude Code のログインか契約の状態を確認してください。解消すれば、次の定期実行で再開します。")
+    else:
+        text = f"API エラー（{err}）のため、{when(h.get('at'))} の巡回が途中で止まりました。次の定期実行で再開します。"
+    detail = f'<br><span class="muted">{esc(h["message"])}</span>' if h.get("message") else ""
+    return f'<div class="banner">{esc(text)}{detail}</div>'
 
 
 def table(headers, rows):
@@ -1022,6 +1276,8 @@ def cmd_render(a):
                             f"{esc(x['before'])} → {esc(x['after'])}"])
 
     cron = meta.get("cron") or {}
+    halt = load(HALT, {})
+    halted = halt_banner(halt) if halt.get("active") else ""
     done_count = sum(1 for t in tickets if t["status"] == DONE)
     cards = [("担当チケット", len(tickets)), ("要確認", len(att_rows)),
              ("今回の自動更新", len(last.get("actions", []))), ("完了待ち (REVIEW-OK)", done_count)]
@@ -1033,8 +1289,9 @@ def cmd_render(a):
 <title>servant</title><style>{CSS}</style></head>
 <body data-generated="{esc(updated)}"><div class="wrap">
 <header><h1>servant: 担当チケットの状況</h1>
-<div class="meta">最終更新 {esc(updated[:16].replace('T', ' '))} ・ 次回は毎時 7〜37 分のどこか ・ 定期実行 {esc(cron.get('job_id', '未登録'))} ({esc((cron.get('created_at') or '-')[:10])} 登録) ・ このページは 5 分ごとに再読み込み</div>
-<div id="stale" class="banner" hidden>1 時間半以上更新されていません。ターミナルで <code>servant status</code> を実行し、止まっていれば <code>servant restart</code> を実行してください。</div>
+<div class="meta">最終更新 {esc(updated[:16].replace('T', ' '))} ・ データ取得 {esc(when(snap.get('generated_at')))} ・ 巡回は {esc(CRON_JA)} ・ 定期実行{esc(cron.get('job_id', '未登録'))} ({esc((cron.get('created_at') or '-')[:10])} 登録) ・ このページは 5 分ごとに再読み込み</div>
+{halted}
+<div id="stale" class="banner" hidden>1 時間以上更新されていません。ターミナルで <code>servant status</code> を実行し、止まっていれば <code>servant restart</code> を実行してください。</div>
 {GUIDE}</header>
 <div class="grid">{''.join(f'<div class="card stat"><div class="label">{esc(l)}</div><div class="value">{v}</div></div>' for l, v in cards)}</div>
 <section><h2>要確認</h2><div class="card">{table(["チケット", "種類", "内容"], att_rows)}</div></section>
@@ -1056,12 +1313,14 @@ def cmd_render(a):
 # ---------------------------------------------------------------- main
 
 def main():
+    global _budget
     p = argparse.ArgumentParser(prog="servant.py")
     sub = p.add_subparsers(dest="cmd", required=True)
-    for name in ("lock", "unlock", "context", "scan"):
+    for name in ("lock", "unlock", "context", "scan", "drain", "halted"):
         sub.add_parser(name)
     for name in ("ticket", "feedback"):
         sub.add_parser(name).add_argument("key")
+    sub.add_parser("view").add_argument("url")
     n = sub.add_parser("note")
     n.add_argument("key")
     n.add_argument("--summary")
@@ -1082,9 +1341,11 @@ def main():
     sub.add_parser("worktree").add_argument("pr_url")
     sub.add_parser("render").add_argument("--open", action="store_true")
     a = p.parse_args()
-    {"lock": cmd_lock, "unlock": cmd_unlock, "context": cmd_context, "scan": cmd_scan,
-     "apply": cmd_apply, "ticket": cmd_ticket, "feedback": cmd_feedback, "note": cmd_note,
-     "meta": cmd_meta, "worktree": cmd_worktree, "render": cmd_render}[a.cmd](a)
+    _budget = BUDGET.get(a.cmd, DEFAULT_BUDGET)
+    {"lock": cmd_lock, "unlock": cmd_unlock, "context": cmd_context, "drain": cmd_drain,
+     "scan": cmd_scan, "apply": cmd_apply, "ticket": cmd_ticket, "feedback": cmd_feedback,
+     "view": cmd_view, "note": cmd_note, "meta": cmd_meta, "worktree": cmd_worktree,
+     "render": cmd_render, "halted": cmd_halted}[a.cmd](a)
 
 
 if __name__ == "__main__":
