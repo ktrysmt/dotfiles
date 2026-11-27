@@ -19,12 +19,14 @@ the resulting state puts that next link in front of this review.
 
 These choices are deliberate:
 
-- Every surviving finding is fixed; there is no count limit. A candidate rated
-  nits (SKILL.md Severity) is not a finding and is never fixed: its fixer is
-  stopped as soon as the rating is known, like a refuted candidate's. On
-  PR #3857, 7 of 21 fixed findings would have been nits. A candidate its
-  worker already labelled nits gets no fixer at dispatch; its fixer starts
-  only if its verification finds real harm (SKILL.md Step 4b).
+- Every surviving finding of a fixable severity is fixed; there is no count
+  limit. Fixable means high, medium or low, and on a PR-mode re-review only
+  high and medium, newly raised or still open (SKILL.md Step 4b). A candidate
+  rated nits (SKILL.md Severity) is not a finding and is never fixed: its fixer
+  is stopped as soon as the rating is known, like a refuted candidate's. On
+  PR #3857, 7 of 21 fixed findings would have been nits. A candidate whose
+  worker's severity is not fixable gets no fixer at dispatch; its fixer starts
+  only if its verification rates it fixable (SKILL.md Step 4b).
 - One pass, no loop. What the review of the fixes raises is reported as notes
   for the fix, never fixed again. On PR #3857, the per-finding rounds of an
   earlier design were projected at about 4 of the run's 5 hours.
@@ -158,23 +160,25 @@ arrive, in between the items below.
    `cd <run dir>/wt-fix && GIT_INDEX_FILE=<run dir>/fix.index git read-tree <base sha>`.
 7. With `trial:`, or after an unchanged PR (pr-mode.md Step 2), the candidates
    are known now, and none is verified again: the given findings, or the
-   cache's `open` findings that have no row in 修正の試行, normalized into the
-   candidate shape of Step L1. Start Steps L1 and L1b for all of them at once.
+   cache's fixable open findings that have no 修正の試行 row (pr-mode.md
+   Step 2), normalized into the candidate shape of Step L1 with `jq`. Start
+   Steps L1 and L1b for all of them at once.
 
 ## Step L1: Start a fixer (main session, per candidate)
 
 Step 4b dispatches each candidate that survives deduplication and the 根拠
 gate; dispatch starts its verification and, at the same moment, its fixer.
 All candidates of one axis output are started in a single message. A
-candidate its worker labelled nits is the exception: its fixer starts only
-when its verification rates it high, medium or low (SKILL.md Step 4b).
+candidate whose worker's severity is not fixable is the exception: its fixer
+starts only when its verification rates it fixable (SKILL.md Step 4b).
 
 1. Record the candidate in `<run dir>/input.json`, a JSON array rewritten with
    every candidate so far: `id`, `location` (`path:line`), `claim` (要旨),
    `impact` (影響シナリオ), `fix` (修正案, or null for 無し), `axes`,
    `severity`, `evidence` (根拠), `source` (`change-review`, or the origin
    of a `trial:` finding, with the commenter for a PR review comment). Only
-   `id`, `location` and `claim` are required.
+   `id`, `location` and `claim` are required. Build it with `jq` from
+   `<work dir>/candidates.json`, without printing the objects.
 2. Create `git -C <repo> worktree add --detach <run dir>/wt-<id> <base sha>`.
 3. Launch its fixer with the `Agent` tool, without `isolation`, with
    `model: "sonnet"` (SKILL.md Hard rules), as a named teammate `fix-<id>`
@@ -187,15 +191,16 @@ when its verification rates it high, medium or low (SKILL.md Step 4b).
      Fixer section. You are the fixer for finding <id>. Your worktree is
      <path>. Run every command as `cd <path> && ...`, and never write outside
      it except under the run directory."
-   - The candidate object, verbatim.
+   - The candidate's id and the path of `<run dir>/input.json`; the fixer
+     reads its candidate there.
    - The base sha, the run directory, the context file path with the
      instruction to read it first, and whether `--allow-setup` was given.
    - The output file `<run dir>/<id>.fix.json`, written with one `Write` call
      as the final action.
-4. When Step 5 ends the candidate as REFUTED, OUT-OF-SCOPE or NITS, tell its
-   fixer to stop with `SendMessage`, record the candidate in
-   `<run dir>/discarded.json` with the verdict, and ignore whatever its fixer
-   writes.
+4. When Step 5 ends the candidate as REFUTED, OUT-OF-SCOPE or NITS, or rates
+   it at a severity that is not fixable, tell its fixer to stop with
+   `SendMessage`, record the candidate in `<run dir>/discarded.json` with the
+   verdict or the rating, and ignore whatever its fixer writes.
 
 A fixer is done when its output file exists and is non-empty. Detect it only
 that way. Interruptions (a usage limit, for example): resume the fixer with
@@ -211,8 +216,10 @@ the first one, launch the nested review's four axis workers, all in a
 single message, with `model: "sonnet"` (SKILL.md Hard rules), as named
 teammates `la-axis1-security`, `la-axis2-consistency`,
 `la-axis3-robustness` and `la-axis4-ops` (append the run id if a name is
-taken; with plain `Agent` calls, keep their ids). They are new agents: never
-the workers of this review, never a fixer. Each prompt carries:
+taken; with plain `Agent` calls, keep their ids). At light depth (pr-mode.md
+Step 2b) launch one worker instead, `la-axis-all`, owning every axis. They are
+new agents: never the workers of this review, never a fixer. Each prompt
+carries:
 
 - "You will review, along the axis below, a set of fixes that will be applied
   on top of <target identifier>. The fixes are not ready yet. Until they are,
@@ -221,13 +228,19 @@ the workers of this review, never a fixer. Each prompt carries:
   tree>, as fully as your axis needs. Write no findings yet. Write nothing
   except notes in your scratch directory `<run dir>/review/<your name>-scratch/`.
   Never run `rm`, `rmdir`, `unlink`, `git clean` or any other deleting
-  command. Then end your turn: a message will give you the fixes and the rest
-  of your instructions."
-- The one axis it owns, quoted from SKILL.md Step 3.
+  command. Then end your turn with the single line `ready`: a message will
+  give you the fixes and the rest of your instructions."
+- The axis it owns, or every axis at light depth, quoted from SKILL.md Step 3.
 
 The post-change tree is `<work dir>/tree` in PR mode and code mode, and `repo`
-in local mode. Write `<run dir>/warm.json`: per axis number, the worker's name
-or id. Step L3 passes this file to the nested review as `warm:`.
+in local mode. Write `<run dir>/warm.json`: per axis number, or `all` at light
+depth, the worker's name or id. Step L3 passes this file to the nested review
+as `warm:`.
+
+When the run escalates from light to full (SKILL.md Step 4b) after
+`la-axis-all` was launched, tell `la-axis-all` to stop with `SendMessage`,
+launch the four per-axis reviewers as above, and rewrite `warm.json` per axis
+number. When it escalates before this step starts, this step launches the four.
 
 ## Fixer
 
@@ -237,9 +250,11 @@ The main session combines every fix and runs the checks once on the combined
 state.
 
 1. Confirm `git rev-parse HEAD` equals the base sha.
-2. Read the cited lines, the code they call and the code that calls them, as
-   far as the fix needs. Implement `fix`; when it is null, implement the most
-   direct fix the claim implies and label it 試行者の案.
+2. Read your candidate from the input file:
+   `jq -c '.[] | select(.id == "<id>")' <run dir>/input.json`. Read the cited
+   lines, the code they call and the code that calls them, as far as the fix
+   needs. Implement `fix`; when it is null, implement the most direct fix the
+   claim implies and label it 試行者の案.
 3. Make the smallest change that does it. Do not reformat or touch anything the
    fix does not need, even when an editor hook asks for it; record the hook's
    message instead. Never delete a test, remove an assertion, or loosen an
@@ -259,7 +274,9 @@ state.
    the id, the worktree, status (`fixed` or `not-fixed`), the patch path or
    null, the files, `trial_proposal` (true when the fix is 試行者の案), the
    reason for `not-fixed`, the notes path, and `hook_messages`. Then end your
-   turn.
+   turn with the single line `done <output path>` and nothing else: the main
+   session reads your files, and anything added to the message only costs its
+   context. The same holds after a Redo.
 
 The main session may message you afterwards:
 
@@ -342,13 +359,17 @@ every surviving candidate is merged, redone, or `not-fixed`.
    with their candidates, the weakening, and the byproducts path.
 6. Write `<run dir>/known.json`, the nested review's `findings:` file: every
    surviving finding of this review, merged or not, and every candidate whose
-   verification ended NITS, with its rating, in the candidate shape. In PR mode, add every entry
-   of the cache's 既出の指摘, whatever its status.
+   verification ended NITS, with its rating, in the candidate shape. In PR
+   mode, add every row of the cache, whatever its status:
+   `python3 -I <skill>/scripts/cache_rows.py <cache file> > <run dir>/cache-rows.jsonl`
+   (`<skill>` is `~/.claude/skills/change-review`). Build the file with `jq`,
+   without printing the rows.
 7. Write `<run dir>/fixes.json`, the nested review's `fixes:` file: per merged
    candidate, its `id`, `location`, `claim`, `patch` (from `merges.json`), and
    `evidence`: what this review already established for it — its 根拠, its
-   Step 5a command and output path, or its refuter's output file. Nothing from
-   the notes files goes into it.
+   Step 5a command and output path, or its refuter's output file. Build it with
+   `jq` from `<work dir>/candidates.json` and `merges.json`. Nothing from the
+   notes files goes into it.
 
 ## Step L3: Review the fixes (main session, nested review)
 
@@ -367,6 +388,8 @@ refuters.
 - `warm:` `<run dir>/warm.json`
 - `workdir:` `<run dir>/review/`
 - `name-prefix:` `la`
+- `light:` `true` when this run is still at light depth when this step starts
+  (pr-mode.md Step 2b, not escalated); omitted otherwise
 - `axes:` omitted, so all four canonical axes run
 - `output:` `<run dir>/review.json`
 - `invoked-by: lookahead`

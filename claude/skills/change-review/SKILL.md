@@ -21,7 +21,12 @@ description: >-
   review the fixed state once along the same axes; the final report merges
   both reviews, so findings come with a tested fix, its side effects, and a
   forecast of the next round. No stage waits longer than it must: candidates
-  are verified and fixed as each axis reports.
+  are verified and fixed as each axis reports. A re-review of a PR fixes only
+  high and medium findings, and runs light — one worker for all axes and
+  batched refuters — when the cache passes its freshness checks and the PR's
+  own change since the last full review is within a threshold computed from
+  past runs; a light run turns full as soon as it raises a high finding or a
+  second finding.
   `trial:` runs only the lookahead, on findings from elsewhere such as
   another reviewer's comments. Never posts to GitHub unless told; never
   commits, pushes, installs, or deletes. Triggers: "PRをレビューして",
@@ -31,7 +36,7 @@ description: >-
   "指摘を実際に直して確かめて", "次のレビューを先読みして",
   "このレビューコメントは直す価値があるか試して", "review this PR",
   "review this diff", "review this code".
-argument-hint: "<PR URL|番号> [設計書URL...] [--fresh] [--no-cache] [--allow-setup] [--fast]"
+argument-hint: "<PR URL|番号> [設計書URL...] [--fresh] [--no-cache] [--full] [--allow-setup] [--fast]"
 ---
 
 You execute a change review. The invocation arguments are:
@@ -50,13 +55,16 @@ resolves one of three entry modes:
 | Local mode | A local comparison range named explicitly in the prompt | No |
 | Code mode | Named paths of code at a revision, with no diff | No |
 
-This file holds what every run needs. Two parts live beside it and are read
-only when they apply:
+This file holds what the main session needs. The other parts live beside it
+and are read only by whoever needs them, when they apply:
 
 | File | Read by, when | Holds |
 |---|---|---|
-| `~/.claude/skills/change-review/pr-mode.md` | The main session, when Step 0 resolves PR mode | The GitHub rules, the cache (Step 1 and its schema), the PR fetch (Step 2), posting (Step 8), the cache write-back (Step 9) |
+| `~/.claude/skills/change-review/pr-mode.md` | The main session, when Step 0 resolves PR mode | The GitHub rules, the cache (Step 1 and its schema), the PR fetch (Step 2), the review depth (Step 2b), posting (Step 8), the cache write-back (Step 9) |
 | `~/.claude/skills/change-review/lookahead.md` | The main session, right after Step 4 launches the axis workers, on every run except a nested review or a `--fast` run; each fixer it starts reads its Rules and Fixer section | The lookahead: per-finding fixers, the three-way merge, the review of the fixes, the integration |
+| `~/.claude/skills/change-review/worker.md` | Each axis worker, never the main session | The worker's rules, its rating, its output shape |
+| `~/.claude/skills/change-review/refuter.md` | Each refuter, never the main session | The three stages, the refuter's output shape |
+| `~/.claude/skills/change-review/scripts/` | Run by the main session | `cache_rows.py` (cache rows as JSON), `pr_interdiff.sh` (the PR's own change between two reviewed states), `threshold.py` (the light-depth threshold) |
 
 A nested review is a run marked `invoked-by: lookahead`: the lookahead runs it
 to review its own fixes. It is local mode, skips Step 6b, and reads neither
@@ -124,6 +132,17 @@ round.
   except as `--allow-setup` permits (lookahead.md).
 - Never point a worker at the user's checkout. Workers read the state under
   review from a detached worktree or an extract under the work directory.
+- The main session's context is the scarce resource; agents read, the main
+  session routes. The main session never reads a file under review or a design
+  document whole: it reads only the lines a decision needs with `grep -n` or
+  `sed -n`, for a Step 5a reproduction or a line of the report. It reads agent
+  output files with `jq`, extracting only the fields a decision needs, and the
+  full text only of the findings and nits that the report carries.
+- Agent prompts carry only what differs per agent: names, paths, ids, the axis
+  text and the `questions:`. The rules, the rating and the output shape live in
+  worker.md, refuter.md and lookahead.md's Fixer section, which each agent
+  reads itself; never paste their text, or the Severity section, into a
+  prompt. Every agent ends with the one-line message `done <output path>`.
 - Model: every agent this skill launches — axis workers, refuters, fixers, and
   the reviewers of the fixes, in every run including a nested review — is
   launched with `model: "sonnet"`, and so is every relaunch of one. The main
@@ -139,6 +158,7 @@ round.
 | Any other URL | Design document. Used for axis 2 (docs alignment). |
 | `--fresh` | PR mode. Ignore the existing cache, refetch everything, rebuild the cache. |
 | `--no-cache` | PR mode. Neither read nor write the cache for this run. |
+| `--full` | PR mode. Run a re-review at full depth even when pr-mode.md Step 2b would choose light. |
 | `--allow-setup` | Lets the lookahead run the repository's own documented setup command inside the worktrees it created (lookahead.md). |
 | `--fast` | Any mode. Skips Step 6b, the lookahead: no fixer, no merge, no check run, no review of the fixes, and none of the lookahead's worktrees (`wt-base`, `wt-fix`, `wt-<id>`). The read-only `<work dir>/tree` of PR mode and code mode is still created. Steps 3 to 6 run unchanged. `--allow-setup` has nothing to act on. Not combinable with `trial:` (Step 0). |
 | `trial:` | A JSON file of findings, or findings written in the prompt, from outside this review (another reviewer's comments, another tool). Steps 3 to 6 are skipped, and Step 6b runs the lookahead on these findings against the resolved target. Format: the candidate shape of lookahead.md Step L1, item 1. |
@@ -151,7 +171,8 @@ Local mode reads these fields from the prompt, one per line:
 | `base:` | Base revision. Required. |
 | `target:` | `worktree` (the working tree of `repo`, untracked files included) or a revision. Required. |
 | `fixes:` | Optional, set by the lookahead. Path of a JSON array; each entry `{"id", "location", "claim", "patch", "evidence"}` names a finding of the outer review, the patch of its fix alone, and the evidence the outer review established for it. The state under review holds every listed fix, applied together on top of `base` (lookahead.md Step L2). Requires `output:`. |
-| `warm:` | Optional, set by the lookahead. Path of a JSON object mapping each axis number to the name or id of an axis worker that is already running and has read the change (lookahead.md Step L1b). Step 4 sends those workers their prompt instead of launching new ones. |
+| `warm:` | Optional, set by the lookahead. Path of a JSON object mapping each axis number, or `all` at light depth, to the name or id of an axis worker that is already running and has read the change (lookahead.md Step L1b). Step 4 sends those workers their prompt instead of launching new ones. |
+| `light:` | Optional, set by the lookahead. `true` runs this review at light depth: one worker for all axes (Step 4) and batched refuters (Step 5b). |
 | `axes:` | Optional. Replaces the Step 3 観点 list verbatim. |
 | `questions:` | Optional. Added verbatim to every worker prompt in Step 4. |
 | `findings:` | Optional. Path of a JSON array of findings already raised; the dedup context. |
@@ -202,7 +223,9 @@ Code mode reads these fields from the prompt, one per line. `axes:`,
    timestamp — and use `<scratchpad>/<run id>/`. Every file this run writes goes
    under the work directory, except the PR cache.
 7. PR mode: Read `~/.claude/skills/change-review/pr-mode.md` in full now. Its
-   Steps 1 and 2 replace Step 2 below, and its Steps 8 and 9 run after Step 7.
+   Steps 1, 2 and 2b replace Step 2 below; Step 2b sets the review depth that
+   Steps 4 and 5b use. Its Steps 8 and 9 run after Step 7. Local mode and code
+   mode always run at full depth, except a nested review with `light: true`.
 8. With both `trial:` and `--fast`, stop and ask the user which one to drop:
    `trial:` runs only the lookahead, and `--fast` skips it. With `trial:`
    alone, run Step 2 (or pr-mode.md's Steps 1 and 2) and Step 4's context
@@ -328,17 +351,20 @@ can tell "none" from "not passed". Every worker, every refuter, every fixer
 and every nested review receives the path.
 
 The deduplication context:
-- PR mode: the cache file itself
-  (`~/.claude/pr-context/<owner>__<repo>__<number>.md`) — pass that path. Do not
-  copy its 既出の指摘 / 確定した設計判断 / 他レビュアの指摘 sections into a
-  second scratchpad file. On a first review, pass `<work dir>/comments.json`
-  instead. With `--no-cache` and no comments, there is no dedup context, and the
-  agents are told so explicitly.
+- PR mode, re-review: the cache file
+  (`~/.claude/pr-context/<owner>__<repo>__<number>.md`) and its history
+  directory (`<owner>__<repo>__<number>.history/`, pr-mode.md Cache layout) —
+  pass both paths. Do not copy their rows into a scratchpad file. On a first
+  review, pass `<work dir>/comments.json` instead. With `--no-cache` and no
+  comments, there is no dedup context, and the agents are told so explicitly.
 - Local mode and code mode: the `findings:` file if given; otherwise there is
   none, and the agents are told so explicitly.
 
-Fan the axes out to parallel workers, one per axis. One named teammate per axis
-is the default: two or more parallel tasks must go through Agent Teams, and
+Fan the axes out to parallel workers, one per axis. At light depth (pr-mode.md
+Step 2b, or `light: true`) there is one worker instead, `axis-all`, which owns
+every axis of Step 3; it is a single `Agent` call. The four per-axis workers
+join it if the run escalates (Step 4b). One named teammate per axis
+is the default otherwise: two or more parallel tasks must go through Agent Teams, and
 `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` is exported from `.zshenv`. Spawn each
 teammate with the `Agent` tool and a `name` that identifies its axis
 (`axis1-security`, `axis2-consistency`, `axis3-robustness`, `axis4-ops`, or
@@ -355,169 +381,131 @@ plain `Agent` call has no `name`, so state the name in the worker's prompt; it
 names the worker's scratch directory. If a teammate name is already taken in
 this session, append the run id.
 
-With `warm:`, launch no new worker for an axis the file lists: that axis
-already has a running worker that has read the change. Send it the prompt
-below in full with `SendMessage`. An axis the file does not list, or a worker
-that cannot be reached, gets a newly launched worker as above.
+With `warm:`, launch no new worker for an axis the file lists (`all` at light
+depth): that axis already has a running worker that has read the change. Send
+it the prompt below with `SendMessage`. An axis the file does not list, or a
+worker that cannot be reached, gets a newly launched worker as above.
 
-Each worker's deliverable is a file: `<work dir>/axis<N>.txt`, written with one
-`Write` call as its final action. Detect completion only by that file existing
-and being non-empty, never by a reply or a notification.
+Each worker's deliverable is a file: `<work dir>/axis<N>.json`, or
+`<work dir>/axis-all.json` at light depth, written with one `Write` call as its
+final action. Detect completion only by that file existing and being non-empty,
+never by a reply or a notification.
 
 On a run that reaches Step 6b (every run except a nested review or a `--fast`
 run), Read `~/.claude/skills/change-review/lookahead.md` in full as soon as
 the workers are launched, and start its Step L0. Then go to Step 4b. Do not
 wait for the workers.
 
-Each worker's prompt carries, verbatim:
+Each worker's prompt is short, and carries only:
 
+- "Read `~/.claude/skills/change-review/worker.md` in full and follow it. You
+  are <worker name>."
 - The target: `<owner>/<repo>#<number>` and the head sha,
   `local <repo> <base sha>..<target>`, or `code <repo> <rev sha> <paths>`.
 - What to read:
-  - PR mode and local mode: the diff file path, whether it is the full diff or
-    an incremental diff between two shas, and where the post-change files are
-    read: `<work dir>/tree` in PR mode, `repo` in local mode.
-  - With `fixes:`: the fixes file path, and: "The state under review is `base`
-    plus every fix in the fixes file, applied together; the author will push
-    them together. Each entry names the finding it fixes and the patch of that
-    fix alone. Tag every issue with `対象の修正 — <ids>`, the ids of the fixes
-    whose change it concerns, or `対象の修正 — 無し` when it concerns none. An
-    issue that arises only from two or more fixes together is tagged with every
-    id involved."
+  - PR mode and local mode: the diff file path; whether it is the full diff,
+    an incremental diff or an interdiff (pr-mode.md Step 2), between which
+    shas; and where the post-change files are read: `<work dir>/tree` in PR
+    mode, `repo` in local mode.
+  - With `fixes:`: the fixes file path.
   - Code mode: the file list `<work dir>/files.txt` and the tree
-    `<work dir>/tree`, and: "There is no diff. The whole of the listed code is
-    under review, as it stands at this revision: read every listed file, what
-    it calls, and what calls it."
-- The dedup context path, plus this instruction: nothing listed under 既出の指摘
-  or 確定した設計判断, or in the `findings:` file, may be raised again;
-  `accepted-tradeoff` entries are closed unless there is a purely technical
-  residue worth stating, which must be labelled as such.
-- The one axis it owns, quoted from Step 3 or from `axes:`.
+    `<work dir>/tree`.
+- The dedup context paths, or "There is no dedup context."
+- The axis or axes it owns, quoted from Step 3 or from `axes:`.
 - The `questions:` text, if given.
-- The context file path, and: "Read the context file first. Its design
-  documents feed axis 2 above all. Its intent is what the change or the code is
-  meant to do; judge it against that. Its settled decisions are closed like
-  確定した設計判断. Its user constraints bind you."
-- "Ground every finding in a primary source — the aws-docs MCP for AWS
-  behaviour, official documentation, or the repository's own code cited as
-  path:line. Do not write anything you inferred. Read-only: never post to
-  GitHub, never modify files under review. If you need to run something, copy
-  what you need into your own scratch directory `<work dir>/<your name>-scratch/`
-  and work there. Write nothing outside that directory except your output
-  file. Never run `rm`, `rmdir`, `unlink`, `git clean` or any other deleting
-  command, not even in your scratch directory."
-- "Redirect the output of every command that can run long — test, lint and
-  build runs, repository-wide greps, `git log -L`, `git blame` — to a file in
-  your scratch directory, and read only the lines you need from it with
-  `grep -n`, `head`, `tail`, `sed -n` or `wc -l`. Read further whenever those
-  lines do not settle the question. This limits what you print, not what you
-  examine: read the diff and the files under review as fully as the review
-  needs."
-- "Report every issue you observe. Leaving one out because it would cost
-  someone more work — the author, a later fix, another review round — is a
-  defect of the review."
-- "If you argue from repository convention — that sibling stacks do or do not do
-  something — grep the WHOLE repository from its root, not just the subtree under
-  review, and report the command and the hit count. A subtree-scoped convention
-  claim is treated as unsupported."
-- "Mark each finding as 機械検証可能 or 解釈依存. 機械検証可能 means a command
-  reproduces it deterministically (a linter that fails, a template that will not
-  render, a value that differs between two files, a grep that returns zero) —
-  state the exact command. 解釈依存 means it rests on reading documentation, a
-  threat model, or a judgement about intent. Step 5 routes the two differently."
-- "Name the concrete change that would remove the problem in 修正案. If you
-  cannot name one, write 無し; the lookahead then drafts the most direct fix
-  the claim implies."
-- The Severity section of this file, verbatim, and: "Rate each finding's
-  severity by its present harm as that section defines it, and state the harm
-  in 実害: what goes wrong, for whom, under which condition that exists now,
-  with its evidence. When the facts are correct but no harm occurs now, or the
-  harm is negligible, label it nits and write in 実害 why. Do not inflate a nit
-  to low. A nits label exempts nothing from verification: ground a nit like
-  any finding, the facts in 根拠 and the absence of harm in 実害, each with
-  a command, `path:line` or URL. An observation you cannot ground is neither a
-  finding nor a nit; do not report it."
-- "根拠 is what decides whether an issue is worth verifying at all. Give the
-  primary source that establishes the facts, and quote it: `path:line` with
-  the exact code or text found there, `<URL>` with the exact sentence relied
-  on, or a command with the output line that shows it. A URL, a file name, a
-  best practice or general knowledge without a quote is not a 根拠. The main
-  session drops, unverified and unreported, every issue whose 根拠 carries no
-  such quote (Step 4b), so ground an issue before you write it."
-- In a nested review: "For each finding, state in 基点で成立 whether the same
-  issue already holds at the base revision (はい, いいえ or 不明), with the
-  command or `path:line` that shows it. State in 元の帰結 whether the finding
-  says that the consequence of an entry of the `findings:` file that has a fix
-  in the fixes file still occurs after that fix, through the same path or
-  another: that entry's id, or いいえ."
-- The output file path, and the instruction to write it with one `Write` call as
-  the final action.
+- The context file path.
+- In a nested review: "This is a nested review: fill `base_holds` and
+  `original_consequence`."
+- The output file path.
 
-Each worker writes a list of findings in this shape, and nothing else:
-
-```
-- file:line — <path:line>
-  severity — high|medium|low|nits
-  要旨 — <one line>
-  根拠 — <path:line, <URL> or command, each with the exact quoted text or output line that establishes the facts>
-  影響シナリオ — <concrete trigger or failure path>
-  実害 — <what goes wrong, for whom, under which present condition, with evidence; for nits, why there is none or it is negligible>
-  検証区分 — 機械検証可能 (<command>) | 解釈依存
-  修正案 — <the concrete change, or 無し>
-  基点で成立 — はい | いいえ | 不明 (<evidence>)   (only in a nested review)
-  元の帰結 — <findings: entry id> | いいえ   (only in a nested review)
-  対象の修正 — <finding ids separated by commas> | 無し   (only with fixes:)
-```
+The worker's rules, its rating, the 根拠 it must quote and the JSON shape of
+its findings are in worker.md. Its output is a JSON array of finding objects
+with the keys `location`, `axes`, `severity`, `claim`, `evidence` (an array of
+`{source, quote}`), `impact`, `harm`, `verification_kind`,
+`verification_command`, `fix`, and, where they apply, `base_holds`,
+`original_consequence` and `fix_ids`.
 
 ## Step 4b: Handle each axis as it reports
 
 No step waits for every worker. Whenever you regain control (a notification, a
-finished command, a finished agent), check which `axis<N>.txt` files exist and
+finished command, a finished agent), check which `axis*.json` files exist and
 are non-empty, and handle each new one at once, while the other workers keep
 running. Fit the lookahead's Step L0 and Step 5a reproductions in between.
 
+A severity is fixable when the lookahead fixes findings of that severity: high,
+medium or low, except on a PR-mode re-review (pr-mode.md Step 2b), where only
+high and medium are fixable. A finding newly raised in a re-review is fixed
+when it is rated high or medium, like any other.
+
 For each new axis file:
 
-1. Parse its findings into candidates and give each an id, unique within this
-   run; in PR mode, continue the cache's F-ids, so that Step 9 keeps them. A
-   candidate that duplicates one already received from another axis (the same
-   `file:line` and the same 要旨 in substance) is merged into it, adding the
-   axis, and is not dispatched again.
+1. Validate it with `jq empty <file>`. On failure, send the worker the error
+   with `SendMessage` and ask it to rewrite the file; handle the file when it
+   is valid. Give each finding an id, unique within this run (in PR mode,
+   continue the cache's F-ids, so that Step 9 keeps them), and append the
+   objects with their ids to `<work dir>/candidates.json` with `jq`, without
+   printing them. Print only `{id, location, severity, claim,
+   verification_kind}` per new candidate. A candidate that duplicates one
+   already received from another axis (the same `location` and the same claim
+   in substance) is merged into it, adding the axis, and is not dispatched
+   again.
 2. Run Step 6 on each new candidate against the dedup context. A candidate
    that Step 6 suppresses, or reports as a reminder of an `open` entry, stops
    here: nothing is spent verifying or fixing it.
-3. Gate on 根拠, yourself, by reading the candidate; no agent and no command.
-   A candidate passes when its 根拠 names a primary source (`path:line`,
-   `<URL>` or a command) and quotes the text or output line there that
-   establishes the facts. A candidate that fails is dropped as 根拠不足: it is
-   neither verified nor fixed nor reported, only counted in the summary line
-   and recorded with its 要旨 in `<work dir>/ungrounded.json`. PR mode does
-   not cache it, so that a grounded raise of the same point in a later run is
-   not suppressed. This gate is what keeps verifying every candidate cheap: a
-   refuter starts from the quote (Step 5b), and an issue with nothing to start
-   from would cost a refuter a search of its own.
+3. Gate on 根拠 with `jq`; no agent. A candidate passes when its `evidence` is
+   a non-empty array and every entry has a non-empty `source` (`path:line`,
+   `<URL>` or a command) and a non-empty `quote`. A candidate that fails is
+   dropped as 根拠不足: it is neither verified nor fixed nor reported, only
+   counted in the summary line and recorded with its claim in
+   `<work dir>/ungrounded.json`. PR mode does not cache it, so that a grounded
+   raise of the same point in a later run is not suppressed. This gate is what
+   keeps verifying every candidate cheap: a refuter starts from the quote
+   (Step 5b), and an issue with nothing to start from would cost a refuter a
+   search of its own.
 4. Dispatch every candidate that passed, all in one message where agents are
-   launched: its verification (Step 5a by you, or a Step 5b refuter), and, on
-   a run that reaches Step 6b, its fixer (lookahead.md Step L1). On such a
-   run, the first fixer started also starts lookahead.md Step L1b.
-5. A candidate its worker labelled nits is dispatched like any other: it is
-   verified (Severity), but gets no fixer at dispatch. When its verification
-   rates it high, medium or low, start its fixer then, on a run that reaches
-   Step 6b. When it ends NITS, list it under nits. When it ends REFUTED or
-   OUT-OF-SCOPE, handle it as Step 5b's verdict table says.
+   launched: its verification (Step 5a by you, or Step 5b), and, on a run that
+   reaches Step 6b, its fixer (lookahead.md Step L1) when its worker's severity
+   is fixable. On such a run, the first fixer started also starts lookahead.md
+   Step L1b.
+5. A candidate whose worker's severity is not fixable (nits always; low on a
+   re-review) is dispatched like any other: it is verified (Severity), but gets
+   no fixer at dispatch. When its verification rates it fixable, start its
+   fixer then, on a run that reaches Step 6b. When it ends NITS, list it under
+   nits. When it ends REFUTED or OUT-OF-SCOPE, handle it as Step 5b's verdict
+   table says.
 
 When a verification ends, record its verdict. On a run that reaches Step 6b,
-a REFUTED, OUT-OF-SCOPE or NITS candidate's fixer is stopped and discarded
-(lookahead.md Step L1), and Step 6b's merge (lookahead.md Step L2) takes each
-candidate as soon as it is verified and its fixer is done.
+the fixer of a candidate that ends REFUTED, OUT-OF-SCOPE or NITS, or whose
+rating is not fixable, is stopped and discarded (lookahead.md Step L1), and
+Step 6b's merge (lookahead.md Step L2) takes each candidate as soon as it is
+verified and its fixer is done.
+
+Escalation, at light depth only. Light depth rests on the statistic that a
+small re-review raises at most one finding (pr-mode.md Step 2b); a run that
+breaks it turns full at once. Whenever a verification ends, count this run's
+findings so far: candidates of this review's axis workers that ended CONFIRMED
+or SURVIVES and that Step 5c rated high, medium or low. As soon as one of them
+is high, or there are two or more, escalate, once:
+
+1. Rewrite `<work dir>/depth.json` with `depth` full, `escalated` true, and
+   the reason, for example `軽量で開始し、high の指摘が出たためフルに昇格`.
+2. Launch the four per-axis workers of Step 4 with their usual prompts, adding
+   `<work dir>/candidates.json` to their dedup context as "the candidates this
+   run already raised". Step 4b handles their axis files like any other, and
+   Step 7 waits for them like any other.
+3. Every candidate dispatched from now on gets its own refuter (Step 5b at full
+   depth). Batch refuters already running finish their batches.
+4. On a run that reaches Step 6b, the lookahead's review of the fixes turns full
+   too (lookahead.md Step L1b).
 
 A nested review and a `--fast` run both go through this step without fixers:
-their candidates are verified as each axis reports. In a nested review, a candidate whose 元の帰結 names a
-`findings:` entry is never suppressed by item 2: it says that a fix left that
-finding's consequence in place, and an earlier result about the base revision
-says nothing about the fixed state. Every other nested candidate that items 2
-and 3 keep is verified, including one whose 基点で成立 is はい; the lookahead reports
-it as a miss of the original review.
+their candidates are verified as each axis reports. In a nested review, a
+candidate whose `original_consequence` names a `findings:` entry is never
+suppressed by item 2: it says that a fix left that finding's consequence in
+place, and an earlier result about the base revision says nothing about the
+fixed state. Every other nested candidate that items 2 and 3 keep is verified,
+including one whose `base_holds` is はい; the lookahead reports it as a miss of
+the original review.
 
 Step 7 starts only when every axis file is handled and every dispatched
 candidate is verified (and, on a run that reaches Step 6b, when the lookahead
@@ -574,55 +562,36 @@ be computed from the diff.
 
 ### Step 5b: Staged refutation (for 解釈依存 candidates)
 
-One independent worker per candidate. Two or more candidates means two or more
-parallel tasks, so spawn one named teammate per candidate with the `Agent` tool,
-named `refute-<finding id>`, with `model: "sonnet"` (Hard rules); a single
-candidate may go to a single `Agent` call, with the same model.
-If this session is itself a teammate, issue plain `Agent` calls in a single
-message instead. Pass the candidate, the diff path, the target identifier, the
-dedup context path, and the output file `<work dir>/refute-<id>.txt`, written
-with one `Write` call as the worker's final action. With `fixes:`, also pass
-the fixes file, and: "Each entry carries the evidence the outer review already
-established. Reuse it; look up only what the candidate newly relies on." The context file, scratch,
-output-file and no-delete instructions of Step 4 go into each refuter's prompt
-verbatim.
-
-The worker runs three stages in this order and reports them separately. Keeping
-them separate is the point: a single blended verdict with "treat ambiguity as
+A refuter is an independent worker that runs refuter.md's three stages — the
+facts, the scope, the present harm — and reports them separately. Keeping them
+separate is the point: a single blended verdict with "treat ambiguity as
 refuted" folded in rejects sound findings for reasons that have nothing to do
 with whether they are true. On a mature PR that bias silently eats almost
 everything. The same holds for harm: whether a finding is true, whether it
 belongs to this change, and whether it hurts anyone now are three questions.
-The Severity section goes into each refuter's prompt verbatim.
 
-Stage 1 — refute the facts. "Start from the candidate's 根拠: confirm that the
-quoted text is at the cited place and says what the claim says, then attack
-the step from it to the claim. Reuse what holds; look up only what the claim
-relies on beyond the quote. Attack the claim itself. Is the quoted
-documentation real and does it say what the finding claims? Are the cited
-`path:line` locations what the finding says they are? Does the causal chain hold,
-or does some property in the template break it? Is the premise proven, or assumed?
-If the evidence is ambiguous, or you cannot confirm the finding from a primary
-source, the facts are REFUTED."
+Assigning candidates:
 
-Stage 2 — runs only if the facts survived Stage 1. PR mode and local mode: "The
-facts hold. Now judge scope only: is this a defect introduced or left by THIS
-change, or is it a repository-wide gap and a hardening proposal that happens to
-be visible here? Grep the whole repository (see Hard rules) to decide. Also
-check whether the prior review already settled it." Code mode: "The facts hold.
-Now judge scope only: does the defect lie in the code under review — the listed
-paths, or how they use what they call — or entirely outside it? A defect that
-also exists elsewhere in the repository is still in scope when it exists in the
-code under review. Also check whether the `findings:` file already settled it."
+- Full depth: one refuter per candidate, named `refute-<finding id>`.
+- Light depth (pr-mode.md Step 2b, or `light: true`): the 解釈依存 candidates
+  of one axis file go out in batches of at most 8, one refuter per batch, named
+  `refute-b<n>`, n counting the batches of this run. refuter.md has a refuter
+  judge each candidate on its own evidence, one at a time.
 
-Stage 3 — runs only if Stage 2 put the finding in this change or in the code
-under review. "The facts hold and the defect belongs here. Now judge the present
-harm only, as the Severity section defines it. Name what goes wrong, for whom,
-and under which condition that exists now, with evidence: a command,
-`path:line`, or production data read without changing anything. If no harm
-occurs now, or the harm is negligible, the severity is nits, whatever the
-worker rated it. Otherwise rate it high, medium or low by the size of the
-harm."
+Two or more refuters at once are named teammates, launched with the `Agent`
+tool in one message, with `model: "sonnet"` (Hard rules); a single refuter may
+be a single `Agent` call, with the same model. If this session is itself a
+teammate, issue plain `Agent` calls in a single message instead.
+
+Each refuter's prompt carries only: "Read
+`~/.claude/skills/change-review/refuter.md` in full and follow it. You are
+<name>."; the candidates file `<work dir>/candidates.json` and the ids it owns;
+the target identifier; the diff path; the dedup context paths; the context file
+path; with `fixes:`, the fixes file path; and its output file
+`<work dir>/<refuter name>.json`, a JSON array with one verdict object per
+candidate. Read a finished output file with
+`jq -c '.[] | {id, verdict, stage3_harm}'`; read the reasons and the evidence
+only of the candidates the report carries.
 
 Verdicts and what to do with each:
 
@@ -630,32 +599,12 @@ Verdicts and what to do with each:
 |---|---|---|---|---|
 | refuted | not run | not run | REFUTED | Drop. Cache as `withdrawn` with the refuting evidence, so no future run raises it. |
 | survived | PR-specific, or in the code under review | high, medium or low | SURVIVES | Report it with the Stage 3 severity. Attach the refutation attempt's evidence to strengthen the write-up. |
-| survived | PR-specific, or in the code under review | nits | NITS | Not a finding. List it under nits with the Stage 3 reason, `stage1_証拠` as its 論拠 and `stage3_証拠` as its 否定の根拠; cache as `nits`. |
+| survived | PR-specific, or in the code under review | nits | NITS | Not a finding. List it under nits with the Stage 3 reason, `stage1_evidence` as its 論拠 and `stage3_evidence` as its 否定の根拠; cache as `nits`. |
 | survived | repo-wide, outside the code under review, or already settled | not run | OUT-OF-SCOPE | Do NOT drop. Cache as `out-of-scope` and report it under 別作業候補 with the evidence that put it there. |
 
 A finding whose facts hold is never discarded merely for being broader than this
 change. That is a routing decision, not a refutation, and throwing it away loses
 real work — the refuter has already established it is true.
-
-Each worker writes exactly:
-
-```
-stage1_facts — REFUTED | SURVIVES
-stage1_理由 — <2-4 lines, Japanese>
-stage1_証拠 — <path:line, <URL> or command with its output line, quoting the exact text that confirms or refutes the facts>
-stage2_scope — PR固有 | 対象コード内 | リポジトリ横断 | 対象コード外 | 既決着 | 未実施
-stage2_理由 — <2-4 lines, Japanese; include the repo-wide grep command and count>
-stage3_harm — high | medium | low | nits | 未実施
-stage3_理由 — <2-4 lines, Japanese: what goes wrong, for whom, under which present condition, with evidence; for nits, why there is no harm or it is negligible>
-stage3_証拠 — <path:line, <URL> or command with its output line, quoting the exact text that shows the harm or its absence; 未実施 when Stage 3 did not run>
-verdict — REFUTED | SURVIVES | NITS | OUT-OF-SCOPE
-決定的な証拠 — <path:line or <URL>, quoting the exact text relied on>
-残余 — <narrower true point if any, else 無し>
-```
-
-Report honestly which attack angles failed. A refuter that confirms the quoted
-documentation is verbatim real, or that the premise holds, has produced evidence
-worth carrying into the write-up.
 
 ### Step 5c: Present harm (every candidate Step 5 keeps)
 
@@ -676,24 +625,31 @@ is not enough: a true fact that hurts no one now is a nit (Severity).
   its 否定の根拠 is the command, `path:line` or URL that shows the harm absent
   or negligible; a rating you cannot back with such evidence is not nits.
 - A rating of high, medium or low replaces the worker's provisional severity.
-  For a candidate its worker labelled nits, it also starts its fixer on a run
-  that reaches Step 6b (Step 4b).
+  When the rating is fixable (Step 4b) and the worker's severity was not, start
+  its fixer now, on a run that reaches Step 6b. When the rating is not fixable
+  (low on a re-review), stop its fixer if it has one; the report lists it under
+  未深掘り with that reason.
 
 ## Step 6: Deduplication
 
 Step 4b runs this step on each candidate as it arrives, before Step 5, so that
 nothing is spent verifying or fixing a known finding. Match every candidate
-against the dedup context. In PR mode that is the
-three cache sections: 既出の指摘, 確定した設計判断, 他レビュアの指摘. In local
-mode and code mode it is the `findings:` file. When the context file's
-`settled` is not null, also match against the decisions it holds. Match on
-`file:line` plus semantic equivalence of the 要旨, not string equality — the
-same defect moves lines between pushes.
+against the dedup context. In PR mode on a re-review that is the cache: the
+sections of the cache file that pr-mode.md Step 1 read (the open rows of
+既出の指摘, 確定した設計判断, 他レビュアの指摘), and the rows of the history
+directory that concern the candidate's file. Look those up per candidate,
+without reading the history whole:
+`grep -nF '<path of the candidate>' <cache file> <history dir>/*.md`. On a first
+review it is `<work dir>/comments.json`. In local mode and code mode it is the
+`findings:` file. When the context file's `settled` is not null, also match
+against the decisions it holds. Match on `file:line` plus semantic equivalence
+of the 要旨, not string equality — the same defect moves lines between pushes;
+when a candidate's file was renamed by this change, grep the old path too.
 
 A PR-cache `nits` row whose 根拠URL cell lacks `否定の根拠:` was cached by an
 earlier version of this skill on a worker's word, unverified. It suppresses
 nothing: a candidate matching it goes on to Step 4b's gate and verification,
-and Step 9 rewrites the row with the outcome.
+and Step 9 records the outcome under the same id (pr-mode.md Step 9).
 
 - Matches an `open` entry: not new. Report it as a reminder in the 既出 section,
   do not restate it as a fresh finding.
@@ -725,6 +681,9 @@ It is not a separate phase: Step 4 already read
 Step 4b started its fixers. Follow lookahead.md to its end. With `trial:`, or
 after an unchanged PR (pr-mode.md Step 2), Steps 4 to 6 did not run: Read
 lookahead.md in full here and start at its Step L0.
+On a PR-mode re-review the lookahead fixes only fixable findings (Step 4b):
+high and medium, whether newly raised in this run or still open from an
+earlier one. A low finding is reported with its 修正案 untested.
 
 ## Step 7: Report
 
@@ -738,7 +697,7 @@ is one object. Each object has these keys:
 | `location` | file:line |
 | `severity` | high, medium, low or nits, as Step 5c rated it |
 | `claim` | 要旨 |
-| `evidence` | 根拠 |
+| `evidence` | 根拠: the worker's array of `{source, quote}` |
 | `impact` | 影響シナリオ |
 | `verification_kind` | 機械検証可能 or 解釈依存 |
 | `fix` | 修正案 |
@@ -763,14 +722,19 @@ chapter per axis.
 新規 N件 / nits X件 / 既出につき抑制 M件 / 根拠不足で不採用 G件 / 反証により却下 K件 / 別作業候補 S件 / 未深掘り U件
 先読み T件: 残す a / 修正案を直す c / 人に返す d / 修正のレビューで見つかった見落とし m件
 対象: <owner>/<repo>#<number> <head sha 短縮> (前回レビュー: <sha 短縮> / <日付>)
+深さ: <フル | 軽量> (<pr-mode.md Step 2b の理由>)
 ```
 
 新規 counts findings only; nits are counted apart and never appear in the
 per-axis chapters.
 
 In local mode the third line is `対象: <repo> <base 短縮>..<target>`. In code
-mode it is `対象: <repo> <rev 短縮> <paths>`. With `trial:`, the first line is
-omitted and the findings are grouped by source instead of by axis. With
+mode it is `対象: <repo> <rev 短縮> <paths>`. The fourth line appears in PR
+mode only; its reason is the one `<work dir>/depth.json` records, for example
+`軽量 (前回のフル実行からの PR 自身の変更 23 行、基準 71 行以下)`,
+`フル (base を取り込み、差分の差を計算できない)` or
+`フル (軽量で開始し、high の指摘が出たためフルに昇格)`. With `trial:`, the first line
+is omitted and the findings are grouped by source instead of by axis. With
 `--fast`, the second line is `先読み: 省略 (--fast)`.
 
 Then, per axis: each finding as `path:line`, severity, the point, the evidence
@@ -824,7 +788,9 @@ After the axes, the closing sections:
   `描画できない対象では、import Automation が bundle 段階で失敗します / 失敗は状態を変える前に起きるため、実害はありません`.
   Append `(修正のレビュー)` to a nit the review of the fixes raised. Nits are
   not findings, and are posted only as pr-mode.md Step 8 allows.
-- 未深掘り — every candidate the lookahead did not fix, and why.
+- 未深掘り — every candidate the lookahead did not fix, and why. On a
+  re-review this includes every low finding, with the reason
+  `2 回目以降のレビューのため、修正を試すのは high と medium のみ`.
 - 未解決の疑問 — including any candidate that could not be verified at all, named
   explicitly as 未検証 rather than folded in with the verified ones.
 - 実行できなかった確認 — each check the lookahead marked 実行できず, with its
